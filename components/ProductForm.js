@@ -145,15 +145,15 @@ export default function ProductForm({ product }) {
        <div className="inline-block mb-2 mt-2">
         <button 
         onClick={decrement}
-        className='highlight-removal transition-all ease-in-out duration-400 border-2 px-3 rounded-l-md py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+        className='highlight-removal transition-all ease-in-out duration-100 border-2 px-3 rounded-l-md py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
           &mdash;
         </button>
         
-        <input id="input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="transition-all ease-in-out duration-400 relative z-50 focus:outline-2 outline-blue-400 caret-indigo-400 text-center border-y-2 border-x-0 rounded-none w-16 py-1 font-semibold" type="text"  value={counter} onChange={handleChange} />
+        <input id="input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="transition-all ease-in-out duration-100 relative z-50 focus:outline-2 outline-blue-400 caret-indigo-400 text-center border-y-2 border-x-0 rounded-none w-16 py-1 font-semibold" type="text"  value={counter} onChange={handleChange} />
         
         <button 
         onClick={increment}
-        className='highlight-removal transition-all ease-in-out duration-400 border-2 px-3 rounded-r-md py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+        className='highlight-removal transition-all ease-in-out duration-100 border-2 px-3 rounded-r-md py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
           &#xff0b;
         </button>  
       </div>   
