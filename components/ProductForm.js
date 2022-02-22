@@ -1,10 +1,27 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { formatter } from "../utils/helpers"
 import ProductOptions from "./ProductOptions"
 import { CartContext } from '../context/shopContext'
+import useSWR from "swr"
+import axios from "axios"
 
+const fetcher = (url, id) => (
+    axios.get(url, {
+        params: {
+            id: id
+        }
+    }).then((res) => res.data)
+)
 
 export default function ProductForm({ product }) {
+
+    const { data: productInventory } = useSWR(
+        ['/api/available', product.handle],
+        (url, id) => fetcher(url, id), 
+        { errorRetryCount: 3 }
+    )
+
+    const [available, setAvailable] = useState(true)
 
     const { cart, addToCart } = useContext(CartContext)
 
@@ -96,6 +113,7 @@ export default function ProductForm({ product }) {
 
     const handleChange = (e) => {
         counter = Number(e.target.value);
+        setCounter(counter)
 
         cart.map(item => {
             if (item.id === selectedVariant.id) {
@@ -110,10 +128,10 @@ export default function ProductForm({ product }) {
             selectedVariant.variantQuantity = counter
             setCounter(selectedVariant.variantQuantity)
         }
-        if(e.key === 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9 ){
+        if (e.key === 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9 ) {
             e.target.blur();
         } 
-        if(isNaN(counter)) {
+        if (isNaN(counter)) {
             e.target.value = 1
             parseInt(e.target.value)
             counter = 1
@@ -123,6 +141,18 @@ export default function ProductForm({ product }) {
         }
         console.log('in cart:', selectedVariant.variantQuantity, 'counter:', counter, 'new item:', selectedVariant.newVariantQuantity)
     }
+
+    useEffect(() => {
+        if (productInventory) {
+            const checkAvailable = productInventory?.variants.edges.filter(item => item.node.id === selectedVariant.id)
+
+            if (checkAvailable[0].node.availableForSale) {
+                setAvailable(true)
+            } else {
+                setAvailable(false)
+            }
+        }
+    }, [productInventory, selectedVariant])
 
 
   return (
@@ -157,12 +187,19 @@ export default function ProductForm({ product }) {
           &#xff0b;
         </button>  
       </div>   
-      <button 
-      onClick={() => {
-          addToCart(selectedVariant)
-          setCounter(1)
-      }}
-      className="transition-all ease-in-out duration-400 font-bold bg-amber-300 rounded-lg text-black px-2 py-3 mt-8 hover:bg-amber-400">Add to Cart</button>
+      {
+          available ?
+          <button 
+          onClick={() => {
+              addToCart(selectedVariant)
+              setCounter(1)
+          }}
+          className="transition-all ease-in-out duration-400 font-bold bg-amber-300 rounded-lg text-black px-2 py-3 mt-8 hover:bg-amber-400">Add to Cart</button> 
+          :
+          <button 
+          className="bg-gray-800 rounded-lg text-white px-2 py-3 mt-8 cursor-not-allowed">SOLD OUT!</button>
+      }
+      
     </div>
   )
 }
