@@ -77,23 +77,23 @@ export default function shopProvider({ children }) {
     }
 
     async function updateMiniCartQuantity(newItem) {
-            let newCart = []
-            let added = false
+        let newCart = []
+        let added = false
             
-            cart.map(item => {
-                if (item.id === newItem.id) {
-                    newCart = [...cart]
-                    added = true
-                }
-            })
-
-            if (!added) {
-                newCart = [...cart, newItem]
+        cart.map(item => {
+            if (item.id === newItem.id) {
+                newCart = [...cart]
+                added = true
             }
+        })
 
-            setCart(newCart)
-            const newCheckout = await updateCheckout(checkoutId, newCart)
-            localStorage.setItem("checkout_id", JSON.stringify([newCart, newCheckout]))
+        if (!added) {
+            newCart = [...cart, newItem]
+        }
+
+        setCart(newCart)
+        const newCheckout = await updateCheckout(checkoutId, newCart)
+        localStorage.setItem("checkout_id", JSON.stringify([newCart, newCheckout]))
     }
 
 
