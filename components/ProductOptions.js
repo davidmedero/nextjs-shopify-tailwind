@@ -22,7 +22,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                             setOptions(name, value)
                         }}
                         />
-                        <div className={`transition-all ease-in-out duration-100 hover:scale-110 p-2 my-2 text-lg rounded-full block cursor-pointer mr-3 ${checked ? "text-white bg-gray-900" : "text-gray-900 bg-gray-200 hover:bg-gray-300"}`}>
+                        <div className={`hover:scale-110 p-2 my-2 text-lg rounded-full block cursor-pointer mr-3 ${checked ? "text-white bg-gray-900" : "text-gray-900 bg-gray-200 hover:bg-gray-300"}`}>
                             <span className='px-2'>{value}</span>
                         </div>
                     </label>
