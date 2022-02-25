@@ -58,16 +58,16 @@ export default function MiniCart({ cart }) {
   });
 
   return (
-    <Transition.Root show={cartOpen} as={Fragment} {...handlers} style={{ touchAction: 'pan-right' }}>
+    <Transition.Root show={cartOpen} as={Fragment} {...handlers}>
       <Dialog 
-      {...handlers} style={{ touchAction: 'pan-right' }}
+      {...handlers}
       initialFocus={cancelButtonRef}
       as="div" 
       className="fixed z-50 inset-0 overflow-hidden" 
-      onClose={() => { setCartOpen(!cartOpen) }}>
+      onClose={() => setCartOpen(!cartOpen)}>
         <div className="absolute inset-0 overflow-hidden">
           <Transition.Child
-          {...handlers} style={{ touchAction: 'pan-right' }}
+          {...handlers}
             as={Fragment}
             enter="ease-in-out duration-500"
             enterFrom="opacity-0"
@@ -76,12 +76,12 @@ export default function MiniCart({ cart }) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay {...handlers} style={{ touchAction: 'pan-right' }} className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <Dialog.Overlay {...handlers} className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
-          <div {...handlers} style={{ touchAction: 'pan-right' }} className="fixed inset-y-0 right-0 sm:pl-10 max-w-full flex">
+          <div {...handlers} className="fixed inset-y-0 right-0 sm:pl-10 max-w-full flex">
             <Transition.Child
-            {...handlers} style={{ touchAction: 'pan-right' }}
+            {...handlers}
               as={Fragment}
               enter="transform transition ease-in-out duration-500 sm:duration-700"
               enterFrom="translate-x-full"
@@ -90,7 +90,7 @@ export default function MiniCart({ cart }) {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <div {...handlers} style={{ touchAction: 'pan-right' }} className="w-screen max-w-full sm:max-w-md">
+              <div {...handlers} className="w-screen max-w-full sm:max-w-md">
                 <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
                   <div className="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
                     <div className="flex items-start justify-between">
@@ -108,7 +108,7 @@ export default function MiniCart({ cart }) {
                       </div>
                     </div>
 
-                    <div {...handlers} style={{ touchAction: 'pan-right' }} className="mt-8">
+                    <div {...handlers} className="mt-8">
                       <div className="flow-root">
                           {
                               cart.length > 0 ?

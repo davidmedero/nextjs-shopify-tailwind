@@ -1,52 +1,57 @@
-import { useState, useEffect, useRef, useCallback } from "react"
-import ReactDOM from "react-dom"
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
+import { useRef, Fragment } from "react"
+import { Dialog, Transition } from '@headlessui/react'
+import { useSwipeable } from 'react-swipeable';
 
 
 export default function Login({ show, onClose }) {
+    const cancelButtonRef = useRef()
 
-    const [isBrowser, setIsBrowser] = useState(false)
+    const handlers = useSwipeable({
+        onSwipedUp: () => onClose(),
+        preventDefaultTouchmoveEvent: true,
+        trackMouse: true
+      });
 
-    useEffect(() => {
-        setIsBrowser(true)
-    }, [])
 
-    const handleClose = (e) => {
-        e.preventDefault()
-        onClose()
-    }
+      return (
+        <Transition.Root show={show} as={Fragment} {...handlers}>
+      <Dialog 
+      {...handlers}
+      initialFocus={cancelButtonRef}
+      as="div" 
+      className="fixed z-50 inset-0 overflow-hidden" 
+      onClose={onClose}>
+        <div className="absolute inset-0 overflow-hidden">
+          <Transition.Child
+          {...handlers}
+            as={Fragment}
+            enter="ease-in-out duration-500"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in-out duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <Dialog.Overlay {...handlers} className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
 
-    const ref = useRef()
-
-    const handleKey = useCallback(
-      (e) => {
-        if (e.key === 'Escape') {
-          return onClose()
-        }
-      },
-      [onClose]
-    )
-
-    useEffect(() => {
-        const modal = ref.current
-    
-        if (modal) {
-          disableBodyScroll(modal, { reserveScrollBarGap: true })
-          window.addEventListener('keydown', handleKey)
-        }
-        return () => {
-          clearAllBodyScrollLocks()
-          window.removeEventListener('keydown', handleKey)
-        }
-      }, [handleKey])
-
-    const modalContent = show ? (
-        <div ref={ref} onClick={() => onClose()}>
-        <div id="authentication-modal" aria-hidden="true" class="flex overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-0 z-50 justify-center items-center h-full bg-black bg-opacity-50">
-        <div onClick={e => e.stopPropagation()} class="relative sm:px-4 w-full sm:max-w-md h-full sm:h-3/4">
+          <div {...handlers} className="mx-auto sm:mt-[90px] max-w-full flex justify-center">
+            <Transition.Child
+            {...handlers}
+              as={Fragment}
+              enter="transform transition ease-in-out duration-500 sm:duration-600"
+              enterFrom="-translate-y-[500px]"
+              enterTo="translate-y-0"
+              leave="transform transition ease-in-out duration-500 sm:duration-600"
+              leaveFrom="translate-y-0"
+              leaveTo="-translate-y-[550px]"
+            >
+        <div>
+        <div id="authentication-modal" aria-hidden="true" class="w-screen sm:w-[450px]">
+        <div class="relative sm:px-4 h-full sm:h-3/4">
         <div class="relative bg-white sm:rounded-lg shadow dark:bg-gray-700">
             <div class="flex justify-end p-2">
-                <button onClick={handleClose} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                <button ref={cancelButtonRef} onClick={onClose} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
                     <svg class="w-5 h-5 highlight-removal" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
                 </button>
             </div >
@@ -78,14 +83,10 @@ export default function Login({ show, onClose }) {
           </div>
          </div>
         </div>
-    ) : null
-    if (isBrowser) {
-        return ReactDOM.createPortal(
-            modalContent,
-            //This Id can be found in _document.js
-            document.getElementById('modal-root')
-        )
-    } else {
-        return null
-    }
+        </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+    )
 }
