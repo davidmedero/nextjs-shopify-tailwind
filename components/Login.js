@@ -21,7 +21,7 @@ export default function Login({ show, onClose }) {
       as="div" 
       className="fixed z-50 inset-0 overflow-hidden" 
       onClose={onClose}>
-        <div className="absolute inset-0 overflow-hidden">
+        <div {...handlers} className="absolute inset-0 overflow-hidden">
           <Transition.Child
           {...handlers}
             as={Fragment}

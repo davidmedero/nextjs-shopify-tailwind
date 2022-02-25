@@ -65,7 +65,7 @@ export default function MiniCart({ cart }) {
       as="div" 
       className="fixed z-50 inset-0 overflow-hidden" 
       onClose={() => setCartOpen(!cartOpen)}>
-        <div className="absolute inset-0 overflow-hidden">
+        <div {...handlers} className="absolute inset-0 overflow-hidden">
           <Transition.Child
           {...handlers}
             as={Fragment}
@@ -204,8 +204,6 @@ export default function MiniCart({ cart }) {
                     </div>
                   </div> : null
                   }
-
-                  
                 </div>
               </div>
             </Transition.Child>
