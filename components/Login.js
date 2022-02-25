@@ -67,11 +67,11 @@ export default function Login({ show, onClose }) {
                         <label for="remember" class="font-medium text-gray-900 dark:text-gray-300">Remember me</label>
                         </div>
                     </div>
-                    <a href="#" class="no-underline text-sm text-pink-500 hover:text-pink-700">Lost Password?</a>
+                    <a href="#" class="no-underline text-sm text-pink-500 hover:text-pink-800">Lost Password?</a>
                 </div>
                 <button type="submit" class="transition-all ease-in-out duration-600 w-full text-white bg-pink-400 hover:bg-pink-500 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800">Log In</button>
                 <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                Don't have an account? <a href="#" class="text-pink-500 hover:text-pink-700">Sign Up</a>
+                Don't have an account? <a href="#" class="text-pink-500 hover:text-pink-800">Sign Up</a>
                 </div>
             </form>
            </div>
