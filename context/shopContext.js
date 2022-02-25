@@ -76,7 +76,7 @@ export default function shopProvider({ children }) {
         }
     }
 
-    async function updateMiniCartQuantity(newItem) {
+    async function updateCartQuantity(newItem) {
         let newCart = []
         let added = false
             
@@ -105,7 +105,7 @@ export default function shopProvider({ children }) {
         addToCart,
         checkoutUrl,
         removeCartItem,
-        updateMiniCartQuantity
+        updateCartQuantity
     }}>
         {children}
     </CartContext.Provider>

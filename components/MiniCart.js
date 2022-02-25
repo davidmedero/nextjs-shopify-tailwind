@@ -12,7 +12,7 @@ import { useSwipeable } from 'react-swipeable';
 export default function MiniCart({ cart }) {
   const cancelButtonRef = useRef()
 
-  const { cartOpen, setCartOpen, checkoutUrl, removeCartItem, updateMiniCartQuantity } = useContext(CartContext)
+  const { cartOpen, setCartOpen, checkoutUrl, removeCartItem, updateCartQuantity } = useContext(CartContext)
 
   let cartTotal = 0
   cart.map(item => {
@@ -25,7 +25,7 @@ export default function MiniCart({ cart }) {
     let item = cart.find(el => el.id === product_id)
     item.variantQuantity += 1
     setInputValue(item.variantQuantity)
-    updateMiniCartQuantity(item)
+    updateCartQuantity(item)
   }
 
   const decrement = (product_id) => {
@@ -34,7 +34,7 @@ export default function MiniCart({ cart }) {
     if (item.variantQuantity > 1) {
       item.variantQuantity -= 1
       setInputValue(item.variantQuantity)
-      updateMiniCartQuantity(item)
+      updateCartQuantity(item)
     }
   }
 
@@ -42,7 +42,7 @@ export default function MiniCart({ cart }) {
     let item = cart.find(el => el.id === id)
     item.variantQuantity = Number.parseFloat(e)
     setInputValue(item.variantQuantity)
-    updateMiniCartQuantity(item)
+    updateCartQuantity(item)
   }
 
   const updateState = (id) => {
