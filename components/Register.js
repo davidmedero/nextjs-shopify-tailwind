@@ -1,12 +1,9 @@
 import Login from './Login'
-import { useState, useContext } from 'react'
-import { CartContext } from '../context/shopContext'
+import { useState } from 'react'
 
 export default function Register() {
 
   const [show, setShow] = useState(true)
-
-  const { registerCustomer } = useContext(CartContext)
 
   const registerUser = async event => {
     event.preventDefault()
@@ -16,7 +13,7 @@ export default function Register() {
         firstName: event.target.firstName.value,
         lastName: event.target.lastName.value,
         email: event.target.email.value,
-        password: event.target.password.value,
+        password: event.target.password.value
       }),
       headers: {
         'Content-Type': 'application/json'
@@ -26,8 +23,10 @@ export default function Register() {
 
     const result = await res.json()
     console.log(result)
+    return result.data
   }
 
+  
       return (
       <div>
         {

@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
-import { createCheckout, updateCheckout, createCustomer } from '../lib/shopify'
+import { createCheckout, updateCheckout } from '../lib/shopify'
 
 const CartContext = createContext()
 
@@ -96,11 +96,6 @@ export default function shopProvider({ children }) {
         localStorage.setItem("checkout_id", JSON.stringify([newCart, newCheckout]))
     }
 
-    async function registerCustomer(newCustomer) {
-        const customer = await createCustomer(newCustomer)
-        console.log(customer)
-    }
-
 
   return (
     <CartContext.Provider value={{
@@ -111,7 +106,6 @@ export default function shopProvider({ children }) {
         checkoutUrl,
         removeCartItem,
         updateCartQuantity,
-        registerCustomer
     }}>
         {children}
     </CartContext.Provider>
