@@ -16,7 +16,7 @@ export default function Login() {
           type="email" 
           name="email" 
           placeholder="Email"
-          id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:!border-pink-500 focus:!outline-pink-500 focus:!bg-pink-100 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+          id="username" class="h-[45px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:!border-pink-500 focus:!outline-pink-500 focus:!bg-pink-100 block w-full p-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
       </div>
       <div>
           <input 
@@ -24,7 +24,7 @@ export default function Login() {
           name="password" 
           placeholder="Password"
           id="password"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:!border-pink-500 focus:!outline-pink-500 focus:!bg-pink-100 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+          class="h-[45px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:!border-pink-500 focus:!outline-pink-500 focus:!bg-pink-100 block w-full p-3 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
       </div>
       <div class="flex justify-between">
           <div class="flex items-start">
@@ -37,9 +37,9 @@ export default function Login() {
           </div>
           <a class="no-underline text-sm text-pink-500 hover:text-pink-800">Lost Password?</a>
       </div>
-      <button type="button" class="transition-all ease-in-out duration-600 w-full text-white bg-pink-400 hover:bg-pink-500 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800">Log In</button>
+      <button type="button" class="h-[45px] transition-all ease-in-out duration-600 w-full text-white bg-pink-400 hover:bg-pink-500 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800">Log In</button>
       <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-      Don't have an account? <a onClick={() => setShow(false)} class="text-pink-500 hover:text-pink-800">Register</a>
+      Don't have an account? <a onClick={() => setShow(false)} class="cursor-pointer text-pink-500 hover:text-pink-800">Register</a>
       </div>
   </form>
   : <Register />
