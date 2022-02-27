@@ -78,7 +78,6 @@ export default function MiniCart({ cart }) {
           >
             <Dialog.Overlay {...handlers} className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
-
           <div {...handlers} className="fixed inset-y-0 right-0 sm:pl-10 max-w-full flex">
             <Transition.Child
             {...handlers}

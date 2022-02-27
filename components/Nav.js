@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { CartContext } from '../context/shopContext'
 import MiniCart from './MiniCart'
-import LoginModal from './LoginModal'
+import LoginButton from './LoginButton'
 
 
 export default function Nav() {
@@ -24,7 +24,7 @@ export default function Nav() {
                 </a>
             </Link>
             <div className='flex items-center w-30 justify-end'>
-            <LoginModal />
+            <LoginButton />
             <a 
             className='text-lg font-bold cursor-pointer'
             onClick={() => setCartOpen(!cartOpen)}
