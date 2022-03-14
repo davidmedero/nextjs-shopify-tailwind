@@ -5,6 +5,7 @@ import { CartContext } from '../context/shopContext'
 import useSWR from "swr"
 import axios from "axios"
 
+
 const fetcher = (url, id) => (
     axios.get(url, {
         params: {
@@ -168,6 +169,8 @@ export default function ProductForm({ product }) {
               selectedOptions={selectedOptions}
               setOptions={setOptions}
               selectedVariant={selectedVariant}
+              productInventory={productInventory}
+              available={available}
               />
           ))
       }
