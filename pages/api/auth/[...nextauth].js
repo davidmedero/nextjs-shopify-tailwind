@@ -19,7 +19,7 @@ export default NextAuth({
     jwt: {
         encryption: true,
     },
-    secret: "AQq94I8ExZxpm/CsMy5esMs0tjtyEpu87rMPcoTH9C8=",
+    secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async jwt({ token, account }) {
             // Persist the OAuth access_token to the token right after signin
