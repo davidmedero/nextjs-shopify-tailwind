@@ -251,6 +251,15 @@ export async function getServerSideProps({ req }) {
 
         const product = await getProduct(...handles)
 
+        if (!session) {
+          return {
+            redirect: {
+              destination: '/',
+              permanent: false,
+            },
+          }
+        }
+
         return {
           props: { 
             data,

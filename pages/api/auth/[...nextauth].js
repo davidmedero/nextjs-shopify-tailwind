@@ -37,7 +37,7 @@ export default NextAuth({
             if (url === baseUrl) {
                 return Promise.resolve('/')
             }
-            return Promise.resolve('/')
+            return Promise.resolve('/signedIn')
         }
     }
 })
