@@ -11,8 +11,6 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { SessionProvider } from 'next-auth/react'
 import Router from 'next/router'
-import { useState } from 'react'
-import Loader from '../components/Loader'
 import NProgress from 'nprogress'
 NProgress.configure({ showSpinner: false })
 
@@ -21,16 +19,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
   const router = useRouter()
 
-  const [loading, setLoading] = useState(false)
-
   Router.events.on('routeChangeStart', (url) => {
     NProgress.start()
-    setLoading(true)
   })
 
   Router.events.on('routeChangeComplete', (url) => {
     NProgress.done()
-    setLoading(false)
   })
   
   return (
@@ -42,7 +36,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     <ShopProvider>
     <SessionProvider session={session}>
       <Layout>
-        {loading && <Loader />}
         <Component {...pageProps} key={router.asPath} />
       </Layout>
       </SessionProvider>
