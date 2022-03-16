@@ -44,7 +44,7 @@ export default function signedIn({ data, data2, product }) {
 
 
   return (
-    <div className="flex flex-col w-[1000px] max-w-full mx-auto pl-8 pr-8">
+    <div className="flex flex-col w-[1000px] max-w-full mx-auto xxs:px-6 xs:!px-8">
         <div className="mb-[100px] mt-[50px] mx-auto flex flex-wrap xxs:flex-col md:!flex-row justify-center items-center">
           <span>Signed in as<span className="font-semibold">
           { ' ' + ' ' }{session?.user.email}</span></span>
@@ -66,8 +66,8 @@ export default function signedIn({ data, data2, product }) {
 
       
               return (
-              <div key={order.id + Math.random()} className="mb-[100px] border rounded-md p-6">
-                <div className="border-b pb-1">
+              <div key={order.id + Math.random()} className="mb-[100px] relative -top-4 border-1 shadow-lg rounded-2xl p-6">
+                <div className="border-b">
                   <div className="flex flex-wrap xs:!flex-row justify-between mb-5 xxs:flex-col">
                     <div className="xs:mr-4"><span className="font-semibold text-xl">Order # </span>&nbsp;
                       <span className="text-gray-600">{order.id.slice(20, order.id.length)}</span>
@@ -84,12 +84,12 @@ export default function signedIn({ data, data2, product }) {
                   order.dateDelivered.slice(0, order.dateDelivered.length - 16)}
                   </div> 
                   : 
-                ( order.trackingUrl ? <button className="xxs:mt-3 xxs:flex xxs:justify-center xxs:w-full xs:!w-[150px] xs:!flex-none xs:!mt-0 self-start border rounded-md p-2"><a href={order.trackingUrl}>Track package</a></button> : <div className="xxs:flex xxs:items-center xxs:w-[100px] sm:w-[178px] xxs:mt-3 xs:!mt-0 text-green-600">Tracking # coming soon!</div> )
+                ( order.trackingUrl ? <button className="xxs:mt-4 xxs:flex xxs:justify-center xxs:w-full xs:!w-[150px] xs:!flex-none xs:!mt-0 self-start border rounded-md p-2"><a href={order.trackingUrl}>Track package</a></button> : <div className="xxs:flex xxs:items-center xxs:w-full xs:!w-[100px] sm:!w-[178px] xxs:mt-3 xs:!mt-0 text-green-600">Tracking # coming soon!</div> )
                 }
                 
                 </div>
                 <div className="xxs:flex-col xs:!flex-none">
-                <button className="xxs:float-left xxs:flex xxs:justify-center xxs:w-full xxs:mb-5 xs:!float-right xs:!flex-none xs:!w-32 xs:!mb-0 border rounded-md p-2"><a href={orderStatusUrl}>See invoice</a></button>
+                <button className="xxs:float-left xxs:flex xxs:justify-center xxs:w-full xxs:mb-[18px] xs:!float-right xs:!flex-none xs:!w-32 xs:!mb-0 border rounded-md p-2"><a href={orderStatusUrl}>See invoice</a></button>
   
                 <div className="xxs:mb-2 xs:!mb-1"><span className="font-semibold">Date placed </span>
                 <span className="text-gray-600">{ ' ' }&nbsp;
