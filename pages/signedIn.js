@@ -5,9 +5,22 @@ import { formatter } from "../utils/helpers"
 import Shopify from '@shopify/shopify-api'
 import Link from 'next/link'
 import { getAllProducts, getProduct } from "../lib/shopify"
+import useSWR, { SWRConfig } from "swr"
+import axios from "axios"
 
 
-export default function signedIn({ data, data2, product }) {
+const fetcher = (url, id) => (
+  axios.get(url, {
+      params: {
+          id: id
+      }
+  }).then((res) => res.data)
+)
+
+export default function signedIn({ data, data2, product, fallback }) {
+
+  
+  console.log(fallback)
 
   const products = product.collections.edges[0].node.products.edges.map(el => el.node)
   
@@ -44,6 +57,7 @@ export default function signedIn({ data, data2, product }) {
 
 
   return (
+    <SWRConfig value={{ fallback }}>
     <div className="flex flex-col w-[1000px] max-w-full mx-auto xxs:px-6 xs:!px-8">
         <div className="mb-[100px] mt-[50px] mx-auto flex flex-wrap xxs:flex-col md:!flex-row justify-center items-center">
           <span>Signed in as<span className="font-semibold">
@@ -149,6 +163,7 @@ export default function signedIn({ data, data2, product }) {
             </Link></div>)
         }
     </div>
+    </SWRConfig>
   )
 }
 
@@ -264,7 +279,10 @@ export async function getServerSideProps({ req }) {
           props: { 
             data,
             data2,
-            product
+            product,
+            fallback: {
+              '/signedIn': data
+            }
           }, 
         }
     } catch (error) {
