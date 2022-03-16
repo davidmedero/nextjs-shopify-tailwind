@@ -264,8 +264,7 @@ export async function getServerSideProps({ req }) {
           props: { 
             data,
             data2,
-            product,
-            fallback: false
+            product
           }, 
         }
     } catch (error) {
