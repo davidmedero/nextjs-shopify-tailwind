@@ -129,10 +129,10 @@ export default function ProductForm({ product }) {
             selectedVariant.variantQuantity = counter
             setCounter(selectedVariant.variantQuantity)
         }
-        if (e.key === 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9 ) {
+        if (e.key === 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9 ) {
             e.target.blur();
-        } 
-        if (isNaN(counter)) {
+        }
+        if (isNaN(counter) || (e.target.value == 0)) {
             e.target.value = 1
             parseInt(e.target.value)
             counter = 1
@@ -140,7 +140,6 @@ export default function ProductForm({ product }) {
             selectedVariant.newVariantQuantity = counter
             setCounter(1)
         }
-        console.log('in cart:', selectedVariant.variantQuantity, 'counter:', counter, 'new item:', selectedVariant.newVariantQuantity)
     }
 
     useEffect(() => {
