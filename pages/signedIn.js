@@ -84,12 +84,16 @@ export default function signedIn({ data, data2, product }) {
                   order.dateDelivered.slice(0, order.dateDelivered.length - 16)}
                   </div> 
                   : 
-                ( order.trackingUrl ? <button className="xxs:mt-4 xxs:flex xxs:justify-center xxs:w-full xs:!w-[150px] xs:!flex-none xs:!mt-0 self-start border rounded-md p-2"><a href={order.trackingUrl}>Track package</a></button> : <div className="xxs:flex xxs:items-center xxs:w-full xs:!w-[100px] sm:!w-[178px] xxs:mt-3 xs:!mt-0 text-green-600">Tracking # coming soon!</div> )
+                ( order.trackingUrl ? <a href={order.trackingUrl}><button className="xxs:mt-4 xxs:flex xxs:justify-center xxs:w-full xs:!w-[150px] xs:!flex-none xs:!mt-0 self-start border rounded-md p-2">Track package</button></a> : <div className="xxs:flex xxs:items-center xxs:w-full xs:!w-[100px] sm:!w-[178px] xxs:mt-3 xs:!mt-0 text-green-600">Tracking # coming soon!</div> )
                 }
                 
                 </div>
+
                 <div className="xxs:flex-col xs:!flex-none">
-                <button className="xxs:float-left xxs:flex xxs:justify-center xxs:w-full xxs:mb-[18px] xs:!float-right xs:!flex-none xs:!w-32 xs:!mb-0 border rounded-md p-2"><a href={orderStatusUrl}>See invoice</a></button>
+
+                <a href={orderStatusUrl}>
+                <button className="xxs:float-left xxs:flex xxs:justify-center xxs:w-full xxs:mb-[18px] xs:!float-right xs:!flex-none xs:!w-32 xs:!mb-0 border rounded-md p-2">See invoice</button>
+                </a>
   
                 <div className="xxs:mb-2 xs:!mb-1"><span className="font-semibold">Date placed </span>
                 <span className="text-gray-600">{ ' ' }&nbsp;
@@ -106,6 +110,12 @@ export default function signedIn({ data, data2, product }) {
                 </div>
                 {
                   order.items.map((item, i) => 
+                  <Link href={`/products/${handler.map(product => {
+                    if (product.title == item.node.title){
+                      return product.handle
+                    }
+                  }).filter(el => el !== undefined).join(' ')}`}>
+                    <a>
                     <li key={i + Math.random()} className="flex pt-6 flex-wrap sm:flex-nowrap">
                     <div className="flex-shrink-0 xxs:w-full xxs:min-w-[200px] xxs:max-w-[385px] sm:!w-[250px] xxs:h-auto sm:!h-[250px] mr-6 border border-gray-200 rounded-md overflow-hidden">
                     <Image src={item.node.image.originalSrc} atl={item.node.variantTitle} width='500' height='500' layout="responsive" objectFit="cover" />
@@ -114,15 +124,7 @@ export default function signedIn({ data, data2, product }) {
                         <div className="flex justify-between flex-col md:flex-row">
                         <div className="float-left font-semibold text-lg mr-8 mt-3 sm:mt-0">{item.node.title}</div>
                           <div>
-                          <Link href={`/products/${handler.map(product => {
-                                if (product.title == item.node.title){
-                                  return product.handle
-                                }
-                              }).filter(el => el !== undefined).join(' ')}`}>
-                            <a className="group">
                             <button className="xxs:flex xxs:justify-center xxs:w-full xs:!w-36 xs:!flex-none mt-2.5 sm:mt-5 md:mt-0 border rounded-md p-2 whitespace-nowrap">View Product</button>
-                            </a>
-                            </Link>
                           </div>
                           </div>
                               <div className="pt-3 sm:pt-6 text-gray-600">
@@ -132,6 +134,8 @@ export default function signedIn({ data, data2, product }) {
                               </div>
                       </div>
                     </li>
+                    </a>
+                      </Link>
                   )
                 }
               </div>
