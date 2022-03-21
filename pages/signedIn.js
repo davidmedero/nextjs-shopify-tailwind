@@ -35,7 +35,7 @@ export default function signedIn({ data, data2, product }) {
       id: order.node.id,
       dateCreated: order.node.createdAt,
       dateDelivered: order.node.fulfillments[0]?.deliveredAt,
-      trackingUrl: order.node.fulfillments[0]?.trackingInfo[0].url,
+      trackingUrl: order.node.fulfillments[0]?.trackingInfo[0]?.url,
       totalPrice: order.node.subtotalPriceSet.shopMoney.amount,
       quantity: order.node.subtotalLineItemsQuantity,
       items: order.node.lineItems.edges
