@@ -8,7 +8,7 @@ import { getAllProducts, getProduct } from "../lib/shopify"
 
 
 export default function signedIn({ data, data2, product }) {
-
+  
   const products = product.collections.edges[0].node.products.edges.map(el => el.node)
   
   const handler = products.map(product => {
@@ -164,6 +164,56 @@ export async function getServerSideProps({ req }) {
 
   const domain = process.env.SHOPIFY_STORE_DOMAIN
   const adminAccessToken = process.env.SHOPIFY_ADMIN_ACCESSTOKEN
+
+  const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESSTOKEN
+  
+  async function ShopifyData(query) {
+    const URL = `https://${domain}/api/2022-01/graphql.json`
+
+    const options = {
+        endpoint : URL,
+        method: "POST",
+        headers: {
+            "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ query })
+    }
+
+    try {
+        const data = await fetch(URL, options)
+
+        return data
+        } catch (error) {
+        throw new Error("Products not fetched")
+        }
+    }
+    
+    async function create(email, password) {
+      const query = `
+      mutation {
+        customerCreate(input: { email: "${email}", password: "${password}" }) {
+          customer {
+            email
+          }
+        }
+      }
+      `
+      const response = await ShopifyData(query)
+    
+      return response
+    }
+
+    const generateRandomPassword = function (length, randomString="") {
+      randomString += Math.random().toString(20).substring(2, length);
+      if (randomString.length > length) return randomString.slice(0, length);
+      return generateRandomPassword(length, randomString);
+    }
+
+    const password = generateRandomPassword(40)
+
+    create(email, password)
 
   const URL = `https://${domain}/admin/api/2022-01/graphql.json`
 
