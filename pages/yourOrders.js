@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { getAllProducts, getProduct } from "../lib/shopify"
 
 
-export default function signedIn({ data, data2, product }) {
+export default function yourOrders({ data, data2, product }) {
   
   const products = product.collections.edges[0].node.products.edges.map(el => el.node)
   
@@ -151,6 +151,17 @@ export default function signedIn({ data, data2, product }) {
                   </span>
               </a>
             </Link></div>)
+        }
+        {
+          data.data.customers.edges[0] = 0 ? 
+          (<div className="pb-60 xxs:flex xxs:flex-col sm:!flex-row xxs:justify-center sm:!justify-between xxs:w-full sm:w-[500px] flex-wrap">You haven't purchased anything. 
+            <Link href="/" passHref>
+              <a className='cursor-pointer'>
+                  <span className='xxs:flex xxs:justify-center xxs:mt-6 sm:!mt-0 text-lg font-bold border rounded-md px-4 py-3 '>
+                      Go Shopping!
+                  </span>
+              </a>
+            </Link></div>) : null
         }
     </div>
   )
