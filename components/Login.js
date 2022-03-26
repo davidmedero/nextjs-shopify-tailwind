@@ -24,7 +24,6 @@ export default function Login({ csrfToken, onClose }) {
     }
   }
 
-
       return (
         <div>
           <div class="px-6 space-y-6 lg:px-8 pb-8">
