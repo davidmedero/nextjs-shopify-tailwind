@@ -318,10 +318,7 @@ export async function getServerSideProps({ req }) {
           props: { 
             data,
             data2,
-            product,
-            fallback: {
-              '/signedIn': [data, data2, product]
-            }
+            product
           }, 
         }
     } catch (error) {

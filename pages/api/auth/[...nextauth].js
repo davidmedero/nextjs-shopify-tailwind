@@ -70,7 +70,7 @@ function text({ url, host }) {
 }
 
 export default NextAuth({
-    adapter: MongoDBAdapter(clientPromise),
+  adapter: MongoDBAdapter(clientPromise),
     providers: [
         EmailProvider({
             server: {
