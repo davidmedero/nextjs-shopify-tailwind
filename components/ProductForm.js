@@ -174,7 +174,7 @@ export default function ProductForm({ product }) {
           ))
       }
       <legend className='text-xl font-semibold mt-6'>Qty</legend>
-       <div className="shadow-md rounded-lg inline-block my-2 xxs:w-[143px] xs:!w-[142px]">
+       <div className="shadow-md rounded-lg inline-block my-2 xxs:w-[142.5px] xs:!w-[142px]">
         <button 
         onClick={decrement}
         className='text-black highlight-removal transition-all ease-in-out duration-100 px-3 rounded-l-lg py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
