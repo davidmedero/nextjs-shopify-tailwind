@@ -136,7 +136,7 @@ export default function MiniCart({ cart }) {
                                   <p className="mt-1 text-sm text-gray-500">{product.variantTitle}</p>
                                 </div>
                                 <div className="flex-1 flex items-end justify-between text-sm">
-                                    <div className="shadow-md rounded-lg inline-block mt-2 xxs:w-[110.6px] xs:!w-[130.4px]">
+                                    <div className="shadow-md rounded-lg inline-block mt-2 xxs:w-[111px] xs:!w-[130.4px]">
                                       <button 
                                       onClick={() => decrement(product.id)}
                                       className='highlight-removal transition-all ease-in-out duration-100 px-3 rounded-l-lg py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
