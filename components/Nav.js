@@ -14,7 +14,7 @@ export default function Nav() {
     })
 
   return (
-    <header className='border-b sticky top-0 z-20 bg-white shadow-sm'>
+    <header className='border-b sticky top-0 z-20 bg-white shadow-md'>
         <div className='flex items-center justify-between max-w-6xl py-4 px-8 mx-auto lg:max-w-screen-xl'>
             <Link href="/" passHref>
                 <a className='cursor-pointer'>

@@ -190,7 +190,7 @@ export async function getServerSideProps({ req, res }) {
 
         return data
         } catch (error) {
-        throw new Error("Products not fetched")
+        throw new Error("Data not fetched")
         }
     }
     
@@ -326,7 +326,7 @@ export async function getServerSideProps({ req, res }) {
           }, 
         }
     } catch (error) {
-        throw new Error("Products not fetched")
+        throw new Error("Data not fetched")
     }
 }
 

@@ -174,18 +174,18 @@ export default function ProductForm({ product }) {
           ))
       }
       <legend className='text-xl font-semibold mt-6'>Qty</legend>
-       <div className="inline-block mb-2 mt-2">
+       <div className="shadow-md rounded-lg inline-block my-2 w-[142px]">
         <button 
         onClick={decrement}
-        className='highlight-removal transition-all ease-in-out duration-100 border-2 px-3 rounded-l-md py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+        className='text-black highlight-removal transition-all ease-in-out duration-100 px-3 rounded-l-lg py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
           &mdash;
         </button>
         
-        <input id="input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="transition-all ease-in-out duration-100 relative z-50 focus:outline-2 outline-blue-400 caret-indigo-400 text-center border-y-2 border-x-0 rounded-none w-16 py-1 font-semibold" type="text"  value={counter} onChange={handleChange} />
+        <input id="input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-black transition-all ease-in-out duration-100 relative z-50 focus:outline-2 outline-blue-400 caret-indigo-400 text-center rounded-none w-16 py-1" type="text"  value={counter} onChange={handleChange} />
         
         <button 
         onClick={increment}
-        className='highlight-removal transition-all ease-in-out duration-100 border-2 px-3 rounded-r-md py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+        className='text-black highlight-removal transition-all ease-in-out duration-100 px-3 rounded-r-lg py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
           &#xff0b;
         </button>  
       </div>   

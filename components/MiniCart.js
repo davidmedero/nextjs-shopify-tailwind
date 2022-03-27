@@ -136,16 +136,16 @@ export default function MiniCart({ cart }) {
                                   <p className="mt-1 text-sm text-gray-500">{product.variantTitle}</p>
                                 </div>
                                 <div className="flex-1 flex items-end justify-between text-sm">
-                                    <div className="inline-block mt-2">
+                                    <div className="shadow-md rounded-lg inline-block mt-2 xxs:w-[110.4px] xs:!w-[130.4px]">
                                       <button 
                                       onClick={() => decrement(product.id)}
-                                      className='border-2 px-3 rounded-l-md py-1 font-semibold hover:bg-gray-200 active:bg-gray-500 active:text-white'>
+                                      className='highlight-removal transition-all ease-in-out duration-100 px-3 rounded-l-lg py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
                                         &mdash;
                                       </button>
-                                          <input id="input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = product.variantQuantity} className="transition-all ease-in-out duration-400 relative z-50 focus:outline-2 outline-blue-400 caret-indigo-400 text-center border-y-2 border-x-0 rounded-none w-12 py-1 font-semibold" type="text" value={product.variantQuantity} onChange={(e) => handleChange(product.id, e.target.value)} />
+                                          <input id="input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = product.variantQuantity} className="transition-all ease-in-out duration-100 relative z-50 focus:outline-2 outline-blue-400 caret-indigo-400 text-center rounded-none xxs:w-9 xs:!w-14 py-1 font-semibold" type="text" value={product.variantQuantity} onChange={(e) => handleChange(product.id, e.target.value)} />
                                       <button 
                                       onClick={() => increment(product.id)}
-                                      className='border-2 px-3 rounded-r-md py-1 font-semibold hover:bg-gray-200 active:bg-gray-500 active:text-white'>
+                                      className='highlight-removal transition-all ease-in-out duration-100 px-3 rounded-r-lg py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
                                         &#xff0b;
                                       </button>  
                                 </div>   
