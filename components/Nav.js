@@ -62,7 +62,7 @@ export default function Nav() {
                 ))
             }
             </div>
-            <div className='flex items-center w-30 justify-end'>
+            <div className='flex items-center justify-end'>
             <LoginButton />
             <a 
             className='text-lg font-bold cursor-pointer'
@@ -75,19 +75,19 @@ export default function Nav() {
         </div>
         {
           showSubMenu && (
-            <div 
+            <div
             onMouseEnter={() => setShowSubMenu(true)}
             onMouseLeave={() => setShowSubMenu(false)}
-            className="absolute w-full  mx-auto flex justify-center shadow-md border-b h-[73px] bg-white">
-              <div className="mx-auto absolute flex justify-center max-w-[490px] bg-white">
+            className="absolute w-full flex justify-center shadow-md border-b h-[73px] bg-white">
+              <div className="flex justify-center bg-white">
                 {subcategories[subcategoryIndex].map(subcategory => (                   
-                    <Link href={'/' + categoryHandle + '/' + subcategory.handle} >
-                        <div className="relative">                       
-                        <a className='flex items-center justify-center w-full p-6 cursor-pointer hover:bg-pink-100'>
-                            {subcategory.title}
-                        </a>
-                        </div>                       
-                    </Link>                   
+                    <Link href={'/' + categoryHandle + '/' + subcategory.handle}>
+                        <div className="relative right-5">
+                            <a className='flex p-6 cursor-pointer hover:bg-pink-100'>
+                                {subcategory.title}
+                            </a>
+                        </div>
+                    </Link>
                 ))}
               </div>
             </div>
