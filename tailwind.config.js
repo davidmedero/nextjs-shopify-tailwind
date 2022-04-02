@@ -12,5 +12,8 @@ module.exports = {
       ...defaultTheme.screens,
     },
   },
+  variants: {
+    borderRadius: ['first', 'last']
+  },
   plugins: [],
 }

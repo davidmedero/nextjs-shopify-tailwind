@@ -3,6 +3,7 @@ import ProductForm from './ProductForm'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Navigation, Pagination } from 'swiper'
 import RecommendedList from './RecommendedList'
+import Script from 'next/script'
 
 
 export default function ProductPageContent({ product }) {
@@ -18,7 +19,6 @@ export default function ProductPageContent({ product }) {
   })
 
   SwiperCore.use([Navigation, Pagination])
-
 
 
   return (
