@@ -35,6 +35,7 @@ export default function Nav() {
 
   return (
     <header className='border-b sticky top-0 z-20 bg-white shadow-md'>
+        
         <div className='flex items-center justify-between max-w-6xl py-4 px-8 mx-auto lg:max-w-screen-xl'>
             <Link href="/" passHref>
                 <a className='cursor-pointer'>
@@ -47,7 +48,7 @@ export default function Nav() {
             {
                 collections.map(collection => (
                     <Link href={'/' + collection.handle} >
-                        <a className="p-6"
+                        <a className="p-6 hover:bg-pink-100"
                         data-info={JSON.stringify(collection)}
                         onMouseEnter={(e) => {
                             setShowSubMenu(true);
@@ -72,22 +73,26 @@ export default function Nav() {
             <MiniCart cart={cart} />
             </div>
         </div>
-        <div className="flex justify-center">
-        <div className="absolute flex items-center justify-center w-[50%] bg-white shadow-md border-b rounded-b-xl">
         {
-                showSubMenu && 
-                (subcategories[subcategoryIndex].map(subcategory => (
+          showSubMenu && (
+            <div 
+            onMouseEnter={() => setShowSubMenu(true)}
+            onMouseLeave={() => setShowSubMenu(false)}
+            className="relative mx-auto flex justify-center shadow-md border-b h-[73px]">
+              <div className="mx-auto absolute flex justify-center w-full max-w-[490px] bg-white">
+                {subcategories[subcategoryIndex].map(subcategory => (                   
                     <Link href={'/' + categoryHandle + '/' + subcategory.handle} >
-                        <a className='flex items-center justify-center w-full py-6 hover:bg-pink-100 first:rounded-bl-xl last:rounded-br-xl'
-                        onMouseEnter={() => setShowSubMenu(true)}
-                        onMouseLeave={() => setShowSubMenu(false)}>
+                        <div className="relative">                       
+                        <a className='flex items-center justify-center w-full p-6 cursor-pointer hover:bg-pink-100'>
                             {subcategory.title}
                         </a>
-                    </Link>
-                )))
-            }
-        </div>
-        </div>
+                        </div>                       
+                    </Link>                   
+                ))}
+              </div>
+            </div>
+          )
+        }
     </header>
   )
 }
