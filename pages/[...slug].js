@@ -5,7 +5,7 @@ import ProductPageContent from "../components/ProductPageContent"
 import CategoryList from "../components/CategoryList"
 import SubcategoryList from "../components/SubcategoryList"
 import { useRouter } from 'next/router'
-import collections from './categories'
+import collections from '../categories'
 
 
 export default function Slug({ product, category, productsByCollection, productsBySubcollection }) {

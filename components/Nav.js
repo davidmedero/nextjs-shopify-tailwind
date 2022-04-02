@@ -3,7 +3,7 @@ import { useContext, useState } from 'react'
 import { CartContext } from '../context/shopContext'
 import MiniCart from './MiniCart'
 import LoginButton from './LoginButton'
-import collections from '../pages/categories'
+import collections from '../categories'
 
 
 export default function Nav() {
