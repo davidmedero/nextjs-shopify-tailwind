@@ -78,8 +78,8 @@ export default function Nav() {
             <div 
             onMouseEnter={() => setShowSubMenu(true)}
             onMouseLeave={() => setShowSubMenu(false)}
-            className="relative mx-auto flex justify-center shadow-md border-b h-[73px]">
-              <div className="mx-auto absolute flex justify-center w-full max-w-[490px] bg-white">
+            className="absolute w-full  mx-auto flex justify-center shadow-md border-b h-[73px] bg-white">
+              <div className="mx-auto absolute flex justify-center max-w-[490px] bg-white">
                 {subcategories[subcategoryIndex].map(subcategory => (                   
                     <Link href={'/' + categoryHandle + '/' + subcategory.handle} >
                         <div className="relative">                       
