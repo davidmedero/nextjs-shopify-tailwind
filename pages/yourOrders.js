@@ -110,7 +110,7 @@ export default function yourOrders({ data, data2, product }) {
                 </div>
                 {
                   order.items.map((item, i) => 
-                  <Link href={`/products/${handler.map(product => {
+                  <Link href={`/${handler.map(product => {
                     if (product.title == item.node.title){
                       return product.handle
                     }
