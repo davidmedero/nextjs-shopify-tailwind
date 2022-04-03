@@ -6,6 +6,7 @@ import SignInButton from './SignInButton'
 import collections from '../categories'
 import MobileMenuButton from './MobileMenuButton'
 
+
 export default function Nav() {
 
     const { cart, cartOpen, setCartOpen } = useContext(CartContext)

@@ -4,6 +4,8 @@ import { useSwipeable } from 'react-swipeable'
 import { XIcon } from '@heroicons/react/outline'
 import collections from '../categories'
 import Link from 'next/link'
+import MobileMenuSubcategories from './MobileMenuSubcategories'
+
 
 export default function MobileMenuModal({ show, onClose }) {
   const cancelButtonRef = useRef()
@@ -14,6 +16,10 @@ export default function MobileMenuModal({ show, onClose }) {
     trackMouse: true
   })
 
+  const [showModal, setShowModal] = useState(false)
+
+  const [hideCategories, setHideCategories] = useState(false)
+
 
     return (
       <Transition.Root show={show} as={Fragment} {...handlers}>
@@ -23,7 +29,7 @@ export default function MobileMenuModal({ show, onClose }) {
         as="div" 
         className="fixed z-50 inset-0 overflow-hidden" 
         onClose={onClose}>
-            <div {...handlers} className="absolute inset-0 overflow-hidden">
+            <div {...handlers} className="absolute inset-0">
             <Transition.Child
             {...handlers}
                 as={Fragment}
@@ -48,46 +54,63 @@ export default function MobileMenuModal({ show, onClose }) {
                 leaveTo="-translate-x-full"
                 >
                 <div {...handlers} className="w-screen max-w-full sm:max-w-md overflow-y-scroll">
-                    <div className="h-full flex flex-col bg-white shadow-xl">
+                  <div className="h-full flex flex-col bg-white shadow-xl">
                     <div className="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
-                        <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-lg font-medium text-gray-900">Menu</Dialog.Title>
+                      <div className="flex items-start justify-between">
+                        <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">Menu</Dialog.Title>
                         <div className="ml-3 h-7 flex items-center">
-                            <button
-                            ref={cancelButtonRef}
-                            type="button"
-                            className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                            onClick={onClose}
-                            >
-                            <span className="sr-only">Close panel</span>
-                            <XIcon className="h-6 w-6" aria-hidden="true" />
-                            </button>
+                            {
+                                !hideCategories && (
+                                    <button
+                                    ref={cancelButtonRef}
+                                    type="button"
+                                    className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                    onClick={onClose}
+                                    >
+                                    <span className="sr-only">Close panel</span>
+                                    <XIcon className="h-6 w-6" aria-hidden="true" />
+                                    </button>
+                                )
+                            }
                         </div>
                         </div>
                         <div {...handlers} className="mt-8">
                         <div>
                             <div className="flex flex-col">
                                 {
-                                    collections.map(collection => (
-                                        <Link href={'/' + collection.handle} >
-                                            <a 
-                                            className="py-6 hover:bg-pink-100 font-semibold"
-                                            onClick={onClose}>
-                                                {collection.title}
-                                            </a>
-                                        </Link>
-                                    ))
+                                //   !hideCategories && (
+                                  collections.map(collection => (
+                                    <div 
+                                    onClick={() => {
+                                        setShowModal(true);
+                                        // setHideCategories(true)
+                                    }}
+                                    className="flex border-b flow-row justify-between py-6 hover:bg-pink-100 pl-3 cursor-pointer">
+                                        <span>{collection.title}</span>
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                  ))
                                 }
+                                <MobileMenuSubcategories 
+                                show={showModal} 
+                                onClose={() => {
+                                    setShowModal(false);
+                                    // setHideCategories(false)
+                                    }} />
                             </div>
                         </div>
-                        </div>
+                      </div>
                     </div>
-                    </div>
+                  </div>
                 </div>
-                </Transition.Child>
+              </Transition.Child>
             </div>
-            </div>
+          </div>
         </Dialog>
-        </Transition.Root>
+      </Transition.Root>
     )
 }
