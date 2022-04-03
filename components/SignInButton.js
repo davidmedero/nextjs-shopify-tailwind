@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import Modal from './Modal'
+import SignInModal from './SignInModal'
 import Link from 'next/link'
 import { useSession } from "next-auth/react"
 
 
-export default function LoginButton() {
+export default function SignInButton() {
   const { data: session } = useSession()
 
   const [showModal, setShowModal] = useState(false)
@@ -33,8 +33,8 @@ export default function LoginButton() {
       </Link>
       </>
       )}
-       <Modal show={showModal} onClose={() => setShowModal(false)}>
-      </Modal>
+       <SignInModal show={showModal} onClose={() => setShowModal(false)}>
+      </SignInModal>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { getCsrfToken } from "next-auth/react"
 import Link from 'next/link'
 
 
-export default function Login({ csrfToken, onClose }) {
+export default function SignIn({ csrfToken, onClose }) {
 
   const [value, setValue] = useState("")
 

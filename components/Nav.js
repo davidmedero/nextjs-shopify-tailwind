@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { CartContext } from '../context/shopContext'
-import MiniCart from './MiniCart'
-import LoginButton from './LoginButton'
+import Cart from './Cart'
+import SignInButton from './SignInButton'
 import collections from '../categories'
-
+import MobileMenuButton from './MobileMenuButton'
 
 export default function Nav() {
 
@@ -37,6 +37,9 @@ export default function Nav() {
     <header className='border-b sticky top-0 z-20 bg-white shadow-md'>
         
         <div className='flex items-center justify-between max-w-6xl py-4 px-8 mx-auto lg:max-w-screen-xl'>
+            <div className="xxs:flex md:!hidden">
+            <MobileMenuButton />
+            </div>
             <Link href="/" passHref>
                 <a className='cursor-pointer'>
                     <span className='text-lg pt-1 font-bold'>
@@ -44,7 +47,7 @@ export default function Nav() {
                     </span>
                 </a>
             </Link>
-            <div className="relative">
+            <div className="relative xxs:hidden md:!block">
             {
                 collections.map(collection => (
                     <Link href={'/' + collection.handle} >
@@ -63,14 +66,14 @@ export default function Nav() {
             }
             </div>
             <div className='flex items-center justify-end'>
-            <LoginButton />
+            <SignInButton />
             <a 
             className='text-lg font-bold cursor-pointer'
             onClick={() => setCartOpen(!cartOpen)}
             >
                 Cart {cartQuantity > 0 ? '(' + cartQuantity + ')' : ''}
             </a>
-            <MiniCart cart={cart} />
+            <Cart cart={cart} />
             </div>
         </div>
         {

@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useContext, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
@@ -9,7 +8,7 @@ import { formatter } from '../utils/helpers'
 import { useSwipeable } from 'react-swipeable';
 
 
-export default function MiniCart({ cart }) {
+export default function Cart({ cart }) {
   const cancelButtonRef = useRef()
 
   const { cartOpen, setCartOpen, checkoutUrl, removeCartItem, updateCartQuantity } = useContext(CartContext)
