@@ -40,7 +40,7 @@ export default function MobileMenuSubcategories({ show, onClose }) {
                 <Dialog.Overlay {...handlers} className="absolute inset-0" />
             </Transition.Child>
             <div {...handlers} className="fixed inset-y-0 left-0 max-w-full flex overflow-hidden">
-                <Transition.Child
+              <Transition.Child
                 {...handlers}
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -50,7 +50,7 @@ export default function MobileMenuSubcategories({ show, onClose }) {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
                 >
-                  <div className="mt-7 ml-6 bg-white">
+                  <div className="mt-1 p-6 w-screen sm:max-w-md bg-white">
                     <div className="flex justify-between items-center relative bottom-1">
                       <button
                         ref={cancelButtonRef}
@@ -74,10 +74,10 @@ export default function MobileMenuSubcategories({ show, onClose }) {
                         <XIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
                     </div>
-                  <div {...handlers} className="mt-[28px] w-[385px]">
+                  <div {...handlers} className="mt-[28px]">
                     {
                         collections.map(collection => (
-                        <div className="flex border-b flow-row justify-between py-6 hover:bg-pink-100 pl-3 cursor-pointer">
+                        <div className="flex border-b justify-between py-6 pl-3 hover:bg-pink-100 cursor-pointer">
                             <span>{collection.title}</span>
                             <span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -88,8 +88,8 @@ export default function MobileMenuSubcategories({ show, onClose }) {
                         ))
                     }
                   </div>
-                  </div>
-                </Transition.Child>
+                </div>
+              </Transition.Child>
             </div>
           </div>
         </Dialog>

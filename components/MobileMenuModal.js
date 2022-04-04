@@ -18,8 +18,6 @@ export default function MobileMenuModal({ show, onClose }) {
 
   const [showModal, setShowModal] = useState(false)
 
-  const [hideCategories, setHideCategories] = useState(false)
-
 
     return (
       <Transition.Root show={show} as={Fragment} {...handlers}>
@@ -53,39 +51,31 @@ export default function MobileMenuModal({ show, onClose }) {
                 leaveFrom="-translate-x-0"
                 leaveTo="-translate-x-full"
                 >
-                <div {...handlers} className="w-screen max-w-full sm:max-w-md overflow-y-scroll">
-                  <div className="h-full flex flex-col bg-white shadow-xl">
-                    <div className="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
-                      <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">Menu</Dialog.Title>
-                        <div className="ml-3 h-7 flex items-center">
-                            {
-                                !hideCategories && (
-                                    <button
-                                    ref={cancelButtonRef}
-                                    type="button"
-                                    className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                                    onClick={onClose}
-                                    >
-                                    <span className="sr-only">Close panel</span>
-                                    <XIcon className="h-6 w-6" aria-hidden="true" />
-                                    </button>
-                                )
-                            }
-                        </div>
+                    <div {...handlers} className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl">
+                        <div className="flex items-start justify-between">
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">Menu</Dialog.Title>
+                          <div className="ml-3 h-7 flex items-center">
+                            <button
+                                ref={cancelButtonRef}
+                                type="button"
+                                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                onClick={onClose}
+                                >
+                                <span className="sr-only">Close panel</span>
+                                <XIcon className="h-6 w-6" aria-hidden="true" />
+                                </button>
+                          </div>
                         </div>
                         <div {...handlers} className="mt-8">
                         <div>
                             <div className="flex flex-col">
                                 {
-                                //   !hideCategories && (
                                   collections.map(collection => (
                                     <div 
                                     onClick={() => {
                                         setShowModal(true);
-                                        // setHideCategories(true)
                                     }}
-                                    className="flex border-b flow-row justify-between py-6 hover:bg-pink-100 pl-3 cursor-pointer">
+                                    className="flex border-b justify-between py-6 hover:bg-pink-100 pl-3 cursor-pointer">
                                         <span>{collection.title}</span>
                                         <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -99,14 +89,11 @@ export default function MobileMenuModal({ show, onClose }) {
                                 show={showModal} 
                                 onClose={() => {
                                     setShowModal(false);
-                                    // setHideCategories(false)
                                     }} />
                             </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
               </Transition.Child>
             </div>
           </div>
