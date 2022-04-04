@@ -13,9 +13,9 @@ export default function MobileMenuButton() {
         type="button"
         className="flex items-center">
             <div class="space-y-1">
-                <span className="block w-8 h-1 bg-black rounded-md"></span>
-                <span className="block w-8 h-1 bg-black rounded-md"></span>
-                <span className="block w-8 h-1 bg-black rounded-md"></span>
+                <span className="block w-7 h-[3px] bg-black"></span>
+                <span className="block w-7 h-[3px] bg-black"></span>
+                <span className="block w-7 h-[3px] bg-black"></span>
             </div>
         </button>
        <MobileMenuModal show={showModal} onClose={() => setShowModal(false)}>

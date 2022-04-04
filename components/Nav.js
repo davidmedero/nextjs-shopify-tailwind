@@ -28,7 +28,7 @@ export default function Nav() {
     }
 
     const getCategoryHandle = (e) => {
-        setCategoryHandle(collections.find(el => el.handle === JSON.parse(e.target.dataset.info).handle).handle)
+        setCategoryHandle(collections.find(el => el.id === JSON.parse(e.target.dataset.info).id).handle)
     }
     
     const [showSubMenu, setShowSubMenu] = useState(false)
@@ -43,7 +43,7 @@ export default function Nav() {
             </div>
             <Link href="/" passHref>
                 <a className='cursor-pointer'>
-                    <span className='text-lg pt-1 font-bold'>
+                    <span className='text-2xl pt-1 font-bold'>
                         Logo
                     </span>
                 </a>
