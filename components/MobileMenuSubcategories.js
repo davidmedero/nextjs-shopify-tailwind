@@ -6,7 +6,7 @@ import collections from '../categories'
 import Link from 'next/link'
 
 
-export default function MobileMenuSubcategories({ show, onClose, categoryTitle, subcategories }) {
+export default function MobileMenuSubcategories({ show, onClose, closeMenu, categoryTitle, subcategories }) {
   const cancelButtonRef = useRef()
 
   const handlers = useSwipeable({
@@ -14,8 +14,6 @@ export default function MobileMenuSubcategories({ show, onClose, categoryTitle, 
     preventDefaultTouchmoveEvent: true,
     trackMouse: true
   })
-
-  const [showModal, setShowModal] = useState(false)
 
 
     return (
@@ -25,7 +23,10 @@ export default function MobileMenuSubcategories({ show, onClose, categoryTitle, 
         initialFocus={cancelButtonRef}
         as="div" 
         className="fixed z-[60] inset-0 overflow-hidden" 
-        onClose={onClose}>
+        onClose={() => {
+            closeMenu();
+            onClose()
+        }}>
           <div {...handlers} className="absolute inset-0 overflow-hidden">
             <Transition.Child
             {...handlers}
@@ -44,11 +45,11 @@ export default function MobileMenuSubcategories({ show, onClose, categoryTitle, 
                 {...handlers}
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
-                enterFrom="translate-x-full"
+                enterFrom="-translate-x-full"
                 enterTo="translate-x-0"
                 leave="transform transition ease-in-out duration-500 sm:duration-700"
                 leaveFrom="translate-x-0"
-                leaveTo="translate-x-full"
+                leaveTo="-translate-x-full"
                 >
                   <div className="mt-1 p-6 w-screen sm:max-w-md bg-white">
                     <div className="flex justify-between items-center relative bottom-1">
@@ -68,7 +69,10 @@ export default function MobileMenuSubcategories({ show, onClose, categoryTitle, 
                         ref={cancelButtonRef}
                         type="button"
                         className="-mx-2 -my-[10px] p-2 text-gray-400 hover:text-gray-500"
-                        onClick={onClose}
+                        onClick={() => {
+                            closeMenu();
+                            onClose()
+                        }}
                         >
                         <span className="sr-only">Close panel</span>
                         <XIcon className="h-6 w-6" aria-hidden="true" />

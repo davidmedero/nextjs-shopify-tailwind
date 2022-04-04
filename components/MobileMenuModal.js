@@ -94,7 +94,8 @@ export default function MobileMenuModal({ show, onClose }) {
                                 categoryTitle={categoryTitle}
                                 subcategories={subcategories}
                                 show={showModal}
-                                onClose={() => setShowModal(false)} />
+                                onClose={() => setShowModal(false)}
+                                closeMenu={onClose} />
                             </div>
                         </div>
                       </div>
