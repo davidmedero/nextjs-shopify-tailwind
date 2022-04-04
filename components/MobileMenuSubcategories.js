@@ -6,7 +6,7 @@ import collections from '../categories'
 import Link from 'next/link'
 
 
-export default function MobileMenuSubcategories({ show, onClose }) {
+export default function MobileMenuSubcategories({ show, onClose, categoryTitle, subcategories }) {
   const cancelButtonRef = useRef()
 
   const handlers = useSwipeable({
@@ -63,7 +63,7 @@ export default function MobileMenuSubcategories({ show, onClose }) {
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                      <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">Category</Dialog.Title>
+                      <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">{categoryTitle}</Dialog.Title>
                       <button
                         ref={cancelButtonRef}
                         type="button"
@@ -76,9 +76,9 @@ export default function MobileMenuSubcategories({ show, onClose }) {
                     </div>
                   <div {...handlers} className="mt-[28px]">
                     {
-                        collections.map(collection => (
+                        subcategories.map(subcategory => (
                         <div className="flex border-b justify-between py-6 pl-3 hover:bg-pink-100 cursor-pointer">
-                            <span>{collection.title}</span>
+                            <span>{subcategory.title}</span>
                             <span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />

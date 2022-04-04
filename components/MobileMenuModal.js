@@ -18,6 +18,9 @@ export default function MobileMenuModal({ show, onClose }) {
 
   const [showModal, setShowModal] = useState(false)
 
+  const [categoryTitle, setCategoryTitle] = useState('')
+  const [subcategories, setSubcategories] = useState([])
+
 
     return (
       <Transition.Root show={show} as={Fragment} {...handlers}>
@@ -74,6 +77,8 @@ export default function MobileMenuModal({ show, onClose }) {
                                     <div 
                                     onClick={() => {
                                         setShowModal(true);
+                                        setCategoryTitle(collection.title);
+                                        setSubcategories(collection.subcollections)
                                     }}
                                     className="flex border-b justify-between py-6 hover:bg-pink-100 pl-3 cursor-pointer">
                                         <span>{collection.title}</span>
@@ -85,11 +90,11 @@ export default function MobileMenuModal({ show, onClose }) {
                                     </div>
                                   ))
                                 }
-                                <MobileMenuSubcategories 
-                                show={showModal} 
-                                onClose={() => {
-                                    setShowModal(false);
-                                    }} />
+                                <MobileMenuSubcategories
+                                categoryTitle={categoryTitle}
+                                subcategories={subcategories}
+                                show={showModal}
+                                onClose={() => setShowModal(false)} />
                             </div>
                         </div>
                       </div>
