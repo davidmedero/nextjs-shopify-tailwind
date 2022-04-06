@@ -88,7 +88,7 @@ export default function Nav() {
                 <div className="">
                     <Link href={'/' + categoryHandle + '/' + subcategory.handle}>
                         <div className="relative right-5">
-                            <a className='flex p-6 cursor-pointer hover:bg-pink-100'>
+                            <a className='font-semibold flex p-6 cursor-pointer hover:bg-pink-100'>
                                 {subcategory.title}
                             </a>
                         </div>
