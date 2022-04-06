@@ -8,8 +8,8 @@ export default function MobileMenuButton() {
 
   return (
     <div>
-        <button 
-        onClick={() => setShowModal(true)} 
+        <button
+        onClick={() => setShowModal(true)}
         type="button"
         className="flex items-center">
             <div class="space-y-1">

@@ -4,11 +4,12 @@ import { getAllProducts, getProduct, getAllCollections, getProductsbyCollection 
 import ProductPageContent from "../components/ProductPageContent"
 import CategoryList from "../components/CategoryList"
 import SubcategoryList from "../components/SubcategoryList"
+import Sub_SubcategoryList from "../components/Sub_SubcategoryList"
 import { useRouter } from 'next/router'
 import collections from '../categories'
 
 
-export default function Slug({ product, category, productsByCollection, productsBySubcollection }) {
+export default function Slug({ product, category, productsByCollection, productsBySubcollection, productsBySub_Subcollection }) {
 
   const router = useRouter()
   
@@ -32,7 +33,12 @@ export default function Slug({ product, category, productsByCollection, products
           asPath === '/' + category[0] + '/' + category[1] ? 
           <SubcategoryList productsBySubcollection={productsBySubcollection} /> :
           null
-        }      
+        }
+        {
+          asPath === '/' + category[0] + '/' + category[1] + '/' + category[2] ? 
+          <Sub_SubcategoryList productsBySub_Subcollection={productsBySub_Subcollection} /> :
+          null
+        }  
       </div>
     </main>
   </>
@@ -46,27 +52,30 @@ export async function getStaticPaths() {
       params: { slug: [category.handle] }
     }
   })
-  const subcategoryPathsForClothing = categories[0].subcollections.map(subcategory => {
-    return {
-      params: { slug: [categories[0].handle, subcategory.handle] }
+  const subcategoryPaths = []
+  for (let category of categories) {
+    for (let subcategory of category.subcollections) {
+      subcategoryPaths.push({
+        params: {
+          slug: [category.handle, subcategory.handle]
+        }
+      })
     }
-  })
-  const subcategoryPathsForShoes = categories[1].subcollections.map(subcategory => {
-    return {
-      params: { slug: [categories[1].handle, subcategory.handle] }
+  }
+  const sub_SubcategoryPaths = []
+  for (let category of categories) {
+    for (let subcategory of category.subcollections) {
+      if (subcategory.sub_subcollections) {
+        for (let sub_subcategory of subcategory.sub_subcollections) {
+          sub_SubcategoryPaths.push({
+            params: {
+              slug: [category.handle, subcategory.handle, sub_subcategory.handle]
+            }
+          })
+        }
+      }
     }
-  })
-  const subcategoryPathsForAccessories = categories[2].subcollections.map(subcategory => {
-    return {
-      params: { slug: [categories[2].handle, subcategory.handle] }
-    }
-  })
-  const subcategoryPathsForBeauty = categories[3].subcollections.map(subcategory => {
-    return {
-      params: { slug: [categories[3].handle, subcategory.handle] }
-    }
-  })
-
+  }
   const products = await getAllProducts()
   const productPaths = products.map(item => {
     const product = String(item.node.handle)
@@ -75,14 +84,12 @@ export async function getStaticPaths() {
       params: { slug: [product] }
     }
   })
-  
+
     return {
       paths: [
         ...categoryPaths,
-        ...subcategoryPathsForClothing,
-        ...subcategoryPathsForShoes,
-        ...subcategoryPathsForAccessories,
-        ...subcategoryPathsForBeauty,
+        ...subcategoryPaths,
+        ...sub_SubcategoryPaths,
         ...productPaths
       ],
       fallback: false
@@ -93,12 +100,14 @@ export async function getStaticProps({ params }) {
   const product = await getProduct(params.slug)
   const productsByCollection = await getProductsbyCollection(params.slug[0])
   const productsBySubcollection = await getProductsbyCollection(params.slug[1])
+  const productsBySub_Subcollection = await getProductsbyCollection(params.slug[2])
     return {
         props: {
           category: params.slug || null,
           product,
           productsByCollection,
-          productsBySubcollection
+          productsBySubcollection,
+          productsBySub_Subcollection
         }
       }
 }

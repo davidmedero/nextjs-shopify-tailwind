@@ -16,15 +16,15 @@ export default function Nav() {
         return (cartQuantity += item?.variantQuantity)
     })
 
-    const [subcategoryIndex, setSubcategoryIndex] = useState(false)
+    const [categoryIndex, setCategoryIndex] = useState(false)
     const [categoryHandle, setCategoryHandle] = useState('')
 
     const subcategories = collections.map(category => {
         return category.subcollections
     })
 
-    const findSubcategory = (e) => {
-        setSubcategoryIndex(collections.findIndex(el => el.id === JSON.parse(e.target.dataset.info).id))
+    const findCategory = (e) => {
+        setCategoryIndex(collections.findIndex(el => el.id === JSON.parse(e.target.dataset.info).id))
     }
 
     const getCategoryHandle = (e) => {
@@ -36,7 +36,6 @@ export default function Nav() {
 
   return (
     <header className='border-b sticky top-0 z-20 bg-white shadow-md'>
-        
         <div className='flex items-center justify-between max-w-6xl py-4 px-8 mx-auto lg:max-w-screen-xl'>
             <div className="xxs:flex md:!hidden">
             <MobileMenuButton />
@@ -56,8 +55,8 @@ export default function Nav() {
                         data-info={JSON.stringify(collection)}
                         onMouseEnter={(e) => {
                             setShowSubMenu(true);
-                            findSubcategory(e);
-                            getCategoryHandle(e)
+                            findCategory(e);
+                            getCategoryHandle(e);
                             }}
                             onMouseLeave={() => setShowSubMenu(false)}>
                             {collection.title}
@@ -79,12 +78,12 @@ export default function Nav() {
         </div>
         {
           showSubMenu && (
-            <div
-            onMouseEnter={() => setShowSubMenu(true)}
-            onMouseLeave={() => setShowSubMenu(false)}
-            className="absolute w-full flex justify-center shadow-md border-b h-[73px] bg-white">
+          <div
+          onMouseEnter={() => setShowSubMenu(true)}
+          onMouseLeave={() => setShowSubMenu(false)}
+          className="absolute w-full flex flex-col justify-center shadow-md border-b bg-white">
               <div className="flex justify-center bg-white">
-                {subcategories[subcategoryIndex].map(subcategory => (                   
+                {subcategories[categoryIndex].map(subcategory => (
                     <Link href={'/' + categoryHandle + '/' + subcategory.handle}>
                         <div className="relative right-5">
                             <a className='flex p-6 cursor-pointer hover:bg-pink-100'>
@@ -94,7 +93,22 @@ export default function Nav() {
                     </Link>
                 ))}
               </div>
+              {
+            <div className="flex justify-center bg-white">
+              {subcategories[categoryIndex].map(subcategory => (
+                <div className="relative right-5">
+                  {subcategory.sub_subcollections?.map(sub_subcategory => (
+                    <Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
+                      <a className='flex p-6 cursor-pointer hover:bg-pink-100'>
+                        {sub_subcategory.title}
+                       </a>
+                    </Link>
+                  ))}
+                </div>
+              ))}
             </div>
+              }
+          </div>
           )
         }
     </header>
