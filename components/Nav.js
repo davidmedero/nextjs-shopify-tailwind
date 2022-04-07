@@ -81,7 +81,7 @@ export default function Nav() {
           <div
           onMouseEnter={() => setShowSubMenu(true)}
           onMouseLeave={() => setShowSubMenu(false)}
-          className="absolute w-full flex flex-col justify-center shadow-md border-b bg-white">
+          className="absolute pb-6 w-full flex flex-col justify-center shadow-md border-b bg-white">
               {
             <div className="flex justify-center bg-white">
               {subcategories[categoryIndex].map(subcategory => (
@@ -96,7 +96,7 @@ export default function Nav() {
                   {subcategory.sub_subcollections?.map(sub_subcategory => (
                     <Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
                         <div className="relative right-5">
-                          <a className='flex p-6 cursor-pointer hover:bg-pink-100'>
+                          <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100'>
                             {sub_subcategory.title}
                           </a>
                        </div>
