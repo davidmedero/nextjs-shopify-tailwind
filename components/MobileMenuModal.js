@@ -19,6 +19,7 @@ export default function MobileMenuModal({ show, onClose }) {
   const [showModal, setShowModal] = useState(false)
 
   const [categoryTitle, setCategoryTitle] = useState('')
+  const [categoryHandle, setCategoryHandle] = useState('')
   const [subcategories, setSubcategories] = useState([])
 
 
@@ -54,7 +55,7 @@ export default function MobileMenuModal({ show, onClose }) {
                 leaveFrom="-translate-x-0"
                 leaveTo="-translate-x-full"
                 >
-                    <div {...handlers} className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl">
+                    <div {...handlers} className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
                         <div className="flex items-start justify-between">
                           <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">Menu</Dialog.Title>
                           <div className="ml-3 h-7 flex items-center">
@@ -78,6 +79,7 @@ export default function MobileMenuModal({ show, onClose }) {
                                     onClick={() => {
                                         setShowModal(true);
                                         setCategoryTitle(collection.title);
+                                        setCategoryHandle(collection.handle);
                                         setSubcategories(collection.subcollections)
                                     }}
                                     className="flex border-b justify-between py-6 hover:bg-pink-100 pl-3 cursor-pointer">
@@ -92,6 +94,7 @@ export default function MobileMenuModal({ show, onClose }) {
                                 }
                                 <MobileMenuSubcategories
                                 categoryTitle={categoryTitle}
+                                categoryHandle={categoryHandle}
                                 subcategories={subcategories}
                                 show={showModal}
                                 onClose={() => setShowModal(false)}
