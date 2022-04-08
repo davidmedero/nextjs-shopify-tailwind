@@ -18,7 +18,7 @@ export default function Nav() {
         return (cartQuantity += item?.variantQuantity)
     })
 
-    const [categoryIndex, setCategoryIndex] = useState(false)
+    const [categoryIndex, setCategoryIndex] = useState(0)
     const [categoryHandle, setCategoryHandle] = useState('')
 
     const subcategories = collections.map(category => {

@@ -99,26 +99,26 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                         <div key={subcategory.id}>
                           <div
                           onClick={() => toggleSub_Subcategories(subcategory.id)}
-                          className="border-b py-6 pl-3 hover:bg-pink-100 cursor-pointer">
+                          className="border-b pl-3 hover:bg-pink-100 cursor-pointer">
                               {
                                   !subcategory.sub_subcollections ? 
                                   (
                                     <Link href={'/' + categoryHandle + '/' + subcategory.handle}>
-                                      <a>
+                                      <a className="">
                                         <div
                                         onClick={() => {
                                           closeMenu();
                                           onClose();
                                           setShowSub_Subcategories(false)
                                         }}
-                                        className="w-full test">
+                                        className="w-full h-[75px] flex items-center">
                                             {subcategory.title}
                                             </div>
                                       </a>
                                     </Link>
                                   ) : (
-                                  <div className="flex justify-between">
-                                    <span>{subcategory.title}</span>
+                                  <div className="flex justify-between items-center">
+                                    <span className="w-full h-[75px] flex items-center">{subcategory.title}</span>
                                     <span className={showSub_Subcategories[subcategory.id] ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}>
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
