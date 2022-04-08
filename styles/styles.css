@@ -70,3 +70,7 @@ and left sides of the text */
   margin-left: 0.5em;
 }
 
+.react-slidedown.my-dropdown-slidedown {
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
+}

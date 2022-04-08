@@ -39,10 +39,10 @@ export default function SignInModal({ show, onClose }) {
           <Transition.Child
           {...handlers}
             as={Fragment}
-            enter="transform transition ease-in-out duration-700"
+            enter="transform transition ease-in-out duration-[550ms]"
             enterFrom="-translate-y-[500px]"
             enterTo="translate-y-0"
-            leave="transform transition ease-in-out duration-1000"
+            leave="transform transition ease-in-out duration-[800ms]"
             leaveFrom="translate-y-0"
             leaveTo="-translate-y-[800px]"
           >

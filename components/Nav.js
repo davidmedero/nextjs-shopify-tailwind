@@ -5,6 +5,8 @@ import Cart from './Cart'
 import SignInButton from './SignInButton'
 import collections from '../categories'
 import MobileMenuButton from './MobileMenuButton'
+import {SlideDown} from 'react-slidedown'
+import 'react-slidedown/lib/slidedown.css'
 
 
 export default function Nav() {
@@ -82,6 +84,7 @@ export default function Nav() {
           onMouseEnter={() => setShowSubMenu(true)}
           onMouseLeave={() => setShowSubMenu(false)}
           className="absolute pb-6 w-full flex flex-col justify-center shadow-md border-b bg-white">
+              <SlideDown className={'my-dropdown-slidedown'}>
               {
             <div className="flex justify-center bg-white">
               {subcategories[categoryIndex].map(subcategory => (
@@ -106,6 +109,7 @@ export default function Nav() {
               ))}
             </div>
               }
+              </SlideDown>
           </div>
           )
         }
