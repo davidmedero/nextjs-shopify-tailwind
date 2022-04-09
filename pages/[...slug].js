@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import collections from '../categories'
 
 
-export default function Slug({ product, category, productsByCollection, productsBySubcollection, productsBySub_Subcollection }) {
+export default function Slug({ product, category, subcategory, sub_subcategory, productsByCollection, productsBySubcollection, productsBySub_Subcollection }) {
 
   const router = useRouter()
   
@@ -18,7 +18,7 @@ export default function Slug({ product, category, productsByCollection, products
   return (
   <>
     <main>
-      <div className="md:min-h-screen md:py-12 md:pt-20">
+      <div className="md:min-h-screen md:py-12 md:pt-5">
         {
           product.length != 0 ?
             <ProductPageContent product={product} /> :
@@ -26,17 +26,17 @@ export default function Slug({ product, category, productsByCollection, products
         }
         {
           asPath === '/' + category[0] ? 
-          <CategoryList productsByCollection={productsByCollection} /> :
+          <CategoryList productsByCollection={productsByCollection} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
           null
         }
         {
           asPath === '/' + category[0] + '/' + category[1] ? 
-          <SubcategoryList productsBySubcollection={productsBySubcollection} /> :
+          <SubcategoryList productsBySubcollection={productsBySubcollection} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
           null
         }
         {
           asPath === '/' + category[0] + '/' + category[1] + '/' + category[2] ? 
-          <Sub_SubcategoryList productsBySub_Subcollection={productsBySub_Subcollection} /> :
+          <Sub_SubcategoryList productsBySub_Subcollection={productsBySub_Subcollection} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
           null
         }  
       </div>
