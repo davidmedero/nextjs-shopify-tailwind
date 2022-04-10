@@ -4,6 +4,7 @@ import ProductOptions from "./ProductOptions"
 import { CartContext } from '../context/shopContext'
 import useSWR from "swr"
 import axios from "axios"
+import Script from 'next/script'
 
 
 const fetcher = (url, id) => (
@@ -181,7 +182,7 @@ export default function ProductForm({ product }) {
           &mdash;
         </button>
         
-        <input id="input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-black transition-all ease-in-out duration-100 relative z-50 focus:outline-2 outline-blue-400 caret-indigo-400 text-center rounded-none w-16 py-1" type="text"  value={counter} onChange={handleChange} />
+        <input id="input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 text-center rounded-none w-16 py-1" type="text"  value={counter} onChange={handleChange} />
         
         <button 
         onClick={increment}
@@ -201,6 +202,78 @@ export default function ProductForm({ product }) {
           <button 
           className="bg-gray-800 rounded-lg text-white px-2 py-3 mt-8 cursor-not-allowed">SOLD OUT!</button>
       }
+    <div className="mt-6">
+    <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
+      </div>
+      <Script
+        dangerouslySetInnerHTML={{
+        __html: `
+        for (let button of document.querySelectorAll(".selectSection button")) {
+
+        button.addEventListener('click', (e) => {
+
+            const et = e.target;
+
+            const active = document.querySelector(".active");
+            const inactive = document.querySelector(".inactive");
+            const first_active = document.querySelector(".first_active");
+            let chevrons = document.querySelectorAll(".chevron");
+            let minuses = document.querySelectorAll(".minus");
+
+            if (active) {
+            active.classList.remove("active");
+            }
+
+            if (first_active) {
+                first_active.classList.remove("first_active");
+            }
+
+            if (inactive) {
+            inactive.classList.remove("inactive");
+            }
+
+            et.classList.add("active");
+            et.classList.add("first_active");
+
+            for (let chevron of chevrons) {
+                if(chevron.getAttribute('data-number') === button.getAttribute('data-number')) {
+                    chevron.style.display = "none";
+                    }
+
+                else {
+                    chevron.style.display = "block";
+                }
+            }
+
+            for (let minus of minuses) {
+                if(minus.getAttribute('data-number') === button.getAttribute('data-number')) {
+                    minus.style.display = "block";
+                }
+        
+                else {
+                    minus.style.display = "none";
+                }
+            }
+            
+
+            let allContent = document.querySelectorAll('.content');
+
+
+            for (let content of allContent) {
+
+            if(content.getAttribute('data-number') === button.getAttribute('data-number')) {
+                content.style.display = "block";
+            }
+
+            else {
+                content.style.display = "none";
+            }
+            }
+        });
+        }
+        `
+        }}
+      />
       
     </div>
   )

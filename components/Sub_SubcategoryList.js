@@ -2,11 +2,15 @@ import ProductCard from "./ProductCard"
 import Link from 'next/link'
 
 
-const Sub_SubcategoryList = ({ productsBySub_Subcollection, category, subcategory, sub_subcategory }) => {
+const Sub_SubcategoryList = ({ productsBySub_Subcollection, category, subcategory, sub_subcategory, product }) => {
   return (
     <div className="bg-white">
       <div className="max-w-4xl mx-auto py-3 px-4 lg:max-w-7xl">
-        <div className="text-2xl pb-3 pl-1">{sub_subcategory.toString().charAt(0).toUpperCase() + sub_subcategory.toString().slice(1)}</div>
+        <div className="text-2xl pb-3 pl-1">{
+          sub_subcategory !== product.handle ?
+          sub_subcategory.toString().charAt(0).toUpperCase() + sub_subcategory.toString().slice(1)
+          : null
+        }</div>
         <div className="flex flow-row text-sm pb-7 pl-1">
           <div>
             <Link href={`/${category}`}>

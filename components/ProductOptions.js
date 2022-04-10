@@ -35,14 +35,14 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                   const id = `option-${name}-${value}`
                   const checked = selectedOptions[name] === value
                 return (
-                <label key={id} htmlFor={id} onClick={() => {setOptions(name, value); console.log('clicked')}}>
+                <label key={id} htmlFor={id} onClick={() => {setOptions(name, value)}}>
                 <Listbox.Option
                   id={id}
                   name={`option-${name}`}
                   checked={checked}
                   value={value}
                   className={({ active }) =>
-                    `cursor-pointer select-none relative py-2 pl-10 pr-4 ${
+                    `border-b border-gray-100  cursor-pointer select-none relative py-2 pl-10 pr-4 ${
                       active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'
                     }`
                   }

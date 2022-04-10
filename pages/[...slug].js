@@ -21,22 +21,22 @@ export default function Slug({ product, category, subcategory, sub_subcategory, 
       <div className="md:min-h-screen md:py-12 md:pt-5">
         {
           product.length != 0 ?
-            <ProductPageContent product={product} /> :
+          <ProductPageContent product={product} /> :
           null
         }
         {
           asPath === '/' + category[0] ? 
-          <CategoryList productsByCollection={productsByCollection} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
+          <CategoryList productsByCollection={productsByCollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
           null
         }
         {
           asPath === '/' + category[0] + '/' + category[1] ? 
-          <SubcategoryList productsBySubcollection={productsBySubcollection} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
+          <SubcategoryList productsBySubcollection={productsBySubcollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
           null
         }
         {
           asPath === '/' + category[0] + '/' + category[1] + '/' + category[2] ? 
-          <Sub_SubcategoryList productsBySub_Subcollection={productsBySub_Subcollection} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
+          <Sub_SubcategoryList productsBySub_Subcollection={productsBySub_Subcollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
           null
         }  
       </div>

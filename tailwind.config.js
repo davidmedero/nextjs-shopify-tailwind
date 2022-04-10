@@ -13,7 +13,8 @@ module.exports = {
     },
   },
   variants: {
-    borderRadius: ['first', 'last']
+    borderRadius: ['responsive', 'first', 'last'],
+    borderWidth: ['responsive', 'first', 'last']
   },
   plugins: [],
 }
