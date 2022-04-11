@@ -60,7 +60,8 @@ export default function Nav() {
                             findCategory(e);
                             getCategoryHandle(e);
                             }}
-                            onMouseLeave={() => setShowSubMenu(false)}>
+                            onMouseLeave={() => setShowSubMenu(false)}
+                            onClick ={() => setShowSubMenu(false)}>
                             {collection.title}
                         </a>
                     </Link>
@@ -88,7 +89,7 @@ export default function Nav() {
               {
             <div className="flex justify-center bg-white">
               {subcategories[categoryIndex].map(subcategory => (
-                <div className="">
+                <div onClick ={() => setShowSubMenu(false)}>
                     <Link href={'/' + categoryHandle + '/' + subcategory.handle}>
                         <div className="relative right-5">
                             <a className='font-semibold flex p-6 cursor-pointer hover:bg-pink-100'>
