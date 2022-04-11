@@ -206,6 +206,7 @@ export default function ProductForm({ product }) {
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
       </div>
       <Script
+        id="show-product-details"
         dangerouslySetInnerHTML={{
         __html: `
         for (let button of document.querySelectorAll(".selectSection button")) {
@@ -214,9 +215,6 @@ export default function ProductForm({ product }) {
 
         for (let content of allContent) {
             allContent[0].classList.add('toggled');
-            if (content.getAttribute('data-number') !== button.getAttribute('data-number')) {
-                content.classList.remove('toggled');
-            }
         }
 
         let chevrons = document.querySelectorAll(".chevron");
@@ -224,17 +222,11 @@ export default function ProductForm({ product }) {
 
         for (let minus of minuses) {
             minuses[0].classList.add('toggled');
-            if (minus.getAttribute('data-number') !== button.getAttribute('data-number')) {
-                minus.classList.remove('toggled');
-            }
         }
 
         for (let chevron of chevrons) {
             chevrons[1].classList.add('toggled');
             chevrons[2].classList.add('toggled');
-            if (chevron.getAttribute('data-number') !== button.getAttribute('data-number')) {
-                chevron.classList.remove('toggled');
-            }
         }
 
         button.addEventListener('click', (e) => {
