@@ -4,7 +4,7 @@ import ProductOptions from "./ProductOptions"
 import { CartContext } from '../context/shopContext'
 import useSWR from "swr"
 import axios from "axios"
-import Script from 'next/script'
+import Head from 'next/head'
 
 
 const fetcher = (url, id) => (
@@ -158,6 +158,70 @@ export default function ProductForm({ product }) {
 
   return (
     <div className="rounded-2xl p-4 relative -top-4 md:top-0 shadow-lg flex flex-col w-11/12 md:w-[390px]">
+        <Head>
+            <script type='text/javascript' id={product.id}>
+                {
+                    `for (let button of document.querySelectorAll(".selectSection button")) {
+
+                        let allContent = document.querySelectorAll('.content');
+                
+                        for (let content of allContent) {
+                            allContent[0].classList.add('toggled');
+                        }
+                
+                        let chevrons = document.querySelectorAll(".chevron");
+                        let minuses = document.querySelectorAll(".minus");
+                
+                        for (let minus of minuses) {
+                            minuses[0].classList.add('toggled');
+                        }
+                
+                        for (let chevron of chevrons) {
+                            chevrons[1].classList.add('toggled');
+                            chevrons[2].classList.add('toggled');
+                        }
+                
+                        button.addEventListener('click', (e) => {
+                
+                            let chevrons = document.querySelectorAll(".chevron");
+                            let minuses = document.querySelectorAll(".minus");
+                
+                            for (let chevron of chevrons) {
+                                if (chevron.getAttribute('data-number') === button.getAttribute('data-number')) {
+                                    chevron.classList.toggle('toggled');
+                                    }
+                
+                                else if (chevron.getAttribute('data-number') !== button.getAttribute('data-number')) {
+                                    chevron.classList.add('toggled');
+                                }
+                            }
+                
+                            for (let minus of minuses) {
+                                if (minus.getAttribute('data-number') === button.getAttribute('data-number')) {
+                                    minus.classList.toggle('toggled');
+                                }
+                        
+                                else if (minus.getAttribute('data-number') !== button.getAttribute('data-number')) {
+                                    minus.classList.remove('toggled');
+                                }
+                            }
+                            
+                            let allContent = document.querySelectorAll('.content');
+                
+                            for (let content of allContent) {
+                                if (content.getAttribute('data-number') === button.getAttribute('data-number')) {
+                                    content.classList.toggle('toggled');
+                                }
+                
+                                else if (content.getAttribute('data-number') !== button.getAttribute('data-number')) {
+                                    content.classList.remove('toggled');
+                                }
+                            }
+                        });
+                        }
+                `}
+            </script>
+        </Head>
       <h2 className="text-2xl font-bold">{product.title}</h2>
       <span className="pb-3 text-xl">{formatter.format(product.variants.edges[0].node.priceV2.amount)}</span>
       {
@@ -205,72 +269,6 @@ export default function ProductForm({ product }) {
     <div className="mt-6">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
       </div>
-      <Script
-        id={product.id}
-        dangerouslySetInnerHTML={{
-        __html: `
-        for (let button of document.querySelectorAll(".selectSection button")) {
-
-        let allContent = document.querySelectorAll('.content');
-
-        for (let content of allContent) {
-            allContent[0].classList.add('toggled');
-        }
-
-        let chevrons = document.querySelectorAll(".chevron");
-        let minuses = document.querySelectorAll(".minus");
-
-        for (let minus of minuses) {
-            minuses[0].classList.add('toggled');
-        }
-
-        for (let chevron of chevrons) {
-            chevrons[1].classList.add('toggled');
-            chevrons[2].classList.add('toggled');
-        }
-
-        button.addEventListener('click', (e) => {
-
-            let chevrons = document.querySelectorAll(".chevron");
-            let minuses = document.querySelectorAll(".minus");
-
-            for (let chevron of chevrons) {
-                if (chevron.getAttribute('data-number') === button.getAttribute('data-number')) {
-                    chevron.classList.toggle('toggled');
-                    }
-
-                else if (chevron.getAttribute('data-number') !== button.getAttribute('data-number')) {
-                    chevron.classList.add('toggled');
-                }
-            }
-
-            for (let minus of minuses) {
-                if (minus.getAttribute('data-number') === button.getAttribute('data-number')) {
-                    minus.classList.toggle('toggled');
-                }
-        
-                else if (minus.getAttribute('data-number') !== button.getAttribute('data-number')) {
-                    minus.classList.remove('toggled');
-                }
-            }
-            
-            let allContent = document.querySelectorAll('.content');
-
-            for (let content of allContent) {
-                if (content.getAttribute('data-number') === button.getAttribute('data-number')) {
-                    content.classList.toggle('toggled');
-                }
-
-                else if (content.getAttribute('data-number') !== button.getAttribute('data-number')) {
-                    content.classList.remove('toggled');
-                }
-            }
-        });
-        }
-        `
-        }}
-      />
-      
     </div>
   )
 }
