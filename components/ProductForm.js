@@ -206,7 +206,7 @@ export default function ProductForm({ product }) {
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
       </div>
       <Script
-        id="show-product-details"
+        id={product.id}
         dangerouslySetInnerHTML={{
         __html: `
         for (let button of document.querySelectorAll(".selectSection button")) {
