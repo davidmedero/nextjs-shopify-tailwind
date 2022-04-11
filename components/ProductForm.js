@@ -210,64 +210,68 @@ export default function ProductForm({ product }) {
         __html: `
         for (let button of document.querySelectorAll(".selectSection button")) {
 
+        let allContent = document.querySelectorAll('.content');
+
+        for (let content of allContent) {
+            allContent[0].classList.add('toggled');
+            if (content.getAttribute('data-number') !== button.getAttribute('data-number')) {
+                content.classList.remove('toggled');
+            }
+        }
+
+        let chevrons = document.querySelectorAll(".chevron");
+        let minuses = document.querySelectorAll(".minus");
+
+        for (let minus of minuses) {
+            minuses[0].classList.add('toggled');
+            if (minus.getAttribute('data-number') !== button.getAttribute('data-number')) {
+                minus.classList.remove('toggled');
+            }
+        }
+
+        for (let chevron of chevrons) {
+            chevrons[1].classList.add('toggled');
+            chevrons[2].classList.add('toggled');
+            if (chevron.getAttribute('data-number') !== button.getAttribute('data-number')) {
+                chevron.classList.remove('toggled');
+            }
+        }
+
         button.addEventListener('click', (e) => {
 
-            const et = e.target;
-
-            const active = document.querySelector(".active");
-            const inactive = document.querySelector(".inactive");
-            const first_active = document.querySelector(".first_active");
             let chevrons = document.querySelectorAll(".chevron");
             let minuses = document.querySelectorAll(".minus");
 
-            if (active) {
-            active.classList.remove("active");
-            }
-
-            if (first_active) {
-                first_active.classList.remove("first_active");
-            }
-
-            if (inactive) {
-            inactive.classList.remove("inactive");
-            }
-
-            et.classList.add("active");
-            et.classList.add("first_active");
-
             for (let chevron of chevrons) {
-                if(chevron.getAttribute('data-number') === button.getAttribute('data-number')) {
-                    chevron.style.display = "none";
+                if (chevron.getAttribute('data-number') === button.getAttribute('data-number')) {
+                    chevron.classList.toggle('toggled');
                     }
 
-                else {
-                    chevron.style.display = "block";
+                else if (chevron.getAttribute('data-number') !== button.getAttribute('data-number')) {
+                    chevron.classList.add('toggled');
                 }
             }
 
             for (let minus of minuses) {
-                if(minus.getAttribute('data-number') === button.getAttribute('data-number')) {
-                    minus.style.display = "block";
+                if (minus.getAttribute('data-number') === button.getAttribute('data-number')) {
+                    minus.classList.toggle('toggled');
                 }
         
-                else {
-                    minus.style.display = "none";
+                else if (minus.getAttribute('data-number') !== button.getAttribute('data-number')) {
+                    minus.classList.remove('toggled');
                 }
             }
             
-
             let allContent = document.querySelectorAll('.content');
 
-
             for (let content of allContent) {
+                if (content.getAttribute('data-number') === button.getAttribute('data-number')) {
+                    content.classList.toggle('toggled');
+                }
 
-            if(content.getAttribute('data-number') === button.getAttribute('data-number')) {
-                content.style.display = "block";
-            }
-
-            else {
-                content.style.display = "none";
-            }
+                else if (content.getAttribute('data-number') !== button.getAttribute('data-number')) {
+                    content.classList.remove('toggled');
+                }
             }
         });
         }
