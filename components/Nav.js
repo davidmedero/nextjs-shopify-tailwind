@@ -5,7 +5,7 @@ import Cart from './Cart'
 import SignInButton from './SignInButton'
 import collections from '../categories'
 import MobileMenuButton from './MobileMenuButton'
-import {SlideDown} from 'react-slidedown'
+import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 
 
@@ -52,7 +52,21 @@ export default function Nav() {
             <div className="relative xxs:hidden md:!block">
             {
                 collections.map(collection => (
-                    <Link href={'/' + collection.handle} >
+                    collection.handle == "shop" ?
+                    (<Link href={'/shop-brands'} >
+                    <a className="p-6 hover:bg-pink-100"
+                    data-info={JSON.stringify(collection)}
+                    onMouseEnter={(e) => {
+                        setShowSubMenu(true);
+                        findCategory(e);
+                        getCategoryHandle(e);
+                        }}
+                        onMouseLeave={() => setShowSubMenu(false)}
+                        onClick ={() => setShowSubMenu(false)}>
+                        {collection.title}
+                    </a>
+                    </Link>) :
+                    (<Link href={'/' + collection.handle} >
                         <a className="p-6 hover:bg-pink-100"
                         data-info={JSON.stringify(collection)}
                         onMouseEnter={(e) => {
@@ -64,7 +78,7 @@ export default function Nav() {
                             onClick ={() => setShowSubMenu(false)}>
                             {collection.title}
                         </a>
-                    </Link>
+                    </Link>)
                 ))
             }
             </div>

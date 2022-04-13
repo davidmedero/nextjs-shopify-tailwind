@@ -103,7 +103,7 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                               {
                                   !subcategory.sub_subcollections ? 
                                   (
-                                    <Link href={'/' + categoryHandle + '/' + subcategory.handle}>
+                                    <Link href={'/' + ('shop-brands' ? 'shop' : categoryHandle) + '/' + subcategory.handle}>
                                       <a className="">
                                         <div
                                         onClick={() => {

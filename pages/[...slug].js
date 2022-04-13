@@ -1,15 +1,15 @@
-import Link from "next/link"
-import Nav from '../components/Nav'
-import { getAllProducts, getProduct, getAllCollections, getProductsbyCollection } from "../lib/shopify"
+import { getAllProducts, getProduct, getProductsbyCollection } from "../lib/shopify"
 import ProductPageContent from "../components/ProductPageContent"
 import CategoryList from "../components/CategoryList"
 import SubcategoryList from "../components/SubcategoryList"
 import Sub_SubcategoryList from "../components/Sub_SubcategoryList"
+import BrandList from "../components/BrandList"
 import { useRouter } from 'next/router'
 import collections from '../categories'
+import brands from '../brands'
 
 
-export default function Slug({ product, category, subcategory, sub_subcategory, productsByCollection, productsBySubcollection, productsBySub_Subcollection }) {
+export default function Slug({ product, category, productsByCollection, productsBySubcollection, productsBySub_Subcollection, productsByBrand }) {
 
   const router = useRouter()
   
@@ -30,7 +30,8 @@ export default function Slug({ product, category, subcategory, sub_subcategory, 
           null
         }
         {
-          asPath === '/' + category[0] + '/' + category[1] ? 
+          asPath === '/' + category[0] + '/' + category[1] &&
+          asPath !== '/shop/' + category[1] ? 
           <SubcategoryList productsBySubcollection={productsBySubcollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
           null
         }
@@ -38,7 +39,12 @@ export default function Slug({ product, category, subcategory, sub_subcategory, 
           asPath === '/' + category[0] + '/' + category[1] + '/' + category[2] ? 
           <Sub_SubcategoryList productsBySub_Subcollection={productsBySub_Subcollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
           null
-        }  
+        }
+        {
+          asPath === '/shop/' + category[1] ? 
+          <BrandList productsByBrand={productsByBrand} product={product} brand={category[1]} /> :
+          null
+        }
       </div>
     </main>
   </>
@@ -84,13 +90,24 @@ export async function getStaticPaths() {
       params: { slug: [product] }
     }
   })
+  const brandPaths = []
+  for (let shop of brands) {
+    for (let brand of shop.subcollections) {
+      brandPaths.push({
+        params: {
+          slug: [shop.handle, brand.handle]
+        }
+      })
+    }
+  }
 
     return {
       paths: [
         ...categoryPaths,
         ...subcategoryPaths,
         ...sub_SubcategoryPaths,
-        ...productPaths
+        ...productPaths,
+        ...brandPaths,
       ],
       fallback: false
     }
@@ -101,13 +118,15 @@ export async function getStaticProps({ params }) {
   const productsByCollection = await getProductsbyCollection(params.slug[0])
   const productsBySubcollection = await getProductsbyCollection(params.slug[1])
   const productsBySub_Subcollection = await getProductsbyCollection(params.slug[2])
+  const productsByBrand = await getProductsbyCollection(params.slug[1]);
     return {
         props: {
           category: params.slug || null,
           product,
           productsByCollection,
           productsBySubcollection,
-          productsBySub_Subcollection
+          productsBySub_Subcollection,
+          productsByBrand
         }
       }
 }
