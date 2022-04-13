@@ -103,14 +103,23 @@ export default function Nav() {
               {
             <div className="flex justify-center bg-white">
               {subcategories[categoryIndex].map(subcategory => (
-                <div onClick ={() => setShowSubMenu(false)}>
-                    <Link href={'/' + categoryHandle + '/' + subcategory.handle}>
+                <div onClick={() => setShowSubMenu(false)}>
+                    {
+                    subcategory.handle === "" ? (
+                        <div className="relative right-5">
+                        <div className='font-semibold flex p-6 pointer-events-none hover:bg-pink-100'>
+                            {subcategory.title}
+                        </div>
+                        </div>
+                    ) : 
+                    (<Link href={'/' + categoryHandle + '/' + subcategory.handle}>
                         <div className="relative right-5">
                             <a className='font-semibold flex p-6 cursor-pointer hover:bg-pink-100'>
                                 {subcategory.title}
                             </a>
                         </div>
-                    </Link>
+                    </Link>)
+                    }
                   {subcategory.sub_subcollections?.map(sub_subcategory => (
                     <Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
                         <div className="relative right-5">

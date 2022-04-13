@@ -12,6 +12,18 @@ const BrandList = ({ productsByBrand, brand, product }) => {
           : null
         }</div>
         <div className="flex flow-row text-sm pb-7 pl-1">
+        <div>
+            <Link href={'/'}>
+              <a className="hover:underline text-[#8d8d8d] font-semibold">
+                Home
+              </a>
+            </Link>
+          </div>
+          &nbsp;
+            {
+              ' ' + '/' + ' '
+            }
+          &nbsp;
           <div>
             <Link href={`/shop-brands`}>
               <a className="hover:underline text-[#8d8d8d] font-semibold">

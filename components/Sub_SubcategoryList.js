@@ -12,6 +12,18 @@ const Sub_SubcategoryList = ({ productsBySub_Subcollection, category, subcategor
           : null
         }</div>
         <div className="flex flow-row text-sm pb-7 pl-1">
+        <div>
+            <Link href={'/'}>
+              <a className="hover:underline text-[#8d8d8d] font-semibold">
+                Home
+              </a>
+            </Link>
+          </div>
+          &nbsp;
+            {
+              ' ' + '/' + ' '
+            }
+          &nbsp;
           <div>
             <Link href={`/${category}`}>
               <a className="hover:underline text-[#8d8d8d] font-semibold">
@@ -19,21 +31,23 @@ const Sub_SubcategoryList = ({ productsBySub_Subcollection, category, subcategor
               </a>
             </Link>
           </div>
-          &nbsp;
           <div>
+          &nbsp;
             {
               ' ' + '/' + ' '
             }
+            &nbsp;
             <Link href={`/${category}/${subcategory}`}>
               <a className="hover:underline text-[#8d8d8d] font-semibold">
                 {subcategory.toString().charAt(0).toUpperCase() + subcategory.toString().slice(1)}
               </a>
             </Link>
+            &nbsp;
             {
               ' ' + '/' + ' '
             }
+            &nbsp;
           </div>
-          &nbsp;
           <div className="font-semibold">
                 {sub_subcategory.toString().charAt(0).toUpperCase() + sub_subcategory.toString().slice(1)}
           </div>

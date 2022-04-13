@@ -12,6 +12,18 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
           : null
         }</div>
         <div className="flex flow-row text-sm pb-7 pl-1">
+        <div>
+            <Link href={'/'}>
+              <a className="hover:underline text-[#8d8d8d] font-semibold">
+                Home
+              </a>
+            </Link>
+          </div>
+          &nbsp;
+            {
+              ' ' + '/' + ' '
+            }
+          &nbsp;
           <div>
             <Link href={`/${category}`}>
               <a className="hover:underline text-[#8d8d8d] font-semibold">
