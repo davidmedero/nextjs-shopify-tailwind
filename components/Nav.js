@@ -121,13 +121,22 @@ export default function Nav() {
                     </Link>)
                     }
                   {subcategory.sub_subcollections?.map(sub_subcategory => (
-                    <Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
+                      subcategory.handle === "" ? (
+                        <Link href={'/' + categoryHandle + '/' + sub_subcategory.handle}>
                         <div className="relative right-5">
                           <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100'>
                             {sub_subcategory.title}
                           </a>
                        </div>
-                    </Link>
+                    </Link> 
+                      ) :
+                    (<Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
+                        <div className="relative right-5">
+                          <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100'>
+                            {sub_subcategory.title}
+                          </a>
+                       </div>
+                    </Link>)
                   ))}
                 </div>
               ))}
