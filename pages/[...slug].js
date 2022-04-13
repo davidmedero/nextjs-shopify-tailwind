@@ -73,11 +73,13 @@ export async function getStaticPaths() {
     for (let subcategory of category.subcollections) {
       if (subcategory.sub_subcollections) {
         for (let sub_subcategory of subcategory.sub_subcollections) {
-          sub_SubcategoryPaths.push({
-            params: {
-              slug: [category.handle, subcategory.handle, sub_subcategory.handle]
-            }
-          })
+          if (subcategory.handle !== "") {
+            sub_SubcategoryPaths.push({
+              params: {
+                slug: [category.handle, subcategory.handle, sub_subcategory.handle]
+              }
+            })
+          }
         }
       }
     }
