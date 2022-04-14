@@ -101,9 +101,9 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                           onClick={() => toggleSub_Subcategories(subcategory.id)}
                           className="border-b pl-3 hover:bg-pink-100 cursor-pointer">
                               {
-                                  !subcategory.sub_subcollections ? 
+                                  !subcategory.sub_subcollections && subcategory.handle !== "" ? 
                                   (
-                                    <Link href={'/' + ('shop-brands' ? 'shop' : categoryHandle) + '/' + subcategory.handle}>
+                                    <Link href={'/' + categoryHandle + '/' + subcategory.handle}>
                                       <a className="">
                                         <div
                                         onClick={() => {
