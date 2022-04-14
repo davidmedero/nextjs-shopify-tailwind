@@ -76,14 +76,14 @@ export default function ProductForm({ product }) {
     }
 
     const increment = () => {
-        counter += 1
+        counter < 9 ? counter += 1 : null
         setCounter(counter)
 
-        cart.map(item => {
-            if (item.id === selectedVariant.id) {
-                selectedVariant.newVariantQuantity += 1
+        cart.map(_ => {
+            if ((cart.includes(selectedVariant)) && counter < 9) {
+                selectedVariant.newVariantQuantity = counter
                 setCounter(selectedVariant.newVariantQuantity)
-            } else {
+            } else if ((!cart.includes(selectedVariant)) && counter < 9) {
                 selectedVariant.variantQuantity = counter
                 setCounter(selectedVariant.variantQuantity)
             }
@@ -95,14 +95,14 @@ export default function ProductForm({ product }) {
     }
 
     const decrement = () => {
-        counter > 1 ? counter -= 1 : setCounter(1)
+        counter > 1 ? counter -= 1 : null
         setCounter(counter)
 
-        cart.map(item => {
-            if (item.id === selectedVariant.id) {
-                selectedVariant.newVariantQuantity -= 1
+        cart.map(_ => {
+            if ((cart.includes(selectedVariant)) && counter > 1) {
+                selectedVariant.newVariantQuantity = counter
                 setCounter(selectedVariant.newVariantQuantity)
-            } else {
+            } else if ((!cart.includes(selectedVariant)) && counter > 1) {
                 selectedVariant.variantQuantity = counter
                 setCounter(selectedVariant.variantQuantity)
             }
@@ -117,11 +117,11 @@ export default function ProductForm({ product }) {
         counter = Number(e.target.value);
         setCounter(counter)
 
-        cart.map(item => {
-            if (item.id === selectedVariant.id) {
+        cart.map(_ => {
+            if (cart.includes(selectedVariant)) {
                 selectedVariant.newVariantQuantity = counter
                 setCounter(selectedVariant.newVariantQuantity)
-            } else {
+            } else if (!cart.includes(selectedVariant)) {
                 selectedVariant.variantQuantity = counter
                 setCounter(selectedVariant.variantQuantity)
             }
