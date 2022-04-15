@@ -276,7 +276,7 @@ export default function ProductForm({ product }) {
     {
     product.collections.edges.map(el => (
         categories.map(category => (
-            el.node.title === category.title ? (
+            el.node.id === category.id ? (
                 <span>
                     <Link href={`/${category.handle}`}>
                         <a>
@@ -286,7 +286,7 @@ export default function ProductForm({ product }) {
                     {' | '}
                 </span>
             ) : category.subcollections?.map(subcategory => (
-                el.node.title === subcategory.title ? (
+                el.node.id === subcategory.id ? (
                     <span>
                         <Link href={`/${category.handle}/${subcategory.handle}`}>
                             <a>
@@ -296,9 +296,19 @@ export default function ProductForm({ product }) {
                         {' | '}
                     </span>
                 ) : subcategory.sub_subcollections?.map(sub_subcategory => (
-                    el.node.title === sub_subcategory.title ? (
+                    el.node.id === sub_subcategory.id &&
+                    subcategory.handle !== "" ? (
                         <span>
                             <Link href={`/${category.handle}/${subcategory.handle}/${sub_subcategory.handle}`}>
+                                <a>
+                                    {el.node.title}
+                                </a>
+                            </Link>
+                        </span>
+                    ) : el.node.id === sub_subcategory.id && 
+                        subcategory.handle === "" ? (
+                        <span>
+                            <Link href={`/${category.handle}/${sub_subcategory.handle}`}>
                                 <a>
                                     {el.node.title}
                                 </a>
