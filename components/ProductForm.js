@@ -5,6 +5,8 @@ import { CartContext } from '../context/shopContext'
 import useSWR from "swr"
 import axios from "axios"
 import Head from 'next/head'
+import Link from "next/link"
+import collections from "../categories"
 
 
 const fetcher = (url, id) => (
@@ -16,6 +18,9 @@ const fetcher = (url, id) => (
 )
 
 export default function ProductForm({ product }) {
+
+    const categories = collections
+    console.log(categories)
 
     const { data: productInventory } = useSWR(
         ['/api/available', product.handle],
@@ -268,6 +273,42 @@ export default function ProductForm({ product }) {
       }
     <div className="mt-6">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
+    {
+    product.collections.edges.map(el => (
+        categories.map(category => (
+            el.node.title === category.title ? (
+                <span>
+                    <Link href={`/${category.handle}`}>
+                        <a>
+                            {el.node.title}
+                        </a>
+                    </Link>
+                    {' | '}
+                </span>
+            ) : category.subcollections?.map(subcategory => (
+                el.node.title === subcategory.title ? (
+                    <span>
+                        <Link href={`/${category.handle}/${subcategory.handle}`}>
+                            <a>
+                                {el.node.title}
+                            </a>
+                        </Link>
+                        {' | '}
+                    </span>
+                ) : subcategory.sub_subcollections?.map(sub_subcategory => (
+                    el.node.title === sub_subcategory.title ? (
+                        <span>
+                            <Link href={`/${category.handle}/${subcategory.handle}/${sub_subcategory.handle}`}>
+                                <a>
+                                    {el.node.title}
+                                </a>
+                            </Link>
+                        </span>
+                    ) : null))
+                ))
+            ))
+        ))
+    }
       </div>
     </div>
   )

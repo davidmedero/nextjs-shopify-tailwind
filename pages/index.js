@@ -31,6 +31,6 @@ export async function getStaticProps() {
   const products = await getProductsInHomePage()
 
   return {
-    props: { products },
+    props: { products }
   }
 }

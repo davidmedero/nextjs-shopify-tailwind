@@ -2,7 +2,6 @@ import { useRef, Fragment, useState } from "react"
 import { Dialog, Transition } from '@headlessui/react'
 import { useSwipeable } from 'react-swipeable'
 import { XIcon } from '@heroicons/react/outline'
-import collections from '../categories'
 import Link from 'next/link'
 import {SlideDown} from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
