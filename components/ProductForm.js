@@ -160,7 +160,7 @@ export default function ProductForm({ product }) {
         }
     }, [productInventory, selectedVariant])
 
-    let tracker = []
+
   return (
     <div className="rounded-2xl p-4 relative -top-4 md:top-0 shadow-lg flex flex-col w-11/12 md:w-[390px]">
         <Head>
@@ -283,25 +283,22 @@ export default function ProductForm({ product }) {
                             {el.node.title}
                         </a>
                     </Link>
-                    {tracker.push(el.node.title)}
-                    {tracker.length > 1 ? ' | ' : null}
-                    {console.log(product.collections.edges.map(el => el))}
                 </span>
             ) : category.subcollections?.map(subcategory => (
                 el.node.id === subcategory.id ? (
                     <span>
+                        {' | '}
                         <Link href={`/${category.handle}/${subcategory.handle}`}>
                             <a>
                                 {el.node.title}
                             </a>
                         </Link>
-                        {tracker.push(el.node.title)}
-                        {tracker.length > 2 ? ' | ' : null}
                     </span>
                 ) : subcategory.sub_subcollections?.map(sub_subcategory => (
                     el.node.id === sub_subcategory.id &&
                     subcategory.handle !== "" ? (
                         <span>
+                            {' | '}
                             <Link href={`/${category.handle}/${subcategory.handle}/${sub_subcategory.handle}`}>
                                 <a>
                                     {el.node.title}
@@ -311,6 +308,7 @@ export default function ProductForm({ product }) {
                     ) : el.node.id === sub_subcategory.id && 
                         subcategory.handle === "" ? (
                         <span>
+                            {' | '}
                             <Link href={`/${category.handle}/${sub_subcategory.handle}`}>
                                 <a>
                                     {el.node.title}
