@@ -30,6 +30,12 @@ export default function ProductForm({ product }) {
 
     const [available, setAvailable] = useState(true)
 
+    const [showViewMore, setShowViewMore] = useState({})
+
+    const toggleViewMore = () => {
+        setShowViewMore(checked => !checked)
+    }
+
     const { cart, addToCart } = useContext(CartContext)
 
     const allVariantOptions = product.variants.edges?.map(variant => {
@@ -273,11 +279,23 @@ export default function ProductForm({ product }) {
       }
     <div className="mt-6">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
+    <div 
+    onClick={() => toggleViewMore()}
+    className="flex items-center h-[56px] font-[700] cursor-pointer select-none">
     {
+    !showViewMore ? 
+    (<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-[12px]" data-number="2" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>) :
+    (<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-[12px]" data-number="2" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path></svg>)
+    }
+        View More
+        </div>
+    <div className="ml-[36px] leading-[18px] mb-[30px] text-[14px] relative top-[-1px]">
+    {
+        showViewMore ? (
     product.collections.edges.map(el => (
         categories.map(category => (
             el.node.id === category.id ? (
-                <span>
+                <span className="hover:underline hover:decoration-pink-500 hover:text-pink-500">
                     <Link href={`/${category.handle}`}>
                         <a>
                             {el.node.title}
@@ -286,40 +304,44 @@ export default function ProductForm({ product }) {
                 </span>
             ) : category.subcollections?.map(subcategory => (
                 el.node.id === subcategory.id ? (
-                    <span>
-                        {' | '}
-                        <Link href={`/${category.handle}/${subcategory.handle}`}>
-                            <a>
-                                {el.node.title}
-                            </a>
-                        </Link>
+                    <span>{' | '}
+                        <span className="hover:underline hover:decoration-pink-500 hover:text-pink-500">
+                            <Link href={`/${category.handle}/${subcategory.handle}`}>
+                                <a>
+                                    {el.node.title}
+                                </a>
+                            </Link>
+                        </span>
                     </span>
                 ) : subcategory.sub_subcollections?.map(sub_subcategory => (
                     el.node.id === sub_subcategory.id &&
                     subcategory.handle !== "" ? (
-                        <span>
-                            {' | '}
-                            <Link href={`/${category.handle}/${subcategory.handle}/${sub_subcategory.handle}`}>
-                                <a>
-                                    {el.node.title}
-                                </a>
-                            </Link>
+                        <span>{' | '}
+                            <span className="hover:underline hover:decoration-pink-500 hover:text-pink-500">
+                                <Link href={`/${category.handle}/${subcategory.handle}/${sub_subcategory.handle}`}>
+                                    <a>
+                                        {el.node.title}
+                                    </a>
+                                </Link>
+                            </span>
                         </span>
                     ) : el.node.id === sub_subcategory.id && 
                         subcategory.handle === "" ? (
-                        <span>
-                            {' | '}
-                            <Link href={`/${category.handle}/${sub_subcategory.handle}`}>
-                                <a>
-                                    {el.node.title}
-                                </a>
-                            </Link>
+                        <span>{' | '}
+                            <span className="hover:underline hover:decoration-pink-500 hover:text-pink-500">
+                                <Link href={`/${category.handle}/${sub_subcategory.handle}`}>
+                                    <a>
+                                        {el.node.title}
+                                    </a>
+                                </Link>
+                            </span>
                         </span>
                     ) : null))
                 ))
             ))
-        ))
+        ))) : null
     }
+    </div>
       </div>
     </div>
   )
