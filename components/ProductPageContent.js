@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Navigation, Pagination } from 'swiper'
 import RecommendedList from './RecommendedList'
 import { useState } from 'react'
+import Zoom from 'react-img-zoom'
 
 
 export default function ProductPageContent({ product }) {
@@ -26,7 +27,7 @@ export default function ProductPageContent({ product }) {
     setImageIndex(product.images.edges.findIndex(el => el.node.id === JSON.parse(e.target.dataset.info).id))
   }
 
-  // const [showImage, setShowImage] = useState(true)
+  const [show, setShow] = useState(false)
 
 
   return (
@@ -41,10 +42,10 @@ export default function ProductPageContent({ product }) {
                 src={image.node.originalSrc} 
                 atl={image.node.altText} 
                 data-info={JSON.stringify(image.node)}
-                className="rounded-2xl"
                 onMouseEnter={(e) => {
                   findImage(e);
-                }} 
+                }}
+                className="rounded-2xl"
                 width='100' height='100' layout="responsive" objectFit="cover" />
               </div>
             ))
@@ -53,7 +54,34 @@ export default function ProductPageContent({ product }) {
           <div className="xxs:hidden lg:block w-[40%]">
             {
               [product.images.edges[imageIndex]].map(image => (
-                <Image src={image.node.originalSrc} atl={image.node.altText} className="rounded-2xl" width='500' height='500' layout="responsive" objectFit="cover" />
+                <div>
+                  {
+                    !show && (
+                      <Image 
+                  src={image.node.originalSrc} 
+                  atl={image.node.altText}
+                  onMouseEnter={() => {
+                    setShow(true);
+                  }} 
+                  className="rounded-2xl" 
+                  width='500' height='500' layout="responsive" objectFit="cover" />
+                    ) 
+                  }
+                  {
+                    show && (
+                      <div onMouseLeave={() => {
+                          setShow(false);
+                          }} 
+                      className="rounded-2xl overflow-hidden" >
+                        <Zoom img={image.node.originalSrc}
+                        zoomScale={3}
+                        width={450}
+                        height={450}
+                        transitionTime={0.3}/>
+                      </div>
+                      )
+                  }
+                  </div>
               ))
             }
           </div>
