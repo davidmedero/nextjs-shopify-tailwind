@@ -28,6 +28,12 @@ export default function ProductPageContent({ product }) {
     setImageIndex(product.images.edges.findIndex(el => el.node.id === JSON.parse(e.target.dataset.info).id))
   }
 
+  const imgDelay = () => {
+    setTimeout(() => {
+      setShow(false)
+    }, 300)
+  }
+
   const [show, setShow] = useState(false)
 
 
@@ -61,7 +67,7 @@ export default function ProductPageContent({ product }) {
                       <Image 
                   src={image.node.originalSrc} 
                   atl={image.node.altText}
-                  onMouseEnter={() => {
+                  onMouseOver={() => {
                     setShow(true);
                   }} 
                   className="rounded-2xl" 
@@ -71,7 +77,7 @@ export default function ProductPageContent({ product }) {
                   {
                     show && (
                       <div onMouseLeave={() => {
-                          setShow(false);
+                          imgDelay();
                           }} 
                       className="rounded-2xl overflow-hidden" >
                         <LazyLoad height={450} overflow={true} offset={100}>
