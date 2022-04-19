@@ -5,7 +5,6 @@ import SwiperCore, { Navigation, Pagination } from 'swiper'
 import RecommendedList from './RecommendedList'
 import { useState } from 'react'
 import Zoom from 'react-img-zoom'
-import LazyLoad from 'react-lazyload'
 
 
 export default function ProductPageContent({ product }) {
@@ -80,13 +79,11 @@ export default function ProductPageContent({ product }) {
                           imgDelay();
                           }} 
                       className="rounded-2xl overflow-hidden" >
-                        <LazyLoad height={450} overflow={true} offset={100}>
                           <Zoom img={image.node.originalSrc}
                           zoomScale={3}
                           width={450}
                           height={450}
                           transitionTime={0.3}/>
-                        </LazyLoad>
                       </div>
                       )
                   }

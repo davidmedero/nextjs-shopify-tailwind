@@ -274,9 +274,9 @@ export default function ProductForm({ product }) {
       }
     <div className="mt-6">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
-    <div class="selectSection">
-    <button className="select-none -mt-[11px]" data-number="4" type="button"> <svg xmlns="http://www.w3.org/2000/svg" class="chevron" data-number="4" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path> </svg> <svg xmlns="http://www.w3.org/2000/svg" class="minus" data-number="4" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path> </svg> View More </button>
-    <div data-number="4" class="content ml-[35px] mb-[16px]">
+    <div className="selectSection">
+    <button className="select-none -mt-[11px]" data-number="4" type="button"> <svg xmlns="http://www.w3.org/2000/svg" className="chevron" data-number="4" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path> </svg> <svg xmlns="http://www.w3.org/2000/svg" className="minus" data-number="4" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path> </svg> View More </button>
+    <div data-number="4" className="content ml-[35px] mb-[16px]">
     {
     product.collections.edges.map(el => (
         categories.map(category => (

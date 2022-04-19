@@ -26,8 +26,8 @@ export default function SignIn({ csrfToken, onClose }) {
 
       return (
         <div>
-          <div class="px-6 space-y-6 lg:px-8 pb-8">
-      <h3 class="pb-7 pt-3 text-xl font-bold text-gray-900 dark:text-white text-center">Logo</h3>
+          <div className="px-6 space-y-6 lg:px-8 pb-8">
+      <h3 className="pb-7 pt-3 text-xl font-bold text-gray-900 dark:text-white text-center">Logo</h3>
       {tooltip.show && (
         <h3>Try signing in with Google instead</h3>
       )}
