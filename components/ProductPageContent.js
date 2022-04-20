@@ -3,8 +3,7 @@ import ProductForm from './ProductForm'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Navigation, Pagination } from 'swiper'
 import RecommendedList from './RecommendedList'
-import { useState } from 'react'
-import Zoom from 'react-img-zoom'
+import { useState, useEffect } from 'react'
 
 
 export default function ProductPageContent({ product }) {
@@ -23,23 +22,31 @@ export default function ProductPageContent({ product }) {
 
   const [imageIndex, setImageIndex] = useState(0)
 
+  const [mousePosition, setMousePosition] = useState({
+    backgroundImage: `url(${[product.images.edges[imageIndex]].map(image => image.node.originalSrc)})`,
+    backgroundPosition: '0% 0%'
+  })
+
   const findImage = (e) => {
     setImageIndex(product.images.edges.findIndex(el => el.node.id === JSON.parse(e.target.dataset.info).id))
   }
 
-  const imgDelay = () => {
-    setTimeout(() => {
-      setShow(false)
-    }, 300)
+  useEffect(() => {
+    const src = [product.images.edges[imageIndex]].map(image => image.node.originalSrc)
+    setMousePosition({ backgroundImage: `url(${src})` })
+  }, [imageIndex]); 
+
+  const handleMouseMove = (e) => {
+    const { left, top, width, height } = e.target.getBoundingClientRect()
+    const x = (e.pageX - left) / width * 100
+    const y = (e.pageY - top) / height * 100
+    setMousePosition({ ...mousePosition, backgroundPosition: `${x}% ${y}%` })
   }
-
-  const [show, setShow] = useState(false)
-
 
   return (
     <div>
       <div className="flex flex-col justify-center items-center md:px-6 space-y-8 md:flex-row md:items-start md:space-y-0 md:space-x-4 lg:space-x-8 md:max-w-6xl mx-auto">
-      <div className="xxs:hidden lg:block w-[10%]">
+      <div className="xxs:hidden lg:block w-[8.35%]">
         {
             product.images.edges.map(image => (
               <div
@@ -48,11 +55,8 @@ export default function ProductPageContent({ product }) {
                 src={image.node.originalSrc} 
                 atl={image.node.altText} 
                 data-info={JSON.stringify(image.node)}
-                onMouseEnter={(e) => {
-                  findImage(e);
-                }}
-                className="rounded-2xl"
-                width='100' height='100' layout="responsive" objectFit="cover" />
+                onMouseOver={(e) => findImage(e)}
+                width='200' height='300' layout="responsive" objectFit="cover" />
               </div>
             ))
           }
@@ -62,30 +66,15 @@ export default function ProductPageContent({ product }) {
               [product.images.edges[imageIndex]].map(image => (
                 <div>
                   {
-                    !show && (
+                    <figure 
+                    className="w-full block bg-no-repeat cursor-move"
+                    onMouseMove={(e) => handleMouseMove(e)} 
+                    style={mousePosition}>
                       <Image 
-                  src={image.node.originalSrc} 
-                  atl={image.node.altText}
-                  onMouseOver={() => {
-                    setShow(true);
-                  }} 
-                  className="rounded-2xl" 
-                  width='500' height='500' layout="responsive" objectFit="cover" />
-                    ) 
-                  }
-                  {
-                    show && (
-                      <div onMouseLeave={() => {
-                          imgDelay();
-                          }} 
-                      className="rounded-2xl overflow-hidden" >
-                          <Zoom img={image.node.originalSrc}
-                          zoomScale={3}
-                          width={450}
-                          height={450}
-                          transitionTime={0.3}/>
-                      </div>
-                      )
+                      className="opacity-100 hover:opacity-0 transition-all ease-in-out duration-500" 
+                      src={image.node.originalSrc} 
+                      width='600' height='850' layout="responsive" objectFit="cover" />
+                    </figure>
                   }
                   </div>
               ))
