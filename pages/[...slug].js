@@ -18,7 +18,7 @@ export default function Slug({ product, category, productsByCollection, products
   return (
   <>
     <main>
-      <div className="md:min-h-screen md:py-12 md:pt-5">
+      <div className="md:min-h-screen md:py-12 md:pt-0">
         {
           product.length != 0 ?
           <ProductPageContent product={product} /> :

@@ -13,7 +13,7 @@ export default function ProductPageContent({ product }) {
   product.images.edges.map((image, i) => {
     images.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={image.node.originalSrc} atl={image.node.altText} width='500' height='500' layout="responsive" objectFit="cover" />
+        <Image src={image.node.originalSrc} atl={image.node.altText} width='600' height='850' layout="responsive" objectFit="cover" />
       </SwiperSlide>
     )
   })
@@ -45,7 +45,7 @@ export default function ProductPageContent({ product }) {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center md:px-6 space-y-8 md:flex-row md:items-start md:space-y-0 md:space-x-4 lg:space-x-8 md:max-w-6xl mx-auto">
+      <div className="flex flex-col justify-center items-center md:pb-6 md:flex-row md:items-start lg:space-x-8 md:max-w-[1080px] mx-auto">
       <div className="xxs:hidden lg:block w-[8.35%]">
         {
             product.images.edges.map(image => (
@@ -80,12 +80,12 @@ export default function ProductPageContent({ product }) {
               ))
             }
           </div>
-        <div className="lg:hidden w-full md:max-w-md border bg-white md:rounded-2xl shadow-lg">
+        <div className="lg:hidden w-full flex justify-center md:mr-[calc(15%-100px)] md:max-w-[432px] bg-white">
             <Swiper
             style={{ '--swiper-navigation-color': '#000', '--swiper-pagination-color': '#000' }}
             navigation
             pagination={{ clickable: true }}
-            className="w-full md:rounded-2xl"
+            className="w-full"
             loop="true"
           >
             {images}
