@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
+
 
 export default function CurrencyConversion() {
+
+    const ref = useRef()
 
     const [currencyRates, setCurrencyRates] = useState(0)
 
@@ -18,26 +21,51 @@ export default function CurrencyConversion() {
         .then(data => setCurrencyRates(data.rates))
     }, [])
 
+    useEffect(() => {
+        function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+            setTimeout(() => {
+                setShowCurrencies(false)
+            }, 150)
+        }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
+
     const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
 
     const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
-
+    
 
     return (
       <div className="flex flex-col ml-4 cursor-pointer relative select-none">
-        <div onClick={() => toggleCurrencies()}>
+        <div ref={ref} onClick={() => toggleCurrencies()}>
             {currentCurrency}
         </div>
-            <div className="absolute top-8 bg-white border flex flex-col">
-                {
-                showCurrencies && (
-                    <div className="p-3">
-                        <div className="hover:bg-pink-100 whitespace-nowrap mb-2">United Kingdom</div>
-                        <div className="hover:bg-pink-100 whitespace-nowrap">European Union</div>
-                    </div>
-                )   
-                }
-            </div>
+            {
+            showCurrencies && (
+                <div className="p-3 border absolute top-8 bg-white flex flex-col right-[1px]">
+                    <div 
+                    onClick={() => {
+                        setCurrentCurrency('USD');
+                    }} 
+                    className="hover:bg-pink-100 whitespace-nowrap mb-2">United States</div>
+                    <div 
+                    onClick={() => {
+                        setCurrentCurrency('GBP');
+                    }} 
+                    className="hover:bg-pink-100 whitespace-nowrap mb-2">United Kingdom</div>
+                    <div 
+                    onClick={() => {
+                        setCurrentCurrency('EUR');
+                    }} 
+                    className="hover:bg-pink-100 whitespace-nowrap">European Union</div>
+                </div>
+            )   
+            }
       </div>
     )
 }
