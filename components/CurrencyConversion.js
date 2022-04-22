@@ -24,17 +24,17 @@ export default function CurrencyConversion() {
 
 
     return (
-      <div className="flex flex-col ml-4 cursor-pointer relative">
+      <div className="flex flex-col ml-4 cursor-pointer relative select-none">
         <div onClick={() => toggleCurrencies()}>
             {currentCurrency}
         </div>
-            <div className="absolute top-5 bg-white border">
+            <div className="absolute top-8 bg-white border flex flex-col">
                 {
                 showCurrencies && (
-                    <>
-                        <div>GBP</div>
-                        <div>EUR</div>
-                    </>
+                    <div className="p-3">
+                        <div className="hover:bg-pink-100 whitespace-nowrap mb-2">United Kingdom</div>
+                        <div className="hover:bg-pink-100 whitespace-nowrap">European Union</div>
+                    </div>
                 )   
                 }
             </div>
