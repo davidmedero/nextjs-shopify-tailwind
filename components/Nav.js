@@ -7,6 +7,7 @@ import collections from '../categories'
 import MobileMenuButton from './MobileMenuButton'
 import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
+import CurrencyConversion from './CurrencyConversion'
 
 
 export default function Nav() {
@@ -91,6 +92,7 @@ export default function Nav() {
                 Cart {cartQuantity > 0 ? '(' + cartQuantity + ')' : ''}
             </a>
             <Cart cart={cart} />
+            <CurrencyConversion />
             </div>
         </div>
         {
