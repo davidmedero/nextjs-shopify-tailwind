@@ -126,7 +126,7 @@ export default function Cart({ cart }) {
                                 <div>
                                   <div className="flex justify-between text-base font-medium text-gray-900">
                                     <h3>
-                                    <Link href={`/products/${product.handle}`} passHref>
+                                    <Link href={`/${product.handle}`} passHref>
                                       <a onClick={() => setCartOpen(false)}>{product.title}</a>
                                     </Link>
                                     </h3>
