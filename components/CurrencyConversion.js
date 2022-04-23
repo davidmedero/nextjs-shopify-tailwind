@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef } from "react"
+import { useLayoutEffect, useEffect, useState, useRef } from "react"
+import ProductCard from "./ProductCard"
 
 
-export default function CurrencyConversion() {
+export default function CurrencyConversion({ productsByCollection }) {
 
     const ref = useRef()
 
@@ -35,6 +36,18 @@ export default function CurrencyConversion() {
         };
     }, [ref]);
 
+    useLayoutEffect(() => {
+        if (window.localStorage.getItem('current_currency')) {
+            setCurrentCurrency(JSON.parse(window.localStorage.getItem('current_currency')))
+        } else {
+            window.localStorage.setItem('current_currency', JSON.stringify(currentCurrency))
+        }
+    }, [])
+
+    useEffect(() => {
+        window.localStorage.setItem('current_currency', JSON.stringify(currentCurrency))
+    }, [currentCurrency])
+
     const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
 
     const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
@@ -66,6 +79,13 @@ export default function CurrencyConversion() {
                 </div>
             )   
             }
+            <div className="hidden">
+            {
+                productsByCollection?.map(product => (
+                    <ProductCard key={product.node.id} product={product} currentCurrency={currentCurrency} />
+                ))
+              }
+            </div>
       </div>
     )
 }

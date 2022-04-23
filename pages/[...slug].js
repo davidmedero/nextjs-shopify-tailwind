@@ -4,6 +4,7 @@ import CategoryList from "../components/CategoryList"
 import SubcategoryList from "../components/SubcategoryList"
 import Sub_SubcategoryList from "../components/Sub_SubcategoryList"
 import BrandList from "../components/BrandList"
+import CurrencyConversion from '../components/CurrencyConversion'
 import { useRouter } from 'next/router'
 import collections from '../categories'
 import brands from '../brands'
@@ -19,6 +20,11 @@ export default function Slug({ product, category, productsByCollection, products
   <>
     <main>
       <div className="md:min-h-screen md:py-12 md:pt-0">
+        <div className="hidden">
+          {
+            <CurrencyConversion productsByCollection={productsByCollection} />
+          }
+        </div>
         {
           product.length != 0 ?
           <ProductPageContent product={product} /> :

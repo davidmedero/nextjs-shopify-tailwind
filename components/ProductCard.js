@@ -1,10 +1,10 @@
-import { useEffect, useState, useRef } from "react"
+import { useLayoutEffect, useEffect, useState, useRef } from "react"
 import Link from 'next/link'
 import Image from 'next/image'
-import { formatter } from "../utils/helpers"
+import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, currentCurrency }) => {
 
   const { handle, title } = product.node
 
@@ -12,16 +12,19 @@ const ProductCard = ({ product }) => {
 
   const price = product.node.priceRange.minVariantPrice.amount
 
-  //   useEffect(() => {
-  //     fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
-  //     .then(res => res.json())
-  //     .then(data => setCurrencyRates(data.rates))
-  // }, [])
+  const [currencyRates, setCurrencyRates] = useState(0)
 
-  // const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+  useEffect(() => {
+      fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+      .then(res => res.json())
+      .then(data => setCurrencyRates(data.rates))
+  }, [])
 
-  // const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+  const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
 
+  const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+
+  console.log(currentCurrency === undefined)
 
   return (
     <>
@@ -41,7 +44,11 @@ const ProductCard = ({ product }) => {
             </div>
         </div>
         <h3 className="mt-4 text-lg font-medium text-gray-900">{title}</h3>
-        <p className='mt-1 text-sm text-gray-700'>{formatter.format(price)}</p>
+        <p className='mt-1 text-sm text-gray-700'>
+          {
+          (currentCurrency == 'GBP') ? formatter.format(price) : null
+          }
+        </p>
       </a>
     </Link>
     </>
