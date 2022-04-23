@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 
 
-const ProductCard = ({ product, currentCurrency }) => {
+const ProductCard = ({ product }) => {
 
   const { handle, title } = product.node
 
@@ -13,6 +13,8 @@ const ProductCard = ({ product, currentCurrency }) => {
   const price = product.node.priceRange.minVariantPrice.amount
 
   const [currencyRates, setCurrencyRates] = useState(0)
+
+  const [currency, setCurrency] = useState('')
 
   useEffect(() => {
       fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
@@ -24,7 +26,13 @@ const ProductCard = ({ product, currentCurrency }) => {
 
   const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
 
-  console.log(currentCurrency === undefined)
+  useLayoutEffect(() => {
+    setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+    window.addEventListener('storage', () => {
+      setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+    })
+  }, [])
+
 
   return (
     <>
@@ -46,7 +54,10 @@ const ProductCard = ({ product, currentCurrency }) => {
         <h3 className="mt-4 text-lg font-medium text-gray-900">{title}</h3>
         <p className='mt-1 text-sm text-gray-700'>
           {
-          (currentCurrency == 'GBP') ? formatter.format(price) : null
+            currency === 'USD' ? formatter.format(price) :
+            currency === 'GBP' ? GBPFormatter.format(price * GBPcurrency) :
+            currency === 'EUR' ? EURFormatter.format(price * EURcurrency) :
+            null
           }
         </p>
       </a>

@@ -1,5 +1,5 @@
-import { useState, useContext, useEffect } from "react"
-import { formatter } from "../utils/helpers"
+import { useState, useContext, useEffect, useLayoutEffect } from "react"
+import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import ProductOptions from "./ProductOptions"
 import { CartContext } from '../context/shopContext'
 import useSWR from "swr"
@@ -159,6 +159,27 @@ export default function ProductForm({ product }) {
         }
     }, [productInventory, selectedVariant])
 
+    const [currencyRates, setCurrencyRates] = useState(0)
+
+    const [currency, setCurrency] = useState('')
+
+    useEffect(() => {
+        fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+        .then(res => res.json())
+        .then(data => setCurrencyRates(data.rates))
+    }, [])
+  
+    const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+  
+    const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+  
+    useLayoutEffect(() => {
+      setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+      window.addEventListener('storage', () => {
+        setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+      })
+    }, [])
+
 
   return (
     <div className="xxs:mt-4 md:!mt-0 py-4 pr-3 relative -top-4 md:top-0 flex flex-col w-11/12 md:w-[390px]">
@@ -229,7 +250,12 @@ export default function ProductForm({ product }) {
             </script>
         </Head>
       <h2 className="text-2xl font-bold">{product.title}</h2>
-      <span className="pb-3 text-xl">{formatter.format(product.variants.edges[0].node.priceV2.amount)}</span>
+      <span className="pb-3 text-xl">{
+      currency === 'USD' ? formatter.format(product.variants.edges[0].node.priceV2.amount) :
+      currency === 'GBP' ? GBPFormatter.format(product.variants.edges[0].node.priceV2.amount * GBPcurrency) :
+      currency === 'EUR' ? EURFormatter.format(product.variants.edges[0].node.priceV2.amount * EURcurrency) :
+      null
+      }</span>
       {
           product.options.map(({ name, values }) => (
               <ProductOptions 

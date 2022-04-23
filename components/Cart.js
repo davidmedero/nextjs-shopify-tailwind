@@ -1,10 +1,10 @@
-import { Fragment, useContext, useRef, useState } from 'react'
+import { Fragment, useContext, useRef, useState, useEffect, useLayoutEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CartContext } from '../context/shopContext'
-import { formatter } from '../utils/helpers'
+import { formatter, GBPFormatter, EURFormatter } from '../utils/helpers'
 import { useSwipeable } from 'react-swipeable';
 
 
@@ -55,6 +55,27 @@ export default function Cart({ cart }) {
     preventDefaultTouchmoveEvent: true,
     trackMouse: true
   });
+
+  const [currencyRates, setCurrencyRates] = useState(0)
+
+    const [currency, setCurrency] = useState('')
+
+    useEffect(() => {
+        fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+        .then(res => res.json())
+        .then(data => setCurrencyRates(data.rates))
+    }, [])
+  
+    const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+  
+    const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+  
+    useLayoutEffect(() => {
+      setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+      window.addEventListener('storage', () => {
+        setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+      })
+    }, [])
 
   return (
     <Transition.Root show={cartOpen} as={Fragment} {...handlers}>
@@ -130,7 +151,12 @@ export default function Cart({ cart }) {
                                       <a onClick={() => setCartOpen(false)}>{product.title}</a>
                                     </Link>
                                     </h3>
-                                    <p className="ml-4">{formatter.format(product.variantPrice)}</p>
+                                    <p className="ml-4">{
+                                      currency === 'USD' ? formatter.format(product.variantPrice) :
+                                      currency === 'GBP' ? GBPFormatter.format(product.variantPrice * GBPcurrency) :
+                                      currency === 'EUR' ? EURFormatter.format(product.variantPrice * EURcurrency) :
+                                      null
+                                    }</p>
                                   </div>
                                   <p className="mt-1 text-sm text-gray-500">{product.variantTitle}</p>
                                 </div>
@@ -177,7 +203,12 @@ export default function Cart({ cart }) {
                       <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <p>Subtotal</p>
-                      <p>{formatter.format(cartTotal)}</p>
+                      <p>{
+                          currency === 'USD' ? formatter.format(cartTotal) :
+                          currency === 'GBP' ? GBPFormatter.format(cartTotal * GBPcurrency) :
+                          currency === 'EUR' ? EURFormatter.format(cartTotal * EURcurrency) :
+                          null
+                        }</p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                     <div className="mt-6">
