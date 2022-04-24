@@ -31,7 +31,7 @@ export default function shopProvider({ children }) {
         if (cart.length === 0) {
             setCart([newItem])
 
-            const checkout = await createCheckout(newItem.id, newItem.variantQuantity)
+            const checkout = await createCheckout(newItem.id, newItem.variantQuantity, newItem.currency)
 
             setCheckoutId(checkout.id)
             setCheckoutUrl(checkout.webUrl)

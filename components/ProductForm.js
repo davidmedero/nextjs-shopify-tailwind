@@ -19,6 +19,27 @@ const fetcher = (url, id) => (
 
 export default function ProductForm({ product }) {
 
+    const [currencyRates, setCurrencyRates] = useState(0)
+
+    const [currency, setCurrency] = useState('')
+
+    useEffect(() => {
+        fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+        .then(res => res.json())
+        .then(data => setCurrencyRates(data.rates))
+    }, [])
+  
+    const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+  
+    const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+  
+    useLayoutEffect(() => {
+      setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+      window.addEventListener('storage', () => {
+        setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+      })
+    }, [])
+
     const categories = collections
 
     const { data: productInventory } = useSWR(
@@ -47,7 +68,8 @@ export default function ProductForm({ product }) {
             variantTitle: variant.node.title,
             variantPrice: variant.node.priceV2.amount,
             variantQuantity: 1,
-            newVariantQuantity: 1
+            newVariantQuantity: 1,
+            currency: currency === 'USD' ? 'US' : currency === 'GBP' ? 'GB' : currency === 'EUR' ? 'FR' : 'US' 
         }
     })
 
@@ -158,27 +180,6 @@ export default function ProductForm({ product }) {
             }
         }
     }, [productInventory, selectedVariant])
-
-    const [currencyRates, setCurrencyRates] = useState(0)
-
-    const [currency, setCurrency] = useState('')
-
-    useEffect(() => {
-        fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
-        .then(res => res.json())
-        .then(data => setCurrencyRates(data.rates))
-    }, [])
-  
-    const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
-  
-    const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
-  
-    useLayoutEffect(() => {
-      setCurrency(JSON.parse(localStorage.getItem('current_currency')))
-      window.addEventListener('storage', () => {
-        setCurrency(JSON.parse(localStorage.getItem('current_currency')))
-      })
-    }, [])
 
 
   return (
