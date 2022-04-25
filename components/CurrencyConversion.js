@@ -1,13 +1,25 @@
-import { useLayoutEffect, useEffect, useState, useRef } from "react"
+import { useLayoutEffect, useEffect, useState, useRef, useContext } from "react"
+import { CartContext } from '../context/shopContext'
 
 
 export default function CurrencyConversion() {
+
+    const { cart, addToCart, clearCart } = useContext(CartContext)
 
     const ref = useRef()
 
     const [currentCurrency, setCurrentCurrency] = useState('USD')
 
     const [showCurrencies, setShowCurrencies] = useState(false)
+
+    // function convert() {
+    //     if (cart.length !== 0) {
+    //         clearCart()
+    //         setCurrentCurrency('GBP')
+    //         console.log(storedCart)
+    //     }
+    //     setCurrentCurrency('GBP')
+    // }
 
     const toggleCurrencies = () => {
         setShowCurrencies(checked => !checked)
@@ -48,16 +60,19 @@ export default function CurrencyConversion() {
                 <div className="p-3 border absolute top-8 bg-white flex flex-col right-[1px]">
                     <div 
                     onClick={() => {
+                        clearCart();
                         setCurrentCurrency('USD');
                     }} 
                     className="hover:bg-pink-100 whitespace-nowrap mb-2">United States</div>
                     <div 
                     onClick={() => {
-                        setCurrentCurrency('GBP');
+                        clearCart();
+                        setCurrentCurrency('GBP')
                     }} 
                     className="hover:bg-pink-100 whitespace-nowrap mb-2">United Kingdom</div>
                     <div 
                     onClick={() => {
+                        clearCart();
                         setCurrentCurrency('EUR');
                     }} 
                     className="hover:bg-pink-100 whitespace-nowrap">European Union</div>

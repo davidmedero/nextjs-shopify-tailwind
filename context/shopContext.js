@@ -47,7 +47,6 @@ export default function shopProvider({ children }) {
             setCheckoutUrl(checkout.webUrl)
 
             localStorage.setItem("checkout_id", JSON.stringify([newItem, checkout]))
-            console.log(checkout)
         } else {
             let newCart = []
             let added = false
@@ -68,7 +67,6 @@ export default function shopProvider({ children }) {
             setCart(newCart)
             const newCheckout = await updateCheckout(checkoutId, newCart)
             localStorage.setItem("checkout_id", JSON.stringify([newCart, newCheckout]))
-            console.log(currencyCode, newCheckout)
         }
     }
 
@@ -84,6 +82,17 @@ export default function shopProvider({ children }) {
         if (cart.length === 1) {
             setCartOpen(false)
         }
+    }
+
+    async function clearCart() {
+
+        cart.length = []
+
+        setCart(cart)
+
+        const newCheckout = await updateCheckout(checkoutId, cart)
+
+        localStorage.setItem("checkout_id", JSON.stringify([cart, newCheckout]))
     }
 
     async function updateCartQuantity(newItem) {
@@ -116,6 +125,7 @@ export default function shopProvider({ children }) {
         checkoutUrl,
         removeCartItem,
         updateCartQuantity,
+        clearCart
     }}>
         {children}
     </CartContext.Provider>
