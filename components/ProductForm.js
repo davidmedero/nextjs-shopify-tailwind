@@ -23,10 +23,8 @@ export default function ProductForm({ product }) {
 
     const [currency, setCurrency] = useState('')
 
-    const exchangerates_access_key = process.env.EXCHANGERATES_ACCESS_KEY
-
     useEffect(() => {
-        fetch(`http://api.exchangeratesapi.io/v1/latest?access_key=${exchangerates_access_key}&base=USD`)
+        fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
         .then(res => res.json())
         .then(data => setCurrencyRates(data.rates))
     }, [])

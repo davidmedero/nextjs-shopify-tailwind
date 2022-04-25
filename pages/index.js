@@ -20,6 +20,7 @@ export default function Home({ products }) {
         <meta property="og:description" content="Modern eCommerce store template focusing on Shopify, Next.js, TailwindCSS, GraphQL. Additional topics include Storefront API, Static Site Generation, getStaticPaths, getStaticProps and more." />
         <meta property="og:locale" content="en_US" />
         <meta property="og:site_name" content="Modern eCommerce Template" />
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta>
       </Head>
       <Hero />
       <ProductList products={products} />
