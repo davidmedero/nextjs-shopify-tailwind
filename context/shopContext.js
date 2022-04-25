@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useLayoutEffect } from 'react'
 import { createCheckout, updateCheckout } from '../lib/shopify'
 
 const CartContext = createContext()
@@ -8,6 +8,7 @@ export default function shopProvider({ children }) {
     const [cartOpen, setCartOpen] = useState(false)
     const [checkoutId, setCheckoutId] = useState('')
     const [checkoutUrl, setCheckoutUrl] = useState('')
+    const [currency, setCurrency] = useState('')
 
     useEffect(() => {
         if (localStorage.checkout_id) {
@@ -25,18 +26,28 @@ export default function shopProvider({ children }) {
 
     }, [])
 
+    useLayoutEffect(() => {
+        setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+        window.addEventListener('storage', () => {
+          setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+        })
+      }, [])
+
+    const currencyCode = currency === 'USD' ? 'US' : currency === 'GBP' ? 'GB' : currency === 'EUR' ? 'FR' : 'US'
+
     async function addToCart(newItem) {
         setCartOpen(true)
 
         if (cart.length === 0) {
             setCart([newItem])
 
-            const checkout = await createCheckout(newItem.id, newItem.variantQuantity, newItem.currency)
+            const checkout = await createCheckout(newItem.id, newItem.variantQuantity, currencyCode)
 
             setCheckoutId(checkout.id)
             setCheckoutUrl(checkout.webUrl)
 
             localStorage.setItem("checkout_id", JSON.stringify([newItem, checkout]))
+            console.log(checkout)
         } else {
             let newCart = []
             let added = false
@@ -57,6 +68,7 @@ export default function shopProvider({ children }) {
             setCart(newCart)
             const newCheckout = await updateCheckout(checkoutId, newCart)
             localStorage.setItem("checkout_id", JSON.stringify([newCart, newCheckout]))
+            console.log(currencyCode, newCheckout)
         }
     }
 
