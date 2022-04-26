@@ -37,10 +37,10 @@ export default function shopProvider({ children }) {
 
     async function addToCart(newItem) {
         setCartOpen(true)
-
+        
         if (cart.length === 0) {
             setCart([newItem])
-
+            console.log(newItem)
             const checkout = await createCheckout(newItem.id, newItem.variantQuantity, currencyCode)
 
             setCheckoutId(checkout.id)
@@ -48,6 +48,7 @@ export default function shopProvider({ children }) {
 
             localStorage.setItem("checkout_id", JSON.stringify([newItem, checkout]))
         } else {
+            console.log(newItem)
             let newCart = []
             let added = false
             
@@ -89,10 +90,10 @@ export default function shopProvider({ children }) {
         cart.length = []
 
         setCart(cart)
+    }
 
-        const newCheckout = await updateCheckout(checkoutId, cart)
-
-        localStorage.setItem("checkout_id", JSON.stringify([cart, newCheckout]))
+    async function updateCart(item) {
+        setCart(item)
     }
 
     async function updateCartQuantity(newItem) {
@@ -125,7 +126,8 @@ export default function shopProvider({ children }) {
         checkoutUrl,
         removeCartItem,
         updateCartQuantity,
-        clearCart
+        clearCart,
+        updateCart
     }}>
         {children}
     </CartContext.Provider>
