@@ -54,27 +54,19 @@ export default function CurrencyConversion() {
     })
 
     useEffect(() => {
-        if (cart.length !== 0 && cart.length === 1) {
+        if (cart.length === 1) {
             clearCart()
             addToCart(storedCart[0])
         }
-        if (cart.length !== 0 && cart.length > 1) {
+        if (cart.length > 1) {
             clearCart()
-            // for (let i of storedCart[0]) {
-            //     addToCart(i)
-            // }
-            // storedCart[0]?.forEach(element => {
-            //     addToCart(element)
-            // });
-            storedCart[0]?.forEach(function (el, index) {
-                setTimeout(function () {
-                  console.log(cart);
-                  addToCart(el);
-                  cart.push(el);
-                }, index * 1000);
-              });
+            storedCart[0].forEach(function (el, index) {
+                addToCart(el);
+            });
         }
     }, [storedCart])
+
+    console.log(cart)
     
     const toggleCurrencies = () => {
         setShowCurrencies(checked => !checked)

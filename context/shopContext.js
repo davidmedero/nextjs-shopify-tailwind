@@ -64,7 +64,7 @@ export default function shopProvider({ children }) {
             if (!added) {
                 newCart = [...cart, newItem]
             }
-
+            console.log(newCart)
             setCart(newCart)
             const newCheckout = await updateCheckout(checkoutId, newCart)
             localStorage.setItem("checkout_id", JSON.stringify([newCart, newCheckout]))
