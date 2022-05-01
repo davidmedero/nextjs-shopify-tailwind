@@ -47,19 +47,17 @@ export default function yourOrders({ data, data2, product }) {
 
   const [currency, setCurrency] = useState('')
 
-  // useEffect(() => {
-  //     fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
-  //     .then(res => res.json())
-  //     .then(data => setCurrencyRates(data.rates))
-  // }, [])
+  useEffect(() => {
+      fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+      .then(res => res.json())
+      .then(data => setCurrencyRates(data.rates))
+  }, [])
 
-  // const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+  const shopifyConversionFee = 1.015
 
-  // const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+  const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
 
-  const GBPcurrency = 0.80
-
-  const EURcurrency = 0.95
+  const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
 
   useLayoutEffect(() => {
     setCurrency(JSON.parse(localStorage.getItem('current_currency')))
@@ -132,8 +130,8 @@ export default function yourOrders({ data, data2, product }) {
                 <div className="mb-5"><span className="font-semibold">Total amount </span>&nbsp;
                 <span className="text-gray-600">{
                   currency === 'USD' ? formatter.format(order.totalPrice) :
-                  currency === 'GBP' ? GBPFormatter.format(order.totalPrice * GBPcurrency) :
-                  currency === 'EUR' ? EURFormatter.format(order.totalPrice * EURcurrency) :
+                  currency === 'GBP' ? GBPFormatter.format(Math.ceil(order.totalPrice * GBPcurrency * shopifyConversionFee)) :
+                  currency === 'EUR' ? EURFormatter.format(Math.ceil(order.totalPrice * EURcurrency * shopifyConversionFee)) :
                   null
                 }</span>
                 </div>
@@ -163,8 +161,8 @@ export default function yourOrders({ data, data2, product }) {
                                 <div>Quantity: {item.node.quantity}</div>
                                 <div>{
                                   currency === 'USD' ? formatter.format(item.node.originalUnitPriceSet.shopMoney.amount) :
-                                  currency === 'GBP' ? GBPFormatter.format(item.node.originalUnitPriceSet.shopMoney.amount * GBPcurrency) :
-                                  currency === 'EUR' ? EURFormatter.format(item.node.originalUnitPriceSet.shopMoney.amount * EURcurrency) :
+                                  currency === 'GBP' ? GBPFormatter.format(Math.ceil(item.node.originalUnitPriceSet.shopMoney.amount * GBPcurrency * shopifyConversionFee)) :
+                                  currency === 'EUR' ? EURFormatter.format(Math.ceil(item.node.originalUnitPriceSet.shopMoney.amount * EURcurrency * shopifyConversionFee)) :
                                   null
                                 }</div>
                               </div>

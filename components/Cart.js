@@ -60,19 +60,17 @@ export default function Cart({ cart }) {
 
     const [currency, setCurrency] = useState('')
 
-    // useEffect(() => {
-    //     fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
-    //     .then(res => res.json())
-    //     .then(data => setCurrencyRates(data.rates))
-    // }, [])
-  
-    // const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
-  
-    // const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+    useEffect(() => {
+        fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+        .then(res => res.json())
+        .then(data => setCurrencyRates(data.rates))
+    }, [])
 
-    const GBPcurrency = 0.80
-
-    const EURcurrency = 0.95
+    const shopifyConversionFee = 1.015
+  
+    const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+  
+    const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
   
     useLayoutEffect(() => {
       setCurrency(JSON.parse(localStorage.getItem('current_currency')))
@@ -157,8 +155,8 @@ export default function Cart({ cart }) {
                                     </h3>
                                     <p className="ml-4">{
                                       currency === 'USD' ? formatter.format(product.variantPrice) :
-                                      currency === 'GBP' ? GBPFormatter.format(product.variantPrice * GBPcurrency) :
-                                      currency === 'EUR' ? EURFormatter.format(product.variantPrice * EURcurrency) :
+                                      currency === 'GBP' ? GBPFormatter.format(Math.ceil(product.variantPrice * GBPcurrency * shopifyConversionFee)) :
+                                      currency === 'EUR' ? EURFormatter.format(Math.ceil(product.variantPrice * EURcurrency * shopifyConversionFee)) :
                                       null
                                     }</p>
                                   </div>
@@ -209,8 +207,8 @@ export default function Cart({ cart }) {
                       <p>Subtotal</p>
                       <p>{
                           currency === 'USD' ? formatter.format(cartTotal) :
-                          currency === 'GBP' ? GBPFormatter.format(cartTotal * GBPcurrency) :
-                          currency === 'EUR' ? EURFormatter.format(cartTotal * EURcurrency) :
+                          currency === 'GBP' ? GBPFormatter.format(Math.ceil(cartTotal * GBPcurrency * shopifyConversionFee)) :
+                          currency === 'EUR' ? EURFormatter.format(Math.ceil(cartTotal * EURcurrency * shopifyConversionFee)) :
                           null
                         }</p>
                     </div>

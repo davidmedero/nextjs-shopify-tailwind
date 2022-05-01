@@ -16,19 +16,17 @@ const ProductCard = ({ product }) => {
 
   const [currency, setCurrency] = useState('')
 
-  // useEffect(() => {
-  //     fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
-  //     .then(res => res.json())
-  //     .then(data => setCurrencyRates(data.rates))
-  // }, [])
+  useEffect(() => {
+      fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+      .then(res => res.json())
+      .then(data => setCurrencyRates(data.rates))
+  }, [])
 
-  // const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+  const shopifyConversionFee = 1.015
 
-  // const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+  const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
 
-  const GBPcurrency = 0.80
-
-  const EURcurrency = 0.95
+  const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
 
   useLayoutEffect(() => {
     setCurrency(JSON.parse(localStorage.getItem('current_currency')))
@@ -59,8 +57,8 @@ const ProductCard = ({ product }) => {
         <p className='mt-1 text-sm text-gray-700'>
           {
             currency === 'USD' ? formatter.format(price) :
-            currency === 'GBP' ? GBPFormatter.format(price * GBPcurrency) :
-            currency === 'EUR' ? EURFormatter.format(price * EURcurrency) :
+            currency === 'GBP' ? GBPFormatter.format(Math.ceil(price * GBPcurrency * shopifyConversionFee)) :
+            currency === 'EUR' ? EURFormatter.format(Math.ceil(price * EURcurrency * shopifyConversionFee)) :
             null
           }
         </p>
