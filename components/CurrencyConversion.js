@@ -1,12 +1,25 @@
 import { useLayoutEffect, useEffect, useState, useRef, useContext } from "react"
 import { CartContext } from '../context/shopContext'
+import { createCheckout, updateCheckout } from '../lib/shopify'
 
 
 export default function CurrencyConversion() {
 
-    const { cart, addToCart, clearCart, updateCart } = useContext(CartContext)
+    const { cart, addToCart, clearCart, setCart, setCartOpen, checkoutId, setCheckoutId, setCheckoutUrl } = useContext(CartContext)
 
     const ref = useRef()
+
+    const CartRef = useRef()
+
+    const cartRefLength = useRef()
+
+    const checkoutIdRef = useRef()
+
+    CartRef.current = cart
+
+    cartRefLength.current = cart.length
+
+    checkoutIdRef.current = checkoutId
 
     const [currentCurrency, setCurrentCurrency] = useState('USD')
 
@@ -14,60 +27,120 @@ export default function CurrencyConversion() {
 
     const [storedCart, setStoredCart] = useState([])
 
+    const [cartState, setCartState] = useState([])
+
     useLayoutEffect(() => {
         if (localStorage.getItem("checkout_id")) {
             setStoredCart(JSON.parse(localStorage.getItem("checkout_id")))
         }
+
+        storedCart.map(el => {
+            if (el.buyerIdentity !== undefined) {
+                currentCurrency === 'USD' ? {
+                    ...el.buyerIdentity,
+                    countryCode: 'US'
+                } :
+                currentCurrency === 'GBP' ? {
+                    ...el.buyerIdentity,
+                    countryCode: 'GB'
+                } :
+                currentCurrency === 'EUR' ? {
+                    ...el.buyerIdentity,
+                    countryCode: 'FR'
+                } : 
+                null
+            }
+            if (el.totalPriceV2 !== undefined) {
+                currentCurrency === 'USD' ? {
+                    ...el.totalPriceV2,
+                    currencyCode: 'USD'
+                } :
+                currentCurrency === 'GBP' ? {
+                    ...el.totalPriceV2,
+                    currencyCode: 'GBP'
+                } :
+                currentCurrency === 'EUR' ? {
+                    ...el.totalPriceV2,
+                    currencyCode: 'EUR'
+                } :
+                null
+            }
+            if (el.lineItems !== undefined) {
+                currentCurrency === 'USD' ? el.lineItems.edges.map(el => {
+                    if (el.node.variant !== undefined) {
+                        return {
+                            ...el.node.variant.priceV2,
+                            currencyCode: 'USD'
+                        }
+                    }
+                }) :
+                currentCurrency === 'GBP' ? el.lineItems.edges.map(el => {
+                    if (el.node.variant !== undefined) {
+                        return {
+                            ...el.node.variant.priceV2,
+                            currencyCode: 'GBP'
+                        }
+                    }
+                }) :
+                currentCurrency === 'EUR' ? el.lineItems.edges.map(el => {
+                    if (el.node.variant !== undefined) {
+                        return {
+                            ...el.node.variant.priceV2,
+                            currencyCode: 'EUR'
+                        }
+                    }
+                }) :
+                null
+            }
+        })
     }, [currentCurrency])
-
-    storedCart.map(el => {
-        if (el.buyerIdentity !== undefined) {
-            currentCurrency === 'USD' ? el.buyerIdentity.countryCode = 'US' :
-            currentCurrency === 'GBP' ? el.buyerIdentity.countryCode = 'GB' :
-            currentCurrency === 'EUR' ? el.buyerIdentity.countryCode = 'FR' : 
-            null
-        }
-        if (el.totalPriceV2 !== undefined) {
-            currentCurrency === 'USD' ? el.totalPriceV2.currencyCode = 'USD' :
-            currentCurrency === 'GBP' ? el.totalPriceV2.currencyCode = 'GBP' :
-            currentCurrency === 'EUR' ? el.totalPriceV2.currencyCode = 'EUR' :
-            null
-        }
-        if (el.lineItems !== undefined) {
-            currentCurrency === 'USD' ? el.lineItems.edges.map(el => {
-                if (el.node.variant !== undefined) {
-                    el.node.variant.priceV2.currencyCode = 'USD'
-                }
-            }) :
-            currentCurrency === 'GBP' ? el.lineItems.edges.map(el => {
-                if (el.node.variant !== undefined) {
-                    el.node.variant.priceV2.currencyCode = 'GBP'
-                }
-            }) :
-            currentCurrency === 'EUR' ? el.lineItems.edges.map(el => {
-                if (el.node.variant !== undefined) {
-                    el.node.variant.priceV2.currencyCode = 'EUR'
-                }
-            }) :
-            null
-        }
-    })
-
-    useEffect(() => {
-        if (cart.length === 1) {
+    
+    useEffect(async () => {
+        if (storedCart[0] && cart.length === 1) {
             clearCart()
             addToCart(storedCart[0])
         }
-        if (cart.length > 1) {
+        if (storedCart[0] && cart.length > 1) {
             clearCart()
-            storedCart[0].forEach(function (el, index) {
-                addToCart(el);
-            });
+            const newArray = []
+            for (let i of storedCart[0]) {
+                newArray.push(i)
+            }
+            setCartState(newArray)
         }
     }, [storedCart])
 
-    console.log(cart)
-    
+    const [currency, setCurrency] = useState('')
+
+    useLayoutEffect(() => {
+        setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+        window.addEventListener('storage', () => {
+          setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+        })
+      }, [])
+
+    const currencyCode = currency === 'USD' ? 'US' : currency === 'GBP' ? 'GB' : currency === 'EUR' ? 'FR' : 'US'
+
+    useEffect(async () => {
+        for (let i of cartState) {
+            if (cartRefLength.current === 0) {
+                setCartOpen(true)
+                setCart([i])
+                const checkout = await createCheckout(i.id, i.variantQuantity, currencyCode)
+                console.log(cartRefLength.current, CartRef.current)
+                setCheckoutId(checkout.id)
+                setCheckoutUrl(checkout.webUrl)
+                localStorage.setItem("checkout_id", JSON.stringify([i, checkout]))
+            } else {
+                let newCart = []
+                newCart = [...CartRef.current, i]
+                setCart(newCart)
+                await updateCheckout(checkoutIdRef.current, newCart)
+                localStorage.setItem("checkout_id", JSON.stringify(storedCart))
+            }
+        }
+    }, [cartState])
+
     const toggleCurrencies = () => {
         setShowCurrencies(checked => !checked)
     }

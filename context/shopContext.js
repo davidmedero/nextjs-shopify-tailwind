@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useLayoutEffect } from 'react'
 import { createCheckout, updateCheckout } from '../lib/shopify'
 
+
 const CartContext = createContext()
 
 export default function shopProvider({ children }) {
@@ -40,7 +41,7 @@ export default function shopProvider({ children }) {
         
         if (cart.length === 0) {
             setCart([newItem])
-            console.log(newItem)
+
             const checkout = await createCheckout(newItem.id, newItem.variantQuantity, currencyCode)
 
             setCheckoutId(checkout.id)
@@ -48,7 +49,6 @@ export default function shopProvider({ children }) {
 
             localStorage.setItem("checkout_id", JSON.stringify([newItem, checkout]))
         } else {
-            console.log(newItem)
             let newCart = []
             let added = false
             
@@ -64,7 +64,7 @@ export default function shopProvider({ children }) {
             if (!added) {
                 newCart = [...cart, newItem]
             }
-            console.log(newCart)
+
             setCart(newCart)
             const newCheckout = await updateCheckout(checkoutId, newCart)
             localStorage.setItem("checkout_id", JSON.stringify([newCart, newCheckout]))
@@ -86,14 +86,9 @@ export default function shopProvider({ children }) {
     }
 
     async function clearCart() {
-
         cart.length = []
 
         setCart(cart)
-    }
-
-    async function updateCart(item) {
-        setCart(item)
     }
 
     async function updateCartQuantity(newItem) {
@@ -123,11 +118,14 @@ export default function shopProvider({ children }) {
         cartOpen,
         setCartOpen,
         addToCart,
-        checkoutUrl,
         removeCartItem,
         updateCartQuantity,
         clearCart,
-        updateCart
+        setCart,
+        checkoutId,
+        checkoutUrl,
+        setCheckoutId,
+        setCheckoutUrl
     }}>
         {children}
     </CartContext.Provider>
