@@ -1,10 +1,11 @@
 import { signOut, useSession } from "next-auth/react"
 import { getSession } from "next-auth/react"
 import Image from 'next/image'
-import { formatter } from "../utils/helpers"
+import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import Shopify from '@shopify/shopify-api'
 import Link from 'next/link'
 import { getAllProducts, getProduct } from "../lib/shopify"
+import { useLayoutEffect, useEffect, useState, useRef } from "react"
 
 
 export default function yourOrders({ data, data2, product }) {
@@ -41,6 +42,31 @@ export default function yourOrders({ data, data2, product }) {
       items: order.node.lineItems.edges
     }
   })
+
+  const [currencyRates, setCurrencyRates] = useState(0)
+
+  const [currency, setCurrency] = useState('')
+
+  // useEffect(() => {
+  //     fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+  //     .then(res => res.json())
+  //     .then(data => setCurrencyRates(data.rates))
+  // }, [])
+
+  // const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+
+  // const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+
+  const GBPcurrency = 0.80
+
+  const EURcurrency = 0.95
+
+  useLayoutEffect(() => {
+    setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+    window.addEventListener('storage', () => {
+      setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+    })
+  }, [])
 
 
   return (
@@ -104,7 +130,12 @@ export default function yourOrders({ data, data2, product }) {
                 order.dateCreated.slice(0, order.dateCreated.length - 16)}</span></div>
   
                 <div className="mb-5"><span className="font-semibold">Total amount </span>&nbsp;
-                <span className="text-gray-600">{formatter.format(order.totalPrice)}</span>
+                <span className="text-gray-600">{
+                  currency === 'USD' ? formatter.format(order.totalPrice) :
+                  currency === 'GBP' ? GBPFormatter.format(order.totalPrice * GBPcurrency) :
+                  currency === 'EUR' ? EURFormatter.format(order.totalPrice * EURcurrency) :
+                  null
+                }</span>
                 </div>
                 </div>
                 </div>
@@ -130,7 +161,12 @@ export default function yourOrders({ data, data2, product }) {
                               <div className="pt-3 sm:pt-6 text-gray-600">
                                 <div>{item.node.variantTitle}</div>
                                 <div>Quantity: {item.node.quantity}</div>
-                                <div>{formatter.format(item.node.originalUnitPriceSet.shopMoney.amount)}</div>
+                                <div>{
+                                  currency === 'USD' ? formatter.format(item.node.originalUnitPriceSet.shopMoney.amount) :
+                                  currency === 'GBP' ? GBPFormatter.format(item.node.originalUnitPriceSet.shopMoney.amount * GBPcurrency) :
+                                  currency === 'EUR' ? EURFormatter.format(item.node.originalUnitPriceSet.shopMoney.amount * EURcurrency) :
+                                  null
+                                }</div>
                               </div>
                       </div>
                     </li>
