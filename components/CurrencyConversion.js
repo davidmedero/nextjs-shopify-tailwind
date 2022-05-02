@@ -5,7 +5,7 @@ import { createCheckout, updateCheckout } from '../lib/shopify'
 
 export default function CurrencyConversion() {
 
-    const { cart, addToCart, clearCart, setCart, setCartOpen, checkoutId, setCheckoutId, setCheckoutUrl } = useContext(CartContext)
+    const { cart, clearCart, setCart, setCartOpen, checkoutId, setCheckoutId, setCheckoutUrl } = useContext(CartContext)
 
     const ref = useRef()
 
@@ -14,6 +14,8 @@ export default function CurrencyConversion() {
     const cartRefLength = useRef()
 
     const checkoutIdRef = useRef()
+
+    const storedCartRef = useRef()
 
     CartRef.current = cart
 
@@ -26,6 +28,7 @@ export default function CurrencyConversion() {
     const [showCurrencies, setShowCurrencies] = useState(false)
 
     const [storedCart, setStoredCart] = useState([])
+    storedCartRef.current = storedCart
 
     const [cartState, setCartState] = useState([])
 
@@ -94,23 +97,38 @@ export default function CurrencyConversion() {
             }
         })
     }, [currentCurrency])
+
+    const [currency, setCurrency] = useState('')
+
+    const currencyCode = currency === 'USD' ? 'US' : currency === 'GBP' ? 'GB' : currency === 'EUR' ? 'FR' : 'US'
     
     useEffect(async () => {
-        if (storedCart[0] && cart.length === 1) {
-            clearCart()
-            addToCart(storedCart[0])
+        if (storedCartRef.current && cart.length === 1) {
+            if (storedCartRef.current[0][0].variantQuantity > 1) {
+                clearCart()
+                setCartOpen(true)
+                let newCart = []
+                newCart = [...CartRef.current, storedCartRef.current[0][0]]
+                setCart(newCart)
+                await updateCheckout(checkoutIdRef.current, newCart)
+                localStorage.setItem("checkout_id", JSON.stringify(storedCart))
+            } else {
+                clearCart()
+                setCartOpen(true)
+                setCart([storedCartRef.current[0][0]])
+                await createCheckout(storedCartRef.current[0][0].id, storedCartRef.current[0][0].variantQuantity, currencyCode)
+                localStorage.setItem("checkout_id", JSON.stringify(storedCart))
+            }
         }
-        if (storedCart[0] && cart.length > 1) {
+        if (storedCartRef.current && cart.length > 1) {
             clearCart()
             const newArray = []
-            for (let i of storedCart[0]) {
+            for (let i of storedCartRef.current[0]) {
                 newArray.push(i)
             }
             setCartState(newArray)
         }
     }, [storedCart])
-
-    const [currency, setCurrency] = useState('')
 
     useLayoutEffect(() => {
         setCurrency(JSON.parse(localStorage.getItem('current_currency')))
@@ -119,15 +137,12 @@ export default function CurrencyConversion() {
         })
       }, [])
 
-    const currencyCode = currency === 'USD' ? 'US' : currency === 'GBP' ? 'GB' : currency === 'EUR' ? 'FR' : 'US'
-
     useEffect(async () => {
         for (let i of cartState) {
             if (cartRefLength.current === 0) {
                 setCartOpen(true)
                 setCart([i])
                 const checkout = await createCheckout(i.id, i.variantQuantity, currencyCode)
-                console.log(cartRefLength.current, CartRef.current)
                 setCheckoutId(checkout.id)
                 setCheckoutUrl(checkout.webUrl)
                 localStorage.setItem("checkout_id", JSON.stringify([i, checkout]))

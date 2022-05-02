@@ -13,9 +13,34 @@ export default function Cart({ cart }) {
 
   const { cartOpen, setCartOpen, checkoutUrl, removeCartItem, updateCartQuantity } = useContext(CartContext)
 
+  const [currencyRates, setCurrencyRates] = useState(0)
+
+  const [currency, setCurrency] = useState('')
+
+  useEffect(() => {
+      fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+      .then(res => res.json())
+      .then(data => setCurrencyRates(data.rates))
+  }, [])
+
+  const shopifyConversionFee = 1.015
+
+  const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+
+  const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+
+  useLayoutEffect(() => {
+    setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+    window.addEventListener('storage', () => {
+      setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+    })
+  }, [])
+
+  const cartCurrency = currency === 'USD' ? 1 : currency === 'GBP' ? (GBPcurrency * shopifyConversionFee) : currency === 'EUR' ? (EURcurrency * shopifyConversionFee) : 1
+
   let cartTotal = 0
   cart.map(item => {
-      cartTotal += item?.variantPrice * item?.variantQuantity
+      cartTotal += Math.ceil(item?.variantPrice * item?.variantQuantity * cartCurrency)
   })
 
   const [inputValue, setInputValue] = useState(1);
@@ -56,28 +81,6 @@ export default function Cart({ cart }) {
     trackMouse: true
   });
 
-  const [currencyRates, setCurrencyRates] = useState(0)
-
-    const [currency, setCurrency] = useState('')
-
-    useEffect(() => {
-        fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
-        .then(res => res.json())
-        .then(data => setCurrencyRates(data.rates))
-    }, [])
-
-    const shopifyConversionFee = 1.015
-  
-    const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
-  
-    const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
-  
-    useLayoutEffect(() => {
-      setCurrency(JSON.parse(localStorage.getItem('current_currency')))
-      window.addEventListener('storage', () => {
-        setCurrency(JSON.parse(localStorage.getItem('current_currency')))
-      })
-    }, [])
 
   return (
     <Transition.Root show={cartOpen} as={Fragment} {...handlers}>
@@ -207,8 +210,8 @@ export default function Cart({ cart }) {
                       <p>Subtotal</p>
                       <p>{
                           currency === 'USD' ? formatter.format(cartTotal) :
-                          currency === 'GBP' ? GBPFormatter.format(Math.ceil(cartTotal * GBPcurrency * shopifyConversionFee)) :
-                          currency === 'EUR' ? EURFormatter.format(Math.ceil(cartTotal * EURcurrency * shopifyConversionFee)) :
+                          currency === 'GBP' ? GBPFormatter.format(cartTotal) :
+                          currency === 'EUR' ? EURFormatter.format(cartTotal) :
                           null
                         }</p>
                     </div>
