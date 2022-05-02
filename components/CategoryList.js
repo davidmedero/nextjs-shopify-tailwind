@@ -1,5 +1,6 @@
 import ProductCard from "./ProductCard"
 import Link from "next/link"
+import ProductSort from "./ProductSort"
 
 
 const CategoryList = ({ productsByCollection, category, product }) => {
@@ -11,7 +12,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             category.toString().charAt(0).toUpperCase() + category.toString().slice(1)
             : null
           }</div>
-          <div className="flex flow-row text-sm pb-7 pl-1">
+          <div className="flex flex-row items-center text-sm pb-7 pl-1">
           <div>
             <Link href={'/'}>
               <a className="hover:underline text-[#8d8d8d] font-semibold">
@@ -27,6 +28,9 @@ const CategoryList = ({ productsByCollection, category, product }) => {
           <div className="font-semibold">
                 {category.toString().charAt(0).toUpperCase() + category.toString().slice(1)}
           </div>
+          <div className="relative left-[700px]">
+              <ProductSort />
+            </div>
           </div>
             <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
               {

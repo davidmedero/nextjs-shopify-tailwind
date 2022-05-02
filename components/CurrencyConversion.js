@@ -192,22 +192,22 @@ export default function CurrencyConversion() {
             {currentCurrency}
             {
             showCurrencies && (
-                <div className="p-3 border absolute top-8 bg-white flex flex-col right-[1px]">
+                <div className="border absolute top-8 bg-white flex flex-col right-[1px]">
                     <div 
                     onClick={() => {
                         setCurrentCurrency('USD');
                     }} 
-                    className="hover:bg-pink-100 whitespace-nowrap mb-2">United States</div>
+                    className="hover:bg-pink-100 p-3 whitespace-nowrap">United States</div>
                     <div 
                     onClick={() => {
                         setCurrentCurrency('GBP');
                     }} 
-                    className="hover:bg-pink-100 whitespace-nowrap mb-2">United Kingdom</div>
+                    className="hover:bg-pink-100 p-3 whitespace-nowrap">United Kingdom</div>
                     <div 
                     onClick={() => {
                         setCurrentCurrency('EUR');
                     }} 
-                    className="hover:bg-pink-100 whitespace-nowrap">European Union</div>
+                    className="hover:bg-pink-100 p-3 whitespace-nowrap">European Union</div>
                 </div>
             )   
             }
