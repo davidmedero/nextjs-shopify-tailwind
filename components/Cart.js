@@ -40,7 +40,7 @@ export default function Cart({ cart }) {
 
   let cartTotal = 0
   cart.map(item => {
-      cartTotal += Math.ceil(item?.variantPrice * item?.variantQuantity * cartCurrency)
+      cartTotal += Math.ceil(item?.variantPrice * cartCurrency) * item?.variantQuantity
   })
 
   const [inputValue, setInputValue] = useState(1);
