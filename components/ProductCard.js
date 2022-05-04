@@ -1,4 +1,4 @@
-import { useLayoutEffect, useEffect, useState, useRef } from "react"
+import { useLayoutEffect, useEffect, useState } from "react"
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
