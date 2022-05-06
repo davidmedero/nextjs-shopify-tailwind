@@ -74,3 +74,116 @@ and left sides of the text */
     transition-duration: .1s;
     transition-timing-function: ease-in-out;
 }
+
+#search_content {
+  position: absolute;
+  right: 120%;
+}
+
+.search_input {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #000000;
+  border-radius: 50%;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: Roboto;
+  outline: 0;
+  -webkit-transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+    padding 0.2s;
+  transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+    padding 0.2s;
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+}
+
+.search_button {
+  background: none;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  height: 22px;
+  width: 22px;
+  padding: 0;
+  border-radius: 100%;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+}
+
+.search_button:before {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 2px;
+  background-color: #000000;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  margin-top: 7px;
+  margin-left: 7px;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+
+.close {
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.close:before {  
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  margin-top: -1px;
+  margin-left: -16px;
+  background-color: #000000;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+
+.close:after {  
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: #000000;
+  margin-top: -1px;
+  margin-left: -16px;
+  cursor: pointer;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.square {
+  position: absolute;
+  padding: 0 40px 0 10px;
+  width: 64vw;
+  height: 35px;
+  border: 2px solid #000000;
+  border-radius: 0;
+  background: white;
+  color: #000000;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 400;
+  outline: 0;
+  -webkit-transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+    padding 0.2s;
+  transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+    padding 0.2s;
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+}

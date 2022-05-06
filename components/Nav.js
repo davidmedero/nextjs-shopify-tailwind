@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState, useRef } from 'react'
 import { CartContext } from '../context/shopContext'
 import Cart from './Cart'
 import SignInButton from './SignInButton'
@@ -8,82 +8,172 @@ import MobileMenuButton from './MobileMenuButton'
 import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import CurrencyConversion from './CurrencyConversion'
+import Head from 'next/head'
 
 
 export default function Nav() {
 
-    const { cart, cartOpen, setCartOpen } = useContext(CartContext)
+  const ref = useRef()
 
-    let cartQuantity = 0
-    cart.map(item => {
-        return (cartQuantity += item?.variantQuantity)
-    })
+  const myRefname= useRef(null);
 
-    const [categoryIndex, setCategoryIndex] = useState(0)
-    const [categoryHandle, setCategoryHandle] = useState('')
+  const { cart, cartOpen, setCartOpen } = useContext(CartContext)
 
-    const subcategories = collections.map(category => {
-        return category.subcollections
-    })
+  let cartQuantity = 0
+  cart.map(item => {
+      return (cartQuantity += item?.variantQuantity)
+  })
 
-    const findCategory = (e) => {
-        setCategoryIndex(collections.findIndex(el => el.id === JSON.parse(e.target.dataset.info).id))
+  const [categoryIndex, setCategoryIndex] = useState(0)
+  const [categoryHandle, setCategoryHandle] = useState('')
+
+  const subcategories = collections.map(category => {
+      return category.subcollections
+  })
+
+  const findCategory = (e) => {
+      setCategoryIndex(collections.findIndex(el => el.id === JSON.parse(e.target.dataset.info).id))
+  }
+
+  const getCategoryHandle = (e) => {
+      setCategoryHandle(collections.find(el => el.id === JSON.parse(e.target.dataset.info).id).handle)
+  }
+  
+  const [showSubMenu, setShowSubMenu] = useState(false)
+
+  const [showMenu, setShowMenu] = useState(true)
+
+  const [inputState, setInputState] = useState('')
+
+  const [isOpen, setIsOpen] = useState(false)
+
+  function toggleMenu() {
+    setShowMenu(checked => !checked);
+  }
+
+  console.log(inputState)
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setShowMenu(true)
+      setIsOpen(false);
     }
-
-    const getCategoryHandle = (e) => {
-        setCategoryHandle(collections.find(el => el.id === JSON.parse(e.target.dataset.info).id).handle)
     }
-    
-    const [showSubMenu, setShowSubMenu] = useState(false)
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref])
+
+  const handleFocus = () => {
+    setIsOpen(true);
+    !isOpen ? myRefname.current.focus() : setIsOpen(false);
+ }
 
 
   return (
     <header className='border-b sticky top-0 z-20 bg-white shadow-md'>
+      <Head>
+      <script type='text/javascript'>
+        {
+          `
+          const input = document.getElementById("search-input");
+          const searchBtn = document.getElementById("search-btn");
+
+          const expand = () => {
+            searchBtn.classList.toggle("close");
+            input.classList.toggle("square");
+          };
+
+          searchBtn.addEventListener("click", expand);
+
+          document.addEventListener('click', function(event) {
+            let isClickInside1 = input.contains(event.target);
+            let isClickInside2 = searchBtn.contains(event.target);
+
+            if (!isClickInside1 && !isClickInside2) {
+              input.classList.remove("square")
+              searchBtn.classList.remove("close");
+            }
+          });
+        `
+        }
+      </script>
+      </Head>
         <div className='flex items-center justify-between max-w-6xl py-4 px-8 mx-auto lg:max-w-screen-xl'>
-            <div className="xxs:flex md:!hidden">
+            <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
             </div>
             <Link href="/" passHref>
-                <a className='cursor-pointer'>
+                <a className='cursor-pointer xxs:hidden lg:!block'>
                     <span className='text-2xl pt-1 font-bold'>
                         Logo
                     </span>
                 </a>
             </Link>
-            <div className="relative xxs:hidden md:!block">
-            {
-                collections.map(collection => (
-                    collection.handle == "shop" ?
-                    (<Link href={'/shop-brands'} >
-                    <a className="p-6 hover:bg-pink-100"
-                    data-info={JSON.stringify(collection)}
-                    onMouseEnter={(e) => {
-                        setShowSubMenu(true);
-                        findCategory(e);
-                        getCategoryHandle(e);
-                        }}
-                        onMouseLeave={() => setShowSubMenu(false)}
-                        onClick ={() => setShowSubMenu(false)}>
-                        {collection.title}
-                    </a>
-                    </Link>) :
-                    (<Link href={'/' + collection.handle} >
-                        <a className="p-6 hover:bg-pink-100"
-                        data-info={JSON.stringify(collection)}
-                        onMouseEnter={(e) => {
-                            setShowSubMenu(true);
-                            findCategory(e);
-                            getCategoryHandle(e);
-                            }}
-                            onMouseLeave={() => setShowSubMenu(false)}
-                            onClick ={() => setShowSubMenu(false)}>
-                            {collection.title}
-                        </a>
-                    </Link>)
-                ))
-            }
+            <Link href="/" passHref>
+                <a className='cursor-pointer xxs:block lg:!hidden'>
+                    <span className='text-2xl pt-1 font-bold'>
+                      <span className={ (showMenu ? ('opacity-100 transition-all duration-700 ease-in-out visible') : ('opacity-0 transition-all duration-300 ease-in-out invisible')) }>
+                        Logo
+                      </span>
+                    </span>
+                </a>
+            </Link>
+            <div className='xxs:hidden lg:!block'>
+              <div className={ (showMenu ? ('opacity-100 transition-all duration-700 ease-in-out visible') : ('opacity-0 transition-all duration-300 ease-in-out invisible')) } >
+              {
+                  collections.map(collection => (
+                      collection.handle == "shop" ?
+                      (<Link href={'/shop-brands'} >
+                      <a className="p-6 hover:bg-pink-100"
+                      data-info={JSON.stringify(collection)}
+                      onMouseEnter={(e) => {
+                          setShowSubMenu(true);
+                          findCategory(e);
+                          getCategoryHandle(e);
+                          }}
+                          onMouseLeave={() => setShowSubMenu(false)}
+                          onClick ={() => setShowSubMenu(false)}>
+                          {collection.title}
+                      </a>
+                      </Link>) :
+                      (<Link href={'/' + collection.handle} >
+                          <a className="p-6 hover:bg-pink-100"
+                          data-info={JSON.stringify(collection)}
+                          onMouseEnter={(e) => {
+                              setShowSubMenu(true);
+                              findCategory(e);
+                              getCategoryHandle(e);
+                              }}
+                              onMouseLeave={() => setShowSubMenu(false)}
+                              onClick ={() => setShowSubMenu(false)}>
+                              {collection.title}
+                          </a>
+                      </Link>)
+                  ))
+              }
+              </div>
             </div>
-            <div className='flex items-center justify-end'>
+            <div className='flex items-center justify-end relative'>
+            <form 
+            ref={ref}
+            onClick={() => {
+              toggleMenu();
+              handleFocus();
+              }} 
+              id="search_content" 
+              autocomplete="off">
+                <input 
+                ref={myRefname} 
+                onClick={() => {
+                  setShowMenu(!showMenu);
+                  setIsOpen(true);
+                  }} 
+                  onChange={(e) => setInputState(e.target.value)} type="text" name="input" class="search_input" id="search-input" />
+                  <button type="reset" class="search_button" id="search-btn"></button>
+            </form>
             <SignInButton />
             <a 
             className='text-lg font-bold cursor-pointer'
