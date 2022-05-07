@@ -91,9 +91,9 @@ and left sides of the text */
   font-weight: 400;
   font-family: Roboto;
   outline: 0;
-  -webkit-transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+  -webkit-transition: width 0.3s ease-in-out, height 0.3s ease-in-out, border-radius 0.3s ease-in-out,
     padding 0.2s;
-  transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out, border-radius 0.3s ease-in-out,
     padding 0.2s;
   -webkit-transform: translate(-100%, -50%);
   -ms-transform: translate(-100%, -50%);
@@ -167,7 +167,6 @@ and left sides of the text */
 }
 
 .square {
-  position: absolute;
   padding: 0 40px 0 10px;
   width: 64vw;
   height: 35px;
@@ -179,9 +178,9 @@ and left sides of the text */
   font-size: 16px;
   font-weight: 400;
   outline: 0;
-  -webkit-transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+  -webkit-transition: width 0.3s ease-in-out, height 0.3s ease-in-out, border-radius 0.3s ease-in-out,
     padding 0.2s;
-  transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out, border-radius 0.3s ease-in-out,
     padding 0.2s;
   -webkit-transform: translate(-100%, -50%);
   -ms-transform: translate(-100%, -50%);

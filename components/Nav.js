@@ -15,7 +15,7 @@ export default function Nav() {
 
   const ref = useRef()
 
-  const myRefname= useRef(null);
+  const inputRef= useRef(null);
 
   const { cart, cartOpen, setCartOpen } = useContext(CartContext)
 
@@ -55,20 +55,20 @@ export default function Nav() {
 
   useEffect(() => {
     function handleClickOutside(event) {
-    if (ref.current && !ref.current.contains(event.target)) {
-      setShowMenu(true)
-      setIsOpen(false);
-    }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
+      if (ref.current && !ref.current.contains(event.target)) {
+        setShowMenu(true)
+        setIsOpen(false);
+      }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [ref])
 
   const handleFocus = () => {
     setIsOpen(true);
-    !isOpen ? myRefname.current.focus() : setIsOpen(false);
+    !isOpen ? inputRef.current.focus() : setIsOpen(false);
  }
 
 
@@ -95,6 +95,7 @@ export default function Nav() {
             if (!isClickInside1 && !isClickInside2) {
               input.classList.remove("square")
               searchBtn.classList.remove("close");
+              input.value = ""
             }
           });
         `
@@ -166,7 +167,7 @@ export default function Nav() {
               id="search_content" 
               autocomplete="off">
                 <input 
-                ref={myRefname} 
+                ref={inputRef} 
                 onClick={() => {
                   setShowMenu(!showMenu);
                   setIsOpen(true);

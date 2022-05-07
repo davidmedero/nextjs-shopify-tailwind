@@ -162,13 +162,13 @@ export default function CurrencyConversion() {
 
     useEffect(() => {
         function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-            setShowCurrencies(false)
-        }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
+            if (ref.current && !ref.current.contains(event.target)) {
+                setShowCurrencies(false)
+            }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [ref]);
 
