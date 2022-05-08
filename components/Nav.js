@@ -8,14 +8,16 @@ import MobileMenuButton from './MobileMenuButton'
 import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import CurrencyConversion from './CurrencyConversion'
-import Head from 'next/head'
+import FilteredProducts from './FilteredProducts'
 
 
 export default function Nav() {
 
   const ref = useRef()
 
-  const inputRef= useRef(null);
+  const inputRef = useRef();
+
+  const mobileInputRef = useRef()
 
   const { cart, cartOpen, setCartOpen } = useContext(CartContext)
 
@@ -44,20 +46,19 @@ export default function Nav() {
   const [showMenu, setShowMenu] = useState(true)
 
   const [inputState, setInputState] = useState('')
+  inputRef.current = inputState
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [mobileinputState, setMobileInputState] = useState('')
+  mobileInputRef.current = mobileinputState
 
   function toggleMenu() {
     setShowMenu(checked => !checked);
   }
-
-  console.log(inputState)
-
+  
   useEffect(() => {
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (ref.current && !ref.current.contains(event.target) && (event.target !== inputRef.current) && (event.target !== mobileInputRef.current)) {
         setShowMenu(true)
-        setIsOpen(false);
       }
       }
       document.addEventListener("mousedown", handleClickOutside);
@@ -66,65 +67,26 @@ export default function Nav() {
     };
   }, [ref])
 
-  const handleFocus = () => {
-    setIsOpen(true);
-    !isOpen ? inputRef.current.focus() : setIsOpen(false);
- }
+  const [query, setQuery] = useState("")
 
 
   return (
     <header className='border-b sticky top-0 z-20 bg-white shadow-md'>
-      <Head>
-      <script type='text/javascript'>
-        {
-          `
-          const input = document.getElementById("search-input");
-          const searchBtn = document.getElementById("search-btn");
-
-          const expand = () => {
-            searchBtn.classList.toggle("close");
-            input.classList.toggle("square");
-          };
-
-          searchBtn.addEventListener("click", expand);
-
-          document.addEventListener('click', function(event) {
-            let isClickInside1 = input.contains(event.target);
-            let isClickInside2 = searchBtn.contains(event.target);
-
-            if (!isClickInside1 && !isClickInside2) {
-              input.classList.remove("square")
-              searchBtn.classList.remove("close");
-              input.value = ""
-            }
-          });
-        `
-        }
-      </script>
-      </Head>
-        <div className='flex items-center justify-between max-w-6xl py-4 px-8 mx-auto lg:max-w-screen-xl'>
+        <div className={(showMenu ? 'flex items-center justify-between max-w-6xl py-4 px-8 mx-auto lg:max-w-screen-xl transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-6xl py-4 px-8 mx-auto lg:max-w-screen-xl xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
             <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
             </div>
             <Link href="/" passHref>
-                <a className='cursor-pointer xxs:hidden lg:!block'>
+                <a className='cursor-pointer'>
                     <span className='text-2xl pt-1 font-bold'>
                         Logo
-                    </span>
-                </a>
-            </Link>
-            <Link href="/" passHref>
-                <a className='cursor-pointer xxs:block lg:!hidden'>
-                    <span className='text-2xl pt-1 font-bold'>
-                      <span className={ (showMenu ? ('opacity-100 transition-all duration-700 ease-in-out visible') : ('opacity-0 transition-all duration-300 ease-in-out invisible')) }>
-                        Logo
-                      </span>
                     </span>
                 </a>
             </Link>
             <div className='xxs:hidden lg:!block'>
-              <div className={ (showMenu ? ('opacity-100 transition-all duration-700 ease-in-out visible') : ('opacity-0 transition-all duration-300 ease-in-out invisible')) } >
+              <div>
               {
+                showMenu ? (
                   collections.map(collection => (
                       collection.handle == "shop" ?
                       (<Link href={'/shop-brands'} >
@@ -154,38 +116,70 @@ export default function Nav() {
                           </a>
                       </Link>)
                   ))
+                ) : (
+                  <div className='flex'>
+                  <input
+                  ref={inputRef}
+                  onChange={e => setQuery(e.target.value)}
+                  autoComplete='off'
+                  autoFocus
+                  type="text" placeholder="Search..." name="input" className="border-b border-black w-[500px]" />
+                  <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute z-[-1]" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                  </div>
+                )
               }
               </div>
             </div>
-            <div className='flex items-center justify-end relative'>
-            <form 
-            ref={ref}
-            onClick={() => {
-              toggleMenu();
-              handleFocus();
-              }} 
-              id="search_content" 
-              autocomplete="off">
-                <input 
-                ref={inputRef} 
-                onClick={() => {
-                  setShowMenu(!showMenu);
-                  setIsOpen(true);
-                  }} 
-                  onChange={(e) => setInputState(e.target.value)} type="text" name="input" class="search_input" id="search-input" />
-                  <button type="reset" class="search_button" id="search-btn"></button>
-            </form>
+            <div className='flex items-center relative'>
+              <div 
+              className='relative right-5'
+              ref={ref}
+              onClick={() => {
+                toggleMenu();
+                }} >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              
             <SignInButton />
             <a 
-            className='text-lg font-bold cursor-pointer'
+            className='cursor-pointer flex justify-center items-center'
             onClick={() => setCartOpen(!cartOpen)}
             >
-                Cart {cartQuantity > 0 ? '(' + cartQuantity + ')' : ''}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke={cartQuantity > 0 ? '#ff00a7' : "currentColor"} stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg> 
+                <span className='absolute top-[8.5px] text-[12px] text-[#ff00a7] font-semibold select-none'>{cartQuantity > 0 ? cartQuantity : ''}</span>
             </a>
             <Cart cart={cart} />
             <CurrencyConversion />
             </div>
         </div>
+        <div className={!showMenu ? 'xxs:opacity-100 lg:hidden xxs:transition-opacity xxs:ease-in-out xxs:duration-500' : 'xxs:opacity-0'}>
+        <div className='xxs:absolute top-20 xxs:left-[48%] xxs:-translate-x-1/2 lg:hidden '>
+          {
+          !showMenu && (
+                  <div className='flex'>
+                    <input
+                    onChange={e => setQuery(e.target.value)}
+                    ref={mobileInputRef}
+                    autoComplete='off'
+                    autoFocus
+                    type="text" placeholder="Search..." name="input" className="border-b border-black xxs:w-[80vw] md:w-[60vw]" />
+                    <span>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute z-[-1]" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </div>)
+                  }
+              </div>
+              </div>
         {
           showSubMenu && (
           <div
@@ -239,6 +233,9 @@ export default function Nav() {
           </div>
           )
         }
+        <div className='hidden'>
+          <FilteredProducts query={query} />
+        </div>
     </header>
   )
 }
