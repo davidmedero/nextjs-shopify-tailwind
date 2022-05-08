@@ -161,16 +161,16 @@ export default function Nav() {
             </div>
         </div>
         <div className={!showMenu ? 'xxs:opacity-100 lg:hidden xxs:transition-opacity xxs:ease-in-out xxs:duration-500' : 'xxs:opacity-0'}>
-        <div className='xxs:absolute top-20 xxs:left-[48%] xxs:-translate-x-1/2 lg:hidden '>
+        <div className='xxs:absolute xxs:top-20 xxs:left-[48%] xxs:-translate-x-1/2 lg:hidden '>
           {
           !showMenu && (
-                  <div className='flex'>
+                  <div className='xxs:flex xxs:rounded-none'>
                     <input
                     onChange={e => setQuery(e.target.value)}
                     ref={mobileInputRef}
                     autoComplete='off'
                     autoFocus
-                    type="text" placeholder="Search..." name="input" className="border-b border-black xxs:w-[80vw] md:w-[60vw]" />
+                    type="text" placeholder="Search..." className="xxs:border-b-black xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none" />
                     <span>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute z-[-1]" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
