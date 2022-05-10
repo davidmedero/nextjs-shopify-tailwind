@@ -7,11 +7,13 @@ import collections from '../categories'
 import MobileMenuButton from './MobileMenuButton'
 import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
+import { Router, useRouter } from 'next/router'
 import CurrencyConversion from './CurrencyConversion'
-import FilteredProducts from './FilteredProducts'
 
 
 export default function Nav() {
+  
+  const router = useRouter()
 
   const ref = useRef()
 
@@ -67,7 +69,16 @@ export default function Nav() {
     };
   }, [ref])
 
+  const queryRef = useRef()
+
   const [query, setQuery] = useState("")
+  queryRef.current = query
+
+  useEffect(() => {
+    if (query.length > 2) {
+      router.push({pathname: `/search`, query: {query: query}});
+    }
+  }, [query])
 
 
   return (
@@ -120,7 +131,7 @@ export default function Nav() {
                   <div className='flex'>
                   <input
                   ref={inputRef}
-                  onChange={e => setQuery(e.target.value)}
+                  onChange={(e) => setQuery(e.target.value)}
                   autoComplete='off'
                   autoFocus
                   type="text" placeholder="Search..." name="input" className="border-b border-black w-[500px]" />
@@ -160,13 +171,13 @@ export default function Nav() {
             <CurrencyConversion />
             </div>
         </div>
-        <div className={!showMenu ? 'xxs:opacity-100 lg:hidden xxs:transition-opacity xxs:ease-in-out xxs:duration-500' : 'xxs:opacity-0'}>
+        <div className={!showMenu ? 'xxs:opacity-100 lg:hidden xxs:transition-opacity xxs:ease-in-out xxs:duration-700' : 'xxs:opacity-0'}>
         <div className='xxs:absolute xxs:top-20 xxs:left-[48%] xxs:-translate-x-1/2 lg:hidden '>
           {
           !showMenu && (
                   <div className='xxs:flex xxs:rounded-none'>
                     <input
-                    onChange={e => setQuery(e.target.value)}
+                    onChange={(e) => setQuery(e.target.value)}
                     ref={mobileInputRef}
                     autoComplete='off'
                     autoFocus
@@ -233,9 +244,6 @@ export default function Nav() {
           </div>
           )
         }
-        <div className='hidden'>
-          <FilteredProducts query={query} />
-        </div>
     </header>
   )
 }
