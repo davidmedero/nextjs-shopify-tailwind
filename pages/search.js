@@ -114,9 +114,29 @@ function sortByLowestPrice() {
                 </div>
                     <div className="pt-7 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                         {
+                            (sortOption === 'Best Sellers') ? (
                             displayedProducts.map(product => (
                                 <ProductCard key={product.node.id} product={product} />
                             ))
+                            ) : (sortOption === 'Newest') ? (
+                            displayedProducts.sort((a, b) => (
+                                (a.node.createdAt < b.node.createdAt) ? 1 : ((a.node.createdAt > b.node.createdAt) ? -1 : 0)
+                              )).map(product => (
+                                <ProductCard key={product.node.id} product={product} />
+                            ))
+                            ) : (sortOption === 'Highest Price') ? (
+                            displayedProducts.sort((a, b) => (
+                                (a.node.priceRange.minVariantPrice.amount < b.node.priceRange.minVariantPrice.amount) ? 1 : ((a.node.priceRange.minVariantPrice.amount > b.node.priceRange.minVariantPrice.amount) ? -1 : 0)
+                              )).map(product => (
+                                  <ProductCard key={product.node.id} product={product} />
+                              )) 
+                            ) : (sortOption === 'Lowest Price') ? (
+                            displayedProducts.sort((a, b) => (
+                                (a.node.priceRange.minVariantPrice.amount < b.node.priceRange.minVariantPrice.amount) ? -1 : ((a.node.priceRange.minVariantPrice.amount > b.node.priceRange.minVariantPrice.amount) ? 1 : 0)
+                              )).map(product => (
+                                <ProductCard key={product.node.id} product={product} />
+                            )) 
+                          ) : null
                         }
                     </div>
             </div>
