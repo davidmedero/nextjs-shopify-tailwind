@@ -10,7 +10,7 @@ const router = useRouter()
 
 const query = router.query.query
 
-const filteredProducts = products.filter(product => {
+const filteredProductsIDs = products.filter(product => {
     if (query === '') {
         return product
     } else if (product.node.title.toLowerCase().includes(query?.toLowerCase())) {
@@ -20,7 +20,7 @@ const filteredProducts = products.filter(product => {
     product.node.id
 ))
 
-const displayedProducts = products.filter(product => {
+const filteredProducts = products.filter(product => {
     if (query === '') {
         return product
     } else if (product.node.title.toLowerCase().includes(query?.toLowerCase())) {
@@ -56,11 +56,11 @@ function sortByLowestPrice() {
                     <span className="my-5">
                         <span className="text-2xl pl-1">
                         {
-                        `WE FOUND ${filteredProducts.length}`
+                        `WE FOUND ${filteredProductsIDs.length}`
                         }
                         </span>
                         { ' ' }
-                        <span className="text-2xl pl-1">{filteredProducts.length > 1 || filteredProducts.length === 0 ? 'RESULTS' : 'RESULT'}</span>
+                        <span className="text-2xl pl-1">{filteredProductsIDs.length > 1 || filteredProductsIDs.length === 0 ? 'RESULTS' : 'RESULT'}</span>
                         { ' ' }
                         <span className="text-2xl pl-1">MATCHING</span>
                         { ' ' }
@@ -115,23 +115,23 @@ function sortByLowestPrice() {
                     <div className="pt-7 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                         {
                             (sortOption === 'Best Sellers') ? (
-                            displayedProducts.map(product => (
+                            filteredProducts.map(product => (
                                 <ProductCard key={product.node.id} product={product} />
                             ))
                             ) : (sortOption === 'Newest') ? (
-                            displayedProducts.sort((a, b) => (
+                            filteredProducts.sort((a, b) => (
                                 (a.node.createdAt < b.node.createdAt) ? 1 : ((a.node.createdAt > b.node.createdAt) ? -1 : 0)
                               )).map(product => (
                                 <ProductCard key={product.node.id} product={product} />
                             ))
                             ) : (sortOption === 'Highest Price') ? (
-                            displayedProducts.sort((a, b) => (
+                            filteredProducts.sort((a, b) => (
                                 (a.node.priceRange.minVariantPrice.amount < b.node.priceRange.minVariantPrice.amount) ? 1 : ((a.node.priceRange.minVariantPrice.amount > b.node.priceRange.minVariantPrice.amount) ? -1 : 0)
                               )).map(product => (
                                   <ProductCard key={product.node.id} product={product} />
                               )) 
                             ) : (sortOption === 'Lowest Price') ? (
-                            displayedProducts.sort((a, b) => (
+                            filteredProducts.sort((a, b) => (
                                 (a.node.priceRange.minVariantPrice.amount < b.node.priceRange.minVariantPrice.amount) ? -1 : ((a.node.priceRange.minVariantPrice.amount > b.node.priceRange.minVariantPrice.amount) ? 1 : 0)
                               )).map(product => (
                                 <ProductCard key={product.node.id} product={product} />
