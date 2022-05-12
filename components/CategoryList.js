@@ -28,8 +28,8 @@ const CategoryList = ({ productsByCollection, category, product }) => {
 
   return (
     <div className="bg-white">
-        <div className="w-full mx-auto py-3 xxs:px-4 sm:px-12">
-        <div className="flex flex-row items-center text-sm pt-2 w-full">
+        <div className="mx-auto py-3 xxs:px-4 sm:px-12">
+        <div className="flex flex-wrap flex-row items-center text-sm pt-2 w-full">
           <div className="text-2xl font-semibold xxs:mb-2">{
             category !== product.handle ?
             category.toString().charAt(0).toUpperCase() + category.toString().slice(1)
@@ -104,21 +104,21 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 {category.toString().charAt(0).toUpperCase() + category.toString().slice(1)}
           </div>
           </div>
-          <div className="xxs:flex xxs:flex-row xxs:justify-between xxs:mb-6 md:hidden">
+          <div className="flex flex-row justify-between mb-6 md:hidden">
             <div>
             <div 
             onMouseOver={() => setShowSortOptions(true)}
             onMouseLeave={() => setShowSortOptions(false)}>
-                <span className="border-2 border-black p-1 pl-3 flex xxs:w-[calc(-35%+50.6vw)] sm:w-[calc(-35%+46vw)] items-center justify-between">
+                <span className="border-2 border-black p-1 pl-3 flex xxs:w-[calc(50.6vw-35%)] sm:w-[calc(46vw-35%)] items-center justify-between">
                     <span className="select-none font-semibold">SORT</span>
-                    <span><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
                 </span>
                 {
                     showSortOptions && (
-                      <div className="absolute">
+                      <div className="xxs:absolute">
                         <div className='xxs:w-[calc(-35%+53vw)] sm:w-[calc(-35%+48vw)] relative z-50 whitespace-nowrap bg-white border-2'>
                             <div 
                             onClick={() => {

@@ -1,47 +1,47 @@
 .swiper-button-prev,
 .swiper-button-next { 
-    opacity: .2 !important; 
+  opacity: .2 !important; 
 }
 
 @media (max-width: 499px) {
 .swiper-button-prev,
 .swiper-button-next { 
-    opacity: 0 !important; 
+  opacity: 0 !important; 
 }
 }  
 
 @media (min-width: 1025px) {
 .swiper-button-prev:before,
 .swiper-button-next:before {
-    position: absolute;
-    content: '';
-    top: -170px;
-    right: -150px;
-    left: -150px;
-    bottom: -170px;
-    z-index: 40;
+  position: absolute;
+  content: '';
+  top: -170px;
+  right: -150px;
+  left: -150px;
+  bottom: -170px;
+  z-index: 40;
 }  
 } 
 
 .swiper-pagination-bullet {
-    width: var(--swiper-pagination-bullet-width,var(--swiper-pagination-bullet-size,10px)) !important;
-    height: var(--swiper-pagination-bullet-height,var(--swiper-pagination-bullet-size,10px)) !important;
+  width: var(--swiper-pagination-bullet-width,var(--swiper-pagination-bullet-size,10px)) !important;
+  height: var(--swiper-pagination-bullet-height,var(--swiper-pagination-bullet-size,10px)) !important;
 } 
 
 .highlight-removal {
-    -webkit-tap-highlight-color: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active  {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 input:focus,
 textarea { 
-outline: none ! important; 
+  outline: none ! important; 
 }
 
 .divider {
@@ -71,6 +71,19 @@ and left sides of the text */
 }
 
 .react-slidedown.my-dropdown-slidedown {
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
+  transition-duration: .1s;
+  transition-timing-function: ease-in-out;
 }
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
