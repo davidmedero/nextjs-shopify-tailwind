@@ -75,55 +75,58 @@ and left sides of the text */
   transition-timing-function: ease-in-out;
 }
 
-html::-webkit-scrollbar {
-  display: none;
+@media (min-width: 500px) {
+  html::-webkit-scrollbar {
+    display: none;
+  }
+  
+  html {
+    overflow: auto;
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+  
+  .scrollhost::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollhost-container {
+    position: relative;
+    height: 99vh;
+  }
+  
+  .scrollhost {
+    overflow: auto;
+    height: 99vh;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    position: relative;
+  }
+  
+  .scroll-bar {
+    width: 15px;
+    height: 99vh;
+    right: 0;
+    top: 0px;
+    position: absolute;
+    bottom: 0px;
+    z-index: 9999;
+  }
+  
+  .scroll-thumb {
+    cursor: grab;
+    width: 8px;
+    margin-left: 4px;
+    position: absolute;
+    border-radius: 7px;
+    opacity: 1;
+    margin-top: 3px;
+    background-color: rgba(0, 0, 0, 0.55);
+    z-index: 9999;
+  }
+  
+  .scroll-thumb:active {
+    background-color: rgba(0, 0, 0, 0.85);
+  }  
 }
 
-html {
-  overflow: auto;
-  -ms-overflow-style: none;  
-  scrollbar-width: none;  
-}
-
-.scrollhost::-webkit-scrollbar {
-  display: none;
-}
-
-.scrollhost-container {
-  position: relative;
-  height: 99vh;
-}
-
-.scrollhost {
-  overflow: auto;
-  height: 99vh;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  position: relative;
-}
-
-.scroll-bar {
-  width: 15px;
-  height: 99vh;
-  right: 0;
-  top: 0px;
-  position: absolute;
-  bottom: 0px;
-  z-index: 9999;
-}
-
-.scroll-thumb {
-  cursor: grab;
-  width: 8px;
-  margin-left: 4px;
-  position: absolute;
-  border-radius: 7px;
-  opacity: 1;
-  margin-top: 3px;
-  background-color: rgba(0, 0, 0, 0.55);
-  z-index: 9999;
-}
-
-.scroll-thumb:active {
-  background-color: rgba(0, 0, 0, 0.85);
-}  
