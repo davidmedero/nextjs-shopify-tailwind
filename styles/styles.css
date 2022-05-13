@@ -75,7 +75,7 @@ and left sides of the text */
   transition-timing-function: ease-in-out;
 }
 
-/* html::-webkit-scrollbar {
+html::-webkit-scrollbar {
   display: none;
 }
 
@@ -83,7 +83,7 @@ html {
   overflow: auto;
   -ms-overflow-style: none;  
   scrollbar-width: none;  
-} */
+}
 
 .scrollhost::-webkit-scrollbar {
   display: none;
