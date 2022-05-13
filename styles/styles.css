@@ -75,8 +75,7 @@ and left sides of the text */
   transition-timing-function: ease-in-out;
 }
 
-
-html::-webkit-scrollbar {
+/* html::-webkit-scrollbar {
   display: none;
 }
 
@@ -84,7 +83,7 @@ html {
   overflow: auto;
   -ms-overflow-style: none;  
   scrollbar-width: none;  
-}
+} */
 
 .scrollhost::-webkit-scrollbar {
   display: none;
@@ -93,15 +92,14 @@ html {
 .scrollhost-container {
   position: relative;
   height: 100vh;
-  z-index: 9999;
 }
+
 .scrollhost {
   overflow: auto;
   height: 100vh;
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
-  z-index: 9999;
 }
 
 .scroll-bar {
@@ -111,7 +109,6 @@ html {
   top: 0px;
   position: absolute;
   bottom: 0px;
-  background-color: rgba(0, 0, 0, 0.35);
   z-index: 9999;
 }
 
@@ -127,7 +124,7 @@ html {
   z-index: 9999;
 }
 
-.scroll-thumb:active {
+/* .scroll-thumb:active {
   cursor: grab;
   background-color: rgba(0, 0, 0, 0.85);
-}
+}   */

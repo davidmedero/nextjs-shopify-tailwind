@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef } from "react"
 import Nav from './Nav'
 import Footer from './Footer'
+import { useRouter } from "next/router";
 
 
 const SCROLL_BOX_MIN_HEIGHT = 20;
@@ -11,6 +12,15 @@ export default function Layout({ children, className, ...restProps }) {
   const [scrollBoxTop, setScrollBoxTop] = useState(0);
   const [lastScrollThumbPosition, setScrollThumbPosition] = useState(0);
   const [isDragging, setDragging] = useState(false);
+
+  const router = useRouter();
+  
+  useEffect(()=>{
+    const handleRouteChange = () => {
+        document.querySelector('.top').scrollIntoView();
+  }
+  router.events.on('routeChangeComplete', handleRouteChange)
+  },[]);
 
   const handleMouseOver = useCallback(() => {
     !hovering && setHovering(true);
@@ -77,7 +87,7 @@ export default function Layout({ children, className, ...restProps }) {
     // newTop = newTop + parseInt(scrollTop, 10);
     newTop = Math.min(newTop, offsetHeight - scrollBoxHeight);
     setScrollBoxTop(newTop);
-  }, []);
+  }, [scrollBoxTop]);
 
   const scrollHostRef = useRef();
 
@@ -94,7 +104,7 @@ export default function Layout({ children, className, ...restProps }) {
     return function cleanup() {
       scrollHostElement.removeEventListener("scroll", handleScroll, true);
     };
-  }, [hovering]);
+  }, [scrollBoxTop]);
 
   useEffect(() => {
     //this is handle the dragging on scroll-thumb
@@ -121,7 +131,7 @@ export default function Layout({ children, className, ...restProps }) {
         {...restProps}
       >
     <div className='flex flex-col justify-between'>
-      
+      <div className="top"></div>
         <Nav />
 
         <main>
