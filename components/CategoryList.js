@@ -28,7 +28,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
 
   return (
     <div className="bg-white">
-        <div className="mx-auto py-3 xxs:px-4 sm:px-12">
+        <div className="max-w-[1930px] mx-auto py-3 xxs:px-4 sm:px-12">
         <div className="flex flex-wrap flex-row items-center text-sm pt-2 w-full">
           <div className="text-2xl font-semibold xxs:mb-2">{
             category !== product.handle ?
@@ -157,7 +157,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 </svg>
               </span>
           </div>
-            <div className="grid grid-cols-2 gap-y-10 gap-x-6 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+            <div className="xxs:-mx-4 sm:mx-0 grid grid-cols-2 gap-y-10 gap-x-6 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
               {
                 (sortOption === 'Best Sellers') ? (
                   productsByCollection.map(product => (
