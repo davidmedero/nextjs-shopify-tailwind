@@ -130,3 +130,8 @@ and left sides of the text */
   }  
 }
 
+@media (max-width: 499px) {
+  .hide {
+    display: none;
+  }
+}
