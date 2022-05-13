@@ -91,12 +91,12 @@ html {
 
 .scrollhost-container {
   position: relative;
-  height: 100vh;
+  height: 99vh;
 }
 
 .scrollhost {
   overflow: auto;
-  height: 100vh;
+  height: 99vh;
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
@@ -104,7 +104,7 @@ html {
 
 .scroll-bar {
   width: 15px;
-  height: 100vh;
+  height: 99vh;
   right: 0;
   top: 0px;
   position: absolute;
@@ -124,7 +124,6 @@ html {
   z-index: 9999;
 }
 
-/* .scroll-thumb:active {
-  cursor: grab;
+.scroll-thumb:active {
   background-color: rgba(0, 0, 0, 0.85);
-}   */
+}  
