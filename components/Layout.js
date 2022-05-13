@@ -160,7 +160,7 @@ export default function Layout({ children, className, ...restProps }) {
     </div>
       <div className={"scroll-bar"}>
         <div
-          className={"scroll-thumb hide"}
+          className={"scroll-thumb"}
           style={{ height: scrollBoxHeight, top: scrollBoxTop }}
           onMouseDown={handleScrollThumbMouseDown}
         />

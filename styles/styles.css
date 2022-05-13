@@ -75,8 +75,9 @@ and left sides of the text */
   transition-timing-function: ease-in-out;
 }
 
+@media (min-width: 500px) {
 html::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 html {
@@ -140,3 +141,10 @@ html {
   transition: opacity 0.3s;
   opacity: 1;
 }  
+}
+
+@media (max-width: 499px) {
+.scroll-thumb {
+  display: none;
+}
+}
