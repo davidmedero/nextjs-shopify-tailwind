@@ -7,11 +7,35 @@ import { useRouter } from "next/router";
 const SCROLL_BOX_MIN_HEIGHT = 20;
 
 export default function Layout({ children, className, ...restProps }) {
-  const [hovering, setHovering] = useState(false);
   const [scrollBoxHeight, setScrollBoxHeight] = useState(SCROLL_BOX_MIN_HEIGHT);
   const [scrollBoxTop, setScrollBoxTop] = useState(0);
   const [lastScrollThumbPosition, setScrollThumbPosition] = useState(0);
   const [isDragging, setDragging] = useState(false);
+
+  const [scrolling, setScrolling] = useState(false);
+  const [scrollTop, setScrollTop] = useState(0);
+
+  useEffect(() => {
+    const div = document.querySelector('.scrollhost')
+    const thumb = document.querySelector('.scroll-thumb')
+    const onScroll = () => {
+      setScrollTop(div.scrollTop);
+      setScrolling(div.scrollTop > scrollTop || div.scrollTop < scrollTop);
+    };
+    div.addEventListener("scroll", onScroll);
+
+    (function(timer) {
+        div.addEventListener('scroll', function(e) {
+          thumb.classList.add('toggleScrollThumb');
+          clearTimeout(timer);
+          timer = setTimeout(function() {
+            thumb.classList.remove('toggleScrollThumb');
+          }, 100);    
+        })
+    })();
+
+    return () => {div.removeEventListener("scroll", onScroll)};
+  }, [scrollTop]);
 
   const router = useRouter();
   
@@ -21,14 +45,6 @@ export default function Layout({ children, className, ...restProps }) {
   }
   router.events.on('routeChangeComplete', handleRouteChange)
   },[]);
-
-  const handleMouseOver = useCallback(() => {
-    !hovering && setHovering(true);
-  }, [hovering]);
-
-  const handleMouseOut = useCallback(() => {
-    !!hovering && setHovering(false);
-  }, [hovering]);
 
   const handleDocumentMouseUp = useCallback(
     e => {
@@ -122,8 +138,6 @@ export default function Layout({ children, className, ...restProps }) {
     <div className="App">
     <div
       className={"scrollhost-container"}
-      onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}
     >
       <div
         ref={scrollHostRef}
@@ -142,7 +156,7 @@ export default function Layout({ children, className, ...restProps }) {
         
     </div>
     </div>
-      <div className={"scroll-bar"} style={{ opacity: hovering ? 1 : 0 }}>
+      <div className={"scroll-bar"}>
         <div
           className={"scroll-thumb"}
           style={{ height: scrollBoxHeight, top: scrollBoxTop }}
