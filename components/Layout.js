@@ -133,6 +133,8 @@ export default function Layout({ children, className, ...restProps }) {
       document.removeEventListener("mouseleave", handleDocumentMouseUp);
     };
   }, [handleDocumentMouseMove, handleDocumentMouseUp]);
+
+
   return (
     <>
     <div className="App">
@@ -158,7 +160,7 @@ export default function Layout({ children, className, ...restProps }) {
     </div>
       <div className={"scroll-bar"}>
         <div
-          className={"scroll-thumb"}
+          className={"scroll-thumb hide"}
           style={{ height: scrollBoxHeight, top: scrollBoxTop }}
           onMouseDown={handleScrollThumbMouseDown}
         />
