@@ -37,6 +37,8 @@ export default function ProductForm({ product }) {
   
     // const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
 
+    const shopifyConversionFee = 1.015
+
     const GBPcurrency = 0.82
 
     const EURcurrency = 0.96

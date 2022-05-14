@@ -222,12 +222,14 @@ export default function Nav() {
                   }
               </div>
               </div>
+              <div className="absolute w-full flex flex-col justify-center bg-white">
+              <SlideDown className={'my-dropdown-slidedown'}>
         {
           showSubMenu && (
           <div
           onMouseEnter={() => setShowSubMenu(true)}
           onMouseLeave={() => setShowSubMenu(false)}
-          className="absolute pb-6 w-full flex flex-col justify-center shadow-md border-b bg-white">
+          className="relative pb-6 w-full flex flex-col justify-center shadow-md border-b bg-white">
               <SlideDown className={'my-dropdown-slidedown'}>
               {
             <div className="flex justify-center bg-white">
@@ -275,6 +277,8 @@ export default function Nav() {
           </div>
           )
         }
+        </SlideDown>
+        </div>
     </header>
   )
 }

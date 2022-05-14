@@ -1,6 +1,8 @@
 import ProductCard from "./ProductCard"
 import Link from "next/link"
 import { useState } from "react"
+import {SlideDown} from 'react-slidedown'
+import 'react-slidedown/lib/slidedown.css'
 
 
 const CategoryList = ({ productsByCollection, category, product }) => {
@@ -47,9 +49,11 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                     </svg>
                     </span>
                 </span>
+                <div className='absolute'>
+                <SlideDown className={'my-dropdown-slidedown'}>
                 {
-                    showSortOptions && (
-                        <div className='w-[200px] absolute z-50 whitespace-nowrap bg-white border-2'>
+                    showSortOptions ? (
+                        <div className='w-[200px] relative z-50 whitespace-nowrap bg-white border-2'>
                             <div 
                             onClick={() => {
                               sortByBestSellers();
@@ -75,8 +79,10 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             }}
                             className={sortOption === 'Lowest Price' ? 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b'}>Lowest Price</div>
                         </div>
-                    )
+                    ) : null
                 }
+                </SlideDown>
+                </div>
             </div>
             </div>
               <span className="border-2 border-black ml-5 p-1 pl-3 flex w-[200px] items-center justify-between">
