@@ -17,17 +17,21 @@ export default function Cart({ cart }) {
 
   const [currency, setCurrency] = useState('')
 
-  useEffect(() => {
-      fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
-      .then(res => res.json())
-      .then(data => setCurrencyRates(data.rates))
-  }, [])
+    // useEffect(() => {
+    //     fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+    //     .then(res => res.json())
+    //     .then(data => setCurrencyRates(data.rates))
+    // }, [])
 
-  const shopifyConversionFee = 1.015
+    // const shopifyConversionFee = 1.015
+  
+    // const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+  
+    // const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
 
-  const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+    const GBPcurrency = 0.82
 
-  const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+    const EURcurrency = 0.96
 
   useLayoutEffect(() => {
     setCurrency(JSON.parse(localStorage.getItem('current_currency')))

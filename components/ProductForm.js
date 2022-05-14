@@ -7,6 +7,8 @@ import axios from "axios"
 import Head from 'next/head'
 import Link from "next/link"
 import collections from "../categories"
+import {SlideDown} from 'react-slidedown'
+import 'react-slidedown/lib/slidedown.css'
 
 
 const fetcher = (url, id) => (
@@ -23,17 +25,21 @@ export default function ProductForm({ product }) {
 
     const [currency, setCurrency] = useState('')
 
-    useEffect(() => {
-        fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
-        .then(res => res.json())
-        .then(data => setCurrencyRates(data.rates))
-    }, [])
+    // useEffect(() => {
+    //     fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+    //     .then(res => res.json())
+    //     .then(data => setCurrencyRates(data.rates))
+    // }, [])
 
-    const shopifyConversionFee = 1.015
+    // const shopifyConversionFee = 1.015
   
-    const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+    // const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
   
-    const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+    // const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+
+    const GBPcurrency = 0.82
+
+    const EURcurrency = 0.96
   
     useLayoutEffect(() => {
       setCurrency(JSON.parse(localStorage.getItem('current_currency')))
@@ -103,7 +109,7 @@ export default function ProductForm({ product }) {
     }
 
     const increment = () => {
-        counter < 9 ? counter += 1 : null
+        counter < 9 ? counter += 1 : counter = 9
         setCounter(counter)
 
         cart.map(_ => {
@@ -122,7 +128,7 @@ export default function ProductForm({ product }) {
     }
 
     const decrement = () => {
-        counter > 1 ? counter -= 1 : null
+        counter > 1 ? counter -= 1 : counter = 1
         setCounter(counter)
 
         cart.map(_ => {
@@ -185,11 +191,69 @@ export default function ProductForm({ product }) {
 
   return (
     <div className="xxs:mt-4 md:!mt-0 py-4 pr-3 relative -top-4 md:top-0 flex flex-col w-11/12 md:w-[390px]">
+        <SlideDown className={'my-dropdown-slidedown'}>
         <Head>
             <script type='text/javascript' id={product.id}>
                 {
                     `for (let button of document.querySelectorAll(".selectSection button")) {
 
+                        let slideUp = (target, duration=500) => {
+
+                            target.style.transitionProperty = 'height, margin, padding';
+                            target.style.transitionDuration = duration + 'ms';
+                            target.style.boxSizing = 'border-box';
+                            target.style.height = target.offsetHeight + 'px';
+                            target.offsetHeight;
+                            target.style.overflow = 'hidden';
+                            target.style.height = 0;
+                            target.style.paddingTop = 0;
+                            target.style.paddingBottom = 0;
+                            target.style.marginTop = 0;
+                            target.style.marginBottom = 0;
+                            window.setTimeout( () => {
+                                  target.style.display = 'none';
+                                  target.style.removeProperty('height');
+                                  target.style.removeProperty('padding-top');
+                                  target.style.removeProperty('padding-bottom');
+                                  target.style.removeProperty('margin-top');
+                                  target.style.removeProperty('margin-bottom');
+                                  target.style.removeProperty('overflow');
+                                  target.style.removeProperty('transition-duration');
+                                  target.style.removeProperty('transition-property');
+                                  //alert("!");
+                            }, duration);
+                        }
+                    
+                        let slideDown = (target, duration=500) => {
+                    
+                            target.style.removeProperty('display');
+                            let display = window.getComputedStyle(target).display;
+                            if (display === 'none') display = 'block';
+                            target.style.display = display;
+                            let height = target.offsetHeight;
+                            target.style.overflow = 'hidden';
+                            target.style.height = 0;
+                            target.style.paddingTop = 0;
+                            target.style.paddingBottom = 0;
+                            target.style.marginTop = 0;
+                            target.style.marginBottom = 0;
+                            target.offsetHeight;
+                            target.style.boxSizing = 'border-box';
+                            target.style.transitionProperty = "height, margin, padding";
+                            target.style.transitionDuration = duration + 'ms';
+                            target.style.height = height + 'px';
+                            target.style.removeProperty('padding-top');
+                            target.style.removeProperty('padding-bottom');
+                            target.style.removeProperty('margin-top');
+                            target.style.removeProperty('margin-bottom');
+                            window.setTimeout( () => {
+                              target.style.removeProperty('height');
+                              target.style.removeProperty('overflow');
+                              target.style.removeProperty('transition-duration');
+                              target.style.removeProperty('transition-property');
+                            }, duration);
+                        }
+                    
                         let allContent = document.querySelectorAll('.content');
                 
                         for (let content of allContent) {
@@ -236,14 +300,22 @@ export default function ProductForm({ product }) {
                             }
                             
                             let allContent = document.querySelectorAll('.content');
-                
+ 
                             for (let content of allContent) {
-                                if (content.getAttribute('data-number') === button.getAttribute('data-number')) {
-                                    content.classList.toggle('toggled');
+                                let slideToggle = (target, duration = 500) => {
+                                    if (window.getComputedStyle(target).display === 'none') {
+                                      return slideDown(target, duration);
+                                    } else {
+                                      return slideUp(target, duration);
+                                    }
                                 }
-                
+                                if (content.getAttribute('data-number') === button.getAttribute('data-number')) {
+                                    slideToggle(content, 300);
+                                    content.classList.toggle('.toggled');
+                                }
                                 else if (content.getAttribute('data-number') !== button.getAttribute('data-number')) {
-                                    content.classList.remove('toggled');
+                                    slideUp(content, 300);
+                                    content.classList.remove('.toggled');
                                 }
                             }
                         });
@@ -251,6 +323,7 @@ export default function ProductForm({ product }) {
                 `}
             </script>
         </Head>
+        </SlideDown>
       <h2 className="text-2xl font-bold">{product.title}</h2>
       <span className="pb-3 text-xl">{
       currency === 'USD' ? formatter.format(product.variants.edges[0].node.priceV2.amount) :
@@ -280,7 +353,7 @@ export default function ProductForm({ product }) {
           &mdash;
         </button>
         
-        <input id="input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 text-center rounded-none w-16 py-1" type="text"  value={counter} onChange={handleChange} />
+        <input id="quantity_input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 text-center rounded-none w-16 py-1" type="text"  value={counter} onChange={handleChange} />
         
         <button 
         onClick={increment}

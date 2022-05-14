@@ -114,12 +114,7 @@ export default function yourOrders({ data, data2, product }) {
                 order.dateCreated.slice(0, order.dateCreated.length - 16)}</span></div>
   
                 <div className="mb-5"><span className="font-semibold">Total amount </span>&nbsp;
-                <span className="text-gray-600">{
-                  currency === 'USD' ? formatter.format(order.totalPrice) :
-                  currency === 'GBP' ? GBPFormatter.format(order.totalPrice) :
-                  currency === 'EUR' ? EURFormatter.format(order.totalPrice) :
-                  null
-                }</span>
+                <span className="text-gray-600">{formatter.format(order.totalPrice)}</span>
                 </div>
                 </div>
                 </div>
@@ -145,12 +140,7 @@ export default function yourOrders({ data, data2, product }) {
                               <div className="pt-3 sm:pt-6 text-gray-600">
                                 <div>{item.node.variantTitle}</div>
                                 <div>Quantity: {item.node.quantity}</div>
-                                <div>{
-                                  currency === 'USD' ? formatter.format(item.node.originalUnitPriceSet.shopMoney.amount) :
-                                  currency === 'GBP' ? GBPFormatter.format(item.node.originalUnitPriceSet.shopMoney.amount) :
-                                  currency === 'EUR' ? EURFormatter.format(item.node.originalUnitPriceSet.shopMoney.amount) :
-                                  null
-                                }</div>
+                                <div>{formatter.format(item.node.originalUnitPriceSet.shopMoney.amount)}</div>
                               </div>
                       </div>
                     </li>

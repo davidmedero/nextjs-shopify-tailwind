@@ -153,3 +153,76 @@ html {
   display: none;
 }
 }
+
+.selectSection {
+  display: flex;
+	flex-direction: column;
+  align-items: start;
+  margin-top: 10px;
+  border-bottom: 1px dotted #ddd;
+}
+
+.selectSection button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 700;
+  height: 56px;
+}
+
+.first {
+  user-select: none;
+}
+
+.second {
+  border-top: 1px dotted #ddd;
+  user-select: none;
+}
+
+.third {
+  border-top: 1px dotted #ddd;
+  user-select: none;
+}
+
+.minus {
+  display: none;
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 12px;
+}
+
+.chevron {
+  display: none;
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 12px;
+}
+
+.content {
+  display: none;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.toggled {
+  display: block;
+}
+
+.description {
+  margin-bottom: 16px;
+	color: black;
+  line-height: 18px;
+  padding-right: 5px;
+  margin-left: 35px;
+}
+
+.details {
+  margin-bottom: 16px;
+  margin-left: 36px;
+}
+
+.size {
+  margin-bottom: 16px;
+  margin-left: 36px;
+}
