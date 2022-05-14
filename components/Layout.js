@@ -11,9 +11,10 @@ export default function Layout({ children, className, ...restProps }) {
   const [scrollBoxTop, setScrollBoxTop] = useState(0);
   const [lastScrollThumbPosition, setScrollThumbPosition] = useState(0);
   const [isDragging, setDragging] = useState(false);
-
   const [scrolling, setScrolling] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
+  const scrollHostRef = useRef();
+  const scrollTrackRef = useRef();
 
   useEffect(() => {
     const div = document.querySelector('.scrollhost')
@@ -88,7 +89,6 @@ export default function Layout({ children, className, ...restProps }) {
     e.stopPropagation();
     setScrollThumbPosition(e.clientY);
     setDragging(true);
-    console.log("handleScrollThumbMouseDown");
   }, []);
 
   const handleScroll = useCallback(() => {
@@ -105,7 +105,37 @@ export default function Layout({ children, className, ...restProps }) {
     setScrollBoxTop(newTop);
   }, [scrollBoxTop]);
 
-  const scrollHostRef = useRef();
+  const handleTrackClick = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const { current: trackCurrent } = scrollTrackRef;
+      const { current: contentCurrent } = scrollHostRef;
+      if (trackCurrent && contentCurrent && (e.target !== document.getElementById("thumb"))) {
+        // First, figure out where we clicked
+        const { clientY } = e;
+        // Next, figure out the distance between the top of the track and the top of the viewport
+        const target = e.target;
+        const rect = target.getBoundingClientRect();
+        const trackTop = rect.top;
+        // We want the middle of the thumb to jump to where we clicked, so we subtract half the thumb's height to offset the position
+        const thumbOffset = -(scrollBoxHeight / 2);
+        // Find the ratio of the new position to the total content length using the thumb and track values...
+        const clickRatio =
+          (clientY - trackTop + thumbOffset) / trackCurrent.clientHeight;
+        // ...so that you can compute where the content should scroll to.
+        const scrollAmount = Math.floor(
+          clickRatio * contentCurrent.scrollHeight
+        );
+        // And finally, scroll to the new position!
+        contentCurrent.scrollTo({
+          top: scrollAmount,
+          behavior: 'smooth',
+        });
+      }
+    },
+    [scrollBoxHeight]
+  );
 
   useEffect(() => {
     const scrollHostElement = scrollHostRef.current;
@@ -158,10 +188,11 @@ export default function Layout({ children, className, ...restProps }) {
         
     </div>
     </div>
-      <div className={"scroll-bar"}>
+      <div onClick={handleTrackClick} ref={scrollTrackRef} className={"scroll-bar"}>
         <div
           className={"scroll-thumb"}
-          style={{ height: scrollBoxHeight, top: scrollBoxTop }}
+          id="thumb"
+          style={{ height: scrollBoxHeight - 8, top: scrollBoxTop }}
           onMouseDown={handleScrollThumbMouseDown}
         />
       </div>

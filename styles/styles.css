@@ -111,13 +111,14 @@ html {
   bottom: 0px;
   z-index: 9999;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .scroll-thumb {
   cursor: grab;
   width: 8px;
-
   margin-left: 4px;
+  margin-top: 3.5px;
   position: absolute;
   border-radius: 7px;
   opacity: 0;
@@ -132,7 +133,7 @@ html {
 }
 
 .scroll-thumb:active {
-  cursor: grab;
+  cursor: grabbing;
   background-color: rgba(0, 0, 0, 0.85);
 }  
 
@@ -140,6 +141,11 @@ html {
   transition: opacity 0.3s;
   opacity: 1;
 }  
+
+.scroll-bar:hover .scroll-thumb {
+  transition: opacity 0.3s;
+  opacity: 1;
+}
 }
 
 @media (max-width: 499px) {

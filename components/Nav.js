@@ -59,7 +59,9 @@ export default function Nav() {
   focusRef.current = focusState
 
   function toggleMenu() {
-    document.getElementById('input')?.value = '';
+    if (document.getElementById('input')) {
+      document.getElementById('input').value = '';
+    }
     setShowMenu(checked => !checked)
   }
 
@@ -73,7 +75,9 @@ export default function Nav() {
   useEffect(() => {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target) && (event.target !== mobileInputRef.current) && (event.target !== focusRef.current) && (event.target !== document.getElementById('input')) && (event.target !== document.getElementById('mobile-input'))) {
-        document.getElementById('input')?.value = '';
+        if (document.getElementById('input')) {
+          document.getElementById('input').value = '';
+        }
         setShowMenu(true)
       }
       }
