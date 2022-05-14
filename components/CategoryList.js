@@ -42,7 +42,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             onMouseLeave={() => setShowSortOptions(false)}>
                 <span className="border-2 border-black p-1 pl-3 flex w-[200px] items-center justify-between">
                     <span className="select-none font-semibold">SORT</span>
-                    <span><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
@@ -111,7 +111,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             onMouseLeave={() => setShowSortOptions(false)}>
                 <span className="border-2 border-black p-1 pl-3 flex xxs:w-[calc(50.6vw-35%)] sm:w-[calc(46vw-35%)] items-center justify-between">
                     <span className="select-none font-semibold">SORT</span>
-                    <span><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
@@ -119,7 +119,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 {
                     showSortOptions && (
                       <div className="xxs:absolute">
-                        <div className='xxs:w-[calc(-35%+53vw)] sm:w-[calc(-35%+48vw)] relative z-50 whitespace-nowrap bg-white border-2'>
+                        <div className='xxs:w-[calc(50.6vw-24%)] sm:w-[calc(47vw-30%)] relative z-50 whitespace-nowrap bg-white border-2'>
                             <div 
                             onClick={() => {
                               sortByBestSellers();
