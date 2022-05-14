@@ -7,7 +7,7 @@ import collections from '../categories'
 import MobileMenuButton from './MobileMenuButton'
 import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
-import { Router, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import CurrencyConversion from './CurrencyConversion'
 
 
@@ -17,9 +17,11 @@ export default function Nav() {
 
   const ref = useRef()
 
-  const inputRef = useRef();
+  const inputRef = useRef()
 
   const mobileInputRef = useRef()
+
+  const focusRef = useRef()
 
   const { cart, cartOpen, setCartOpen } = useContext(CartContext)
 
@@ -53,13 +55,25 @@ export default function Nav() {
   const [mobileinputState, setMobileInputState] = useState('')
   mobileInputRef.current = mobileinputState
 
+  const [focusState, setFocusState] = useState('')
+  focusRef.current = focusState
+
   function toggleMenu() {
-    setShowMenu(checked => !checked);
+    document.getElementById('input')?.value = '';
+    setShowMenu(checked => !checked)
   }
+
+  useEffect(()=>{
+    if (focusRef.current) {
+      focusRef.current.focus();
+    }
+  },[showMenu])
+
   
   useEffect(() => {
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target) && (event.target !== inputRef.current) && (event.target !== mobileInputRef.current)) {
+      if (ref.current && !ref.current.contains(event.target) && (event.target !== mobileInputRef.current) && (event.target !== focusRef.current) && (event.target !== document.getElementById('input')) && (event.target !== document.getElementById('mobile-input'))) {
+        document.getElementById('input')?.value = '';
         setShowMenu(true)
       }
       }
@@ -97,7 +111,7 @@ export default function Nav() {
             <div className='xxs:hidden lg:!block'>
               <div>
               {
-                showMenu ? (
+                showMenu && (
                   collections.map(collection => (
                       collection.handle == "shop" ?
                       (<Link href={'/shop-brands'} >
@@ -127,22 +141,35 @@ export default function Nav() {
                           </a>
                       </Link>)
                   ))
-                ) : (
+                )
+              }
+              {
+                !showMenu ? (
                   <div className='flex'>
                   <input
-                  ref={inputRef}
+                  ref={focusRef}
                   onChange={(e) => setQuery(e.target.value)}
                   autoComplete='off'
                   autoFocus
-                  type="text" placeholder="Search..." name="input" className="border-b border-black w-[500px]" />
+                  id='input' type="text" placeholder="Search..." name="input" className="border-b border-black w-[500px]" />
                   <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute z-[-1]" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                  </div>
+                ) : (
+                  <div className='hidden'>
+                  <input />
+                  <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                   </span>
                   </div>
                 )
               }
+               
               </div>
             </div>
             <div className='flex items-center relative'>
@@ -181,9 +208,9 @@ export default function Nav() {
                     ref={mobileInputRef}
                     autoComplete='off'
                     autoFocus
-                    type="text" placeholder="Search..." className="xxs:border-b-black xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none" />
+                    id="mobile-input" type="text" placeholder="Search..." className="xxs:border-b-black xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none" />
                     <span>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute z-[-1]" viewBox="0 0 20 20" fill="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                       </svg>
                     </span>

@@ -92,12 +92,11 @@ html {
 
 .scrollhost-container {
   position: relative;
-  height: 99vh;
 }
 
 .scrollhost {
   overflow: auto;
-  height: 99vh;
+  height: 100vh;
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
@@ -117,11 +116,11 @@ html {
 .scroll-thumb {
   cursor: grab;
   width: 8px;
+
   margin-left: 4px;
   position: absolute;
   border-radius: 7px;
   opacity: 0;
-  margin-top: 3px;
   background-color: rgba(0, 0, 0, 0.55);
   z-index: 9999;
   transition: opacity 0.3s;
