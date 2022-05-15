@@ -65,7 +65,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             ref={desktopRef}
             onMouseOver={() => setShowSortOptions(true)}
             onMouseLeave={() => setShowSortOptions(false)}
-            className='xxs:hidden lg:block'>
+            className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 lg:visible lg:relative lg:z-[1] lg:opacity-100'>
                 <span className="border-2 border-black p-1 pl-3 flex w-[200px] items-center justify-between">
                     <span className="select-none font-semibold">SORT</span>
                     <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -111,7 +111,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             <div 
             ref={tabletRef}
             onClick={() => toggleSortOptions()}
-            className='xxs:hidden md:block lg:hidden'>
+            className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 md:visible md:relative md:z-[1] md:opacity-100 lg:invisible lg:absolute lg:z-[-1] lg:opacity-0'>
                 <span className="border-2 border-black p-1 pl-3 flex w-[200px] items-center justify-between">
                     <span className="select-none font-semibold">SORT</span>
                     <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
