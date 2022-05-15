@@ -347,21 +347,23 @@ export default function ProductForm({ product }) {
               />
           ))
       }
-      <legend className='text-xl font-semibold mt-6'>Qty</legend>
-       <div className="shadow-md rounded-lg inline-block my-2 xxs:w-[142.5px] xs:!w-[142px]">
+       <div className="mt-6 rounded-md shadow-md flex justify-between my-2 xxs:w-full">
+        
+        <input id="quantity_input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full pl-3 py-1" type="text"  value={counter} onChange={handleChange} />
+
+        <span className="flex"> 
         <button 
         onClick={decrement}
-        className='text-black highlight-removal transition-all ease-in-out duration-100 px-3 rounded-l-lg py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+        className='text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
           &mdash;
         </button>
         
-        <input id="quantity_input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 text-center rounded-none w-16 py-1" type="text"  value={counter} onChange={handleChange} />
-        
         <button 
         onClick={increment}
-        className='text-black highlight-removal transition-all ease-in-out duration-100 px-3 rounded-r-lg py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+        className='text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white rounded-r-md'>
           &#xff0b;
         </button>  
+        </span>
       </div>   
       {
           available ?
@@ -370,7 +372,7 @@ export default function ProductForm({ product }) {
               addToCart(selectedVariant)
               setCounter(1)
           }}
-          className="transition-all ease-in-out duration-400 font-bold bg-amber-300 rounded-lg text-black px-2 py-3 mt-8 hover:bg-amber-400">Add to Cart</button> 
+          className={"transition-all ease-in-out duration-400 rounded-md font-bold bg-amber-300 text-black px-2 py-3 mt-8 hover:bg-amber-400"}>Add to Cart</button> 
           :
           <button 
           className="bg-gray-800 rounded-lg text-white px-2 py-3 mt-8 cursor-not-allowed">SOLD OUT!</button>

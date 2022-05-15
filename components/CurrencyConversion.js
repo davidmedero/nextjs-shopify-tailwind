@@ -103,7 +103,7 @@ export default function CurrencyConversion() {
     const currencyCode = currency === 'USD' ? 'US' : currency === 'GBP' ? 'GB' : currency === 'EUR' ? 'FR' : 'US'
     
     useEffect(async () => {
-        if (storedCartRef.current && cart.length === 1) {
+        if (storedCartRef.current && storedCartRef.current[0] && storedCartRef.current[0][0] && cart.length === 1) {
             if (storedCartRef.current[0][0].variantQuantity > 1) {
                 clearCart()
                 setCartOpen(true)
@@ -120,7 +120,7 @@ export default function CurrencyConversion() {
                 localStorage.setItem("checkout_id", JSON.stringify(storedCart))
             }
         }
-        if (storedCartRef.current && cart.length > 1) {
+        if (storedCartRef.current && storedCartRef.current[0] && storedCartRef.current[0][0] && cart.length > 1) {
             clearCart()
             const newArray = []
             for (let i of storedCartRef.current[0]) {
