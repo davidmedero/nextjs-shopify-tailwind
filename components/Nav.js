@@ -234,7 +234,7 @@ export default function Nav() {
               {
             <div className="flex justify-center bg-white">
               {subcategories[categoryIndex].map(subcategory => (
-                <div onClick={() => setShowSubMenu(false)}>
+                <div>
                     {
                     subcategory.handle === "" ? (
                         <div className="relative right-5">
@@ -244,7 +244,7 @@ export default function Nav() {
                         </div>
                     ) : 
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle}>
-                        <div className="relative right-5">
+                        <div onClick={() => setShowSubMenu(false)} className="relative right-5">
                             <a className='font-semibold flex p-6 cursor-pointer hover:bg-pink-100'>
                                 {subcategory.title}
                             </a>
@@ -254,7 +254,7 @@ export default function Nav() {
                   {subcategory.sub_subcollections?.map(sub_subcategory => (
                       subcategory.handle === "" ? (
                         <Link href={'/' + categoryHandle + '/' + sub_subcategory.handle}>
-                        <div className="relative right-5">
+                        <div onClick={() => setShowSubMenu(false)} className="relative right-5">
                           <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100'>
                             {sub_subcategory.title}
                           </a>
@@ -262,7 +262,7 @@ export default function Nav() {
                     </Link> 
                       ) :
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
-                        <div className="relative right-5">
+                        <div onClick={() => setShowSubMenu(false)} className="relative right-5">
                           <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100'>
                             {sub_subcategory.title}
                           </a>
