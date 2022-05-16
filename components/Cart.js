@@ -163,6 +163,7 @@ export default function Cart({ cart }) {
                                     </Link>
                                     </h3>
                                     <p className="ml-4">{
+                                      currency === '' ? formatter.format(product.variantPrice) :
                                       currency === 'USD' ? formatter.format(product.variantPrice) :
                                       currency === 'GBP' ? GBPFormatter.format(Math.ceil(product.variantPrice * GBPcurrency * shopifyConversionFee)) :
                                       currency === 'EUR' ? EURFormatter.format(Math.ceil(product.variantPrice * EURcurrency * shopifyConversionFee)) :
@@ -215,6 +216,7 @@ export default function Cart({ cart }) {
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <p>Subtotal</p>
                       <p>{
+                          currency === '' ? formatter.format(cartTotal) :
                           currency === 'USD' ? formatter.format(cartTotal) :
                           currency === 'GBP' ? GBPFormatter.format(cartTotal) :
                           currency === 'EUR' ? EURFormatter.format(cartTotal) :

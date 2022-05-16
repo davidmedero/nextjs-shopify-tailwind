@@ -328,6 +328,7 @@ export default function ProductForm({ product }) {
         </SlideDown>
       <h2 className="text-2xl font-bold">{product.title}</h2>
       <span className="pb-3 text-xl">{
+      currency === '' ? formatter.format(product.variants.edges[0].node.priceV2.amount) :
       currency === 'USD' ? formatter.format(product.variants.edges[0].node.priceV2.amount) :
       currency === 'GBP' ? GBPFormatter.format(Math.ceil(product.variants.edges[0].node.priceV2.amount * GBPcurrency * shopifyConversionFee)) :
       currency === 'EUR' ? EURFormatter.format(Math.ceil(product.variants.edges[0].node.priceV2.amount * EURcurrency * shopifyConversionFee)) :
@@ -349,18 +350,18 @@ export default function ProductForm({ product }) {
       }
        <div className="mt-6 rounded-md shadow-md flex justify-between my-2 xxs:w-full">
         
-        <input id="quantity_input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full pl-3 py-1" type="text"  value={counter} onChange={handleChange} />
+        <input id="quantity_input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full rounded-l-md pl-3 py-2" type="text"  value={counter} onChange={handleChange} />
 
         <span className="flex"> 
         <button 
         onClick={decrement}
-        className='text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+        className='border-t border-b border-l text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
           &mdash;
         </button>
         
         <button 
         onClick={increment}
-        className='text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white rounded-r-md'>
+        className='border text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-gray-200 active:bg-black active:text-white rounded-r-md'>
           &#xff0b;
         </button>  
         </span>

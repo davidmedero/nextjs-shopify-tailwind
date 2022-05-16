@@ -62,6 +62,7 @@ const ProductCard = ({ product }) => {
         <h3 className="mt-4 xxs:ml-2 sm:ml-0 text-lg font-medium text-gray-900">{title}</h3>
         <p className='mt-1 xxs:ml-2 sm:ml-0 text-sm text-gray-700'>
           {
+            currency === '' ? formatter.format(price) :
             currency === 'USD' ? formatter.format(price) :
             currency === 'GBP' ? GBPFormatter.format(Math.ceil(price * GBPcurrency * shopifyConversionFee)) :
             currency === 'EUR' ? EURFormatter.format(Math.ceil(price * EURcurrency * shopifyConversionFee)) :

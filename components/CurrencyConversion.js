@@ -5,7 +5,7 @@ import { createCheckout, updateCheckout } from '../lib/shopify'
 
 export default function CurrencyConversion() {
 
-    const { cart, clearCart, setCart, setCartOpen, checkoutId, setCheckoutId, setCheckoutUrl } = useContext(CartContext)
+    const { cart, addToCart, clearCart, setCart, setCartOpen, checkoutId, setCheckoutId, setCheckoutUrl } = useContext(CartContext)
 
     const ref = useRef()
 
@@ -23,7 +23,7 @@ export default function CurrencyConversion() {
 
     checkoutIdRef.current = checkoutId
 
-    const [currentCurrency, setCurrentCurrency] = useState('USD')
+    const [currentCurrency, setCurrentCurrency] = useState('')
 
     const [showCurrencies, setShowCurrencies] = useState(false)
 
@@ -39,6 +39,7 @@ export default function CurrencyConversion() {
 
         storedCart.map(el => {
             if (el.buyerIdentity !== undefined) {
+                console.log(el.buyerIdentity)
                 currentCurrency === 'USD' ? {
                     ...el.buyerIdentity,
                     countryCode: 'US'
@@ -102,31 +103,33 @@ export default function CurrencyConversion() {
 
     const currencyCode = currency === 'USD' ? 'US' : currency === 'GBP' ? 'GB' : currency === 'EUR' ? 'FR' : 'US'
     
-    useEffect(async () => {
-        if (storedCartRef.current && storedCartRef.current[0] && storedCartRef.current[0][0] && cart.length === 1) {
-            if (storedCartRef.current[0][0].variantQuantity > 1) {
-                clearCart()
-                setCartOpen(true)
-                let newCart = []
-                newCart = [...CartRef.current, storedCartRef.current[0][0]]
-                setCart(newCart)
-                await updateCheckout(checkoutIdRef.current, newCart)
-                localStorage.setItem("checkout_id", JSON.stringify(storedCart))
-            } else {
-                clearCart()
-                setCartOpen(true)
-                setCart([storedCartRef.current[0][0]])
-                await createCheckout(storedCartRef.current[0][0].id, storedCartRef.current[0][0].variantQuantity, currencyCode)
-                localStorage.setItem("checkout_id", JSON.stringify(storedCart))
+    useEffect(() => {
+        if (currentCurrency !== '') {
+            for (let i of storedCart) {
+                if ((Object.prototype.toString.call(storedCart[0]) !== '[object Array]')) {
+                    console.log('object')
+                    clearCart()
+                    setCartOpen(true)
+                    addToCart(storedCart[0])
+                    localStorage.setItem("checkout_id", JSON.stringify(storedCart))
+                }
+                if ((Object.prototype.toString.call(storedCart[0]) === '[object Array]') && (storedCart[0].length === 1)) {
+                    console.log('array')
+                    clearCart()
+                    setCartOpen(true)
+                    addToCart(JSON.parse(JSON.stringify(storedCart[0]).replace(/[\[\]']+/g,'')))
+                    localStorage.setItem("checkout_id", JSON.stringify(storedCart))
+                }
             }
-        }
-        if (storedCartRef.current && storedCartRef.current[0] && storedCartRef.current[0][0] && cart.length > 1) {
-            clearCart()
-            const newArray = []
-            for (let i of storedCartRef.current[0]) {
-                newArray.push(i)
+            if ((storedCart[0]?.length > 1) && (cart.length > 1)) {
+                console.log('many')
+                clearCart()
+                const newArray = []
+                for (let i of storedCart[0]) {
+                    newArray.push(i)
+                }
+                setCartState(newArray)
             }
-            setCartState(newArray)
         }
     }, [storedCart])
 
@@ -189,7 +192,14 @@ export default function CurrencyConversion() {
     return (
       <div className="flex flex-col ml-4 cursor-pointer relative select-none">
         <div ref={ref} onClick={() => toggleCurrencies()}>
-            {currentCurrency}
+            {
+              (currentCurrency === 'USD' || currentCurrency === 'GBP' || currentCurrency === 'EUR') ? '' : (
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>  
+              ) 
+            }
+                {currentCurrency}
             {
             showCurrencies && (
                 <div className="border absolute top-8 bg-white flex flex-col right-[1px]">
