@@ -87,7 +87,7 @@ export default function ProductPageContent({ product }) {
             navigation={true}
             pagination={{ clickable: true }}
             className="w-full"
-            loop="true"
+            loop={true}
           >
             {images}
           </Swiper>
