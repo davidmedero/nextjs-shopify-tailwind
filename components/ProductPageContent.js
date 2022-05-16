@@ -83,7 +83,8 @@ export default function ProductPageContent({ product }) {
         <div className="lg:hidden w-full flex justify-center md:mr-[calc(15%-100px)] md:max-w-[432px] bg-white">
             <Swiper
             style={{ '--swiper-navigation-color': '#000', '--swiper-pagination-color': '#000' }}
-            navigation
+            cssMode={true}
+            navigation={true}
             pagination={{ clickable: true }}
             className="w-full"
             loop="true"

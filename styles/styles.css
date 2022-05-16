@@ -3,26 +3,6 @@
   opacity: .2 !important; 
 }
 
-@media (max-width: 499px) {
-.swiper-button-prev,
-.swiper-button-next { 
-  opacity: 0 !important; 
-}
-}  
-
-@media (min-width: 1025px) {
-.swiper-button-prev:before,
-.swiper-button-next:before {
-  position: absolute;
-  content: '';
-  top: -170px;
-  right: -150px;
-  left: -150px;
-  bottom: -170px;
-  z-index: 40;
-}  
-} 
-
 .swiper-pagination-bullet {
   width: var(--swiper-pagination-bullet-width,var(--swiper-pagination-bullet-size,10px)) !important;
   height: var(--swiper-pagination-bullet-height,var(--swiper-pagination-bullet-size,10px)) !important;
