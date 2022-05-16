@@ -28,7 +28,7 @@
     "react-slidedown": "^2.4.7",
     "react-swipeable": "^6.2.0",
     "sass": "^1.49.7",
-    "swiper": "^8.0.6",
+    "swiper": "^8.1.5",
     "swr": "^1.2.2",
     "vercel": "^24.0.0"
   },
