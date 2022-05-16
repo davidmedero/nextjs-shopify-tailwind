@@ -193,10 +193,10 @@ export default function Nav() {
             className='cursor-pointer flex justify-center items-center'
             onClick={() => setCartOpen(!cartOpen)}
             >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke={cartQuantity > 0 ? '#ff00a7' : "currentColor"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke={cartQuantity > 0 ? '#ff00a7' : "currentColor"} stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg> 
-                <span className='absolute top-[8.5px] text-[12px] text-[#ff00a7] font-semibold select-none'>{cartQuantity > 0 ? cartQuantity : ''}</span>
+                <span className='absolute top-[12px] text-[12px] text-[#ff00a7] font-semibold select-none'>{cartQuantity > 0 ? cartQuantity : ''}</span>
             </a>
             <Cart cart={cart} />
             <CurrencyConversion />

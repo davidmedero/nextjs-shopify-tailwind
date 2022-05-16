@@ -6,7 +6,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 export default function ProductOptions({ name, values, selectedOptions, setOptions }) {
 
-    const [selected, setSelected] = useState(`Select a ${name}`)
+    const [selected, setSelected] = useState(`Select a ${name}...`)
 
   return (
     <fieldset>
@@ -14,8 +14,8 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
     <div className="mt-2">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <Listbox.Button className="border relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-md shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500">
-            <span className="block truncate">{selected}</span>
+          <Listbox.Button className="border relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-md shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-pink-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500">
+            <span className="block truncate xxs:text-center">{selected}</span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
               <SelectorIcon
                 className="w-5 h-5 text-gray-400"
@@ -43,7 +43,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                   value={value}
                   className={({ active }) =>
                     `border-b border-gray-100  cursor-pointer select-none relative py-2 pl-10 pr-4 ${
-                      active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'
+                      active ? 'text-pink-900 bg-pink-100' : 'text-gray-900'
                     }`
                   }
                 >
@@ -58,7 +58,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                       </span>
                       {selected ? (
                         <span
-                          className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                          className="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-600">
                           <CheckIcon className="w-5 h-5" aria-hidden="true" />
                         </span>
                       ) : null}

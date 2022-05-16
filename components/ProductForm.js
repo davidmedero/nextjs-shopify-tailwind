@@ -350,7 +350,7 @@ export default function ProductForm({ product }) {
       }
        <div className="mt-6 rounded-md shadow-md flex justify-between my-2 xxs:w-full">
         
-        <input id="quantity_input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full rounded-l-md pl-3 py-2" type="text"  value={counter} onChange={handleChange} />
+        <input id="quantity_input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full xxs:rounded-l-md pl-[52px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
 
         <span className="flex"> 
         <button 
@@ -373,10 +373,10 @@ export default function ProductForm({ product }) {
               addToCart(selectedVariant)
               setCounter(1)
           }}
-          className={"transition-all ease-in-out duration-400 rounded-md font-bold bg-amber-300 text-black px-2 py-3 mt-8 hover:bg-amber-400"}>Add to Cart</button> 
+          className={"shadow-md transition-all ease-in-out duration-400 rounded-md font-bold bg-pink-300 text-black px-2 py-3 mt-5 hover:bg-pink-400"}>Add to Cart</button> 
           :
           <button 
-          className="bg-gray-800 rounded-lg text-white px-2 py-3 mt-8 cursor-not-allowed">SOLD OUT!</button>
+          className="bg-gray-800 rounded-lg text-white px-2 py-3 mt-5 cursor-not-allowed">SOLD OUT!</button>
       }
     <div className="mt-6">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
