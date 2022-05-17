@@ -9,7 +9,7 @@ import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import { useRouter } from 'next/router'
 import CurrencyConversion from './CurrencyConversion'
-import { isChrome, isIPhone13, isIPad13 } from 'react-device-detect'
+import { isChrome, isIPhone13, isIPad13, isMobile } from 'react-device-detect'
 
 
 export default function Nav() {
@@ -201,7 +201,7 @@ export default function Nav() {
             </a>
             <Cart cart={cart} />
             {
-              (isChrome && isIPhone13) ? <CurrencyConversion /> : null
+              (isChrome && isMobile && isIPhone13) ? <CurrencyConversion /> : null
             }
             </div>
         </div>
