@@ -200,9 +200,7 @@ export default function Nav() {
                 <span className='absolute z-[-1] top-[12px] text-[12px] text-[#ff00a7] font-semibold select-none'>{cartQuantity > 0 ? cartQuantity : ''}</span>
             </a>
             <Cart cart={cart} />
-            {
-              (isChrome && isMobile && isIPhone13) ? <CurrencyConversion /> : null
-            }
+            <CurrencyConversion />
             </div>
         </div>
         <div className={!showMenu ? 'xxs:opacity-100 lg:hidden xxs:transition-opacity xxs:ease-in-out xxs:duration-700' : 'xxs:opacity-0'}>

@@ -193,7 +193,6 @@ export default function ProductForm({ product }) {
 
   return (
     <div className="xxs:mt-4 md:!mt-0 py-4 pr-3 relative -top-4 md:top-0 flex flex-col w-11/12 md:w-[390px]">
-        <SlideDown className={'my-dropdown-slidedown'}>
         <Head>
             <script type='text/javascript' id={product.id}>
                 {
@@ -325,7 +324,6 @@ export default function ProductForm({ product }) {
                 `}
             </script>
         </Head>
-        </SlideDown>
       <h2 className="text-2xl font-bold">{product.title}</h2>
       <span className="pb-3 text-xl">{
       currency === '' ? formatter.format(product.variants.edges[0].node.priceV2.amount) :
