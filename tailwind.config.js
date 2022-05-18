@@ -17,5 +17,7 @@ module.exports = {
     borderRadius: ['responsive', 'first', 'last'],
     borderWidth: ['responsive', 'first', 'last']
   },
-  plugins: [],
+  plugins: [
+    require('autoprefixer')
+  ],
 }
