@@ -236,12 +236,12 @@ export async function getServerSideProps({ req, res }) {
     customers(first:1, query:"email:'${email}") {
       edges {
         node {
-          orders(first: 5) {
+          orders(first: 20) {
             edges {
               node {
                 id
                 createdAt
-                fulfillments(first: 5) {
+                fulfillments(first: 20) {
                   deliveredAt
                   trackingInfo {
                     url
@@ -253,7 +253,7 @@ export async function getServerSideProps({ req, res }) {
                     amount
                   }
                 }
-                lineItems(first: 5) {
+                lineItems(first: 10) {
                   edges {
                     node {
                       image {
