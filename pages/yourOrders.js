@@ -168,10 +168,10 @@ export default function yourOrders({ data, data2, product }) {
 
 
 export async function getServerSideProps({ req, res }) {
-  res.setHeader(
-    'Cache-Control',
-    'private, max-age=1, stale-while-revalidate=86400'
-  )
+  // res.setHeader(
+  //   'Cache-Control',
+  //   'private, max-age=1, stale-while-revalidate=86400'
+  // )
 
   const session = await getSession({ req })
   const email = session?.user.email
