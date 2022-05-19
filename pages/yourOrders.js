@@ -333,7 +333,7 @@ export async function getServerSideProps({ req, res }) {
             data,
             data2,
             product,
-            fallback: 'blocking' 
+            fallback: 'true' 
           },
         }
     } catch (error) {
