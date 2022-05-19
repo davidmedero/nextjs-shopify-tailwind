@@ -170,7 +170,7 @@ export default function yourOrders({ data, data2, product }) {
 export async function getServerSideProps({ req, res }) {
   res.setHeader(
     'Cache-Control',
-    'private, max-age=1, stale-while-revalidate=2592000'
+    'private, max-age=20, stale-while-revalidate=2592000'
   )
 
   const session = await getSession({ req })
