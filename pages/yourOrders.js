@@ -168,10 +168,10 @@ export default function yourOrders({ data, data2, product }) {
 
 
 export async function getServerSideProps({ req, res }) {
-  res.setHeader(
-    'Cache-Control',
-    'private, max-age=10, stale-while-revalidate=60'
-  )
+  // res.setHeader(
+  //   'Cache-Control',
+  //   'private, max-age=10, stale-while-revalidate=60'
+  // )
 
   const session = await getSession({ req })
   const email = session?.user.email
@@ -332,8 +332,9 @@ export async function getServerSideProps({ req, res }) {
           props: { 
             data,
             data2,
-            product
-          }, 
+            product,
+            fallback: 'blocking' 
+          },
         }
     } catch (error) {
         throw new Error("Data not fetched")

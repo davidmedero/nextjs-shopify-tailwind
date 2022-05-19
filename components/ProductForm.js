@@ -346,7 +346,7 @@ export default function ProductForm({ product }) {
       }
        <div className="mt-6 rounded-md shadow-md flex justify-between my-2 xxs:w-full">
         
-        <input id="quantity_input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full xxs:rounded-l-md xxs:rounded-r-none pl-[52px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
+        <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full xxs:rounded-l-md xxs:rounded-r-none pl-[52px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
 
         <span className="flex"> 
         <button 
