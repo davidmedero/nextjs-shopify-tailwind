@@ -191,6 +191,7 @@ export default function Nav() {
               
             <SignInButton />
             <a 
+            id='slide-toggle'
             className='cursor-pointer flex justify-center items-center'
             onClick={() => setCartOpen(!cartOpen)}
             >

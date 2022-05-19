@@ -172,17 +172,18 @@ export default function Cart({ cart }) {
                                   </div>
                                   <p className="mt-1 text-sm text-gray-500">{product.variantTitle}</p>
                                 </div>
-                                <div className="flex-1 flex items-end justify-between text-sm">
-                                    <div className="shadow-md rounded-lg inline-block mt-2 xxs:w-[111px] xs:!w-[130.4px]">
+                                <div className="flex-1 flex items-end justify-between  text-sm">
+                                    <div className="rounded-md flex shadow-md flex-row max-w-[150px]">
+                                      
+                                      <input id="mobile_quantity_input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = product.variantQuantity} className="border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full xxs:rounded-l-md xxs:rounded-r-none py-2 text-center" type="text" value={product.variantQuantity} onChange={(e) => handleChange(product.id, e.target.value)} />
                                       <button 
                                       onClick={() => decrement(product.id)}
-                                      className='highlight-removal transition-all ease-in-out duration-100 px-3 rounded-l-lg py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+                                      className='border-t border-b border-l text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
                                         &mdash;
                                       </button>
-                                          <input id="mobile_quantity_input" inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = product.variantQuantity} className="transition-all ease-in-out duration-100 relative z-50 focus:outline-2 outline-blue-400 caret-indigo-400 text-center rounded-none xxs:w-9 xs:!w-14 py-1 font-semibold" type="text" value={product.variantQuantity} onChange={(e) => handleChange(product.id, e.target.value)} />
                                       <button 
                                       onClick={() => increment(product.id)}
-                                      className='highlight-removal transition-all ease-in-out duration-100 px-3 rounded-r-lg py-1 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+                                      className='border text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-gray-200 active:bg-black active:text-white rounded-r-md'>
                                         &#xff0b;
                                       </button>  
                                 </div>   
@@ -193,8 +194,10 @@ export default function Cart({ cart }) {
                                       updateState(product.id);
                                     }}
                                     type="button" 
-                                    className="font-medium text-gray-500 hover:text-gray-800">
-                                      Remove
+                                    className="xxs:ml-8 font-medium text-gray-500 hover:text-gray-800 hover:scale-150 transition-transform ">
+                                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                      </svg>
                                     </button>
                                   </div>
                                 </div>
