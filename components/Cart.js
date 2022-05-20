@@ -179,7 +179,7 @@ export default function Cart({ cart }) {
                                 <div className="flex-1 flex items-end justify-between  text-sm">
                                     <div className="rounded-md flex shadow-md flex-row max-w-[150px]">
                                       
-                                      <input id="mobile_quantity_input" autoComplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = product.variantQuantity} className="border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full xxs:rounded-l-md xxs:rounded-r-none py-[6px] text-center" type="text" value={product.variantQuantity} onChange={(e) => handleChange(product.id, e.target.value)} />
+                                      <input id="mobile_quantity_input" autoComplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = product.variantQuantity} className="text-base  border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full xxs:rounded-l-md xxs:rounded-r-none py-[6px] text-center" type="text" value={product.variantQuantity} onChange={(e) => handleChange(product.id, e.target.value)} />
                                       <button 
                                       onClick={() => decrement(product.id)}
                                       className='border-t border-b border-l text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-[6px] font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
@@ -202,7 +202,7 @@ export default function Cart({ cart }) {
                                       updateState(product.id);
                                     }}
                                     type="button" 
-                                    className="relative bottom-1 xxs:ml-8 font-medium text-gray-500 hover:text-gray-800 hover:scale-150 transition-transform ">
+                                    className="relative bottom-2 xxs:ml-4 font-medium text-gray-500 hover:text-gray-800 hover:scale-150 transition-transform ">
                                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                       <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                       </svg>
