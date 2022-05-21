@@ -1,5 +1,6 @@
 export async function ShopifyData(query) {
     const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESSTOKEN
+    const domain = process.env.SHOPIFY_STORE_DOMAIN
     
     const URL = `https://${domain}/api/2022-01/graphql.json`
 
