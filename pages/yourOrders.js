@@ -5,6 +5,7 @@ import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import Shopify from '@shopify/shopify-api'
 import Link from 'next/link'
 import { orderedProducts } from './api/orderedProducts'
+import { ShopifyData } from "./api/shopifyData"
 
 
 export default function yourOrders({ data, data2, product }) {
@@ -171,28 +172,28 @@ export async function getServerSideProps({ req, res }) {
 
   const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESSTOKEN
   
-  async function ShopifyData(query) {
-    const URL = `https://${domain}/api/2022-01/graphql.json`
+  // async function ShopifyData(query) {
+  //   const URL = `https://${domain}/api/2022-01/graphql.json`
 
-    const options = {
-        endpoint : URL,
-        method: "POST",
-        headers: {
-            "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ query })
-    }
+  //   const options = {
+  //       endpoint : URL,
+  //       method: "POST",
+  //       headers: {
+  //           "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
+  //           "Accept": "application/json",
+  //           "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({ query })
+  //   }
 
-    try {
-        const data = await fetch(URL, options)
+  //   try {
+  //       const data = await fetch(URL, options)
 
-        return data
-        } catch (error) {
-        throw new Error("Data not fetched")
-        }
-    }
+  //       return data
+  //       } catch (error) {
+  //       throw new Error("Data not fetched")
+  //       }
+  //   }
     
     async function create(email, password) {
       const query = `
