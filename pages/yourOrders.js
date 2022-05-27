@@ -4,8 +4,8 @@ import Image from 'next/image'
 import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import Shopify from '@shopify/shopify-api'
 import Link from 'next/link'
-import { getAllProducts, getProduct } from "../lib/shopify"
-import { useLayoutEffect, useState } from "react"
+import { orderedProducts } from './api/orderedProducts'
+// import { ShopifyData } from "./api/shopifyData"
 
 
 export default function yourOrders({ data, data2, product }) {
@@ -42,15 +42,6 @@ export default function yourOrders({ data, data2, product }) {
       items: order.node.lineItems.edges
     }
   })
-
-  const [currency, setCurrency] = useState('')
-
-  useLayoutEffect(() => {
-    setCurrency(JSON.parse(localStorage.getItem('current_currency')))
-    window.addEventListener('storage', () => {
-      setCurrency(JSON.parse(localStorage.getItem('current_currency')))
-    })
-  }, [])
 
 
   return (
@@ -168,10 +159,10 @@ export default function yourOrders({ data, data2, product }) {
 
 
 export async function getServerSideProps({ req, res }) {
-  res.setHeader(
-    'Cache-Control',
-    'private, max-age=20, stale-while-revalidate=2592000'
-  )
+  // res.setHeader(
+  //   'Cache-Control',
+  //   'private, max-age=20, stale-while-revalidate=2592000'
+  // )
 
   const session = await getSession({ req })
   const email = session?.user.email
@@ -305,20 +296,6 @@ export async function getServerSideProps({ req, res }) {
           }
         }))
 
-        const products = await getAllProducts()
-
-        const paths = products.map(item => {
-        const product = String(item.node.handle)
-
-            return {
-                params: { product }
-            }
-        })
-
-        const handles = paths.map(item => item.params.product)
-
-        const product = await getProduct(...handles)
-
         if (!session) {
           return {
             redirect: {
@@ -327,6 +304,8 @@ export async function getServerSideProps({ req, res }) {
             },
           }
         }
+
+        const product = await orderedProducts()
 
         return {
           props: { 
@@ -339,4 +318,3 @@ export async function getServerSideProps({ req, res }) {
         throw new Error("Data not fetched")
     }
 }
-
