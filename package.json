@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start"
   },
@@ -44,6 +44,7 @@
     "@types/react-dom": "^17.0.11",
     "@types/tailwindcss": "^3.0.10",
     "autoprefixer": "^10.4.7",
+    "cross-env": "^7.0.3",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",
     "prettier-plugin-tailwindcss": "^0.1.1",

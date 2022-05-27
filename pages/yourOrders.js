@@ -181,53 +181,53 @@ export async function getServerSideProps({ req, res }) {
 
   const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESSTOKEN
   
-  async function ShopifyData(query) {
-    const URL = `https://${domain}/api/2022-01/graphql.json`
+  // async function ShopifyData(query) {
+  //   const URL = `https://${domain}/api/2022-01/graphql.json`
 
-    const options = {
-        endpoint : URL,
-        method: "POST",
-        headers: {
-            "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ query })
-    }
+  //   const options = {
+  //       endpoint : URL,
+  //       method: "POST",
+  //       headers: {
+  //           "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
+  //           "Accept": "application/json",
+  //           "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({ query })
+  //   }
 
-    try {
-        const data = await fetch(URL, options)
+  //   try {
+  //       const data = await fetch(URL, options)
 
-        return data
-        } catch (error) {
-        throw new Error("Data not fetched")
-        }
-    }
+  //       return data
+  //       } catch (error) {
+  //       throw new Error("Data not fetched")
+  //       }
+  //   }
     
-    async function create(email, password) {
-      const query = `
-      mutation {
-        customerCreate(input: { email: "${email}", password: "${password}" }) {
-          customer {
-            email
-          }
-        }
-      }
-      `
-      const response = await ShopifyData(query)
+  //   async function create(email, password) {
+  //     const query = `
+  //     mutation {
+  //       customerCreate(input: { email: "${email}", password: "${password}" }) {
+  //         customer {
+  //           email
+  //         }
+  //       }
+  //     }
+  //     `
+  //     const response = await ShopifyData(query)
     
-      return response
-    }
+  //     return response
+  //   }
 
-    const generateRandomPassword = function (length, randomString="") {
-      randomString += Math.random().toString(20).substring(2, length);
-      if (randomString.length > length) return randomString.slice(0, length);
-      return generateRandomPassword(length, randomString);
-    }
+  //   const generateRandomPassword = function (length, randomString="") {
+  //     randomString += Math.random().toString(20).substring(2, length);
+  //     if (randomString.length > length) return randomString.slice(0, length);
+  //     return generateRandomPassword(length, randomString);
+  //   }
 
-    const password = generateRandomPassword(40)
+  //   const password = generateRandomPassword(40)
 
-    create(email, password)
+  //   create(email, password)
 
   const URL = `https://${domain}/admin/api/2022-01/graphql.json`
 

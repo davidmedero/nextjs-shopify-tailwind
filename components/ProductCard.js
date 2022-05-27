@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
 
   const { handle, title } = product.node
 
-  const { altText, originalSrc } = product.node.images.edges[0].node
+  // const { altText, originalSrc } = product.node.images.edges[0].node
 
   const price = product.node.priceRange.minVariantPrice.amount
 
@@ -48,7 +48,7 @@ const ProductCard = ({ product }) => {
       <a className="group">
         <div className="w-full bg-gray-200 overflow-hidden">
             <div className="relative group-hover:opacity-75 w-full h-full">
-                <Image
+                {/* <Image
                     src={originalSrc}
                     alt={altText}
                     width='600' 
@@ -56,7 +56,7 @@ const ProductCard = ({ product }) => {
                     layout="responsive" 
                     objectFit="cover"
                     style={{display: 'inline-block', width: 'full' }}
-                />
+                /> */}
             </div>
         </div>
         <h3 className="mt-4 xxs:ml-2 sm:ml-0 text-lg font-medium text-gray-900">{title}</h3>

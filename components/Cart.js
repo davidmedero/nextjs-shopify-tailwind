@@ -49,21 +49,18 @@ export default function Cart({ cart }) {
       cartTotal += Math.ceil(item?.variantPrice * cartCurrency) * item?.variantQuantity
   })
 
-  const [inputValue, setInputValue] = useState(1);
-
   const increment = (product_id) => {
     let item = cart.find(el => el.id === product_id)
-    item.variantQuantity += 1
-    setInputValue(item.variantQuantity)
-    updateCartQuantity(item)
+    if (item.variantQuantity < 9) {
+      item.variantQuantity += 1
+      updateCartQuantity(item)
+    }
   }
 
   const decrement = (product_id) => {
     let item = cart.find(el => el.id === product_id)
-    setInputValue(item.variantQuantity)
     if (item.variantQuantity > 1) {
       item.variantQuantity -= 1
-      setInputValue(item.variantQuantity)
       updateCartQuantity(item)
     }
   }
@@ -71,14 +68,16 @@ export default function Cart({ cart }) {
   const handleChange = (id, e) => {
     let item = cart.find(el => el.id === id)
     item.variantQuantity = Number.parseFloat(e)
-    setInputValue(item.variantQuantity)
     updateCartQuantity(item)
+    
+    if (isNaN(item.variantQuantity)) {
+      item.variantQuantity = 1
+    }
   }
 
   const updateState = (id) => {
     let item = cart.find(el => el.id === id)
     item.variantQuantity = 1
-    setInputValue(item.variantQuantity)
   }
 
   const handlers = useSwipeable({
