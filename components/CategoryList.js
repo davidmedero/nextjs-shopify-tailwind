@@ -1,9 +1,10 @@
 import ProductCard from "./ProductCard"
 import Link from "next/link"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useLayoutEffect } from "react"
 import {SlideDown} from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import ReactPaginate from "react-paginate"
+import { isMobile } from 'react-device-detect'
 
 
 const CategoryList = ({ productsByCollection, category, product }) => {
@@ -18,6 +19,18 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   const changePage = ({ selected }) => {
     setPageNumber(selected)
   }
+
+  useEffect(() => {
+    localStorage.setItem('pageNumber', JSON.stringify(pageNumber))
+  }, [pageNumber])
+
+  useLayoutEffect(() => {
+    if (localStorage.getItem('pageNumber')) {
+      setPageNumber(JSON.parse(localStorage.getItem('pageNumber')))
+    } else {
+        localStorage.setItem('pageNumber', JSON.stringify(pageNumber))
+    }
+  }, [])
 
   const [showSortOptions, setShowSortOptions] = useState(false)
 
@@ -274,15 +287,22 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             </div>
            </div>
            <ReactPaginate 
-              previousLabel={"Previous"}
-              nextLabel={"Next"}
+              previousLabel={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-[4.3px] absolute flex" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>}
+              nextLabel={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-[5px] absolute flex" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>}
+              pageRangeDisplayed={isMobile ? 1 : 3}
+              marginPagesDisplayed={1}
               pageCount={pageCount}
               onPageChange={changePage}
               containerClassName={"paginationBttns"}
               previousLinkClassName={"previousBttn"}
               nextLinkClassName={"nextBttn"}
               disabledClassName={"paginationDisabled"}
-              activeClassName={"paginationActive"}/>
+              activeClassName={"paginationActive"}
+              forcePage={pageNumber}/>
           </div>
   )
 }

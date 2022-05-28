@@ -208,27 +208,41 @@ html {
 }
 
 .paginationBttns {
-  list-style: none;
   display: flex;
   justify-content: center;
-  margin: 90px 0 auto;
+  margin: 90px auto 0 auto;
+  padding: 10px;
 }
 
 .paginationBttns a {
-  padding: 10px;
-  margin: 8px;
-  border-radius: 5px;
-  border: 1px solid black;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  padding: 10px 13px 10px 13px;
   color: black;
   cursor: pointer;
 }
 
+.previousBttn  {
+  border-left: 1px solid;
+  border-radius: 5px 0 0 5px;
+  padding-left: 18px !important;
+}
+
+.nextBttn {
+  border-right: 1px solid;
+  border-radius: 0 5px 5px 0;
+  padding-right: 18px !important;
+}
+
 .paginationBttns a:hover {
-  color: white;
   background-color: rgb(251 207 232);
 }
 
 .paginationActive a {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
   color: white;
   background-color: rgb(219 39 119);
 }

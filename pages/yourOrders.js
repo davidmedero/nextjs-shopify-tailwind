@@ -5,7 +5,6 @@ import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import Shopify from '@shopify/shopify-api'
 import Link from 'next/link'
 import { orderedProducts } from './api/orderedProducts'
-// import { ShopifyData } from "./api/shopifyData"
 
 
 export default function yourOrders({ data, data2, product }) {
@@ -159,10 +158,10 @@ export default function yourOrders({ data, data2, product }) {
 
 
 export async function getServerSideProps({ req, res }) {
-  // res.setHeader(
-  //   'Cache-Control',
-  //   'private, max-age=20, stale-while-revalidate=2592000'
-  // )
+  res.setHeader(
+    'Cache-Control',
+    'no-cache'
+  )
 
   const session = await getSession({ req })
   const email = session?.user.email
