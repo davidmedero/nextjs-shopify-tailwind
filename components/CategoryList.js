@@ -3,9 +3,21 @@ import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
 import {SlideDown} from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
+import ReactPaginate from "react-paginate"
 
 
 const CategoryList = ({ productsByCollection, category, product }) => {
+
+  const [products, setProducts] = useState(productsByCollection)
+  const [pageNumber, setPageNumber] = useState(0)
+  const productsPerPage = 20
+  const productsVisited = pageNumber * productsPerPage
+
+  const pageCount = Math.ceil(products.length / productsPerPage)
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected)
+  }
 
   const [showSortOptions, setShowSortOptions] = useState(false)
 
@@ -236,31 +248,41 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             <div className="xxs:-mx-4 sm:mx-0 grid grid-cols-2 gap-y-10 gap-x-6 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
               {
                 (sortOption === 'Best Sellers') ? (
-                  productsByCollection.map(product => (
+                  products.slice(productsVisited, productsVisited + productsPerPage).map(product => (
                     <ProductCard key={product.node.id} product={product} />
-                ))
+                )) 
                 ) : (sortOption === 'Newest') ? (
-                  [...productsByCollection].sort((a, b) => (
+                  [...products].sort((a, b) => (
                     (a.node.createdAt < b.node.createdAt) ? 1 : ((a.node.createdAt > b.node.createdAt) ? -1 : 0)
-                  )).map(product => (
+                  )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
                       <ProductCard key={product.node.id} product={product} />
                   ))
                 ) : (sortOption === 'Highest Price') ? (
-                  [...productsByCollection].sort((a, b) => (
-                    (a.node.priceRange.minVariantPrice.amount < b.node.priceRange.minVariantPrice.amount) ? 1 : ((a.node.priceRange.minVariantPrice.amount > b.node.priceRange.minVariantPrice.amount) ? -1 : 0)
-                  )).map(product => (
+                  [...products].sort((a, b) => (
+                    (b.node.priceRange.minVariantPrice.amount - a.node.priceRange.minVariantPrice.amount)
+                  )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
                       <ProductCard key={product.node.id} product={product} />
                   )) 
                 ) : (sortOption === 'Lowest Price') ? (
-                  [...productsByCollection].sort((a, b) => (
-                      (a.node.priceRange.minVariantPrice.amount < b.node.priceRange.minVariantPrice.amount) ? -1 : ((a.node.priceRange.minVariantPrice.amount > b.node.priceRange.minVariantPrice.amount) ? 1 : 0)
-                    )).map(product => (
+                  [...products].sort((a, b) => (
+                      (a.node.priceRange.minVariantPrice.amount - b.node.priceRange.minVariantPrice.amount)
+                    )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
                         <ProductCard key={product.node.id} product={product} />
                     ))
                 ) : null
               }
             </div>
            </div>
+           <ReactPaginate 
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              pageCount={pageCount}
+              onPageChange={changePage}
+              containerClassName={"paginationBttns"}
+              previousLinkClassName={"previousBttn"}
+              nextLinkClassName={"nextBttn"}
+              disabledClassName={"paginationDisabled"}
+              activeClassName={"paginationActive"}/>
           </div>
   )
 }

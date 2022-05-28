@@ -206,3 +206,29 @@ html {
   margin-bottom: 16px;
   margin-left: 36px;
 }
+
+.paginationBttns {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 90px 0 auto;
+}
+
+.paginationBttns a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid black;
+  color: black;
+  cursor: pointer;
+}
+
+.paginationBttns a:hover {
+  color: white;
+  background-color: rgb(251 207 232);
+}
+
+.paginationActive a {
+  color: white;
+  background-color: rgb(219 39 119);
+}
