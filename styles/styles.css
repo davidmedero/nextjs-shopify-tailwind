@@ -211,8 +211,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0;
-  padding: 0;
+  margin: auto;
 }
 
 .paginationBttns a {
@@ -222,7 +221,8 @@ html {
   color: black;
   cursor: pointer;
   padding: 10px;
-  margin: 0;
+  margin: auto;
+  height: 40px;
 }
 
 .paginationBttns a:hover {
@@ -241,7 +241,6 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
   border-right: 1px solid black;
   border-radius: 0 5px 5px 0;
 }
@@ -259,7 +258,6 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
   border-left: 1px solid black;
   border-radius: 5px 0 0 5px;
 }
