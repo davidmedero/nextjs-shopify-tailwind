@@ -240,9 +240,9 @@ html {
   align-items: center;
   justify-content: center;
   transform: scale(var(--ggs,1));
-  height: 41px;
+  height: 40px;
   position: relative;
-  bottom: 8.5px;
+  bottom: 8px;
   border-right: 1px solid;
   border-radius: 0 5px 5px 0;
 }
@@ -263,9 +263,9 @@ html {
   align-items: center;
   justify-content: center;
   transform: scale(var(--ggs,1));
-  height: 41px;
+  height: 40px;
   position: relative;
-  bottom: 8.5px;
+  bottom: 8px;
 }
 
 .previousBttn::after {

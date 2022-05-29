@@ -1,5 +1,4 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
-const autoprefixer = require('autoprefixer')
 
 module.exports = {
   mode: 'jit',
@@ -17,8 +16,5 @@ module.exports = {
   variants: {
     borderRadius: ['responsive', 'first', 'last'],
     borderWidth: ['responsive', 'first', 'last']
-  },
-  plugins: [
-    autoprefixer
-  ],
+  }
 }
