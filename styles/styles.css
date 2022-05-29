@@ -209,18 +209,18 @@ html {
 
 .paginationBttns {
   display: flex;
+  align-items: center;
   justify-content: center;
   margin: 90px auto 0 auto;
-  padding: 10px;
 }
 
 .paginationBttns a {
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-left: 1px solid;
-  padding: 10px 13px 10px 13px;
   color: black;
   cursor: pointer;
+  padding: 10px 13px 10px 13px;
 }
 
 .paginationBttns a:hover {
@@ -242,7 +242,6 @@ html {
   transform: scale(var(--ggs,1));
   height: 40px;
   position: relative;
-  bottom: 8px;
   border-right: 1px solid;
   border-radius: 0 5px 5px 0;
 }
@@ -265,7 +264,6 @@ html {
   transform: scale(var(--ggs,1));
   height: 40px;
   position: relative;
-  bottom: 8px;
 }
 
 .previousBttn::after {
