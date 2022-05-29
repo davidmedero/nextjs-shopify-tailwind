@@ -188,15 +188,11 @@ export async function getServerSideProps({ req, res }) {
     }
   }
 
-    try {
-        return {
-          props: { 
-            orders,
-            orderIdUrl,
-            products
-          },
-        }
-    } catch (error) {
-        throw new Error("Data not fetched")
+    return {
+      props: { 
+        orders,
+        orderIdUrl,
+        products
+      },
     }
 }
