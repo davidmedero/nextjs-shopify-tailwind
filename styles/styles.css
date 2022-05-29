@@ -215,9 +215,9 @@ html {
 }
 
 .paginationBttns a {
-  border-top: 1px solid;
-  border-bottom: 1px solid;
-  border-left: 1px solid;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
   color: black;
   cursor: pointer;
   padding: 10px 13px 10px 13px;
@@ -239,10 +239,8 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: scale(var(--ggs,1));
-  height: 40px;
-  position: relative;
-  border-right: 1px solid;
+  padding: 14px 13px 14px 13px !important;
+  border-right: 1px solid black;
   border-radius: 0 5px 5px 0;
 }
 
@@ -250,27 +248,25 @@ html {
   content: "";
   width: 10px;
   height: 10px;
-  border-bottom: 2px solid;
-  border-right: 2px solid;
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
   transform: rotate(-45deg);
 }
 
 .previousBttn {
-  border-left: 1px solid;
+  border-left: 1px solid black;
   border-radius: 5px 0 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: scale(var(--ggs,1));
   height: 40px;
-  position: relative;
 }
 
 .previousBttn::after {
   content: "";
   width: 10px;
   height: 10px;
-  border-bottom: 2px solid;
-  border-left: 2px solid;
+  border-bottom: 2px solid black;
+  border-left: 2px solid black;
   transform: rotate(45deg);
 }
