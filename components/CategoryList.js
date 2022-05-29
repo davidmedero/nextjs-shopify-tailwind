@@ -286,14 +286,9 @@ const CategoryList = ({ productsByCollection, category, product }) => {
               }
             </div>
            </div>
-           <div className="xxs:!relative xxs:!flex xxs:!items-center">
            <ReactPaginate 
-              previousLabel={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 xxs:ml-[4.3px] xxs:!absolute" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>}
-              nextLabel={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 xxs:ml-[5px] xxs:!absolute" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>}
+              previousLabel={""}
+              nextLabel={""}
               pageRangeDisplayed={isMobile ? 1 : 3}
               marginPagesDisplayed={1}
               pageCount={pageCount}
@@ -304,7 +299,6 @@ const CategoryList = ({ productsByCollection, category, product }) => {
               disabledClassName={"paginationDisabled"}
               activeClassName={"paginationActive"}
               forcePage={pageNumber}/>
-              </div>
           </div>
   )
 }

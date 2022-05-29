@@ -223,18 +223,6 @@ html {
   cursor: pointer;
 }
 
-.previousBttn  {
-  border-left: 1px solid;
-  border-radius: 5px 0 0 5px;
-  padding-left: 18px !important;
-}
-
-.nextBttn {
-  border-right: 1px solid;
-  border-radius: 0 5px 5px 0;
-  padding-right: 18px !important;
-}
-
 .paginationBttns a:hover {
   background-color: rgb(251 207 232);
 }
@@ -245,4 +233,46 @@ html {
   border-left: 1px solid black;
   color: white;
   background-color: rgb(219 39 119);
+}
+
+.nextBttn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(var(--ggs,1));
+  height: 41px;
+  position: relative;
+  bottom: 8.5px;
+  border-right: 1px solid;
+  border-radius: 0 5px 5px 0;
+}
+
+.nextBttn::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  transform: rotate(-45deg);
+}
+
+.previousBttn {
+  border-left: 1px solid;
+  border-radius: 5px 0 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(var(--ggs,1));
+  height: 41px;
+  position: relative;
+  bottom: 8.5px;
+}
+
+.previousBttn::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+  transform: rotate(45deg);
 }
