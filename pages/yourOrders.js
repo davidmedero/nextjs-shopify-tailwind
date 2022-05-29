@@ -156,7 +156,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
 export async function getServerSideProps({ req, res }) {
   res.setHeader(
     'Cache-Control',
-    'no-cache'
+    'private, max-age=10, stale-while-revalidate=59'
   )
 
   const session = await getSession({ req })
@@ -177,6 +177,8 @@ export async function getServerSideProps({ req, res }) {
     }
   }))
 
+  const products = await getAllProducts()
+
   if (!session) {
     return {
       redirect: {
@@ -185,8 +187,6 @@ export async function getServerSideProps({ req, res }) {
       },
     }
   }
-
-  const products = await getAllProducts()
 
     try {
         return {
