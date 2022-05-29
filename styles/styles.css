@@ -212,6 +212,7 @@ html {
   align-items: center;
   justify-content: center;
   margin: 20px auto 10px auto;
+  overflow: hidden;
 }
 
 .paginationBttns a {
@@ -221,7 +222,8 @@ html {
   color: black;
   cursor: pointer;
   padding: 10px;
-  height: 41px;
+  height: 41px !important;
+  overflow: hidden;
 }
 
 .paginationBttns a:hover {
