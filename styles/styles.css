@@ -211,7 +211,6 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 90px auto 10px auto;
 }
 
 .paginationBttns a {
@@ -254,12 +253,12 @@ html {
 }
 
 .previousBttn {
-  border-left: 1px solid black;
-  border-radius: 5px 0 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 40px;
+  border-left: 1px solid black;
+  border-radius: 5px 0 0 5px;
 }
 
 .previousBttn:after {
