@@ -1,29 +1,25 @@
 import { signOut, useSession } from "next-auth/react"
 import { getSession } from "next-auth/react"
 import Image from 'next/image'
-import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
+import { formatter } from "../utils/helpers"
 import Shopify from '@shopify/shopify-api'
 import Link from 'next/link'
-import { orderedProducts } from './api/orderedProducts'
+import { getAllProducts, getAllOrders } from "../lib/shopify"
 
 
-export default function yourOrders({ data, data2, product }) {
-  
-  const products = product.collections.edges[0].node.products.edges.map(el => el.node)
-  
+export default function yourOrders({ orders, orderIdUrl, products }) {
+
   const handler = products.map(product => {
     const obj = {}
     obj[product.name] = product.value
 
     return {
-      handle: product.handle,
-      title: product.title
+      handle: product.node.handle,
+      title: product.node.title
     }
   })
 
   const { data: session } = useSession()
-
-  const orders = data.data.customers.edges[0]?.node.orders.edges ? data.data.customers.edges[0].node.orders.edges : []
 
   orders.sort((a, b) => -a.node.createdAt.localeCompare(b.node.createdAt))
 
@@ -58,7 +54,7 @@ export default function yourOrders({ data, data2, product }) {
             <div>
               {allOrderSpecs.map(order => {
 
-              const orderStatusUrl = JSON.parse(data2).body.orders.map(el => {
+              const orderStatusUrl = JSON.parse(orderIdUrl).body.orders.map(el => {
                 if (el.id == order.id.slice(20, order.id.length)) {
                   return el.order_status_url
                 }
@@ -169,148 +165,35 @@ export async function getServerSideProps({ req, res }) {
   const domain = process.env.SHOPIFY_STORE_DOMAIN
   const adminAccessToken = process.env.SHOPIFY_ADMIN_ACCESSTOKEN
 
-  const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESSTOKEN
-  
-  // async function ShopifyData(query) {
-  //   const URL = `https://${domain}/api/2022-01/graphql.json`
+  const client = new Shopify.Clients.Rest(`${domain}`, `${adminAccessToken}`)
 
-  //   const options = {
-  //       endpoint : URL,
-  //       method: "POST",
-  //       headers: {
-  //           "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
-  //           "Accept": "application/json",
-  //           "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify({ query })
-  //   }
+  const orders = await getAllOrders(email)
 
-  //   try {
-  //       const data = await fetch(URL, options)
+  const orderIdUrl = JSON.stringify(await client.get({
+    path: 'orders',
+    query: {
+      "fields":"id, order_status_url",
+      "status":"any"
+    }
+  }))
 
-  //       return data
-  //       } catch (error) {
-  //       throw new Error("Data not fetched")
-  //       }
-  //   }
-    
-  //   async function create(email, password) {
-  //     const query = `
-  //     mutation {
-  //       customerCreate(input: { email: "${email}", password: "${password}" }) {
-  //         customer {
-  //           email
-  //         }
-  //       }
-  //     }
-  //     `
-  //     const response = await ShopifyData(query)
-    
-  //     return response
-  //   }
-
-  //   const generateRandomPassword = function (length, randomString="") {
-  //     randomString += Math.random().toString(20).substring(2, length);
-  //     if (randomString.length > length) return randomString.slice(0, length);
-  //     return generateRandomPassword(length, randomString);
-  //   }
-
-  //   const password = generateRandomPassword(40)
-
-  //   create(email, password)
-
-  const URL = `https://${domain}/admin/api/2022-01/graphql.json`
-
-  const query = `
-  query {
-    customers(first:1, query:"email:'${email}") {
-      edges {
-        node {
-          orders(first: 20) {
-            edges {
-              node {
-                id
-                createdAt
-                fulfillments(first: 20) {
-                  deliveredAt
-                  trackingInfo {
-                    url
-                  }
-                }
-                subtotalLineItemsQuantity
-                subtotalPriceSet {
-                  shopMoney {
-                    amount
-                  }
-                }
-                lineItems(first: 10) {
-                  edges {
-                    node {
-                      image {
-                        originalSrc
-                      }
-                      title
-                      variantTitle
-                      quantity
-                      originalUnitPriceSet {
-                        shopMoney {
-                          amount
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
     }
   }
-  `
 
-    const options = {
-        endpoint : URL,
-        method: "POST",
-        headers: {
-            "X-Shopify-Access-Token": adminAccessToken,
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ query })
-    }
-
-    const client = new Shopify.Clients.Rest(`${domain}`, `${adminAccessToken}`)
+  const products = await getAllProducts()
 
     try {
-        const data = await fetch(URL, options).then(response => {
-           return response.json()
-        })
-
-        const data2 = JSON.stringify(await client.get({
-          path: 'orders',
-          query: {
-            "fields":"id, order_status_url",
-            "status":"any"
-          }
-        }))
-
-        if (!session) {
-          return {
-            redirect: {
-              destination: '/',
-              permanent: false,
-            },
-          }
-        }
-
-        const product = await orderedProducts()
-
         return {
           props: { 
-            data,
-            data2,
-            product
+            orders,
+            orderIdUrl,
+            products
           },
         }
     } catch (error) {
