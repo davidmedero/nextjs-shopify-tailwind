@@ -222,8 +222,6 @@ html {
   color: black;
   cursor: pointer;
   padding: 10px;
-  height: 41px !important;
-  overflow: hidden;
 }
 
 .paginationBttns a:hover {
