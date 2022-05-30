@@ -289,7 +289,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
            <ReactPaginate 
               previousLabel={""}
               nextLabel={""}
-              pageRangeDisplayed={isMobile ? 1 : 3}
+              pageRangeDisplayed={3}
               marginPagesDisplayed={1}
               pageCount={pageCount}
               onPageChange={changePage}
