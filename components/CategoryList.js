@@ -11,7 +11,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
 
   const [products, setProducts] = useState(productsByCollection)
   const [pageNumber, setPageNumber] = useState(0)
-  const productsPerPage = 20
+  const productsPerPage = 1
   const productsVisited = pageNumber * productsPerPage
 
   const pageCount = Math.ceil(products.length / productsPerPage)

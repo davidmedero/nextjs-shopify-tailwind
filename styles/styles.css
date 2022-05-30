@@ -211,17 +211,15 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px auto 10px auto;
+  margin: 90px auto 10px auto;
   overflow: hidden;
 }
 
 .paginationBttns a {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
   color: black;
   cursor: pointer;
-  padding: 10px;
+  padding: 15px;
+  font-size: 20px;
 }
 
 .paginationBttns a:hover {
@@ -229,9 +227,6 @@ html {
 }
 
 .paginationActive a {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
   color: white;
   background-color: rgb(219 39 119);
 }
@@ -240,16 +235,16 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: 1px solid black;
-  border-radius: 0 5px 5px 0;
 }
 
 .nextBttn:after {
   content: "";
-  width: 10px;
-  height: 10px;
-  border-bottom: 2px solid black;
-  border-right: 2px solid black;
+  position: relative;
+  right: 2px;
+  width: 15px;
+  height: 15px;
+  border-bottom: 3px solid black;
+  border-right: 3px solid black;
   transform: rotate(-45deg);
 }
 
@@ -257,15 +252,15 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left: 1px solid black;
-  border-radius: 5px 0 0 5px;
 }
 
 .previousBttn:after {
   content: "";
-  width: 10px;
-  height: 10px;
-  border-bottom: 2px solid black;
-  border-left: 2px solid black;
+  position: relative;
+  left: 2px;
+  width: 15px;
+  height: 15px;
+  border-bottom: 3px solid black;
+  border-left: 3px solid black;
   transform: rotate(45deg);
 }
