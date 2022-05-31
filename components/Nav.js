@@ -102,7 +102,7 @@ export default function Nav() {
 
   return (
     <header className='border-b sticky top-0 z-20 bg-white shadow-md'>
-        <div className={(showMenu ? 'flex items-center justify-between max-w-6xl py-4 px-8 mx-auto lg:max-w-screen-xl transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-6xl py-4 px-8 mx-auto lg:max-w-screen-xl xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
+        <div className={(showMenu ? 'flex items-center justify-between max-w-[1930px] py-4 xxs:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-[1930px] py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
             <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
             </div>
