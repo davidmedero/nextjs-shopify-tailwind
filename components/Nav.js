@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useContext, useEffect, useState, useRef } from 'react'
+import { useContext, useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { CartContext } from '../context/shopContext'
 import Cart from './Cart'
 import SignInButton from './SignInButton'
@@ -10,6 +10,7 @@ import 'react-slidedown/lib/slidedown.css'
 import { useRouter } from 'next/router'
 import CurrencyConversion from './CurrencyConversion'
 import { isChrome, isIPhone13, isIPad13, isMobile } from 'react-device-detect'
+import Image from 'next/image'
 
 
 export default function Nav() {
@@ -24,11 +25,47 @@ export default function Nav() {
 
   const focusRef = useRef()
 
+  const [currencyRates, setCurrencyRates] = useState(0)
+
+  const [currency, setCurrency] = useState('')
+
+    // useEffect(() => {
+    //     fetch('http://api.exchangeratesapi.io/v1/latest?access_key=35ec150f1f16d6ce49fa8427128872c1&base=USD')
+    //     .then(res => res.json())
+    //     .then(data => setCurrencyRates(data.rates))
+    // }, [])
+
+    // const shopifyConversionFee = 1.015
+  
+    // const GBPcurrency = [currencyRates].map(currency => currency.GBP).join('')
+  
+    // const EURcurrency = [currencyRates].map(currency => currency.EUR).join('')
+
+    const shopifyConversionFee = 1.015
+
+    const GBPcurrency = 0.82
+
+    const EURcurrency = 0.96
+
+  useLayoutEffect(() => {
+    setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+    window.addEventListener('storage', () => {
+      setCurrency(JSON.parse(localStorage.getItem('current_currency')))
+    })
+  }, [])
+
+  const cartCurrency = currency === 'USD' ? 1 : currency === 'GBP' ? (GBPcurrency * shopifyConversionFee) : currency === 'EUR' ? (EURcurrency * shopifyConversionFee) : 1
+
   const { cart, cartOpen, setCartOpen } = useContext(CartContext)
 
   let cartQuantity = 0
   cart.map(item => {
       return (cartQuantity += item?.variantQuantity)
+  })
+
+  let cartTotal = 0
+  cart.map(item => {
+      cartTotal += Math.ceil(item?.variantPrice * cartCurrency) * item?.variantQuantity
   })
 
   const [categoryIndex, setCategoryIndex] = useState(0)
@@ -99,28 +136,30 @@ export default function Nav() {
     }
   }, [query])
 
+  const [showSubtotal, setShowSubtotal] = useState(false)
+
 
   return (
-    <header className='border-b sticky top-0 z-20 bg-white shadow-md'>
+    <header className='border-b border-b-black sticky top-0 z-20 bg-black shadow-md'>
         <div className={(showMenu ? 'flex items-center justify-between max-w-[1930px] py-4 xxs:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-[1930px] py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
             <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
             </div>
             <Link href="/" passHref>
                 <a className='cursor-pointer'>
-                    <span className='text-2xl pt-1 font-bold select-none'>
-                        Logo
+                    <span className='absolute bottom-2 text-2xl pt-1 font-bold select-none hover:scale-[1.15] transition-all ease-in-out duration-300'>
+                        <Image src="/logo.png" width="200" height="30" layout="fixed" objectFit="cover" />
                     </span>
                 </a>
             </Link>
-            <div className='xxs:hidden lg:!block'>
+            <div className='xxs:hidden lg:!block lg:relative lg:left-[70px]'>
               <div>
               {
                 showMenu && (
                   collections.map(collection => (
                       collection.handle == "shop" ?
                       (<Link href={'/shop-brands'} >
-                      <a className="p-6 hover:bg-pink-100 select-none"
+                      <a className="p-6 text-white hover:bg-[#f031ad] hover:text-black select-none"
                       data-info={JSON.stringify(collection)}
                       onMouseEnter={(e) => {
                           setShowSubMenu(true);
@@ -133,7 +172,7 @@ export default function Nav() {
                       </a>
                       </Link>) :
                       (<Link href={'/' + collection.handle} >
-                          <a className="p-6 hover:bg-pink-100 select-none"
+                          <a className="p-6 text-white hover:bg-[#f031ad] hover:text-black select-none"
                           data-info={JSON.stringify(collection)}
                           onMouseEnter={(e) => {
                               setShowSubMenu(true);
@@ -156,9 +195,9 @@ export default function Nav() {
                   onChange={(e) => setQuery(e.target.value)}
                   autoComplete='off'
                   autoFocus
-                  id='input' type="text" placeholder="Search..." name="input" className="border-b border-black w-[500px]" />
+                  id='input' type="text" placeholder="Search..." name="input" className="border-b border-b-white border-black w-[500px] text-white bg-black" />
                   <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                   </span>
@@ -167,7 +206,7 @@ export default function Nav() {
                   <div className='hidden'>
                   <input />
                   <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                   </span>
@@ -184,7 +223,7 @@ export default function Nav() {
               onClick={() => {
                 toggleMenu();
                 }} >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
@@ -194,11 +233,12 @@ export default function Nav() {
             id='slide-toggle'
             className='cursor-pointer flex justify-center items-center'
             onClick={() => setCartOpen(!cartOpen)}
+            onMouseOver={() => setShowSubtotal(true)}
+            onMouseLeave={() => setShowSubtotal(false)}
             >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hover:scale-[1.2] transition-all duration-200 ease-in-out" fill="none" viewBox="0 0 24 24" stroke={cartQuantity > 0 ? '#ff00a7' : "currentColor"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hover:scale-[1.2] transition-all duration-200 ease-in-out" fill="none" viewBox="0 0 24 24" stroke={cartQuantity > 0 ? '#ff00a7' : "white"} stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg> 
-                <span className='absolute z-[-1] top-[12px] text-[12px] text-[#ff00a7] font-semibold select-none'>{cartQuantity > 0 ? cartQuantity : ''}</span>
             </a>
             <Cart cart={cart} />
             <CurrencyConversion />
@@ -214,9 +254,9 @@ export default function Nav() {
                     ref={mobileInputRef}
                     autoComplete='off'
                     autoFocus
-                    id="mobile-input" type="text" placeholder="Search..." className="xxs:border-b-black xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none" />
+                    id="mobile-input" type="text" placeholder="Search..." className="xxs:border-b-white xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none" />
                     <span>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="none">
                       <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                       </svg>
                     </span>
@@ -224,30 +264,29 @@ export default function Nav() {
                   }
               </div>
               </div>
-              <div className="absolute w-full flex flex-col justify-center bg-white">
+              <div className="absolute w-full flex flex-col justify-center bg-black">
               <SlideDown className={'my-dropdown-slidedown'}>
         {
           showSubMenu && (
           <div
           onMouseEnter={() => setShowSubMenu(true)}
           onMouseLeave={() => setShowSubMenu(false)}
-          className="relative pb-6 w-full flex flex-col justify-center shadow-md border-b bg-white">
-              <SlideDown className={'my-dropdown-slidedown'}>
+          className="relative pb-8 w-full flex flex-col justify-center shadow-md border-b border-b-black bg-black">
               {
-            <div className="flex justify-center bg-white">
+            <div className="flex justify-center bg-black">
               {subcategories[categoryIndex].map(subcategory => (
                 <div>
                     {
                     subcategory.handle === "" ? (
-                        <div className="relative right-10">
-                        <div className='font-semibold flex p-6 pointer-events-none'>
+                        <div className="relative">
+                        <div className='font-semibold text-white flex p-6 pointer-events-none'>
                             {subcategory.title}
                         </div>
                         </div>
                     ) : 
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle}>
-                        <div onClick={() => setShowSubMenu(false)} className="relative right-10 cursor-pointer">
-                            <a className='font-semibold flex p-6 cursor-pointer hover:bg-pink-100 select-none'>
+                        <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
+                            <a className='font-semibold text-white flex p-6 cursor-pointer hover:bg-[#f031ad] hover:text-black select-none'>
                                 {subcategory.title}
                             </a>
                         </div>
@@ -256,16 +295,16 @@ export default function Nav() {
                   {subcategory.sub_subcollections?.map(sub_subcategory => (
                       subcategory.handle === "" ? (
                         <Link href={'/' + categoryHandle + '/' + sub_subcategory.handle}>
-                        <div onClick={() => setShowSubMenu(false)} className="relative right-10 cursor-pointer">
-                          <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100 select-none'>
+                        <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
+                          <a className='flex py-1 px-6 text-white cursor-pointer hover:bg-[#f031ad] hover:text-black select-none'>
                             {sub_subcategory.title}
                           </a>
                        </div>
                     </Link> 
                       ) :
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
-                        <div onClick={() => setShowSubMenu(false)} className="relative right-10 cursor-pointer">
-                          <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100 select-none'>
+                        <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
+                          <a className='flex py-1 px-6 text-white cursor-pointer hover:bg-[#f031ad] hover:text-black select-none'>
                             {sub_subcategory.title}
                           </a>
                        </div>
@@ -275,9 +314,30 @@ export default function Nav() {
               ))}
             </div>
               }
-              </SlideDown>
           </div>
           )
+        }
+        </SlideDown>
+        </div>
+        <div className="absolute right-[70px] top-[65px] w-[200px] flex flex-col justify-center">
+        <SlideDown className={'my-dropdown-slidedown'}>
+        {
+          ((showSubtotal) && (cartQuantity > 0)) ? (
+            <div className='bg-white py-2 px-4 relative flex flex-col border'>
+              <div className='flex flex-row justify-between'>
+                <span className='text-black relative'>Quantity:</span>
+                <span className='text-black relative'>{cartQuantity}</span>
+              </div>
+              <div className='flex flex-row justify-between'>
+                <span className='text-black relative'>Subtotal:</span>
+                <span className='text-black relative'>${cartTotal}</span>
+              </div>
+              </div>
+          ) : ((showSubtotal) && (cartQuantity === 0)) ? (
+            <div className='bg-white py-2 absolute right-20 w-[100px] flex justify-between'>
+              <span className='text-black relative'>Your Bag is Empty!</span>
+            </div>
+          ) : null
         }
         </SlideDown>
         </div>
