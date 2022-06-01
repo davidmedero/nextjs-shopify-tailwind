@@ -14,7 +14,7 @@ export default function Slug({ product, category, productsByCollection, products
   const router = useRouter()
   
   const { asPath } = router
-
+console.log(product)
   return (
   <>
     <main>

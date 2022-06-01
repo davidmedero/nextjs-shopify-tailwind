@@ -18,6 +18,7 @@ const fetcher = (url, id) => (
 )
 
 export default function ProductForm({ product }) {
+    console.log(product)
 
     const [currencyRates, setCurrencyRates] = useState(0)
 

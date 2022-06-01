@@ -13,7 +13,7 @@ import { handleRender } from './TooltipSlider'
 
 
 const CategoryList = ({ productsByCollection, category, product }) => {
-  console.log(productsByCollection)
+  console.log(product)
   const [products, setProducts] = useState(productsByCollection)
   const [pageNumber, setPageNumber] = useState(0)
   const productsPerPage = 1
@@ -118,11 +118,30 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   const [checkedSize, setCheckedSize] = useState({})
 
   const toggleSize = name => {
-    setCheckedSize(prevShown => ({
-      ...prevShown,
-      [name]: !prevShown[name]
-    }))
+    setCheckedSize(prev => ({
+      ...prev,
+      [name]: !prev[name]
+  }))
   }
+
+  useEffect(() => {
+      let selectedSizesArray = Object.entries(checkedSize).filter(val => !val.includes(false)).map(el => el[0])
+      let newArray = []
+      productsByCollection.map(product => {
+        product.node.variants.edges.map(el => {
+          if ((selectedSizesArray.includes(el.node.title)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
+            newArray.push(product)
+          }
+        })
+      })
+      console.log(newArray)
+      if (selectedSizesArray.length === 0) {
+        setProducts(productsByCollection)
+      } else {
+        setProducts(newArray)
+      }
+  }, [checkedSize])
+
 
   return (
     <div className="bg-white">
@@ -541,18 +560,14 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             <div className="flex flex-col mt-5">
                             {
                               sizes.map(size => (
-                                checkedSize[size] ? (
-                                  <div className="flex flex-row items-center justify-between bg-pink-300 cursor-pointer">
+                                  <div className={checkedSize[size] ? "flex flex-row items-center justify-between bg-pink-300 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-pink-200 cursor-pointer"}>
                                   <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 select-none">{size}</div>
                                     <div>
-                                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                      <svg xmlns="http://www.w3.org/2000/svg" class={checkedSize[size] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                       </svg>
                                     </div>
-                                  </div>
-                                ) : (
-                                  <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 hover:bg-pink-200 cursor-pointer select-none">{size}</div>
-                                )                              
+                                  </div>                     
                               ))
                             }
                             </div>
