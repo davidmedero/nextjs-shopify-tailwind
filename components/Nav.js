@@ -108,7 +108,7 @@ export default function Nav() {
             </div>
             <Link href="/" passHref>
                 <a className='cursor-pointer'>
-                    <span className='text-2xl pt-1 font-bold'>
+                    <span className='text-2xl pt-1 font-bold select-none'>
                         Logo
                     </span>
                 </a>
@@ -120,7 +120,7 @@ export default function Nav() {
                   collections.map(collection => (
                       collection.handle == "shop" ?
                       (<Link href={'/shop-brands'} >
-                      <a className="p-6 hover:bg-pink-100"
+                      <a className="p-6 hover:bg-pink-100 select-none"
                       data-info={JSON.stringify(collection)}
                       onMouseEnter={(e) => {
                           setShowSubMenu(true);
@@ -133,7 +133,7 @@ export default function Nav() {
                       </a>
                       </Link>) :
                       (<Link href={'/' + collection.handle} >
-                          <a className="p-6 hover:bg-pink-100"
+                          <a className="p-6 hover:bg-pink-100 select-none"
                           data-info={JSON.stringify(collection)}
                           onMouseEnter={(e) => {
                               setShowSubMenu(true);
@@ -247,7 +247,7 @@ export default function Nav() {
                     ) : 
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative right-10 cursor-pointer">
-                            <a className='font-semibold flex p-6 cursor-pointer hover:bg-pink-100'>
+                            <a className='font-semibold flex p-6 cursor-pointer hover:bg-pink-100 select-none'>
                                 {subcategory.title}
                             </a>
                         </div>
@@ -257,7 +257,7 @@ export default function Nav() {
                       subcategory.handle === "" ? (
                         <Link href={'/' + categoryHandle + '/' + sub_subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative right-10 cursor-pointer">
-                          <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100'>
+                          <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100 select-none'>
                             {sub_subcategory.title}
                           </a>
                        </div>
@@ -265,7 +265,7 @@ export default function Nav() {
                       ) :
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative right-10 cursor-pointer">
-                          <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100'>
+                          <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100 select-none'>
                             {sub_subcategory.title}
                           </a>
                        </div>

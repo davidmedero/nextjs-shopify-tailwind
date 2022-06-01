@@ -7,13 +7,13 @@ import { Dialog, Transition } from '@headlessui/react'
 import { useSwipeable } from 'react-swipeable'
 import { XIcon } from '@heroicons/react/outline'
 import ReactPaginate from "react-paginate"
-import Slider, { Range } from 'rc-slider'
+import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import TooltipSlider, { handleRender } from './TooltipSlider'
+import { handleRender } from './TooltipSlider'
 
 
 const CategoryList = ({ productsByCollection, category, product }) => {
-
+  console.log(productsByCollection)
   const [products, setProducts] = useState(productsByCollection)
   const [pageNumber, setPageNumber] = useState(0)
   const productsPerPage = 1
@@ -39,6 +39,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
 
   const [showFilterOptions, setShowFilterOptions] = useState(false)
   const [showPriceFilter, setShowPriceFilter] = useState(false)
+  const [showSizeFilter, setShowSizeFilter] = useState(false)
 
   const [showSortOptions, setShowSortOptions] = useState(false)
 
@@ -100,6 +101,28 @@ const CategoryList = ({ productsByCollection, category, product }) => {
     setMaxVal(value[1])
   }
 
+  useEffect(() => {
+    let newArray = []
+    productsByCollection.map(product => {
+      if (product.node.priceRange.minVariantPrice.amount >= minVal && product.node.priceRange.minVariantPrice.amount <= maxVal) {
+        newArray.push(product)
+      } 
+    })
+    setProducts(newArray)
+  }, [minVal, maxVal])
+
+  const sizes = [...new Set(productsByCollection.map(product => (
+    product.node.options[0].values
+  )).flat())]
+
+  const [checkedSize, setCheckedSize] = useState({})
+
+  const toggleSize = name => {
+    setCheckedSize(prevShown => ({
+      ...prevShown,
+      [name]: !prevShown[name]
+    }))
+  }
 
   return (
     <div className="bg-white">
@@ -317,7 +340,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 >
                     <div {...handlers} className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
                         <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">Filter</Dialog.Title>
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900 select-none">Filter</Dialog.Title>
                           <div className="ml-3 h-7 flex items-center">
                             <button
                                 ref={cancelButtonRef}
@@ -331,20 +354,28 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                           </div>
                         </div>
                         <div {...handlers} className="mt-8">
-                        <div>
-                            <div className="flex flex-col">
+                          <div className="flex flex-col">
+                            <div 
+                            onClick={() => setShowSizeFilter(true)}
+                            className="flex border-b justify-between items-center hover:bg-pink-100 pl-3 cursor-pointer">
+                                <span className="w-full h-[75px] flex items-center select-none">Size</span>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </span>
+                            </div>
                             <div 
                             onClick={() => setShowPriceFilter(true)}
                             className="flex border-b justify-between items-center hover:bg-pink-100 pl-3 cursor-pointer">
-                                  <span className="w-full h-[75px] flex items-center">Price</span>
-                                  <span>
-                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                                      </svg>
-                                  </span>
-                              </div>
+                                <span className="w-full h-[75px] flex items-center select-none">Price</span>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </span>
                             </div>
-                        </div>
+                          </div>
                       </div>
                     </div>
               </Transition.Child>
@@ -352,7 +383,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
           </div>
         </Dialog>
       </Transition.Root>
-      <Transition.Root show={showPriceFilter} as={Fragment}>
+      <Transition.Root show={showPriceFilter} as={Fragment} {...handlers}>
         <Dialog 
         initialFocus={cancelButtonRef}
         as="div" 
@@ -370,15 +401,15 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             >
                 <Dialog.Overlay className="absolute inset-0 overflow-hidden" />
             </Transition.Child>
-            <div className="fixed inset-y-0 right-0 sm:pl-10 max-w-full flex">
+            <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
                 <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-600"
-                enterFrom="translate-x-full"
+                enterFrom="-translate-x-[500px]"
                 enterTo="translate-x-0"
                 leave="transform transition ease-in-out duration-500 sm:duration-600"
                 leaveFrom="translate-x-0"
-                leaveTo="translate-x-full"
+                leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
                     <div className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
                         <div className="flex items-start justify-between">
@@ -392,7 +423,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">Filter</Dialog.Title>
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900 select-none">Filter</Dialog.Title>
                           <div className="ml-3 h-7 flex items-center">
                             <button
                                 ref={cancelButtonRef}
@@ -418,10 +449,20 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                               range
                               min={min}
                               max={max}
-                              defaultValue={[0, 500]}
+                              defaultValue={[minVal, maxVal]}
                               onChange={onSliderChange}
                               handleRender={handleRender}
-                              className="mt-10 !w-[85%] mx-auto"
+                              className="mt-14 !w-[85%] mx-auto"
+                              handleStyle={{
+                                borderColor: 'rgb(236 72 153)',
+                                height: 20,
+                                width: 20,
+                                backgroundColor: 'white',
+                                marginTop: "-8px",
+                                opacity: "1"
+                              }}
+                              trackStyle={{ backgroundColor: 'rgb(249 168 212)', height: 6 }}
+                              railStyle={{ backgroundColor: 'rgb(163 163 163)', height: 6 }}
                             />
                             <div className="flex justify-between mt-3 !w-[85%] mx-auto">
                               <span>$ {minVal}</span>
@@ -436,10 +477,97 @@ const CategoryList = ({ productsByCollection, category, product }) => {
           </div>
         </Dialog>
       </Transition.Root>
+      <Transition.Root show={showSizeFilter} as={Fragment} {...handlers}>
+        <Dialog 
+        initialFocus={cancelButtonRef}
+        as="div" 
+        className="fixed z-50 inset-0 overflow-hidden" 
+        onClose={() => {setShowSizeFilter(false); setShowFilterOptions(false)}}>
+            <div className="absolute inset-0">
+            <Transition.Child
+                as={Fragment}
+                enter="ease-in-out duration-500"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in-out duration-500"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+            >
+                <Dialog.Overlay className="absolute inset-0 overflow-hidden" />
+            </Transition.Child>
+            <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
+                <Transition.Child
+                as={Fragment}
+                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enterFrom="-translate-x-[500px]"
+                enterTo="translate-x-0"
+                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leaveFrom="translate-x-0"
+                leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
+                >
+                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
+                        <div className="flex items-start justify-between">
+                        <button
+                        ref={cancelButtonRef}
+                        type="button"
+                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                        onClick={() =>setShowSizeFilter(false)}>
+                        <span className="sr-only">Close panel</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </button>
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900 select-none">Filter</Dialog.Title>
+                          <div className="ml-3 h-7 flex items-center">
+                            <button
+                                ref={cancelButtonRef}
+                                type="button"
+                                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                onClick={() => {setShowSizeFilter(false); setShowFilterOptions(false)}}
+                                >
+                                <span className="sr-only">Close panel</span>
+                                <XIcon className="h-6 w-6" aria-hidden="true" />
+                                </button>
+                          </div>
+                        </div>
+                        <div className="mt-8">
+                        <div>
+                            <div className="flex flex-col">
+                            <div 
+                              className="flex border-b justify-between items-center pl-3">
+                                  <span className="w-full h-[75px] flex items-center select-none">Size</span>
+                              </div>
+                            </div>
+                            <div className="flex flex-col mt-5">
+                            {
+                              sizes.map(size => (
+                                checkedSize[size] ? (
+                                  <div className="flex flex-row items-center justify-between bg-pink-300 cursor-pointer">
+                                  <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 select-none">{size}</div>
+                                    <div>
+                                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                      </svg>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 hover:bg-pink-200 cursor-pointer select-none">{size}</div>
+                                )                              
+                              ))
+                            }
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
             <div className="xxs:-mx-4 sm:mx-0 grid grid-cols-2 gap-y-10 gap-x-6 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
               {
                 (sortOption === 'Best Sellers') ? (
-                  products.slice(productsVisited, productsVisited + productsPerPage).map(product => (
+                  [...products].slice(productsVisited, productsVisited + productsPerPage).map(product => (
                     <ProductCard key={product.node.id} product={product} />
                 )) 
                 ) : (sortOption === 'Newest') ? (

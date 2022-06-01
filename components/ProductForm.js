@@ -373,7 +373,7 @@ export default function ProductForm({ product }) {
               addToCart(selectedVariant)
               setCounter(1)
           }}
-          className={"shadow-md transition-all ease-in-out duration-400 rounded-md font-bold bg-pink-300 text-black px-2 py-3 mt-5 hover:bg-pink-400"}>Add to Cart</button> 
+          className={"shadow-md transition-all ease-in-out duration-400 rounded-md font-bold bg-pink-300 text-black px-2 py-3 mt-5 hover:bg-pink-400"}>Add to Bag</button> 
           :
           <button 
           className="bg-gray-800 rounded-lg text-white px-2 py-3 mt-5 cursor-not-allowed">SOLD OUT!</button>

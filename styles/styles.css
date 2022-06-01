@@ -228,7 +228,12 @@ html {
 
 .paginationActive a {
   color: white;
-  background-color: rgb(219 39 119);
+  background-color: rgb(244 114 182);
+}
+
+.paginationActive a:hover {
+  color: white;
+  background-color: rgb(244 114 182);
 }
 
 .nextBttn {
@@ -263,4 +268,8 @@ html {
   border-bottom: 3px solid black;
   border-left: 3px solid black;
   transform: rotate(45deg);
+}
+
+.rc-slider-handle-dragging {
+  box-shadow: 0 0 0 5px #fbcfe8 !important;
 }
