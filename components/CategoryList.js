@@ -16,7 +16,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   console.log(product)
   const [products, setProducts] = useState(productsByCollection)
   const [pageNumber, setPageNumber] = useState(0)
-  const productsPerPage = 1
+  const productsPerPage = 20
   const productsVisited = pageNumber * productsPerPage
 
   const pageCount = Math.ceil(products.length / productsPerPage)
@@ -163,7 +163,7 @@ console.log(colors)
     let newArray = []
     productsByCollection.map(product => {
       product.node.variants.edges.map(el => {
-        if (((selectedSizesArray.includes(product.node.tags[0])) || (selectedSizesArray.includes(product.node.tags[1])) || (selectedSizesArray.includes(product.node.tags[2]))) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
+        if (product.node.tags.some(product => selectedSizesArray.includes(product)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
           newArray.push(product)
         }
       })
