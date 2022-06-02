@@ -213,7 +213,7 @@ export default function Cart({ cart }) {
                           ))}
                         </ul> : 
                         <div>
-                            <p>Nothing in your Cart!</p>
+                            <p>Your Bag is Empty!</p>
                         </div>
                           }
                         

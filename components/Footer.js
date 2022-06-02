@@ -7,7 +7,7 @@ const navigation = [
 
 export default function Footer() {
   return (
-    <footer className="bg-white">
+    <footer className="bg-[#121212]">
       <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
         <nav className="flex flex-wrap justify-center">
           {

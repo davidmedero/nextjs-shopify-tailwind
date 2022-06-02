@@ -140,7 +140,7 @@ export default function Nav() {
 
 
   return (
-    <header className='border-b border-b-black sticky top-0 z-20 bg-black shadow-md'>
+    <header className='border-b-2 border-b-gray-900 sticky top-0 z-20 bg-black shadow-xl'>
         <div className={(showMenu ? 'flex items-center justify-between max-w-[1930px] py-4 xxs:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-[1930px] py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
             <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
@@ -152,14 +152,14 @@ export default function Nav() {
                     </span>
                 </a>
             </Link>
-            <div className='xxs:hidden lg:!block lg:relative lg:left-[70px]'>
+            <div className='xxs:hidden lg:!block lg:relative lg:left-[90px]'>
               <div>
               {
                 showMenu && (
                   collections.map(collection => (
                       collection.handle == "shop" ?
                       (<Link href={'/shop-brands'} >
-                      <a className="p-6 text-white hover:bg-[#f031ad] hover:text-black select-none"
+                      <a className="p-6 text-white hover:bg-[#f031ad] select-none"
                       data-info={JSON.stringify(collection)}
                       onMouseEnter={(e) => {
                           setShowSubMenu(true);
@@ -168,11 +168,11 @@ export default function Nav() {
                           }}
                           onMouseLeave={() => setShowSubMenu(false)}
                           onClick ={() => setShowSubMenu(false)}>
-                          {collection.title}
+                          {collection.title.toUpperCase()}
                       </a>
                       </Link>) :
                       (<Link href={'/' + collection.handle} >
-                          <a className="p-6 text-white hover:bg-[#f031ad] hover:text-black select-none"
+                          <a className="p-6 text-white hover:bg-[#f031ad] select-none"
                           data-info={JSON.stringify(collection)}
                           onMouseEnter={(e) => {
                               setShowSubMenu(true);
@@ -181,7 +181,7 @@ export default function Nav() {
                               }}
                               onMouseLeave={() => setShowSubMenu(false)}
                               onClick ={() => setShowSubMenu(false)}>
-                              {collection.title}
+                              {collection.title.toUpperCase()}
                           </a>
                       </Link>)
                   ))
@@ -271,7 +271,7 @@ export default function Nav() {
           <div
           onMouseEnter={() => setShowSubMenu(true)}
           onMouseLeave={() => setShowSubMenu(false)}
-          className="relative pb-8 w-full flex flex-col justify-center shadow-md border-b border-b-black bg-black">
+          className="relative pb-8 w-full flex flex-col justify-center shadow-md border-b-2 border-b-gray-900 bg-black">
               {
             <div className="flex justify-center bg-black">
               {subcategories[categoryIndex].map(subcategory => (
@@ -280,14 +280,14 @@ export default function Nav() {
                     subcategory.handle === "" ? (
                         <div className="relative">
                         <div className='font-semibold text-white flex p-6 pointer-events-none'>
-                            {subcategory.title}
+                            {subcategory.title.toUpperCase()}
                         </div>
                         </div>
                     ) : 
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                            <a className='font-semibold text-white flex p-6 cursor-pointer hover:bg-[#f031ad] hover:text-black select-none'>
-                                {subcategory.title}
+                            <a className='font-semibold text-white flex p-6 cursor-pointer hover:bg-[#f031ad] select-none'>
+                                {subcategory.title.toUpperCase()}
                             </a>
                         </div>
                     </Link>)
@@ -296,16 +296,16 @@ export default function Nav() {
                       subcategory.handle === "" ? (
                         <Link href={'/' + categoryHandle + '/' + sub_subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                          <a className='flex py-1 px-6 text-white cursor-pointer hover:bg-[#f031ad] hover:text-black select-none'>
-                            {sub_subcategory.title}
+                          <a className='flex py-1 px-6 text-white cursor-pointer hover:bg-[#f031ad] select-none'>
+                            {sub_subcategory.title.toUpperCase()}
                           </a>
                        </div>
                     </Link> 
                       ) :
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                          <a className='flex py-1 px-6 text-white cursor-pointer hover:bg-[#f031ad] hover:text-black select-none'>
-                            {sub_subcategory.title}
+                          <a className='flex py-1 px-6 text-gray-300 hover:text-white cursor-pointer hover:bg-[#f031ad] select-none'>
+                            {sub_subcategory.title.toUpperCase()}
                           </a>
                        </div>
                     </Link>)
@@ -319,23 +319,25 @@ export default function Nav() {
         }
         </SlideDown>
         </div>
-        <div className="absolute right-[70px] top-[65px] w-[200px] flex flex-col justify-center">
+        <div className="absolute right-[60px] top-[60px] w-[200px] flex flex-col justify-center">
         <SlideDown className={'my-dropdown-slidedown'}>
         {
           ((showSubtotal) && (cartQuantity > 0)) ? (
-            <div className='bg-white py-2 px-4 relative flex flex-col border'>
+            <div className='bg-black py-2 px-4 relative flex flex-col border-t-black'>
               <div className='flex flex-row justify-between'>
-                <span className='text-black relative'>Quantity:</span>
-                <span className='text-black relative'>{cartQuantity}</span>
+                <span className='text-white relative'>QUANTITY:</span>
+                <span className='text-white relative'>{cartQuantity}</span>
               </div>
               <div className='flex flex-row justify-between'>
-                <span className='text-black relative'>Subtotal:</span>
-                <span className='text-black relative'>${cartTotal}</span>
+                <span className='text-white relative'>SUBTOTAL:</span>
+                <span className='text-white relative'>${cartTotal}</span>
               </div>
               </div>
           ) : ((showSubtotal) && (cartQuantity === 0)) ? (
-            <div className='bg-white py-2 absolute right-20 w-[100px] flex justify-between'>
-              <span className='text-black relative'>Your Bag is Empty!</span>
+            <div className='bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[30px]'>
+            <div className='flex flex-row justify-between'>
+              <span className='text-white relative'>Your Bag is Empty!</span>
+            </div>
             </div>
           ) : null
         }

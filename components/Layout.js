@@ -180,7 +180,7 @@ export default function Layout({ children, className, ...restProps }) {
       <div className="top"></div>
         <Nav />
 
-        <main>
+        <main className="bg-[#121212]">
             {children}
         </main>
 

@@ -216,24 +216,26 @@ html {
 }
 
 .paginationBttns a {
-  color: black;
+  color: white;
   cursor: pointer;
   padding: 15px;
   font-size: 20px;
 }
 
 .paginationBttns a:hover {
-  background-color: rgb(251 207 232);
+  color: white;
+  background-color: #ff00a7;
+  opacity: 0.75;
 }
 
 .paginationActive a {
   color: white;
-  background-color: rgb(244 114 182);
+  background-color: #ff00a7;
 }
 
 .paginationActive a:hover {
   color: white;
-  background-color: rgb(244 114 182);
+  background-color: #ff00a7;
 }
 
 .nextBttn {
@@ -248,8 +250,8 @@ html {
   right: 2px;
   width: 15px;
   height: 15px;
-  border-bottom: 3px solid black;
-  border-right: 3px solid black;
+  border-bottom: 3px solid white;
+  border-right: 3px solid white;
   transform: rotate(-45deg);
 }
 
@@ -265,8 +267,8 @@ html {
   left: 2px;
   width: 15px;
   height: 15px;
-  border-bottom: 3px solid black;
-  border-left: 3px solid black;
+  border-bottom: 3px solid white;
+  border-left: 3px solid white;
   transform: rotate(45deg);
 }
 

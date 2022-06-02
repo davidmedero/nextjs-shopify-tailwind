@@ -40,6 +40,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   const [showFilterOptions, setShowFilterOptions] = useState(false)
   const [showPriceFilter, setShowPriceFilter] = useState(false)
   const [showSizeFilter, setShowSizeFilter] = useState(false)
+  const [showColorFilter, setShowColorFilter] = useState(false)
 
   const [showSortOptions, setShowSortOptions] = useState(false)
 
@@ -124,6 +125,20 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   }))
   }
 
+  const colors = [...new Set(productsByCollection.map(product => (
+    product.node.tags
+  )).flat())]
+
+console.log(colors)
+  const [checkedColor, setCheckedColor] = useState({})
+
+  const toggleColor = name => {
+    setCheckedColor(prev => ({
+      ...prev,
+      [name]: !prev[name]
+  }))
+  }
+
   useEffect(() => {
       let selectedSizesArray = Object.entries(checkedSize).filter(val => !val.includes(false)).map(el => el[0])
       let newArray = []
@@ -142,14 +157,33 @@ const CategoryList = ({ productsByCollection, category, product }) => {
       }
   }, [checkedSize])
 
+  useEffect(() => {
+    let selectedSizesArray = Object.entries(checkedColor).filter(val => !val.includes(false)).map(el => el[0])
+    console.log(selectedSizesArray)
+    let newArray = []
+    productsByCollection.map(product => {
+      product.node.variants.edges.map(el => {
+        if (((selectedSizesArray.includes(product.node.tags[0])) || (selectedSizesArray.includes(product.node.tags[1])) || (selectedSizesArray.includes(product.node.tags[2]))) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
+          newArray.push(product)
+        }
+      })
+    })
+    console.log(newArray)
+    if (selectedSizesArray.length === 0) {
+      setProducts(productsByCollection)
+    } else {
+      setProducts(newArray)
+    }
+  }, [checkedColor])
+
 
   return (
-    <div className="bg-white">
+    <div className="bg-[#121212]">
         <div className="max-w-[1930px] mx-auto py-3 xxs:px-4 sm:px-8">
         <div className="flex flex-wrap flex-row items-center text-sm pt-2 w-full">
-          <div className="text-2xl font-semibold xxs:mb-2">{
+          <div className="text-2xl text-white font-semibold xxs:mb-2">{
             category !== product.handle ?
-            category.toString().charAt(0).toUpperCase() + category.toString().slice(1)
+            category.toString().toUpperCase()
             : null
           }</div>
           <div className="md:ml-auto md:flex md:flex-row xxs:hidden">
@@ -159,9 +193,9 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             onMouseOver={() => setShowSortOptions(true)}
             onMouseLeave={() => setShowSortOptions(false)}
             className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 lg:visible lg:relative lg:z-[1] lg:opacity-100'>
-                <span className="border-2 border-black p-1 pl-3 flex w-[200px] items-center justify-between">
-                    <span className="select-none font-semibold">SORT</span>
-                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <span className="border-2 bg-black border-white p-1 pl-3 flex w-[200px] items-center justify-between">
+                    <span className="select-none text-white font-semibold">SORT</span>
+                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
@@ -170,31 +204,31 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 <SlideDown className={'my-dropdown-slidedown'}>
                 {
                     showSortOptions ? (
-                        <div className='w-[200px] relative z-50 whitespace-nowrap bg-white border-2'>
+                        <div className='w-[200px] text-white relative z-50 whitespace-nowrap bg-black shadow-xl border-t-0 border-2 border-gray-500'>
                             <div 
                             onClick={() => {
                               sortByBestSellers();
                               setShowSortOptions(false)
                             }}
-                            className={sortOption === 'Best Sellers' ? 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b'}>Best Sellers</div>
+                            className={sortOption === 'Best Sellers' ? 'hover:bg-gray-900 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-900 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>BEST SELLERS</div>
                             <div 
                             onClick={() => {
                               sortByNewest();
                               setShowSortOptions(false)
                             }}
-                            className={sortOption === 'Newest' ? 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b'}>Newest</div>
+                            className={sortOption === 'Newest' ? 'hover:bg-gray-900 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-900 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>NEWEST</div>
                             <div 
                             onClick={() => {
                               sortByHighestPrice();
                               setShowSortOptions(false)
                             }}
-                            className={sortOption === 'Highest Price' ? 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b'}>Highest Price</div>
+                            className={sortOption === 'Highest Price' ? 'hover:bg-gray-900 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-900 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>HIGHEST PRICE</div>
                             <div 
                             onClick={() => {
                               sortByLowestPrice();
                               setShowSortOptions(false)
                             }}
-                            className={sortOption === 'Lowest Price' ? 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b'}>Lowest Price</div>
+                            className={sortOption === 'Lowest Price' ? 'hover:bg-gray-900 w-[197px] p-3 text-[#ff00a7] cursor-pointer font-bold' : 'hover:bg-gray-900 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer'}>LOWEST PRICE</div>
                         </div>
                     ) : null
                 }
@@ -248,9 +282,9 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 </div>
             </div>
             </div>
-              <span onClick={() => setShowFilterOptions(true)} className="cursor-pointer border-2 border-black ml-5 p-1 pl-3 flex w-[200px] items-center justify-between">
-                <span className="select-none font-semibold">FILTER</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <span onClick={() => setShowFilterOptions(true)} className="cursor-pointer border-2 border-white bg-black ml-5 p-1 pl-3 flex w-[200px] items-center justify-between">
+                <span className="select-none text-white font-semibold">FILTER</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-90" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                 </svg>
               </span>
@@ -264,11 +298,13 @@ const CategoryList = ({ productsByCollection, category, product }) => {
               </a>
             </Link>
           </div>
-          &nbsp;
-            {
-              ' ' + '/' + ' '
-            }
-          &nbsp;
+            <div className="text-white">
+            &nbsp;
+              {
+                ' ' + '/' + ' '
+              }
+            &nbsp;
+            </div>
           <div className="font-semibold text-[#f1018a]">
                 {category.toString().charAt(0).toUpperCase() + category.toString().slice(1)}
           </div>
@@ -374,6 +410,16 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                         </div>
                         <div {...handlers} className="mt-8">
                           <div className="flex flex-col">
+                          <div 
+                            onClick={() => setShowColorFilter(true)}
+                            className="flex border-b justify-between items-center hover:bg-pink-100 pl-3 cursor-pointer">
+                                <span className="w-full h-[75px] flex items-center select-none">Color</span>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </span>
+                            </div>
                             <div 
                             onClick={() => setShowSizeFilter(true)}
                             className="flex border-b justify-between items-center hover:bg-pink-100 pl-3 cursor-pointer">
@@ -564,6 +610,89 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                                   <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 select-none">{size}</div>
                                     <div>
                                       <svg xmlns="http://www.w3.org/2000/svg" class={checkedSize[size] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                      </svg>
+                                    </div>
+                                  </div>                     
+                              ))
+                            }
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+      <Transition.Root show={showColorFilter} as={Fragment} {...handlers}>
+        <Dialog 
+        initialFocus={cancelButtonRef}
+        as="div" 
+        className="fixed z-50 inset-0 overflow-hidden" 
+        onClose={() => {setShowColorFilter(false); setShowFilterOptions(false)}}>
+            <div className="absolute inset-0">
+            <Transition.Child
+                as={Fragment}
+                enter="ease-in-out duration-500"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in-out duration-500"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+            >
+                <Dialog.Overlay className="absolute inset-0 overflow-hidden" />
+            </Transition.Child>
+            <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
+                <Transition.Child
+                as={Fragment}
+                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enterFrom="-translate-x-[500px]"
+                enterTo="translate-x-0"
+                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leaveFrom="translate-x-0"
+                leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
+                >
+                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
+                        <div className="flex items-start justify-between">
+                        <button
+                        ref={cancelButtonRef}
+                        type="button"
+                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                        onClick={() =>setShowColorFilter(false)}>
+                        <span className="sr-only">Close panel</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </button>
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900 select-none">Filter</Dialog.Title>
+                          <div className="ml-3 h-7 flex items-center">
+                            <button
+                                ref={cancelButtonRef}
+                                type="button"
+                                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                onClick={() => {setShowColorFilter(false); setShowFilterOptions(false)}}
+                                >
+                                <span className="sr-only">Close panel</span>
+                                <XIcon className="h-6 w-6" aria-hidden="true" />
+                                </button>
+                          </div>
+                        </div>
+                        <div className="mt-8">
+                        <div>
+                            <div className="flex flex-col">
+                            <div 
+                              className="flex border-b justify-between items-center pl-3">
+                                  <span className="w-full h-[75px] flex items-center select-none">Color</span>
+                              </div>
+                            </div>
+                            <div className="flex flex-col mt-5">
+                            {
+                              colors.map(color => (
+                                  <div className={checkedColor[color] ? "flex flex-row items-center justify-between bg-pink-300 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-pink-200 cursor-pointer"}>
+                                  <div onClick={() => toggleColor(color)} className="w-full py-4 pl-3 select-none">{color}</div>
+                                    <div>
+                                      <svg xmlns="http://www.w3.org/2000/svg" class={checkedColor[color] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                       </svg>
                                     </div>
