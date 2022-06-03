@@ -10,10 +10,11 @@ import ReactPaginate from "react-paginate"
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import { handleRender } from './TooltipSlider'
+import brands from "../brands"
 
 
 const CategoryList = ({ productsByCollection, category, product }) => {
-  console.log(product)
+
   const [products, setProducts] = useState(productsByCollection)
   const [pageNumber, setPageNumber] = useState(0)
   const productsPerPage = 20
@@ -41,6 +42,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   const [showPriceFilter, setShowPriceFilter] = useState(false)
   const [showSizeFilter, setShowSizeFilter] = useState(false)
   const [showColorFilter, setShowColorFilter] = useState(false)
+  const [showBrandsFilter, setShowBrandsFilter] = useState(false)
 
   const [showSortOptions, setShowSortOptions] = useState(false)
 
@@ -129,7 +131,6 @@ const CategoryList = ({ productsByCollection, category, product }) => {
     product.node.tags
   )).flat())]
 
-console.log(colors)
   const [checkedColor, setCheckedColor] = useState({})
 
   const toggleColor = name => {
@@ -149,7 +150,6 @@ console.log(colors)
           }
         })
       })
-      console.log(newArray)
       if (selectedSizesArray.length === 0) {
         setProducts(productsByCollection)
       } else {
@@ -158,23 +158,51 @@ console.log(colors)
   }, [checkedSize])
 
   useEffect(() => {
-    let selectedSizesArray = Object.entries(checkedColor).filter(val => !val.includes(false)).map(el => el[0])
-    console.log(selectedSizesArray)
+    let selectedColorsArray = Object.entries(checkedColor).filter(val => !val.includes(false)).map(el => el[0])
     let newArray = []
     productsByCollection.map(product => {
       product.node.variants.edges.map(el => {
-        if (product.node.tags.some(product => selectedSizesArray.includes(product)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
+        if (product.node.tags.some(tag => selectedColorsArray.includes(tag)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
           newArray.push(product)
         }
       })
     })
-    console.log(newArray)
-    if (selectedSizesArray.length === 0) {
+    if (selectedColorsArray.length === 0) {
       setProducts(productsByCollection)
     } else {
       setProducts(newArray)
     }
   }, [checkedColor])
+
+  const brandsArray = brands.map(el => el.subcollections.map(el => el.title))
+
+  const [checkedBrand, setCheckedBrand] = useState({})
+
+  const toggleBrand = name => {
+    setCheckedBrand(prev => ({
+      ...prev,
+      [name]: !prev[name]
+  }))
+  }
+
+  useEffect(() => {
+    let selectedBrandsArray = Object.entries(checkedBrand).filter(val => !val.includes(false)).map(el => el[0])
+    let newArray = []
+    productsByCollection.map(product => {
+      console.log(product.node.collections.edges.some(collection => selectedBrandsArray.includes(collection)))
+      product.node.variants.edges.map(el => {
+        if ((product.node.collections.edges.some(brand => selectedBrandsArray.includes(brand.node.title))) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
+          newArray.push(product)
+        }
+      })
+    })
+    console.log(newArray)
+    if (selectedBrandsArray.length === 0) {
+      setProducts(productsByCollection)
+    } else {
+      setProducts(newArray)
+    }
+  }, [checkedBrand])
 
 
   return (
@@ -410,6 +438,16 @@ console.log(colors)
                         </div>
                         <div {...handlers} className="mt-8">
                           <div className="flex flex-col">
+                          <div 
+                            onClick={() => setShowBrandsFilter(true)}
+                            className="flex border-b justify-between items-center hover:bg-pink-100 pl-3 cursor-pointer">
+                                <span className="w-full h-[75px] flex items-center select-none">Brand</span>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </span>
+                            </div>
                           <div 
                             onClick={() => setShowColorFilter(true)}
                             className="flex border-b justify-between items-center hover:bg-pink-100 pl-3 cursor-pointer">
@@ -693,6 +731,89 @@ console.log(colors)
                                   <div onClick={() => toggleColor(color)} className="w-full py-4 pl-3 select-none">{color}</div>
                                     <div>
                                       <svg xmlns="http://www.w3.org/2000/svg" class={checkedColor[color] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                      </svg>
+                                    </div>
+                                  </div>                     
+                              ))
+                            }
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+      <Transition.Root show={showBrandsFilter} as={Fragment} {...handlers}>
+        <Dialog 
+        initialFocus={cancelButtonRef}
+        as="div" 
+        className="fixed z-50 inset-0 overflow-hidden" 
+        onClose={() => {setShowBrandsFilter(false); setShowFilterOptions(false)}}>
+            <div className="absolute inset-0">
+            <Transition.Child
+                as={Fragment}
+                enter="ease-in-out duration-500"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in-out duration-500"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+            >
+                <Dialog.Overlay className="absolute inset-0 overflow-hidden" />
+            </Transition.Child>
+            <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
+                <Transition.Child
+                as={Fragment}
+                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enterFrom="-translate-x-[500px]"
+                enterTo="translate-x-0"
+                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leaveFrom="translate-x-0"
+                leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
+                >
+                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
+                        <div className="flex items-start justify-between">
+                        <button
+                        ref={cancelButtonRef}
+                        type="button"
+                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                        onClick={() =>setShowBrandsFilter(false)}>
+                        <span className="sr-only">Close panel</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </button>
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900 select-none">Filter</Dialog.Title>
+                          <div className="ml-3 h-7 flex items-center">
+                            <button
+                                ref={cancelButtonRef}
+                                type="button"
+                                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                onClick={() => {setShowBrandsFilter(false); setShowFilterOptions(false)}}
+                                >
+                                <span className="sr-only">Close panel</span>
+                                <XIcon className="h-6 w-6" aria-hidden="true" />
+                                </button>
+                          </div>
+                        </div>
+                        <div className="mt-8">
+                        <div>
+                            <div className="flex flex-col">
+                            <div 
+                              className="flex border-b justify-between items-center pl-3">
+                                  <span className="w-full h-[75px] flex items-center select-none">Brand</span>
+                              </div>
+                            </div>
+                            <div className="flex flex-col mt-5">
+                            {
+                              brandsArray[0].map(brand => (
+                                  <div className={checkedBrand[brand] ? "flex flex-row items-center justify-between bg-pink-300 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-pink-200 cursor-pointer"}>
+                                  <div onClick={() => toggleBrand(brand)} className="w-full py-4 pl-3 select-none">{brand}</div>
+                                    <div>
+                                      <svg xmlns="http://www.w3.org/2000/svg" class={checkedBrand[brand] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                       </svg>
                                     </div>
