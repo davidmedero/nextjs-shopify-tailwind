@@ -7,7 +7,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 export default function ProductOptions({ name, values, selectedOptions, setOptions, inventory }) {
 
     const [selected, setSelected] = useState(`SELECT A ${name.toUpperCase()}...`)
-    console.log(inventory && inventory.map(el => el.title))
+
   return (
     <fieldset>
         <legend className='text-xl font-semibold pt-4'></legend>
