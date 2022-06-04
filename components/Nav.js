@@ -159,7 +159,7 @@ export default function Nav() {
                   collections.map(collection => (
                       collection.handle == "shop" ?
                       (<Link href={'/shop-brands'} >
-                      <a className="p-6 text-white hover:bg-[#f031ad] select-none"
+                      <a className="p-6 text-white hover:bg-[#ff00a7] select-none"
                       data-info={JSON.stringify(collection)}
                       onMouseEnter={(e) => {
                           setShowSubMenu(true);
@@ -172,7 +172,7 @@ export default function Nav() {
                       </a>
                       </Link>) :
                       (<Link href={'/' + collection.handle} >
-                          <a className="p-6 text-white hover:bg-[#f031ad] select-none"
+                          <a className="p-6 text-white hover:bg-[#ff00a7] select-none"
                           data-info={JSON.stringify(collection)}
                           onMouseEnter={(e) => {
                               setShowSubMenu(true);
@@ -286,7 +286,7 @@ export default function Nav() {
                     ) : 
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                            <a className='font-semibold text-white flex p-6 cursor-pointer hover:bg-[#f031ad] select-none'>
+                            <a className='font-semibold text-white flex p-6 cursor-pointer hover:bg-[#ff00a7] select-none'>
                                 {subcategory.title.toUpperCase()}
                             </a>
                         </div>
@@ -296,7 +296,7 @@ export default function Nav() {
                       subcategory.handle === "" ? (
                         <Link href={'/' + categoryHandle + '/' + sub_subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                          <a className='flex py-1 px-6 text-white cursor-pointer hover:bg-[#f031ad] select-none'>
+                          <a className='flex py-1 px-6 text-white cursor-pointer hover:bg-[#ff00a7] select-none'>
                             {sub_subcategory.title.toUpperCase()}
                           </a>
                        </div>
@@ -304,7 +304,7 @@ export default function Nav() {
                       ) :
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                          <a className='flex py-1 px-6 text-gray-300 hover:text-white cursor-pointer hover:bg-[#f031ad] select-none'>
+                          <a className='flex py-1 px-6 text-gray-300 hover:text-white cursor-pointer hover:bg-[#ff00a7] select-none'>
                             {sub_subcategory.title.toUpperCase()}
                           </a>
                        </div>

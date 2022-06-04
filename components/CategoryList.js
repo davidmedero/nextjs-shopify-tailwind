@@ -44,6 +44,11 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   const [showColorFilter, setShowColorFilter] = useState(false)
   const [showBrandsFilter, setShowBrandsFilter] = useState(false)
 
+  const [priceTracker, setPriceTracker] = useState([])
+  const [sizeTracker, setSizeTracker] = useState([])
+  const [colorTracker, setColorTracker] = useState([])
+  const [brandsTracker, setBrandsTracker] = useState([])
+
   const [showSortOptions, setShowSortOptions] = useState(false)
 
   const [sortOption, setSortOption] = useState('Best Sellers')
@@ -89,7 +94,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   const cancelButtonRef = useRef()
 
   const handlers = useSwipeable({
-      onSwipedRight: () => {setShowFilterOptions(false); setShowPriceFilter(false)},
+      onSwipedRight: () => {setShowFilterOptions(false); setShowPriceFilter(false); setShowSizeFilter(false); setShowColorFilter(false); setShowBrandsFilter(false)},
       preventDefaultTouchmoveEvent: true,
       trackMouse: true
     });
@@ -111,7 +116,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
         newArray.push(product)
       } 
     })
-    setProducts(newArray)
+    setPriceTracker(newArray)
   }, [minVal, maxVal])
 
   const sizes = [...new Set(productsByCollection.map(product => (
@@ -124,7 +129,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
     setCheckedSize(prev => ({
       ...prev,
       [name]: !prev[name]
-  }))
+    }))
   }
 
   const colors = [...new Set(productsByCollection.map(product => (
@@ -137,7 +142,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
     setCheckedColor(prev => ({
       ...prev,
       [name]: !prev[name]
-  }))
+    }))
   }
 
   useEffect(() => {
@@ -150,11 +155,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
           }
         })
       })
-      if (selectedSizesArray.length === 0) {
-        setProducts(productsByCollection)
-      } else {
-        setProducts(newArray)
-      }
+      setSizeTracker(newArray)
   }, [checkedSize])
 
   useEffect(() => {
@@ -167,11 +168,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
         }
       })
     })
-    if (selectedColorsArray.length === 0) {
-      setProducts(productsByCollection)
-    } else {
-      setProducts(newArray)
-    }
+    setColorTracker(newArray)
   }, [checkedColor])
 
   const brandsArray = brands.map(el => el.subcollections.map(el => el.title))
@@ -182,27 +179,72 @@ const CategoryList = ({ productsByCollection, category, product }) => {
     setCheckedBrand(prev => ({
       ...prev,
       [name]: !prev[name]
-  }))
+    }))
   }
 
   useEffect(() => {
     let selectedBrandsArray = Object.entries(checkedBrand).filter(val => !val.includes(false)).map(el => el[0])
     let newArray = []
     productsByCollection.map(product => {
-      console.log(product.node.collections.edges.some(collection => selectedBrandsArray.includes(collection)))
       product.node.variants.edges.map(el => {
         if ((product.node.collections.edges.some(brand => selectedBrandsArray.includes(brand.node.title))) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
           newArray.push(product)
         }
       })
     })
-    console.log(newArray)
-    if (selectedBrandsArray.length === 0) {
-      setProducts(productsByCollection)
-    } else {
-      setProducts(newArray)
-    }
+    setBrandsTracker(newArray)
   }, [checkedBrand])
+
+  useEffect(() => {
+    let newArray = []
+    let productsArray = []
+    const tracker = [priceTracker, sizeTracker, colorTracker, brandsTracker]
+    tracker.map(arr => {
+      if (arr.length !== 0) {
+        newArray.push(arr)
+      }
+    })
+    if (newArray.length === 1) {
+      for (let i of newArray[0]) {
+        productsArray.push(i)
+      }
+    }
+    if (newArray.length === 2) {
+      for (let i of newArray[0]) {
+        for (let j of newArray[1]) {
+          if (i.node.title === j.node.title) {
+            console.log(i.node.title)
+            productsArray.push(i)
+          }
+        }
+      }
+    }
+    if (newArray.length === 3) {
+      for (let i of newArray[0]) {
+        for (let j of newArray[1]) {
+          for (let k of newArray[2]) {
+            if ((i.node.title === j.node.title) && (i.node.title === k.node.title)) {
+              productsArray.push(i)
+            }
+          }
+        }
+      }
+    }
+    if (newArray.length === 4) {
+      for (let i of newArray[0]) {
+        for (let j of newArray[1]) {
+          for (let k of newArray[2]) {
+            for (let o of newArray[3]) {
+              if ((i.node.title === j.node.title) && (i.node.title === k.node.title) && (i.node.title === o.node.title)) {
+                productsArray.push(i)
+              }
+            }
+          }
+        }
+      }
+    }
+    setProducts(productsArray)
+  }, [priceTracker, sizeTracker, colorTracker, brandsTracker])
 
 
   return (
@@ -333,7 +375,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
               }
             &nbsp;
             </div>
-          <div className="font-semibold text-[#f1018a]">
+          <div className="font-semibold text-[#ff00a7]">
                 {category.toString().charAt(0).toUpperCase() + category.toString().slice(1)}
           </div>
           </div>
@@ -392,14 +434,12 @@ const CategoryList = ({ productsByCollection, category, product }) => {
           </div>
           <Transition.Root show={showFilterOptions} as={Fragment} {...handlers}>
         <Dialog 
-        {...handlers}
         initialFocus={cancelButtonRef}
         as="div" 
         className="fixed z-50 inset-0 overflow-hidden" 
         onClose={() => setShowFilterOptions(false)}>
             <div {...handlers} className="absolute inset-0">
             <Transition.Child
-            {...handlers}
                 as={Fragment}
                 enter="ease-in-out duration-500"
                 enterFrom="opacity-0"
@@ -408,11 +448,10 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
-                <Dialog.Overlay {...handlers} className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                <Dialog.Overlay className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </Transition.Child>
-            <div {...handlers} className="fixed inset-y-0 right-0 sm:pl-10 max-w-full flex">
+            <div className="fixed inset-y-0 right-0 sm:pl-10 max-w-full flex">
                 <Transition.Child
-                {...handlers}
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-600"
                 enterFrom="translate-x-full"
@@ -421,14 +460,14 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
                 >
-                    <div {...handlers} className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
+                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-[#0A0A0A] shadow-xl overflow-y-scroll">
                         <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900 select-none">Filter</Dialog.Title>
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">FILTER</Dialog.Title>
                           <div className="ml-3 h-7 flex items-center">
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                className="-m-2 p-2 text-white hover:text-gray-500"
                                 onClick={() => setShowFilterOptions(false)}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -436,50 +475,58 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                                 </button>
                           </div>
                         </div>
-                        <div {...handlers} className="mt-8">
+                        <div className="mt-8 flex flex-col justify-between h-full text-white">
                           <div className="flex flex-col">
                           <div 
                             onClick={() => setShowBrandsFilter(true)}
-                            className="flex border-b justify-between items-center hover:bg-pink-100 pl-3 cursor-pointer">
-                                <span className="w-full h-[75px] flex items-center select-none">Brand</span>
+                            className="flex border-b justify-between items-center hover:bg-[#ff00a7] pl-3 cursor-pointer hover:font-semibold">
+                                <span className="w-full h-[75px] flex items-center select-none">BRAND</span>
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                     </svg>
                                 </span>
                             </div>
                           <div 
                             onClick={() => setShowColorFilter(true)}
-                            className="flex border-b justify-between items-center hover:bg-pink-100 pl-3 cursor-pointer">
-                                <span className="w-full h-[75px] flex items-center select-none">Color</span>
+                            className="flex border-b justify-between items-center hover:bg-[#ff00a7] pl-3 cursor-pointer hover:font-semibold">
+                                <span className="w-full h-[75px] flex items-center select-none">COLOR</span>
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                     </svg>
                                 </span>
                             </div>
                             <div 
                             onClick={() => setShowSizeFilter(true)}
-                            className="flex border-b justify-between items-center hover:bg-pink-100 pl-3 cursor-pointer">
-                                <span className="w-full h-[75px] flex items-center select-none">Size</span>
+                            className="flex border-b justify-between items-center hover:bg-[#ff00a7] pl-3 cursor-pointer hover:font-semibold">
+                                <span className="w-full h-[75px] flex items-center select-none">SIZE</span>
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                     </svg>
                                 </span>
                             </div>
                             <div 
                             onClick={() => setShowPriceFilter(true)}
-                            className="flex border-b justify-between items-center hover:bg-pink-100 pl-3 cursor-pointer">
-                                <span className="w-full h-[75px] flex items-center select-none">Price</span>
+                            className="flex border-b justify-between items-center hover:bg-[#ff00a7] pl-3 cursor-pointer hover:font-semibold">
+                                <span className="w-full h-[75px] flex items-center select-none">PRICE</span>
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                     </svg>
                                 </span>
                             </div>
                           </div>
+                          <button onClick={() => {
+                            setMinVal(0);
+                            setMaxVal(500);
+                            setCheckedSize({});
+                            setCheckedColor({});
+                            setCheckedBrand({});
+                          }} className="flex items-center justify-center w-full px-3 py-4 border-2 border-white text-white font-semibold hover:bg-[#ff00a7] hover:text-white transition-all ease-in-out duration-300">CLEAR ALL</button>
                       </div>
+                      
                     </div>
               </Transition.Child>
             </div>
@@ -514,24 +561,24 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
-                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
+                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-[#0A0A0A] shadow-xl overflow-y-scroll">
                         <div className="flex items-start justify-between">
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                        className="-m-2 p-2 text-white hover:text-gray-500"
                         onClick={() =>setShowPriceFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900 select-none">Filter</Dialog.Title>
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">FILTER</Dialog.Title>
                           <div className="ml-3 h-7 flex items-center">
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                className="-m-2 p-2 text-white hover:text-gray-500"
                                 onClick={() => {setShowPriceFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -543,8 +590,8 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                         <div>
                             <div className="flex flex-col">
                             <div 
-                              className="flex border-b justify-between items-center pl-3">
-                                  <span className="w-full h-[75px] flex items-center select-none">Price</span>
+                              className="flex border-b justify-between items-center pl-3 text-white">
+                                  <span className="w-full h-[75px] flex items-center select-none">PRICE</span>
                               </div>
                             </div>
                             <div>
@@ -567,7 +614,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                               trackStyle={{ backgroundColor: 'rgb(249 168 212)', height: 6 }}
                               railStyle={{ backgroundColor: 'rgb(163 163 163)', height: 6 }}
                             />
-                            <div className="flex justify-between mt-3 !w-[85%] mx-auto">
+                            <div className="flex justify-between mt-3 !w-[85%] mx-auto text-white">
                               <span>$ {minVal}</span>
                               <span>$ {maxVal}</span>
                             </div>
@@ -608,24 +655,24 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
-                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
+                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-[#0A0A0A] shadow-xl overflow-y-scroll">
                         <div className="flex items-start justify-between">
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                        className="-m-2 p-2 text-white hover:text-gray-500"
                         onClick={() =>setShowSizeFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900 select-none">Filter</Dialog.Title>
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">FILTER</Dialog.Title>
                           <div className="ml-3 h-7 flex items-center">
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                className="-m-2 p-2 text-white hover:text-gray-500"
                                 onClick={() => {setShowSizeFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -633,19 +680,19 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                                 </button>
                           </div>
                         </div>
-                        <div className="mt-8">
+                        <div className="mt-8 text-white">
                         <div>
                             <div className="flex flex-col">
                             <div 
                               className="flex border-b justify-between items-center pl-3">
-                                  <span className="w-full h-[75px] flex items-center select-none">Size</span>
+                                  <span className="w-full h-[75px] flex items-center select-none">SIZE</span>
                               </div>
                             </div>
                             <div className="flex flex-col mt-5">
                             {
                               sizes.map(size => (
-                                  <div className={checkedSize[size] ? "flex flex-row items-center justify-between bg-pink-300 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-pink-200 cursor-pointer"}>
-                                  <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 select-none">{size}</div>
+                                  <div className={checkedSize[size] ? "flex flex-row items-center justify-between text-[#ff00a7] hover:bg-gray-900 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
+                                  <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 select-none hover:font-semibold ">{size}</div>
                                     <div>
                                       <svg xmlns="http://www.w3.org/2000/svg" class={checkedSize[size] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -691,24 +738,24 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
-                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
+                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-[#0A0A0A] shadow-xl overflow-y-scroll">
                         <div className="flex items-start justify-between">
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                        className="-m-2 p-2 text-white hover:text-gray-500"
                         onClick={() =>setShowColorFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900 select-none">Filter</Dialog.Title>
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">FILTER</Dialog.Title>
                           <div className="ml-3 h-7 flex items-center">
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                className="-m-2 p-2 text-white hover:text-gray-500"
                                 onClick={() => {setShowColorFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -716,19 +763,19 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                                 </button>
                           </div>
                         </div>
-                        <div className="mt-8">
+                        <div className="mt-8 text-white">
                         <div>
                             <div className="flex flex-col">
                             <div 
                               className="flex border-b justify-between items-center pl-3">
-                                  <span className="w-full h-[75px] flex items-center select-none">Color</span>
+                                  <span className="w-full h-[75px] flex items-center select-none">COLOR</span>
                               </div>
                             </div>
                             <div className="flex flex-col mt-5">
                             {
                               colors.map(color => (
-                                  <div className={checkedColor[color] ? "flex flex-row items-center justify-between bg-pink-300 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-pink-200 cursor-pointer"}>
-                                  <div onClick={() => toggleColor(color)} className="w-full py-4 pl-3 select-none">{color}</div>
+                                  <div className={checkedColor[color] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
+                                  <div onClick={() => toggleColor(color)} className="w-full py-4 pl-3 select-none hover:font-semibold">{color.toUpperCase()}</div>
                                     <div>
                                       <svg xmlns="http://www.w3.org/2000/svg" class={checkedColor[color] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -774,24 +821,24 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
-                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-white shadow-xl overflow-y-scroll">
+                    <div className="p-6 flex flex-col w-screen sm:max-w-md bg-[#0A0A0A] shadow-xl overflow-y-scroll">
                         <div className="flex items-start justify-between">
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                        className="-m-2 p-2 text-white hover:text-gray-500"
                         onClick={() =>setShowBrandsFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                          <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900 select-none">Filter</Dialog.Title>
+                          <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">FILTER</Dialog.Title>
                           <div className="ml-3 h-7 flex items-center">
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                                className="-m-2 p-2 text-white hover:text-gray-500"
                                 onClick={() => {setShowBrandsFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -799,19 +846,19 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                                 </button>
                           </div>
                         </div>
-                        <div className="mt-8">
+                        <div className="mt-8 text-white">
                         <div>
                             <div className="flex flex-col">
                             <div 
                               className="flex border-b justify-between items-center pl-3">
-                                  <span className="w-full h-[75px] flex items-center select-none">Brand</span>
+                                  <span className="w-full h-[75px] flex items-center select-none">BRAND</span>
                               </div>
                             </div>
                             <div className="flex flex-col mt-5">
                             {
                               brandsArray[0].map(brand => (
-                                  <div className={checkedBrand[brand] ? "flex flex-row items-center justify-between bg-pink-300 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-pink-200 cursor-pointer"}>
-                                  <div onClick={() => toggleBrand(brand)} className="w-full py-4 pl-3 select-none">{brand}</div>
+                                  <div className={checkedBrand[brand] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
+                                  <div onClick={() => toggleBrand(brand)} className="w-full py-4 pl-3 select-none">{brand.toUpperCase()}</div>
                                     <div>
                                       <svg xmlns="http://www.w3.org/2000/svg" class={checkedBrand[brand] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
