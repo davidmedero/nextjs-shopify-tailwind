@@ -84,30 +84,38 @@ export default function ProductForm({ product }) {
 
     const defaultValues = {}
     product.options.map(item => {
-        defaultValues[item.name] = item.values[0]
+        defaultValues[item.name] = `SELECT A ${item.name.toUpperCase()}...`
     })
-
+    console.log(defaultValues)
     const [selectedVariant, setSelectedVariant] = useState(allVariantOptions[0])
     const [selectedOptions, setSelectedOptions] = useState(defaultValues)
     const [counter, setCounter] = useState(1);
     
 
     function setOptions(name, value) {
-        setSelectedOptions(prevState => {
-            return { ...prevState, [name]: value }
-        })
-
-        const selection = {
-            ...selectedOptions, 
-            [name]: value
-        }
-
-        allVariantOptions.map(item => {
-            if (JSON.stringify(item.options) === JSON.stringify(selection)) {
-                setSelectedVariant(item)
-                setCounter(1)
+        const quantity = inventory && inventory.map(item => {
+            if ((item.title === value)) {
+              return item.quantityAvailable
             }
-        })
+        }).filter(el => el !== undefined).join('')
+
+        if (JSON.parse(quantity) !== 0) {
+            setSelectedOptions(prevState => {
+                return { ...prevState, [name]: value }
+            })
+    
+            const selection = {
+                ...selectedOptions, 
+                [name]: value
+            }
+            
+            allVariantOptions.map(item => {
+                if ((JSON.stringify(item.options) === JSON.stringify(selection)) && (quantity != 0)) {
+                    setSelectedVariant(item)
+                    setCounter(1)
+                }
+            })
+        }
     }
 
     const increment = () => {
@@ -190,7 +198,7 @@ export default function ProductForm({ product }) {
         }
     }, [productInventory, selectedVariant])
 
-
+console.log(Object.values(selectedOptions).join(''))
   return (
     <div className="xxs:mt-4 md:!mt-0 py-4 relative -top-4 md:top-0 flex flex-col w-11/12 md:w-[390px]">
         <Head>
@@ -370,13 +378,16 @@ export default function ProductForm({ product }) {
         </span>
       </div>   
       {
-        <button 
+          Object.values(selectedOptions).join('') == ("SELECT A SIZE...") ? (
+            <button 
+        className={"pointer-events-none select-none shadow-md transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white px-2 py-3 mt-5"}>SELECT A SIZE</button>
+          ) :
+       (<button 
         onClick={() => {
             addToCart(selectedVariant)
             setCounter(1)
-            console.log('checking')
         }}
-        className={"shadow-md transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white px-2 py-3 mt-5 hover:bg-[#ae1077]"}>ADD TO BAG</button> 
+        className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white px-2 py-3 mt-5 hover:bg-[#ae1077]"}>ADD TO BAG</button>) 
       }
     <div className="mt-6">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>

@@ -140,7 +140,7 @@ export default function Nav() {
 
 
   return (
-    <header className='border-b-2 border-b-gray-900 sticky top-0 z-20 bg-black shadow-xl'>
+    <header className='border-b-4 border-b-gray-900 sticky top-0 z-20 bg-black'>
         <div className={(showMenu ? 'flex items-center justify-between max-w-[1930px] py-4 xxs:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-[1930px] py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
             <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
@@ -271,7 +271,7 @@ export default function Nav() {
           <div
           onMouseEnter={() => setShowSubMenu(true)}
           onMouseLeave={() => setShowSubMenu(false)}
-          className="relative pb-8 w-full flex flex-col justify-center shadow-md border-b-2 border-b-gray-900 bg-black">
+          className="relative pb-8 w-full flex flex-col justify-center shadow-md border-b-4 border-b-gray-900 bg-black">
               {
             <div className="flex justify-center bg-black">
               {subcategories[categoryIndex].map(subcategory => (
@@ -296,7 +296,7 @@ export default function Nav() {
                       subcategory.handle === "" ? (
                         <Link href={'/' + categoryHandle + '/' + sub_subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                          <a className='flex py-1 px-6 text-white cursor-pointer hover:bg-[#ff00a7] select-none'>
+                          <a className='flex py-1 px-6 text-gray-300 cursor-pointer hover:bg-[#ff00a7] select-none'>
                             {sub_subcategory.title.toUpperCase()}
                           </a>
                        </div>
@@ -320,10 +320,10 @@ export default function Nav() {
         </SlideDown>
         </div>
         <div className="absolute right-[60px] top-[60px] w-[200px] flex flex-col justify-center">
-        <SlideDown className={'my-dropdown-slidedown'}>
+        <SlideDown className={'my-dropdown-slidedown-cartIcon'}>
         {
           ((showSubtotal) && (cartQuantity > 0)) ? (
-            <div className='bg-black py-2 px-4 relative flex flex-col border-t-black'>
+            <div className='border-b-4 border-b-gray-900 bg-black py-2 px-4 relative flex flex-col border-t-black'>
               <div className='flex flex-row justify-between'>
                 <span className='text-white relative'>QUANTITY:</span>
                 <span className='text-white relative'>{cartQuantity}</span>
@@ -334,7 +334,7 @@ export default function Nav() {
               </div>
               </div>
           ) : ((showSubtotal) && (cartQuantity === 0)) ? (
-            <div className='bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[30px]'>
+            <div className='border-b-4 border-b-gray-900 bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[30px]'>
             <div className='flex flex-row justify-between'>
               <span className='text-white relative'>Your Bag is Empty!</span>
             </div>

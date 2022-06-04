@@ -55,6 +55,11 @@ and left sides of the text */
   transition-timing-function: ease-in-out;
 }
 
+.react-slidedown.my-dropdown-slidedown-cartIcon {
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
 @media (min-width: 500px) {
 html::-webkit-scrollbar {
     display: none;
@@ -109,22 +114,23 @@ html {
 
 .toggleScrollThumb {
   transition: opacity 0.3s;
-  opacity: 1;
+  opacity: 0.50;
 }
 
 .scroll-thumb:active {
   cursor: grabbing;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: white;
+  opacity: 0.50;
 }  
 
 .scroll-thumb:hover {
   transition: opacity 0.3s;
-  opacity: 1;
+  opacity: 1 !important;
 }  
 
 .scroll-bar:hover .scroll-thumb {
   transition: opacity 0.3s;
-  opacity: 1;
+  opacity: 0.50;
 }
 }
 
