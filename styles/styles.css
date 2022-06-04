@@ -102,7 +102,7 @@ html {
   position: absolute;
   border-radius: 7px;
   opacity: 0;
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: white;
   z-index: 9999;
   transition: opacity 0.3s;
 }
@@ -140,6 +140,7 @@ html {
   align-items: flex-start;
   margin-top: 10px;
   border-bottom: 1px dotted #ddd;
+  color: white;
 }
 
 .selectSection button {
@@ -191,7 +192,6 @@ html {
 
 .description {
   margin-bottom: 16px;
-	color: black;
   line-height: 18px;
   padding-right: 20px;
   margin-left: 35px;

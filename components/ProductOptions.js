@@ -4,10 +4,10 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 
-export default function ProductOptions({ name, values, selectedOptions, setOptions }) {
+export default function ProductOptions({ name, values, selectedOptions, setOptions, inventory }) {
 
-    const [selected, setSelected] = useState(`Select a ${name}...`)
-
+    const [selected, setSelected] = useState(`SELECT A ${name.toUpperCase()}...`)
+    console.log(inventory && inventory.map(el => el.title))
   return (
     <fieldset>
         <legend className='text-xl font-semibold pt-4'></legend>
@@ -32,18 +32,23 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             <Listbox.Options className="z-[9999] absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {
               values.map(value => {
+                const quantity = inventory && inventory.map(item => {
+                  if ((item.title === value)) {
+                    return item.quantityAvailable
+                  }
+                }).filter(el => el !== undefined).join('')
                   const id = `option-${name}-${value}`
                   const checked = selectedOptions[name] === value
                 return (
-                <label key={id} htmlFor={id} onClick={() => {setOptions(name, value)}}>
+                <label key={id} htmlFor={id} onClick={() => {setOptions(name, value)}} className={quantity == 0 ? 'cursor-not-allowed' : 'cursor-pointer'}>
                 <Listbox.Option
                   id={id}
                   name={`option-${name}`}
                   checked={checked}
                   value={value}
                   className={({ active }) =>
-                    `border-b border-gray-100  cursor-pointer select-none relative py-2 pl-10 pr-4 ${
-                      active ? 'text-pink-900 bg-pink-100' : 'text-gray-900'
+                    `${quantity == 0 ? 'pointer-events-none border-b relative border-gray-100 select-none py-2 pl-10 pr-4' : 'border-b border-gray-100 select-none relative py-2 pl-10 pr-4 cursor-pointer'} ${
+                      active ? 'text-[#ff00a7] bg-[#ffc9ec]' : 'text-gray-900'
                     }`
                   }
                 >
@@ -51,14 +56,17 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                     <>
                       <span 
                         className={`block truncate ${
-                          selected ? 'font-medium' : 'font-normal'
+                          selected ? 'font-medium text-[#ff00a7]' : 'font-normal'
                         }`}
                       >
-                        {value}
+                        <div className='flex flex-row justify-between w-full'>
+                          <span>{value}</span>
+                          <span>{quantity == 0 ? 'SOLD OUT' : quantity + ' ' + 'left in Stock'}</span>
+                          </div>
                       </span>
                       {selected ? (
                         <span
-                          className="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-600">
+                          className="absolute inset-y-0 left-0 flex items-center pl-3 text-[#ff00a7]">
                           <CheckIcon className="w-5 h-5" aria-hidden="true" />
                         </span>
                       ) : null}

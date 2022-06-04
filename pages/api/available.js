@@ -38,7 +38,9 @@ export default async function available(req, res) {
           edges {
             node {
                 id
+                title
                 availableForSale
+                quantityAvailable
             }
           }
         }

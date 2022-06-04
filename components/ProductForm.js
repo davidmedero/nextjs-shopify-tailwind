@@ -58,6 +58,7 @@ export default function ProductForm({ product }) {
     )
 
     const [available, setAvailable] = useState(true)
+    const [inventory, setInventory] = useState(0)
 
     const { cart, addToCart } = useContext(CartContext)
 
@@ -180,7 +181,7 @@ export default function ProductForm({ product }) {
     useEffect(() => {
         if (productInventory) {
             const checkAvailable = productInventory?.variants.edges.filter(item => item.node.id === selectedVariant.id)
-
+            setInventory(productInventory?.variants.edges.map(item => item.node))
             if (checkAvailable[0].node.availableForSale) {
                 setAvailable(true)
             } else {
@@ -323,8 +324,8 @@ export default function ProductForm({ product }) {
                 `}
             </script>
         </Head>
-      <h2 className="text-2xl font-bold">{product.title}</h2>
-      <span className="pb-3 text-xl">{
+      <h2 className="text-2xl font-bold text-white">{product.title}</h2>
+      <span className="pb-3 text-xl text-white">{
       currency === '' ? formatter.format(product.variants.edges[0].node.priceV2.amount) :
       currency === 'USD' ? formatter.format(product.variants.edges[0].node.priceV2.amount) :
       currency === 'GBP' ? GBPFormatter.format(Math.ceil(product.variants.edges[0].node.priceV2.amount * GBPcurrency * shopifyConversionFee)) :
@@ -342,6 +343,7 @@ export default function ProductForm({ product }) {
               selectedVariant={selectedVariant}
               productInventory={productInventory}
               available={available}
+              inventory={inventory}
               />
           ))
       }
@@ -352,7 +354,7 @@ export default function ProductForm({ product }) {
         <span className="flex"> 
         <button 
         onClick={decrement}
-        className='border-t border-b border-l text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+        className='bg-white border-t border-b border-l text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
           </svg>
@@ -360,7 +362,7 @@ export default function ProductForm({ product }) {
         
         <button 
         onClick={increment}
-        className='border text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-gray-200 active:bg-black active:text-white rounded-r-md'>
+        className='bg-white border text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-gray-200 active:bg-black active:text-white rounded-r-md'>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
           </svg>
@@ -368,16 +370,12 @@ export default function ProductForm({ product }) {
         </span>
       </div>   
       {
-          available ?
-          <button 
-          onClick={() => {
-              addToCart(selectedVariant)
-              setCounter(1)
-          }}
-          className={"shadow-md transition-all ease-in-out duration-400 rounded-md font-bold bg-pink-300 text-black px-2 py-3 mt-5 hover:bg-pink-400"}>Add to Bag</button> 
-          :
-          <button 
-          className="bg-gray-800 rounded-lg text-white px-2 py-3 mt-5 cursor-not-allowed">SOLD OUT!</button>
+        <button 
+        onClick={() => {
+            addToCart(selectedVariant)
+            setCounter(1)
+        }}
+        className={"shadow-md transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white px-2 py-3 mt-5 hover:bg-[#ae1077]"}>ADD TO BAG</button> 
       }
     <div className="mt-6">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
@@ -388,7 +386,7 @@ export default function ProductForm({ product }) {
     product.collections.edges.map(el => (
         categories.map(category => (
             el.node.id === category.id ? (
-                <span className="hover:underline hover:decoration-pink-500 hover:text-pink-500">
+                <span className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
                     <Link href={`/${category.handle}`}>
                         <a>
                             {el.node.title}
@@ -398,7 +396,7 @@ export default function ProductForm({ product }) {
             ) : category.subcollections?.map(subcategory => (
                 el.node.id === subcategory.id ? (
                     <span>{' | '}
-                        <span className="hover:underline hover:decoration-pink-500 hover:text-pink-500">
+                        <span className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
                             <Link href={`/${category.handle}/${subcategory.handle}`}>
                                 <a>
                                     {el.node.title}
@@ -410,7 +408,7 @@ export default function ProductForm({ product }) {
                     el.node.id === sub_subcategory.id &&
                     subcategory.handle !== "" ? (
                         <span>{' | '}
-                            <span className="hover:underline hover:decoration-pink-500 hover:text-pink-500">
+                            <span className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
                                 <Link href={`/${category.handle}/${subcategory.handle}/${sub_subcategory.handle}`}>
                                     <a>
                                         {el.node.title}
@@ -421,7 +419,7 @@ export default function ProductForm({ product }) {
                     ) : el.node.id === sub_subcategory.id && 
                         subcategory.handle === "" ? (
                         <span>{' | '}
-                            <span className="hover:underline hover:decoration-pink-500 hover:text-pink-500">
+                            <span className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
                                 <Link href={`/${category.handle}/${sub_subcategory.handle}`}>
                                     <a>
                                         {el.node.title}
