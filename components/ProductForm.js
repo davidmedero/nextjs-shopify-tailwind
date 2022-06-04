@@ -374,6 +374,7 @@ export default function ProductForm({ product }) {
         onClick={() => {
             addToCart(selectedVariant)
             setCounter(1)
+            console.log('checking')
         }}
         className={"shadow-md transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white px-2 py-3 mt-5 hover:bg-[#ae1077]"}>ADD TO BAG</button> 
       }
