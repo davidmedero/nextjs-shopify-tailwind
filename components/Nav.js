@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 import CurrencyConversion from './CurrencyConversion'
 import { isChrome, isIPhone13, isIPad13, isMobile } from 'react-device-detect'
 import Image from 'next/image'
+import WishlistButton from './WishlistButton'
 
 
 export default function Nav() {
@@ -218,7 +219,7 @@ export default function Nav() {
             </div>
             <div className='flex items-center relative'>
               <div 
-              className='relative right-5 hover:scale-[1.3] transition-all duration-200 ease-in-out'
+              className='relative right-6 hover:scale-[1.3] transition-all duration-200 ease-in-out'
               ref={ref}
               onClick={() => {
                 toggleMenu();
@@ -227,7 +228,7 @@ export default function Nav() {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              
+            <WishlistButton />
             <SignInButton />
             <a 
             id='slide-toggle'
@@ -336,7 +337,7 @@ export default function Nav() {
           ) : ((showSubtotal) && (cartQuantity === 0)) ? (
             <div className='border-b-4 border-b-gray-900 bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[30px]'>
             <div className='flex flex-row justify-between'>
-              <span className='text-white relative'>Your Bag is Empty!</span>
+              <span className='text-white relative top-1'>Your Bag is Empty!</span>
             </div>
             </div>
           ) : null

@@ -56,7 +56,7 @@ and left sides of the text */
 }
 
 .react-slidedown.my-dropdown-slidedown-cartIcon {
-  transition-duration: .3s;
+  transition-duration: .2s;
   transition-timing-function: ease-in-out;
 }
 

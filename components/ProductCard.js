@@ -10,6 +10,12 @@ const ProductCard = ({ product }) => {
 
   const { altText, originalSrc } = product.node.images.edges[0].node
 
+  const secondPicSrc = product.node.images.edges[1].node.originalSrc
+
+  const secondPicAltText = product.node.images.edges[1].node.altText
+
+  const [show2ndPic, setShow2ndPic] = useState(false)
+
   const price = product.node.priceRange.minVariantPrice.amount
 
   const [currencyRates, setCurrencyRates] = useState(0)
@@ -47,15 +53,43 @@ const ProductCard = ({ product }) => {
     <Link href={`/${handle}`}>
       <a className="group">
         <div className="w-full bg-gray-200 overflow-hidden">
-            <div className="relative group-hover:opacity-75 w-full h-full">
-                <Image
-                    src={originalSrc}
-                    alt={altText}
-                    width='600' 
-                    height='860' 
-                    layout="responsive" 
+            <div className="xxs:hidden lg:block relative w-full h-full">
+              {
+                show2ndPic ? (
+                  <Image
+                    src={secondPicSrc}
+                    alt={secondPicAltText}
+                    width='600'
+                    height='860'
+                    layout="responsive"
                     objectFit="cover"
                     style={{display: 'inline-block', width: 'full' }}
+                    onMouseLeave={() => setShow2ndPic(false)}
+                />
+                )
+                :
+                (<Image
+                    src={originalSrc}
+                    alt={altText}
+                    width='600'
+                    height='860'
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{display: 'inline-block', width: 'full' }}
+                    onMouseOver={() => setShow2ndPic(true)}
+                />)
+              }
+            </div>
+            <div className="xxs:block lg:hidden">
+            <Image
+                    src={originalSrc}
+                    alt={altText}
+                    width='600'
+                    height='860'
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{display: 'inline-block', width: 'full' }}
+                    onMouseOver={() => setShow2ndPic(true)}
                 />
             </div>
         </div>

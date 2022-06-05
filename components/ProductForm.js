@@ -357,12 +357,12 @@ console.log(Object.values(selectedOptions).join(''))
       }
        <div className="text-base mt-6 rounded-md shadow-md flex justify-between my-2 xxs:w-full">
         
-        <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full xxs:rounded-l-md xxs:rounded-r-none pl-[52px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
+        <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-md xxs:rounded-r-none pl-[85px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
 
         <span className="flex"> 
         <button 
         onClick={decrement}
-        className='bg-white border-t border-b border-l text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+        className='bg-white border-t border-b border-l text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-[#ffc9ec] active:bg-black active:text-white'>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
           </svg>
@@ -370,7 +370,7 @@ console.log(Object.values(selectedOptions).join(''))
         
         <button 
         onClick={increment}
-        className='bg-white border text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-gray-200 active:bg-black active:text-white rounded-r-md'>
+        className='bg-white border text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-[#ffc9ec] active:bg-black active:text-white rounded-r-md'>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
           </svg>

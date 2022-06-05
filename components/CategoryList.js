@@ -248,7 +248,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
 
 
   return (
-    <div className="bg-[#121212]">
+    <div className="bg-[#0A0A0A]">
         <div className="max-w-[1930px] mx-auto py-3 xxs:px-4 sm:px-8">
         <div className="flex flex-wrap flex-row items-center text-sm pt-2 w-full">
           <div className="text-2xl text-white font-semibold xxs:mb-2">{
