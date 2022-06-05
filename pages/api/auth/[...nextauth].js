@@ -105,7 +105,7 @@ export default NextAuth({
             if (url === baseUrl) {
                 return Promise.resolve('/')
             }
-            return Promise.resolve('/yourOrders')
+            return Promise.resolve('/account-dashboard')
         }
     }
 })

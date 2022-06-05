@@ -40,13 +40,8 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
 
 
   return (
-    <div className="flex flex-col w-[1000px] max-w-full mx-auto xxs:px-6 xs:!px-8">
-        <div className="mb-[100px] mt-[50px] mx-auto flex flex-wrap xxs:flex-col md:!flex-row justify-center items-center">
-          <span>Signed in as<span className="font-semibold">
-          { ' ' + ' ' }{session?.user.email}</span></span>
-          <button onClick={() => signOut()} className="xxs:mt-6 md:!mt-0 md:ml-24 border rounded-md p-2 w-28">Sign Out</button>
-          </div>
-        <div className="text-3xl font-bold mb-20">Your Orders</div>
+    <div className="flex flex-col w-[1000px] max-w-full mx-auto xxs:px-6 xs:!px-8 text-white">
+        <div className="text-3xl font-bold mt-6 mb-20">Your Orders</div>
 
         {
           orders.length != 0 ? 
@@ -66,7 +61,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                 <div className="border-b">
                   <div className="flex flex-wrap xs:!flex-row justify-between mb-5 xxs:flex-col">
                     <div className="xs:mr-4"><span className="font-semibold text-xl">Order # </span>&nbsp;
-                      <span className="text-gray-600">{order.id.slice(20, order.id.length)}</span>
+                      <span>{order.id.slice(20, order.id.length)}</span>
                     </div>
                 
                 {
@@ -92,7 +87,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                 </a>
   
                 <div className="xxs:mb-2 xs:!mb-1"><span className="font-semibold">Date placed </span>
-                <span className="text-gray-600">{ ' ' }&nbsp;
+                <span>{ ' ' }&nbsp;
                   {new Date(order.dateCreated.slice(5, order.dateCreated.length - 13)).toLocaleString('default', { month: 'short' }) 
                 + ' ' + 
                 ( Number(order.dateCreated.slice(8, order.dateCreated.length - 10)) < 10 ? order.dateCreated.slice(9, order.dateCreated.length - 10) : order.dateCreated.slice(8, order.dateCreated.length - 10)) 
@@ -100,7 +95,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                 order.dateCreated.slice(0, order.dateCreated.length - 16)}</span></div>
   
                 <div className="mb-5"><span className="font-semibold">Total amount </span>&nbsp;
-                <span className="text-gray-600">{formatter.format(order.totalPrice)}</span>
+                <span>{formatter.format(order.totalPrice)}</span>
                 </div>
                 </div>
                 </div>
@@ -123,7 +118,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                             <button className="xxs:flex xxs:justify-center xxs:w-full xs:!w-36 xs:!flex-none mt-2.5 sm:mt-5 md:mt-0 border rounded-md p-2 whitespace-nowrap">View Product</button>
                           </div>
                           </div>
-                              <div className="pt-3 sm:pt-6 text-gray-600">
+                              <div className="pt-3 sm:pt-6">
                                 <div>{item.node.variantTitle}</div>
                                 <div>Quantity: {item.node.quantity}</div>
                                 <div>{formatter.format(item.node.originalUnitPriceSet.shopMoney.amount)}</div>

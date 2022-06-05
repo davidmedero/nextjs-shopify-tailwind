@@ -22,7 +22,7 @@ export default function SignInButton() {
       )}
       {session && (
         <>
-      <Link href="/yourOrders" passHref>
+      <Link href="/account-dashboard" passHref>
       <a className='cursor-pointer'>
       <button className='relative left-[6px] highlight-removal flex items-center mr-5 hover:scale-[1.3] transition-all duration-200 ease-in-out' type="button">
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="white">
