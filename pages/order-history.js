@@ -1,4 +1,3 @@
-import { signOut, useSession } from "next-auth/react"
 import { getSession } from "next-auth/react"
 import Image from 'next/image'
 import { formatter } from "../utils/helpers"
@@ -18,8 +17,6 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
       title: product.node.title
     }
   })
-
-  const { data: session } = useSession()
 
   orders.sort((a, b) => -a.node.createdAt.localeCompare(b.node.createdAt))
 
@@ -57,11 +54,11 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
 
       
               return (
-              <div key={order.id + Math.random()} className="mb-[100px] relative -top-4 border-1 shadow-lg rounded-2xl p-6">
+              <div key={order.id + Math.random()} className="mb-[100px] relative bg-[#121212] shadow-[0_0_10px_6px] shadow-gray-500 rounded-md p-6">
                 <div className="border-b">
                   <div className="flex flex-wrap xs:!flex-row justify-between mb-5 xxs:flex-col">
                     <div className="xs:mr-4"><span className="font-semibold text-xl">Order # </span>&nbsp;
-                      <span>{order.id.slice(20, order.id.length)}</span>
+                      <span className="text-gray-300">{order.id.slice(20, order.id.length)}</span>
                     </div>
                 
                 {
@@ -87,7 +84,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                 </a>
   
                 <div className="xxs:mb-2 xs:!mb-1"><span className="font-semibold">Date placed </span>
-                <span>{ ' ' }&nbsp;
+                <span className="text-gray-300">{ ' ' }&nbsp;
                   {new Date(order.dateCreated.slice(5, order.dateCreated.length - 13)).toLocaleString('default', { month: 'short' }) 
                 + ' ' + 
                 ( Number(order.dateCreated.slice(8, order.dateCreated.length - 10)) < 10 ? order.dateCreated.slice(9, order.dateCreated.length - 10) : order.dateCreated.slice(8, order.dateCreated.length - 10)) 
@@ -95,7 +92,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                 order.dateCreated.slice(0, order.dateCreated.length - 16)}</span></div>
   
                 <div className="mb-5"><span className="font-semibold">Total amount </span>&nbsp;
-                <span>{formatter.format(order.totalPrice)}</span>
+                <span className="text-gray-300">{formatter.format(order.totalPrice)}</span>
                 </div>
                 </div>
                 </div>
@@ -108,8 +105,8 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                   }).filter(el => el !== undefined).join(' ')}`}>
                     <a>
                     <li key={i + Math.random()} className="flex pt-6 flex-wrap sm:flex-nowrap">
-                    <div className="flex-shrink-0 xxs:w-full xxs:min-w-[200px] xxs:max-w-[385px] sm:!w-[250px] xxs:h-auto sm:!h-[250px] mr-6 border border-gray-200 rounded-md overflow-hidden">
-                    <Image src={item.node.image.originalSrc} atl={item.node.variantTitle} width='500' height='500' layout="responsive" objectFit="cover" />
+                    <div className="flex-shrink-0 xxs:w-full xxs:min-w-[200px] xxs:max-w-[385px] sm:!w-[250px] xxs:h-auto sm:!h-[356px] mr-6 border border-gray-500 rounded-md overflow-hidden">
+                    <Image src={item.node.image.originalSrc} atl={item.node.variantTitle} width='600' height='860' layout="responsive" objectFit="cover" />
                     </div>
                       <div className="w-[628px]">
                         <div className="flex justify-between flex-col md:flex-row">
@@ -119,7 +116,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                           </div>
                           </div>
                               <div className="pt-3 sm:pt-6">
-                                <div>{item.node.variantTitle}</div>
+                                <div>Size: {item.node.variantTitle}</div>
                                 <div>Quantity: {item.node.quantity}</div>
                                 <div>{formatter.format(item.node.originalUnitPriceSet.shopMoney.amount)}</div>
                               </div>
@@ -146,7 +143,6 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
     </div>
   )
 }
-
 
 export async function getServerSideProps({ req, res }) {
   res.setHeader(
