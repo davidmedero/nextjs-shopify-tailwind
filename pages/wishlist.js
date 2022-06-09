@@ -26,7 +26,7 @@ export default function wishlist({ data, products }) {
 
 export async function getStaticProps() {
   const products = await getAllProducts()
-  const res = await fetch("http://localhost:3000/api/wishlist-endpoint")
+  const res = await fetch("http://https://nextjs-shopify-tailwind-wine.vercel.app//api/wishlist-endpoint")
   const json = await res.json()
   return {
     props: {
