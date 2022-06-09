@@ -1,4 +1,3 @@
-import { signOut, useSession } from "next-auth/react"
 import fetch from 'isomorphic-unfetch'
 import { getAllProducts } from '../lib/shopify'
 import WishlistProductCard from "../components/WishlistProductCard"
