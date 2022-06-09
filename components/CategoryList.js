@@ -262,7 +262,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             ref={desktopRef}
             onMouseOver={() => setShowSortOptions(true)}
             onMouseLeave={() => setShowSortOptions(false)}
-            className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 lg:visible lg:relative lg:z-[1] lg:opacity-100'>
+            className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 lg:visible lg:relative lg:z-[15] lg:opacity-100'>
                 <span className="border-2 bg-black border-white p-1 pl-3 flex w-[200px] items-center justify-between">
                     <span className="select-none text-white font-semibold">SORT</span>
                     <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
@@ -274,7 +274,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 <SlideDown className={'my-dropdown-slidedown'}>
                 {
                     showSortOptions ? (
-                        <div className='w-[200px] text-white relative z-50 whitespace-nowrap bg-black shadow-xl border-t-0 border-2 border-gray-500'>
+                        <div className='w-[200px] text-white relative whitespace-nowrap bg-black shadow-xl border-t-0 border-2 border-gray-500'>
                             <div 
                             onClick={() => {
                               sortByBestSellers();
@@ -876,7 +876,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
           </div>
         </Dialog>
       </Transition.Root>
-            <div className="xxs:-mx-4 sm:mx-0 grid grid-cols-2 gap-y-10 gap-x-6 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+            <div className="xxs:-mx-4 sm:mx-0 grid grid-cols-2 gap-y-10 gap-x-[22px] sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 cursor-pointer">
               {
                 (sortOption === 'Best Sellers') ? (
                   [...products].slice(productsVisited, productsVisited + productsPerPage).map(product => (

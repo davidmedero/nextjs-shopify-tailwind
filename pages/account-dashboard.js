@@ -1,4 +1,4 @@
-import { signOut, useSession } from "next-auth/react"
+import { signOut, useSession, getSession } from "next-auth/react"
 // import { getSession } from "next-auth/react"
 // import Image from 'next/image'
 // import { formatter } from "../utils/helpers"
@@ -16,7 +16,7 @@ export default function wishlist() {
         <div className="mb-[100px] mt-8 mx-auto flex flex-wrap xxs:flex-col md:!flex-row justify-center items-center">
           <span>Signed in as<span className="font-semibold">
           { ' ' + ' ' }{session?.user.email}</span></span>
-          <button onClick={() => signOut()} className="xxs:mt-6 md:!mt-0 md:ml-24 border rounded-md p-2 w-28">Sign Out</button>
+            <button onClick={() => signOut()} className="xxs:mt-6 md:!mt-0 md:ml-24 border rounded-md p-2 w-28">Sign Out</button>
           </div>
           <div className="flex justify-center">
         <div className="flex flex-row justify-between items-center w-[500px] mb-[100px] text-xl">
@@ -34,4 +34,24 @@ export default function wishlist() {
         </div>
     </div>
   )
+}
+
+export async function getServerSideProps({ req, res }) {
+
+  const session = await getSession({ req })
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: { 
+
+    },
+  }
 }

@@ -72,7 +72,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                   order.dateDelivered.slice(0, order.dateDelivered.length - 16)}
                   </div> 
                   : 
-                ( order.trackingUrl ? <a href={order.trackingUrl}><button className="xxs:mt-4 xxs:flex xxs:justify-center xxs:w-full xs:!w-[150px] xs:!flex-none xs:!mt-0 self-start border rounded-md p-2">Track package</button></a> : <div className="xxs:flex xxs:items-center xxs:w-full xs:!w-[100px] sm:!w-[178px] xxs:mt-3 xs:!mt-0 text-green-600">Tracking # coming soon!</div> )
+                ( order.trackingUrl ? <a href={order.trackingUrl}><button className="xxs:mt-4 xxs:flex xxs:justify-center xxs:w-full xs:!w-[150px] xs:!flex-none xs:!mt-0 self-start border rounded-md p-2 hover:bg-[#ff00a7] hover:border-[#ff00a7]">Track package</button></a> : <div className="xxs:flex xxs:items-center xxs:w-full xs:!w-[100px] sm:!w-[178px] xxs:mt-3 xs:!mt-0 text-[#ff00a7]">Tracking # coming soon!</div> )
                 }
                 
                 </div>
@@ -80,7 +80,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                 <div className="xxs:flex-col xs:!flex-none">
 
                 <a href={orderStatusUrl}>
-                <button className="xxs:float-left xxs:flex xxs:justify-center xxs:w-full xxs:mb-[18px] xs:!float-right xs:!flex-none xs:!w-32 xs:!mb-0 border rounded-md p-2">See invoice</button>
+                <button className="xxs:float-left xxs:flex xxs:justify-center xxs:w-full xxs:mb-[18px] xs:!float-right xs:!flex-none xs:!w-32 xs:!mb-0 border rounded-md p-2 hover:bg-[#ff00a7] hover:border-[#ff00a7]">See invoice</button>
                 </a>
   
                 <div className="xxs:mb-2 xs:!mb-1"><span className="font-semibold">Date placed </span>
@@ -112,7 +112,7 @@ export default function yourOrders({ orders, orderIdUrl, products }) {
                         <div className="flex justify-between flex-col md:flex-row">
                         <div className="float-left font-semibold text-lg mr-8 mt-3 sm:mt-0">{item.node.title}</div>
                           <div>
-                            <button className="xxs:flex xxs:justify-center xxs:w-full xs:!w-36 xs:!flex-none mt-2.5 sm:mt-5 md:mt-0 border rounded-md p-2 whitespace-nowrap">View Product</button>
+                            <button className="xxs:flex xxs:justify-center xxs:w-full xs:!w-36 xs:!flex-none mt-2.5 sm:mt-5 md:mt-0 border rounded-md p-2 whitespace-nowrap hover:bg-[#ff00a7] hover:border-[#ff00a7]">View Product</button>
                           </div>
                           </div>
                               <div className="pt-3 sm:pt-6">

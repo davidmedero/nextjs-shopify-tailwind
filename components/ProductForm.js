@@ -198,7 +198,7 @@ export default function ProductForm({ product }) {
         }
     }, [productInventory, selectedVariant])
 
-console.log(Object.values(selectedOptions).join(''))
+
   return (
     <div className="xxs:mt-4 md:!mt-0 py-4 relative -top-4 md:top-0 flex flex-col w-11/12 md:w-[390px]">
         <Head>
