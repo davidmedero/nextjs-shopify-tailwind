@@ -27,7 +27,7 @@ handler.post(async (req, res) => {
             $match: { email: JSON.parse(email) }
         },
         {
-            $set: { saved_items: { $concatArrays: [ "$saved_items", [req.body] ] } }
+            $set: { saved_items: { $concatArrays: [ "$saved_items", [JSON.parse(req.body)] ] } }
         },
         { $merge: 'users' },
      ] ).toArray()
