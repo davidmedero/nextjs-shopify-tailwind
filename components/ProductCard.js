@@ -57,7 +57,7 @@ const ProductCard = ({ product }) => {
 
   const updateMacros = async () => {
     console.log('yes')
-    await fetch('http://localhost:3000/api/wishlist-endpoint', {
+    await fetch('https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint', {
       method: 'post',
       body: JSON.stringify(handle)
     })

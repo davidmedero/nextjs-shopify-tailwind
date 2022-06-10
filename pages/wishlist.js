@@ -44,7 +44,7 @@ export async function getServerSideProps({ req }) {
   }
 
   const products = await getAllProducts()
-  const res = await fetch("http://localhost:3000/api/wishlist-endpoint")
+  const res = await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint")
   const json = await res.json()
   return {
     props: {
