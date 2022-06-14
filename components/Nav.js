@@ -142,13 +142,13 @@ export default function Nav() {
 
   return (
     <header className='border-b-4 border-b-gray-900 sticky top-0 z-20 bg-black'>
-        <div className={(showMenu ? 'flex items-center justify-between max-w-full py-4 xxs:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-full py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
+        <div className={(showMenu ? 'flex items-center justify-between max-w-full py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 search:!pb-4 transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-full py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
             <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
             </div>
             <Link href="/" passHref>
                 <a className='cursor-pointer'>
-                    <span className='xxs:relative xxs:top-1 lg:top-[15px] lg:absolute xxs:right-[calc(30%-73px)] md:right-[calc(40%-100px)] lg:right-[unset] bottom-2 text-2xl pt-1 font-bold select-none hover:scale-[1.15] transition-all ease-in-out duration-300'>
+                    <span className='xxs:relative xxs:top-1 lg:top-[15px] lg:absolute xxs:right-[calc(30%-73px)] xs:!right-[calc(30%-66px)] sm:!right-[calc(30%-76px)] md:right-[calc(40%-100px)] lg:!right-[unset] bottom-2 text-2xl pt-1 font-bold select-none hover:scale-[1.15] transition-all ease-in-out duration-300'>
                         <Image src="/logo.png" width="200" height="30" layout="fixed" objectFit="cover" />
                     </span>
                 </a>
@@ -245,8 +245,8 @@ export default function Nav() {
             <CurrencyConversion />
             </div>
         </div>
-        <div className={!showMenu ? 'xxs:opacity-100 lg:hidden xxs:transition-opacity xxs:ease-in-out xxs:duration-700' : 'xxs:opacity-0'}>
-        <div className='xxs:absolute xxs:top-20 xxs:left-[48%] xxs:-translate-x-1/2 lg:hidden'>
+        <div className={!showMenu ? 'xxs:hidden search:!block search:opacity-100 lg:hidden search:transition-opacity search:ease-in-out search:duration-700' : 'xxs:hidden search:!block search:opacity-0'}>
+        <div className='xxs:absolute xxs:top-20 xxs:left-[50%] xxs:-translate-x-1/2 lg:hidden'>
           {
           !showMenu && (
                   <div className='xxs:flex xxs:rounded-none'>
@@ -264,7 +264,24 @@ export default function Nav() {
                   </div>)
                   }
               </div>
-              </div>
+                </div>
+          <div className='xxs:block search:hidden xxs:transition-opacity xxs:ease-in-out xxs:duration-700'>
+          <div className='xxs:absolute xxs:top-20 xxs:left-[50%] xxs:-translate-x-1/2 lg:hidden'>
+              <div className='xxs:flex xxs:rounded-none'>
+                <input
+                onChange={(e) => setQuery(e.target.value)}
+                ref={mobileInputRef}
+                autoComplete='off'
+                autoFocus
+                id="mobile-input" type="text" placeholder="Search..." className="xxs:border-b-white xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none bg-black text-white" />
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+          </div>
+          </div>
+          </div>
               <div className="absolute w-full flex flex-col justify-center bg-black">
               <SlideDown className={'my-dropdown-slidedown'}>
         {
