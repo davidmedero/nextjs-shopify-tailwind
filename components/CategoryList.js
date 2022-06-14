@@ -9,7 +9,6 @@ import { XIcon } from '@heroicons/react/outline'
 import ReactPaginate from "react-paginate"
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import { handleRender } from './TooltipSlider'
 import brands from "../brands"
 
 
@@ -262,7 +261,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             ref={desktopRef}
             onMouseOver={() => setShowSortOptions(true)}
             onMouseLeave={() => setShowSortOptions(false)}
-            className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 lg:visible lg:relative lg:z-[15] lg:opacity-100'>
+            className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 lg:visible lg:relative lg:top-[11px] lg:z-[15] lg:opacity-100'>
                 <span className="border-2 bg-black border-white p-1 pl-3 flex w-[200px] items-center justify-between">
                     <span className="select-none text-white font-semibold">SORT</span>
                     <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
@@ -280,25 +279,25 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                               sortByBestSellers();
                               setShowSortOptions(false)
                             }}
-                            className={sortOption === 'Best Sellers' ? 'hover:bg-gray-900 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-900 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>BEST SELLERS</div>
+                            className={sortOption === 'Best Sellers' ? 'hover:bg-gray-800 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-800 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>BEST SELLERS</div>
                             <div 
                             onClick={() => {
                               sortByNewest();
                               setShowSortOptions(false)
                             }}
-                            className={sortOption === 'Newest' ? 'hover:bg-gray-900 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-900 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>NEWEST</div>
+                            className={sortOption === 'Newest' ? 'hover:bg-gray-800 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-800 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>NEWEST</div>
                             <div 
                             onClick={() => {
                               sortByHighestPrice();
                               setShowSortOptions(false)
                             }}
-                            className={sortOption === 'Highest Price' ? 'hover:bg-gray-900 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-900 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>HIGHEST PRICE</div>
+                            className={sortOption === 'Highest Price' ? 'hover:bg-gray-800 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-800 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>HIGHEST PRICE</div>
                             <div 
                             onClick={() => {
                               sortByLowestPrice();
                               setShowSortOptions(false)
                             }}
-                            className={sortOption === 'Lowest Price' ? 'hover:bg-gray-900 w-[197px] p-3 text-[#ff00a7] cursor-pointer font-bold' : 'hover:bg-gray-900 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer'}>LOWEST PRICE</div>
+                            className={sortOption === 'Lowest Price' ? 'hover:bg-gray-800 w-[197px] p-3 text-[#ff00a7] cursor-pointer font-bold' : 'hover:bg-gray-800 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer'}>LOWEST PRICE</div>
                         </div>
                     ) : null
                 }
@@ -308,10 +307,10 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             <div 
             ref={tabletRef}
             onClick={() => toggleSortOptions()}
-            className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 md:visible md:relative md:z-[1] md:opacity-100 lg:invisible lg:absolute lg:z-[-1] lg:opacity-0'>
-                <span className="cursor-pointer border-2 border-black p-1 pl-3 flex w-[200px] items-center justify-between">
-                    <span className="select-none font-semibold">SORT</span>
-                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 md:visible md:relative md:top-[11px] md:z-[1] md:opacity-100 lg:invisible lg:absolute lg:z-[-1] lg:opacity-0'>
+                <span className="border-2 bg-black border-white p-1 pl-3 flex w-[200px] items-center justify-between">
+                    <span className="select-none text-white font-semibold">SORT</span>
+                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
@@ -320,31 +319,31 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 <SlideDown className={'my-dropdown-slidedown'}>
                 {
                     showSortOptions ? (
-                        <div className='w-[200px] relative z-50 whitespace-nowrap bg-white border-2'>
+                        <div className='w-[200px] text-white relative whitespace-nowrap bg-black shadow-xl border-t-0 border-2 border-gray-500'>
                             <div 
                             onClick={() => {
                               sortByBestSellers();
                               setShowSortOptions(true)
                             }}
-                            className={sortOption === 'Best Sellers' ? 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b'}>Best Sellers</div>
+                            className={sortOption === 'Best Sellers' ? 'hover:bg-gray-800 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-800 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>Best Sellers</div>
                             <div 
                             onClick={() => {
                               sortByNewest();
                               setShowSortOptions(true)
                             }}
-                            className={sortOption === 'Newest' ? 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b'}>Newest</div>
+                            className={sortOption === 'Newest' ? 'hover:bg-gray-800 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-800 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>Newest</div>
                             <div 
                             onClick={() => {
                               sortByHighestPrice();
                               setShowSortOptions(true)
                             }}
-                            className={sortOption === 'Highest Price' ? 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b'}>Highest Price</div>
+                            className={sortOption === 'Highest Price' ? 'hover:bg-gray-800 w-[197px] p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-800 border-b-gray-500 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>Highest Price</div>
                             <div 
                             onClick={() => {
                               sortByLowestPrice();
                               setShowSortOptions(true)
                             }}
-                            className={sortOption === 'Lowest Price' ? 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'w-[197px] p-3 hover:bg-pink-100 cursor-pointer border-b'}>Lowest Price</div>
+                            className={sortOption === 'Lowest Price' ? 'hover:bg-gray-800 w-[197px] p-3 text-[#ff00a7] cursor-pointer font-bold' : 'hover:bg-gray-800 w-[197px] p-3 hover:font-bold hover:text-white cursor-pointer'}>Lowest Price</div>
                         </div>
                     ) : null
                 }
@@ -352,7 +351,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 </div>
             </div>
             </div>
-              <span onClick={() => setShowFilterOptions(true)} className="cursor-pointer border-2 border-white bg-black ml-5 p-1 pl-3 flex w-[200px] items-center justify-between">
+              <span onClick={() => setShowFilterOptions(true)} className="cursor-pointer border-2 border-white bg-black ml-5 p-1 pl-3 flex w-[200px] relative top-[11px] items-center justify-between">
                 <span className="select-none text-white font-semibold">FILTER</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-90" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
@@ -384,9 +383,9 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             <div 
             ref={mobileRef}
             onClick={() => toggleSortOptions()}>
-                <span className="cursor-pointer border-2 border-black p-1 pl-3 flex xxs:w-[calc(50.6vw-35%)] sm:w-[calc(46vw-35%)] items-center justify-between">
-                    <span className="select-none font-semibold">SORT</span>
-                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <span className="cursor-pointer border-2 border-white p-1 pl-3 flex xxs:w-[calc(50vw-30%)] sm:w-[calc(49vw-44%)] items-center justify-between">
+                    <span className="select-none font-semibold text-white">SORT</span>
+                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
@@ -394,40 +393,40 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 {
                     showSortOptions && (
                       <div className="xxs:absolute">
-                        <div className='xxs:w-[calc(50.6vw-24%)] sm:w-[calc(47vw-30%)] relative z-50 whitespace-nowrap bg-white border-2'>
+                        <div className='xxs:w-[calc(50.6vw-24%)] sm:w-[calc(48.86vw-30%)] text-white relative whitespace-nowrap bg-black shadow-xl border-t-0 border-2 border-gray-500 z-50'>
                             <div 
                             onClick={() => {
                               sortByBestSellers();
                               setShowSortOptions(true)
                             }}
-                            className={sortOption === 'Best Sellers' ? 'p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'p-3 hover:bg-pink-100 cursor-pointer border-b'}>Best Sellers</div>
+                            className={sortOption === 'Best Sellers' ? 'hover:bg-gray-800 p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-800 border-b-gray-500 p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>Best Sellers</div>
                             <div 
                             onClick={() => {
                               sortByNewest();
                               setShowSortOptions(true)
                             }}
-                            className={sortOption === 'Newest' ? 'p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'p-3 hover:bg-pink-100 cursor-pointer border-b'}>Newest</div>
+                            className={sortOption === 'Newest' ? 'hover:bg-gray-800 p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-800 border-b-gray-500 p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>Newest</div>
                             <div 
                             onClick={() => {
                               sortByHighestPrice();
                               setShowSortOptions(true)
                             }}
-                            className={sortOption === 'Highest Price' ? 'p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'p-3 hover:bg-pink-100 cursor-pointer border-b'}>Highest Price</div>
+                            className={sortOption === 'Highest Price' ? 'hover:bg-gray-800 p-3 text-[#ff00a7] cursor-pointer border-b border-b-gray-500 font-bold' : 'hover:bg-gray-800 border-b-gray-500 p-3 hover:font-bold hover:text-white cursor-pointer border-b'}>Highest Price</div>
                             <div 
                             onClick={() => {
                               sortByLowestPrice();
                               setShowSortOptions(true)
                             }}
-                            className={sortOption === 'Lowest Price' ? 'p-3 hover:bg-pink-100 cursor-pointer border-b font-semibold' : 'p-3 hover:bg-pink-100 cursor-pointer border-b'}>Lowest Price</div>
+                            className={sortOption === 'Lowest Price' ? 'hover:bg-gray-800 p-3 text-[#ff00a7] cursor-pointer font-bold' : 'hover:bg-gray-800 p-3 hover:font-bold hover:text-white cursor-pointer'}>Lowest Price</div>
                         </div>
                       </div>
                     )
                 }
             </div>
             </div>
-              <span className="cursor-pointer border-2 border-black p-1 pl-3 flex xxs:w-[calc(100%-49.5vw)] sm:w-[calc(100%-45vw)] items-center justify-between">
-                <span className="select-none font-semibold">FILTER</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <span className="cursor-pointer border-2 border-white p-1 pl-3 flex xxs:w-[calc(95%-44.4vw)] sm:w-[calc(99.9%-47.1vw)] items-center justify-between">
+                <span className="select-none font-semibold text-white">FILTER</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-90" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                 </svg>
               </span>
@@ -594,6 +593,10 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                                   <span className="w-full h-[75px] flex items-center select-none">PRICE</span>
                               </div>
                             </div>
+                            <div className="flex justify-between mt-4 !w-[85%] mx-auto text-white">
+                              <span>$ {minVal}</span>
+                              <span>$ {maxVal}</span>
+                            </div>
                             <div>
                             <Slider
                               range
@@ -601,8 +604,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                               max={max}
                               defaultValue={[minVal, maxVal]}
                               onChange={onSliderChange}
-                              handleRender={handleRender}
-                              className="mt-14 !w-[85%] mx-auto"
+                              className="mt-6 !w-[85%] mx-auto"
                               handleStyle={{
                                 borderColor: 'rgb(236 72 153)',
                                 height: 20,
@@ -614,10 +616,6 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                               trackStyle={{ backgroundColor: 'rgb(249 168 212)', height: 6 }}
                               railStyle={{ backgroundColor: 'rgb(163 163 163)', height: 6 }}
                             />
-                            <div className="flex justify-between mt-3 !w-[85%] mx-auto text-white">
-                              <span>$ {minVal}</span>
-                              <span>$ {maxVal}</span>
-                            </div>
                           </div>
                         </div>
                       </div>

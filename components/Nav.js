@@ -142,25 +142,25 @@ export default function Nav() {
 
   return (
     <header className='border-b-4 border-b-gray-900 sticky top-0 z-20 bg-black'>
-        <div className={(showMenu ? 'flex items-center justify-between max-w-[1930px] py-4 xxs:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-[1930px] py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
+        <div className={(showMenu ? 'flex items-center justify-between max-w-full py-4 xxs:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-full py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
             <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
             </div>
             <Link href="/" passHref>
                 <a className='cursor-pointer'>
-                    <span className='absolute bottom-2 text-2xl pt-1 font-bold select-none hover:scale-[1.15] transition-all ease-in-out duration-300'>
+                    <span className='xxs:relative xxs:top-1 lg:top-[15px] lg:absolute xxs:right-[calc(30%-73px)] md:right-[calc(40%-100px)] lg:right-[unset] bottom-2 text-2xl pt-1 font-bold select-none hover:scale-[1.15] transition-all ease-in-out duration-300'>
                         <Image src="/logo.png" width="200" height="30" layout="fixed" objectFit="cover" />
                     </span>
                 </a>
             </Link>
-            <div className='xxs:hidden lg:!block lg:relative lg:left-[90px]'>
+            <div className='xxs:hidden lg:!block lg:relative lg:left-[100px] xl:left-[95px]'>
               <div>
               {
                 showMenu && (
                   collections.map(collection => (
                       collection.handle == "shop" ?
                       (<Link href={'/shop-brands'} >
-                      <a className="p-6 text-white hover:bg-[#ff00a7] select-none"
+                      <a className="lg:text-[12px] xl:text-sm p-6 text-white hover:bg-[#ff00a7] select-none"
                       data-info={JSON.stringify(collection)}
                       onMouseEnter={(e) => {
                           setShowSubMenu(true);
@@ -173,7 +173,7 @@ export default function Nav() {
                       </a>
                       </Link>) :
                       (<Link href={'/' + collection.handle} >
-                          <a className="p-6 text-white hover:bg-[#ff00a7] select-none"
+                          <a className="lg:text-[12px] xl:text-sm p-6 text-white hover:bg-[#ff00a7] select-none"
                           data-info={JSON.stringify(collection)}
                           onMouseEnter={(e) => {
                               setShowSubMenu(true);
@@ -196,7 +196,7 @@ export default function Nav() {
                   onChange={(e) => setQuery(e.target.value)}
                   autoComplete='off'
                   autoFocus
-                  id='input' type="text" placeholder="Search..." name="input" className="border-b border-b-white border-black w-[500px] text-white bg-black" />
+                  id='input' type="text" placeholder="Search..." name="input" className="border-b border-b-white border-black lg:w-[400px] xl:w-[500px] text-white bg-black" />
                   <span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -217,9 +217,9 @@ export default function Nav() {
                
               </div>
             </div>
-            <div className='flex items-center relative'>
+            <div className='flex items-center justify-center relative cursor-pointer'>
               <div 
-              className='relative right-6 hover:scale-[1.3] transition-all duration-200 ease-in-out'
+              className='xxs:hidden search:!block px-[6px] relative hover:scale-[1.3] transition-all duration-200 ease-in-out'
               ref={ref}
               onClick={() => {
                 toggleMenu();
@@ -232,12 +232,12 @@ export default function Nav() {
             <SignInButton />
             <a 
             id='slide-toggle'
-            className='cursor-pointer flex justify-center items-center'
+            className='xxs:left-3 search:left-[unset] px-[6px] cursor-pointer flex justify-center items-center hover:scale-[1.2] transition-all duration-200 ease-in-out relative z-50'
             onClick={() => setCartOpen(!cartOpen)}
             onMouseOver={() => setShowSubtotal(true)}
             onMouseLeave={() => setShowSubtotal(false)}
             >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hover:scale-[1.2] transition-all duration-200 ease-in-out" fill="none" viewBox="0 0 24 24" stroke={cartQuantity > 0 ? '#ff00a7' : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 relative z-[9999]" fill="none" viewBox="0 0 24 24" stroke={cartQuantity > 0 ? '#ff00a7' : "white"} stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg> 
             </a>
@@ -246,7 +246,7 @@ export default function Nav() {
             </div>
         </div>
         <div className={!showMenu ? 'xxs:opacity-100 lg:hidden xxs:transition-opacity xxs:ease-in-out xxs:duration-700' : 'xxs:opacity-0'}>
-        <div className='xxs:absolute xxs:top-20 xxs:left-[48%] xxs:-translate-x-1/2 lg:hidden '>
+        <div className='xxs:absolute xxs:top-20 xxs:left-[48%] xxs:-translate-x-1/2 lg:hidden'>
           {
           !showMenu && (
                   <div className='xxs:flex xxs:rounded-none'>
@@ -255,9 +255,9 @@ export default function Nav() {
                     ref={mobileInputRef}
                     autoComplete='off'
                     autoFocus
-                    id="mobile-input" type="text" placeholder="Search..." className="xxs:border-b-white xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none" />
+                    id="mobile-input" type="text" placeholder="Search..." className="xxs:border-b-white xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none bg-black text-white" />
                     <span>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="none">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
                       <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                       </svg>
                     </span>
@@ -297,7 +297,7 @@ export default function Nav() {
                       subcategory.handle === "" ? (
                         <Link href={'/' + categoryHandle + '/' + sub_subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                          <a className='flex py-1 px-6 text-gray-300 cursor-pointer hover:bg-[#ff00a7] select-none'>
+                          <a className='flex py-1 px-6 text-gray-300 cursor-pointer hover:bg-[#ff00a7] select-none hover:text-white'>
                             {sub_subcategory.title.toUpperCase()}
                           </a>
                        </div>
@@ -320,12 +320,12 @@ export default function Nav() {
         }
         </SlideDown>
         </div>
-        <div className="absolute right-[60px] top-[60px] w-[200px] flex flex-col justify-center">
-        <SlideDown className={'my-dropdown-slidedown-cartIcon'}>
+        <div className="xxs:hidden lg:block absolute right-[60px] top-[60px] w-[200px] flex flex-col justify-center select-none text-sm">
+        <SlideDown className={'my-dropdown-slidedown'}>
         {
           ((showSubtotal) && (cartQuantity > 0)) ? (
-            <div className='border-b-4 border-b-gray-900 bg-black py-2 px-4 relative flex flex-col border-t-black'>
-              <div className='flex flex-row justify-between'>
+            <div className='pt-[15px] border-b-4 border-b-gray-900 bg-black py-2 px-4 relative flex flex-col border-t-black pb-3'>
+              <div className='flex flex-row justify-between pb-2'>
                 <span className='text-white relative'>QUANTITY:</span>
                 <span className='text-white relative'>{cartQuantity}</span>
               </div>
@@ -337,7 +337,7 @@ export default function Nav() {
           ) : ((showSubtotal) && (cartQuantity === 0)) ? (
             <div className='border-b-4 border-b-gray-900 bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[30px]'>
             <div className='flex flex-row justify-between'>
-              <span className='text-white relative top-1'>Your Bag is Empty!</span>
+              <span className='text-white relative top-1 text-base'>Your Bag is Empty!</span>
             </div>
             </div>
           ) : null

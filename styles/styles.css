@@ -285,3 +285,14 @@ html {
 .rc-slider-handle-dragging {
   box-shadow: 0 0 0 5px #fbcfe8 !important;
 }
+
+/* .line:after {
+  content:"";
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  border-left: 2px dotted #ff0000;
+  transform: translate(-50%);
+} */

@@ -1,10 +1,28 @@
-import { useLayoutEffect, useEffect, useState, useCallback } from "react"
+import { useLayoutEffect, useEffect, useState, useCallback, useRef } from "react"
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
+import useSWR, { useSWRConfig } from "swr"
+import axios from "axios"
+import { useSession } from "next-auth/react"
+import { useRouter } from 'next/router'
+
+
+const fetcher = url => axios.get(url).then(res => res.data)
 
 
 const ProductCard = ({ product }) => {
+
+  const { mutate } = useSWRConfig()
+
+  const { data: session } = useSession()
+  const email = session?.user.email
+
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  }
 
   const { handle, title } = product.node
 
@@ -55,20 +73,50 @@ const ProductCard = ({ product }) => {
     console.log('Button Click');
   }, []);
 
+  const [added, setAdded] = useState(false)
+
   const updateMacros = async () => {
     console.log('yes')
-    await fetch('https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint', {
-      method: 'post',
-      body: JSON.stringify(handle)
-    })
+    if (added) {
+      await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
+        method: 'delete',
+        body: JSON.stringify(handle)
+      })
+    } else {
+      await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
+        method: 'post',
+        body: JSON.stringify(handle)
+      })
+    }
+    mutate('/api/wishlist-endpoint')
   }
 
+  const { data, error } = useSWR('/api/wishlist-endpoint', fetcher)
+
+  const savedItems = data && data.map(el => {
+    if (el.email === email) {
+      return el.saved_items
+    }
+  }).filter(el => el != undefined)
+
+  useEffect(() => {
+    console.log(savedItems)
+    if (savedItems) {
+      if (savedItems[0]) {
+        if (savedItems[0].includes(handle)) {
+          setAdded(true)
+        } else {
+          setAdded(false)
+        }
+      }
+    }
+  }, [savedItems])
 
   return (
     <>
     <Link href={`/${handle}`}>
       <a className="group">
-        <div className="w-full bg-gray-200 overflow-hidden">
+        <div className="line w-full bg-gray-200 overflow-hidden">
             <div className="xxs:hidden lg:block relative w-full h-full">
               <span 
               onMouseOver={() => setHeartFill(true)}
@@ -78,7 +126,7 @@ const ProductCard = ({ product }) => {
                 updateMacros()
               }}
               className="absolute right-[6px] top-1 z-10">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
