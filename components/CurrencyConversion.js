@@ -1,11 +1,23 @@
-import { useLayoutEffect, useEffect, useState, useRef, useContext } from "react"
+import { useLayoutEffect, useEffect, useState, useRef, useContext, Fragment } from "react"
 import { CartContext } from '../context/shopContext'
 import { createCheckout, updateCheckout } from '../lib/shopify'
 import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import Image from "next/image"
+import { Dialog, Transition } from '@headlessui/react'
+import { useSwipeable } from 'react-swipeable'
+import { XIcon } from '@heroicons/react/outline'
 
-export default function CurrencyConversion() {
+
+export default function CurrencyConversion({ show, onClose, closeMenu }) {
+
+    const cancelButtonRef = useRef()
+
+    const handlers = useSwipeable({
+      onSwipedLeft: () => onClose(),
+      preventDefaultTouchmoveEvent: true,
+      trackMouse: true
+    })
 
     const { cart, addToCart, clearCart, setCart, setCartOpen, checkoutId, setCheckoutId, setCheckoutUrl } = useContext(CartContext)
 
@@ -253,12 +265,9 @@ export default function CurrencyConversion() {
             
       </div>
 
-
-
-
       <div
       ref={ref} onClick={() => toggleCurrencies()} 
-      className="xxs:hidden sm:block lg:hidden px-[6px] flex flex-col cursor-pointer select-none text-white">
+      className="xxs:block lg:hidden px-[6px] flex flex-col cursor-pointer select-none text-white">
         <div className="relative z-[9999] flex items-center hover:scale-[1.3] transition-all duration-200 ease-in-out">
         {
               (currentCurrency === 'GBP' || currentCurrency === 'EUR') ? (
@@ -274,7 +283,7 @@ export default function CurrencyConversion() {
             }
             </div>
             <div 
-            className="top-[30px] bg-black py-2 px-4 absolute flex flex-col right-0">
+            className="xxs:hidden xs:!flex top-[30px] bg-black py-2 px-4 absolute flex-col right-0">
             <SlideDown className={'my-dropdown-slidedown'}>
             {
             showCurrencies && (
@@ -310,6 +319,148 @@ export default function CurrencyConversion() {
             }
             </SlideDown>
             </div>
+      </div>
+
+    <div className="xxs:block xs:!hidden">
+      <Transition.Root show={show ? show : false} as={Fragment} {...handlers}>
+        <Dialog 
+        {...handlers}
+        initialFocus={cancelButtonRef}
+        as="div" 
+        className="fixed z-[60] inset-0 overflow-hidden" 
+        onClose={() => {
+            closeMenu();
+            onClose();
+        }}>
+          <div {...handlers} className="absolute inset-0 overflow-hidden">
+            <Transition.Child
+            {...handlers}
+                as={Fragment}
+                enter="ease-in-out duration-500"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in-out duration-500"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+            >
+                <Dialog.Overlay {...handlers} className="absolute inset-0" />
+            </Transition.Child>
+            <div {...handlers} className="fixed inset-y-0 left-0 max-w-full flex overflow-hidden">
+              <Transition.Child
+                {...handlers}
+                as={Fragment}
+                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enterFrom="-translate-x-full"
+                enterTo="translate-x-0"
+                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leaveFrom="translate-x-0"
+                leaveTo="-translate-x-full"
+                >
+                  <div className="mt-1 p-6 w-screen sm:max-w-md bg-white overflow-y-scroll">
+                    <div className="flex justify-between items-center relative bottom-1">
+                      <button
+                        ref={cancelButtonRef}
+                        type="button"
+                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                        onClick={() => {
+                            onClose();
+                            }}>
+
+                        <span className="sr-only">Close panel</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </button>
+                      <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">Currencies</Dialog.Title>
+                      <button
+                        ref={cancelButtonRef}
+                        type="button"
+                        className="-mx-2 -my-[10px] p-2 text-gray-400 hover:text-gray-500"
+                        onClick={() => {
+                            closeMenu();
+                            onClose();
+                        }}
+                        >
+                        <span className="sr-only">Close panel</span>
+                        <XIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
+                    </div>
+                    <div className="pb-[9px] mt-[37px] text-lg">
+                    <div className={!currentCurrency || currentCurrency === 'USD' ? 'cursor-not-allowed' : 'cursor-pointer'}>
+                    <div 
+                    onClick={() => {
+                        setCurrentCurrency('USD');
+                    }} 
+                    className="flex flow-row items-center w-full justify-between border-b">
+                    <div 
+                    className={!currentCurrency || currentCurrency === 'USD' ? "pointer-events-none h-[75px] flex flex-row items-center p-2 whitespace-nowrap" : "flex h-[75px] flex-row items-center p-2 whitespace-nowrap"}>
+                        <Image src="/um.svg" width="40" height="30" layout="fixed" objectFit="cover" />
+                        <div className="ml-9">United States</div>
+                        </div>
+                            {
+                            currentCurrency === 'USD' ?
+                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                 </svg>) :
+                                (<span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                                </svg>
+                                </span>)
+                            }
+                        </div>
+                        </div>
+                    <div 
+                    onClick={() => {
+                        setCurrentCurrency('GBP');
+                    }} 
+                    className="flex flow-row items-center w-full justify-between border-b">
+                    <div 
+                    className="flex border-b h-[75px] flex-row items-center w-full p-2 whitespace-nowrap">
+                         <Image src="/gb.svg" width="40" height="30" layout="fixed" objectFit="cover" />
+                        <div className="ml-9">United Kingdom</div>
+                        </div>
+                            {
+                            currentCurrency === 'GBP' ?
+                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                 </svg>) :
+                                (<span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                                </svg>
+                                </span>)
+                            }
+                        </div>
+                    <div 
+                    onClick={() => {
+                        setCurrentCurrency('EUR');
+                    }}
+                    className="flex flow-row items-center w-full justify-between border-b">
+                    <div  
+                    className="flex border-b h-[75px] flex-row items-center w-full p-2 whitespace-nowrap">
+                        <Image src="/eu.svg" width="40" height="30" layout="fixed" objectFit="cover" />
+                        <div className="ml-9">European Union</div>
+                        </div>
+                            {
+                            currentCurrency === 'EUR' ?
+                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                 </svg>) :
+                                (<span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                                </svg>
+                                </span>)
+                            }
+                        </div>
+                </div>
+                </div>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
       </div>
       </>
     )

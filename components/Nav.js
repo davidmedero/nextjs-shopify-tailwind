@@ -9,7 +9,7 @@ import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import { useRouter } from 'next/router'
 import CurrencyConversion from './CurrencyConversion'
-import { isChrome, isIPhone13, isIPad13, isMobile } from 'react-device-detect'
+// import { isChrome, isIPhone13, isIPad13, isMobile } from 'react-device-detect'
 import Image from 'next/image'
 import WishlistButton from './WishlistButton'
 
@@ -142,18 +142,24 @@ export default function Nav() {
 
   return (
     <header className='border-b-4 border-b-gray-900 sticky top-0 z-20 bg-black'>
-        <div className={(showMenu ? 'flex items-center justify-between max-w-full py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 search:!pb-4 transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-full py-4 xxs:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
+        <div className={(showMenu ? 'flex items-center justify-between max-w-full xxs:py-3 xs:py-4 xxs:px-3 search:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-full xxs:py-3 xs:py-4 xxs:px-3 search:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
             <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
             </div>
             <Link href="/" passHref>
                 <a className='cursor-pointer'>
-                    <span className='xxs:relative xxs:top-1 lg:top-[15px] lg:absolute xxs:right-[calc(30%-73px)] xs:!right-[calc(30%-66px)] sm:!right-[calc(30%-76px)] md:right-[calc(40%-100px)] lg:!right-[unset] bottom-2 text-2xl pt-1 font-bold select-none hover:scale-[1.15] transition-all ease-in-out duration-300'>
+                    <span className='xxs:hidden lg:block lg:top-[10px] lg:absolute lg:hover:scale-110 search:!right-[calc(35%-80px)] xs:!right-[calc(30%-66px)] sm:!right-[calc(30%-76px)] md:right-[calc(40%-100px)] lg:!right-[unset] bottom-2 text-2xl pt-1 select-none transition-all ease-in-out duration-300'>
                         <Image src="/logo.png" width="200" height="30" layout="fixed" objectFit="cover" />
+                    </span>
+                    <span className='xxs:hidden mini:!block lg:!hidden  xxs:relative xxs:top-[2px] xxs:right-[calc(35%-69px)] xs:!right-[calc(30%-66px)] text-2xl pt-1 select-none transition-all ease-in-out duration-300'>
+                        <Image src="/logo.png" width="170" height="25" layout="fixed" objectFit="cover" />
+                    </span>
+                    <span className='xxs:block mini:!hidden xxs:relative xxs:top-[-1px] xxs:right-[calc(35%-60px)] xs:!right-[calc(30%-66px)] text-2xl pt-1 select-none transition-all ease-in-out duration-300'>
+                        <Image src="/logo.png" width="150" height="20" layout="fixed" objectFit="cover" />
                     </span>
                 </a>
             </Link>
-            <div className='xxs:hidden lg:!block lg:relative lg:left-[100px] xl:left-[95px]'>
+            <div className='xxs:hidden lg:!block lg:relative lg:left-[103px] xl:left-[95px]'>
               <div>
               {
                 showMenu && (
@@ -217,9 +223,9 @@ export default function Nav() {
                
               </div>
             </div>
-            <div className='flex items-center justify-center relative cursor-pointer'>
+            <div className='flex items-center justify-center relative xxs:left-3 cursor-pointer'>
               <div 
-              className='xxs:hidden search:!block px-[6px] relative hover:scale-[1.3] transition-all duration-200 ease-in-out'
+              className='px-[6px] relative hover:scale-[1.3] transition-all duration-200 ease-in-out'
               ref={ref}
               onClick={() => {
                 toggleMenu();
@@ -229,10 +235,12 @@ export default function Nav() {
                 </svg>
               </div>
             <WishlistButton />
-            <SignInButton />
+              <div className='xxs:hidden xs:!block'>
+                <SignInButton />
+              </div>
             <a 
             id='slide-toggle'
-            className='xxs:left-3 search:left-[unset] px-[6px] cursor-pointer flex justify-center items-center hover:scale-[1.2] transition-all duration-200 ease-in-out relative z-50'
+            className='px-[6px] cursor-pointer flex justify-center items-center hover:scale-[1.2] transition-all duration-200 ease-in-out relative z-50'
             onClick={() => setCartOpen(!cartOpen)}
             onMouseOver={() => setShowSubtotal(true)}
             onMouseLeave={() => setShowSubtotal(false)}
@@ -242,10 +250,12 @@ export default function Nav() {
                 </svg> 
             </a>
             <Cart cart={cart} />
-            <CurrencyConversion />
+              <div className='xxs:hidden xs:!block'>
+                <CurrencyConversion />
+              </div>
             </div>
         </div>
-        <div className={!showMenu ? 'xxs:hidden search:!block search:opacity-100 lg:hidden search:transition-opacity search:ease-in-out search:duration-700' : 'xxs:hidden search:!block search:opacity-0'}>
+        <div className={!showMenu ? 'xxs:opacity-100 lg:hidden xxs:transition-opacity xxs:ease-in-out xxs:duration-700' : 'xxs:opacity-0'}>
         <div className='xxs:absolute xxs:top-20 xxs:left-[50%] xxs:-translate-x-1/2 lg:hidden'>
           {
           !showMenu && (
@@ -265,23 +275,6 @@ export default function Nav() {
                   }
               </div>
                 </div>
-          <div className='xxs:block search:hidden xxs:transition-opacity xxs:ease-in-out xxs:duration-700'>
-          <div className='xxs:absolute xxs:top-20 xxs:left-[50%] xxs:-translate-x-1/2 lg:hidden'>
-              <div className='xxs:flex xxs:rounded-none'>
-                <input
-                onChange={(e) => setQuery(e.target.value)}
-                ref={mobileInputRef}
-                autoComplete='off'
-                autoFocus
-                id="mobile-input" type="text" placeholder="Search..." className="xxs:border-b-white xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none bg-black text-white" />
-                <span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
-                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                </span>
-          </div>
-          </div>
-          </div>
               <div className="absolute w-full flex flex-col justify-center bg-black">
               <SlideDown className={'my-dropdown-slidedown'}>
         {
@@ -337,7 +330,7 @@ export default function Nav() {
         }
         </SlideDown>
         </div>
-        <div className="xxs:hidden lg:block absolute right-[60px] top-[60px] w-[200px] flex flex-col justify-center select-none text-sm">
+        <div className="xxs:hidden lg:block absolute right-[54px] top-[60px] w-[200px] flex flex-col justify-center select-none text-sm">
         <SlideDown className={'my-dropdown-slidedown'}>
         {
           ((showSubtotal) && (cartQuantity > 0)) ? (
@@ -352,7 +345,7 @@ export default function Nav() {
               </div>
               </div>
           ) : ((showSubtotal) && (cartQuantity === 0)) ? (
-            <div className='border-b-4 border-b-gray-900 bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[30px]'>
+            <div className='border-b-4 border-b-gray-900 bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[30px] -mt-1'>
             <div className='flex flex-row justify-between'>
               <span className='text-white relative top-1 text-base'>Your Bag is Empty!</span>
             </div>

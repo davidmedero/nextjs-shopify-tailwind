@@ -9,9 +9,10 @@ module.exports = {
   theme: {
     screens: {
       'xs': '500px',
-      'xxs': '320px',
+      'xxs': '0px',
       'wish': '460px',
       'search': '410px',
+      'mini': '344px',
       ...defaultTheme.screens,
     },
   },
