@@ -77,7 +77,7 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                      <Dialog.Title className="text-xl font-semibold mx-auto text-white">{categoryTitle}</Dialog.Title>
+                      <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">{categoryTitle}</Dialog.Title>
                       <button
                         ref={cancelButtonRef}
                         type="button"
@@ -98,7 +98,7 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                         <div key={subcategory.id}>
                           <div
                           onClick={() => toggleSub_Subcategories(subcategory.id)}
-                          className="border-b pl-3 hover:text-[#ff00a7] cursor-pointer">
+                          className="border-b pl-3 hover:bg-gray-900 hover:text-[#ff00a7] cursor-pointer select-none">
                               {
                                   !subcategory.sub_subcollections && subcategory.handle !== "" ? 
                                   (
@@ -142,7 +142,7 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                                             }}>
                                             <Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
                                                 <div className="relative">
-                                                    <a className='flex py-1 px-6 cursor-pointer hover:text-[#ff00a7]'>
+                                                    <a className='flex py-1 px-6 cursor-pointer hover:bg-gray-900 hover:text-[#ff00a7] select-none'>
                                                         {sub_subcategory.title}
                                                     </a>
                                                 </div>

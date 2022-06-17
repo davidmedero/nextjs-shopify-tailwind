@@ -200,7 +200,7 @@ export default function ProductForm({ product }) {
 
 
   return (
-    <div className="xxs:mt-4 md:!mt-0 py-4 relative -top-4 md:top-0 flex flex-col w-11/12 md:w-[390px]">
+    <div className="xxs:mt-4 md:!mt-0 py-4 relative -top-4 md:top-0 flex flex-col w-11/12 md:w-[390px] pr-3">
         <Head>
             <script type='text/javascript' id={product.id}>
                 {
@@ -355,14 +355,14 @@ export default function ProductForm({ product }) {
               />
           ))
       }
-       <div className="text-base mt-6 rounded-md shadow-md flex justify-between my-2 xxs:w-full">
+       <div className="text-base rounded-md shadow-md flex justify-between xxs:w-full mt-5">
         
-        <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-md xxs:rounded-r-none pl-[85px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
+        <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-white bg-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-md xxs:rounded-r-none pl-[85px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
 
         <span className="flex"> 
         <button 
         onClick={decrement}
-        className='bg-white border-t border-b border-l text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-[#ffc9ec] active:bg-black active:text-white'>
+        className='bg-black border-t border-b border-l text-white highlight-removal transition-all ease-in-out duration-100 px-3 py-2 hover:bg-gray-800 active:bg-gray-700 hover:text-white active:text-white'>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
           </svg>
@@ -370,7 +370,7 @@ export default function ProductForm({ product }) {
         
         <button 
         onClick={increment}
-        className='bg-white border text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-2 font-semibold hover:bg-[#ffc9ec] active:bg-black active:text-white rounded-r-md'>
+        className='bg-black border text-white highlight-removal transition-all ease-in-out duration-100 px-3 py-2 hover:bg-gray-800 active:bg-gray-700 hover:text-white active:text-white rounded-r-md'>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
           </svg>
@@ -380,7 +380,7 @@ export default function ProductForm({ product }) {
       {
           Object.values(selectedOptions).join('') == ("SELECT A SIZE...") ? (
             <button 
-        className={"pointer-events-none select-none shadow-md transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white px-2 py-3 mt-5"}>SELECT A SIZE</button>
+        className={"cursor-not-allowed select-none shadow-md rounded-md font-semibold bg-[#ff00a7] text-white px-2 py-3 mt-5"}>SELECT A SIZE</button>
           ) :
        (<button 
         onClick={() => {
@@ -389,7 +389,7 @@ export default function ProductForm({ product }) {
         }}
         className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white px-2 py-3 mt-5 hover:bg-[#ae1077]"}>ADD TO BAG</button>) 
       }
-    <div className="mt-6">
+    <div className="mt-3">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
     <div className="selectSection">
     <button className="select-none -mt-[11px]" data-number="4" type="button"> <svg xmlns="http://www.w3.org/2000/svg" className="chevron" data-number="4" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path> </svg> <svg xmlns="http://www.w3.org/2000/svg" className="minus" data-number="4" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path> </svg> View More </button>

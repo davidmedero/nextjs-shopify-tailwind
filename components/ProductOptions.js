@@ -14,7 +14,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
     <div className="mt-2">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <Listbox.Button className="border relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-md shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-pink-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500">
+          <Listbox.Button className="border relative w-full py-2 pl-3 pr-10 text-left bg-black hover:bg-gray-800 text-white rounded-md shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7]">
             <span className="block truncate xxs:text-center pl-7 select-none">{selected}</span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
               <SelectorIcon
@@ -29,7 +29,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="z-[9999] absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="z-[9999] absolute w-full py-1 mt-1 overflow-auto text-base bg-black rounded-md shadow-lg max-h-60 ring-1 ring-black border ring-opacity-5 focus:outline-none sm:text-sm">
               {
               values.map(value => {
                 const quantity = inventory && inventory.map(item => {
@@ -47,8 +47,8 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                   checked={checked}
                   value={value}
                   className={({ active }) =>
-                    `${quantity == 0 ? 'pointer-events-none border-b relative border-gray-100 select-none py-2 pl-10 pr-4' : 'border-b border-gray-100 select-none relative py-2 pl-10 pr-4 cursor-pointer'} ${
-                      active ? 'text-[#ff00a7] bg-[#ffc9ec]' : 'text-gray-900'
+                    `${quantity == 0 ? 'text-white pointer-events-none border-b relative border-gray-100 select-none py-2 pl-10 pr-4' : 'text-white border-b border-gray-100 select-none relative py-2 pl-10 pr-4 cursor-pointer'} ${
+                      active ? 'text-[#ff00a7] bg-gray-800' : 'text-white'
                     }`
                   }
                 >

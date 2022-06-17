@@ -5,7 +5,6 @@ import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import useSWR, { useSWRConfig } from "swr"
 import axios from "axios"
 import { useSession } from "next-auth/react"
-import { useRouter } from 'next/router'
 import SignInModal from "./SignInModal"
 
 
@@ -20,12 +19,6 @@ const ProductCard = ({ product }) => {
   const email = session?.user.email
 
   const [showSignInModal, setShowSignInModal] = useState(false)
-
-  const router = useRouter();
-
-  const refreshData = () => {
-    router.replace(router.asPath);
-  }
 
   const { handle, title } = product.node
 
@@ -115,7 +108,7 @@ const ProductCard = ({ product }) => {
     }
   }, [savedItems])
 
-  
+
   return (
     <>
     <Link href={`/${handle}`}>

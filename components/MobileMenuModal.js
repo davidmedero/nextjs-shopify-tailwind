@@ -66,7 +66,7 @@ export default function MobileMenuModal({ show, onClose }) {
                 >
                     <div {...handlers} className="p-6 flex flex-col w-screen sm:max-w-md bg-black text-white shadow-xl overflow-y-scroll">
                         <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-xl font-semibold mx-auto">Menu</Dialog.Title>
+                          <Dialog.Title className="text-xl font-semibold mx-auto select-none">Menu</Dialog.Title>
                           <div className="ml-3 h-7 flex items-center">
                             <button
                                 ref={cancelButtonRef}
@@ -91,7 +91,7 @@ export default function MobileMenuModal({ show, onClose }) {
                                         setCategoryHandle(collection.handle);
                                         setSubcategories(collection.subcollections)
                                     }}
-                                    className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 hover:font-semibold pl-3 cursor-pointer">
+                                    className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 hover:font-semibold pl-3 cursor-pointer select-none">
                                         <span className="w-full h-[75px] flex items-center">{collection.title.toUpperCase()}</span>
                                         <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
