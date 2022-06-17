@@ -296,3 +296,13 @@ html {
   border-left: 2px dotted #ff0000;
   transform: translate(-50%);
 } */
+
+.dropdownOptions {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll; 
+}
+
+.dropdownOptions::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}

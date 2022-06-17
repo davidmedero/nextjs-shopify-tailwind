@@ -14,7 +14,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
     <div className="mt-2">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <Listbox.Button className="border relative w-full py-2 pl-3 pr-10 text-left bg-black hover:bg-gray-800 text-white rounded-md shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7]">
+          <Listbox.Button className="border relative w-full py-2 pl-3 pr-10 text-left bg-black hover:bg-gray-800 text-white rounded-md shadow-md cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7]">
             <span className="block truncate xxs:text-center pl-7 select-none">{selected}</span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
               <SelectorIcon
@@ -29,7 +29,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="z-[9999] absolute w-full py-1 mt-1 overflow-auto text-base bg-black rounded-md shadow-lg max-h-60 ring-1 ring-black border ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="dropdownOptions z-[9999] absolute w-full py-1 mt-1 text-base bg-black rounded-md shadow-lg max-h-60 ring-1 ring-black border ring-opacity-5 focus:outline-none sm:text-sm">
               {
               values.map(value => {
                 const quantity = inventory && inventory.map(item => {

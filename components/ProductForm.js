@@ -110,7 +110,7 @@ export default function ProductForm({ product }) {
             }
             
             allVariantOptions.map(item => {
-                if ((JSON.stringify(item.options) === JSON.stringify(selection)) && (quantity != 0)) {
+                if ((JSON.stringify(item.options) === JSON.stringify(selection)) && (JSON.parse(quantity) !== 0)) {
                     setSelectedVariant(item)
                     setCounter(1)
                 }
