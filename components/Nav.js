@@ -149,7 +149,7 @@ export default function Nav() {
             <Link href="/" passHref>
                 <a className='cursor-pointer'>
                     <span className='xxs:hidden lg:block lg:top-[10px] lg:absolute lg:hover:scale-110 search:!right-[calc(35%-80px)] xs:!right-[calc(30%-66px)] sm:!right-[calc(30%-76px)] md:right-[calc(40%-100px)] lg:!right-[unset] bottom-2 text-2xl pt-1 select-none transition-all ease-in-out duration-300'>
-                        <Image src="/logo.png" width="200" height="30" layout="fixed" objectFit="cover" />
+                        <Image src="/logo.png" width="200" height="31" layout="fixed" objectFit="cover" />
                     </span>
                     <span className='xxs:hidden mini:!block lg:!hidden  xxs:relative xxs:top-[2px] xxs:right-[calc(35%-69px)] xs:!right-[calc(30%-66px)] text-2xl pt-1 select-none transition-all ease-in-out duration-300'>
                         <Image src="/logo.png" width="170" height="25" layout="fixed" objectFit="cover" />
