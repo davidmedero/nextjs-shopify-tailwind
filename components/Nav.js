@@ -142,7 +142,7 @@ export default function Nav() {
 
   return (
     <header className='border-b-4 border-b-gray-900 sticky top-0 z-20 bg-black'>
-        <div className={(showMenu ? 'flex items-center justify-between max-w-full xxs:py-3 xs:py-4 xxs:px-3 search:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-full xxs:py-3 xs:py-4 xxs:px-3 search:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-4 transition-all duration-300 ease-in-out')}>
+        <div className={(showMenu ? 'flex items-center justify-between max-w-full xxs:py-3 xxs:px-4 search:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-full xxs:py-3 xxs:px-4 search:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-[12px] transition-all duration-300 ease-in-out')}>
             <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
             </div>
@@ -154,8 +154,8 @@ export default function Nav() {
                     <span className='xxs:hidden mini:!block lg:!hidden  xxs:relative xxs:top-[2px] xxs:right-[calc(35%-69px)] xs:!right-[calc(30%-66px)] text-2xl pt-1 select-none transition-all ease-in-out duration-300'>
                         <Image src="/logo.png" width="170" height="25" layout="fixed" objectFit="cover" />
                     </span>
-                    <span className='xxs:block mini:!hidden xxs:relative xxs:top-[-1px] xxs:right-[calc(35%-60px)] xs:!right-[calc(30%-66px)] text-2xl pt-1 select-none transition-all ease-in-out duration-300'>
-                        <Image src="/logo.png" width="150" height="20" layout="fixed" objectFit="cover" />
+                    <span className='xxs:block mini:!hidden xxs:relative xxs:top-[2px] xxs:right-[calc(35%-60px)] xs:!right-[calc(30%-66px)] text-2xl select-none transition-all ease-in-out duration-300'>
+                        <Image src="/logo.png" width="150" height="23" layout="fixed" objectFit="cover" />
                     </span>
                 </a>
             </Link>
@@ -166,7 +166,7 @@ export default function Nav() {
                   collections.map(collection => (
                       collection.handle == "shop" ?
                       (<Link href={'/shop-brands'} >
-                      <a className="lg:text-[12px] xl:text-sm p-6 text-white hover:bg-[#ff00a7] select-none"
+                      <a className="lg:text-[12px] xl:text-sm p-6 text-white hover:text-[#ff00a7] select-none"
                       data-info={JSON.stringify(collection)}
                       onMouseEnter={(e) => {
                           setShowSubMenu(true);
@@ -179,7 +179,7 @@ export default function Nav() {
                       </a>
                       </Link>) :
                       (<Link href={'/' + collection.handle} >
-                          <a className="lg:text-[12px] xl:text-sm p-6 text-white hover:bg-[#ff00a7] select-none"
+                          <a className="lg:text-[12px] xl:text-sm p-6 text-white hover:text-[#ff00a7] select-none"
                           data-info={JSON.stringify(collection)}
                           onMouseEnter={(e) => {
                               setShowSubMenu(true);
@@ -225,7 +225,7 @@ export default function Nav() {
             </div>
             <div className='flex items-center justify-center relative xxs:left-3 cursor-pointer'>
               <div 
-              className='px-[6px] relative hover:scale-[1.3] transition-all duration-200 ease-in-out'
+              className='px-[6px] relative lg:hover:scale-[1.3] transition-all duration-200 ease-in-out'
               ref={ref}
               onClick={() => {
                 toggleMenu();
@@ -240,7 +240,7 @@ export default function Nav() {
               </div>
             <a 
             id='slide-toggle'
-            className='px-[6px] cursor-pointer flex justify-center items-center hover:scale-[1.2] transition-all duration-200 ease-in-out relative z-50'
+            className='px-[6px] cursor-pointer flex justify-center items-center lg:hover:scale-[1.2] transition-all duration-200 ease-in-out relative z-50'
             onClick={() => setCartOpen(!cartOpen)}
             onMouseOver={() => setShowSubtotal(true)}
             onMouseLeave={() => setShowSubtotal(false)}
@@ -297,7 +297,7 @@ export default function Nav() {
                     ) : 
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                            <a className='font-semibold text-white flex p-6 cursor-pointer hover:bg-[#ff00a7] select-none'>
+                            <a className='font-semibold text-white flex p-6 cursor-pointer hover:text-[#ff00a7] select-none'>
                                 {subcategory.title.toUpperCase()}
                             </a>
                         </div>
@@ -307,7 +307,7 @@ export default function Nav() {
                       subcategory.handle === "" ? (
                         <Link href={'/' + categoryHandle + '/' + sub_subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                          <a className='flex py-1 px-6 text-gray-300 cursor-pointer hover:bg-[#ff00a7] select-none hover:text-white'>
+                          <a className='flex py-1 px-6 text-gray-300 cursor-pointer hover:text-[#ff00a7] select-none'>
                             {sub_subcategory.title.toUpperCase()}
                           </a>
                        </div>
@@ -315,7 +315,7 @@ export default function Nav() {
                       ) :
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
                         <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
-                          <a className='flex py-1 px-6 text-gray-300 hover:text-white cursor-pointer hover:bg-[#ff00a7] select-none'>
+                          <a className='flex py-1 px-6 text-gray-300 cursor-pointer hover:text-[#ff00a7] select-none'>
                             {sub_subcategory.title.toUpperCase()}
                           </a>
                        </div>

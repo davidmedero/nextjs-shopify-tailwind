@@ -156,7 +156,19 @@ const ProductCard = ({ product }) => {
                 />)
               }
             </div>
-            <div className="xxs:block lg:hidden">
+            <div className="xxs:block lg:hidden relative w-full h-full">
+            <span 
+              onMouseOver={() => setHeartFill(true)}
+              onMouseLeave={() => setHeartFill(false)}
+              onClick={(e) => {
+                handleButtonClick(e);
+                updateMacros()
+              }}
+              className="absolute right-[6px] top-1 z-[1]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </span>
             <Image
                     src={originalSrc}
                     alt={altText}
@@ -169,7 +181,7 @@ const ProductCard = ({ product }) => {
                 />
             </div>
         </div>
-        <h3 className="mt-4 xxs:ml-2 sm:ml-0 text-lg font-medium text-white">{title}</h3>
+        <h3 className="mt-2 xxs:ml-2 sm:ml-0 text-sm font-medium text-white">{title}</h3>
         <p className='mt-1 xxs:ml-2 sm:ml-0 text-sm text-white'>
           {
             currency === '' ? formatter.format(price) :

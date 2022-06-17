@@ -211,10 +211,10 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
         onMouseOver={() => setHoverCurrencies(true)}
         onMouseLeave={() => setHoverCurrencies(false)}
         className="xxs:hidden lg:block flex flex-col items-center cursor-pointer relative select-none text-white">
-        <div className="relative z-[9999] px-[6px] hover:scale-[1.2] transition-transform duration-200 ease-in-out">
+        <div className="relative z-[9999] px-[6px] lg:hover:scale-[1.2] transition-transform duration-200 ease-in-out">
             {
               (currentCurrency === 'GBP' || currentCurrency === 'EUR') ? (
-               <div className="flex items-center h-[28px] w-[28px] hover:scale-[1.1] transition-transform duration-200 ease-in-out">
+               <div className="flex items-center h-[28px] w-[28px] lg:hover:scale-[1.1] transition-transform duration-200 ease-in-out">
               {currentCurrency}
                 </div>
                 ) : 
@@ -268,10 +268,10 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
       <div
       ref={ref} onClick={() => toggleCurrencies()} 
       className="xxs:block lg:hidden px-[6px] flex flex-col cursor-pointer select-none text-white">
-        <div className="relative z-[9999] flex items-center hover:scale-[1.3] transition-all duration-200 ease-in-out">
+        <div className="relative z-[9999] flex items-center lg:hover:scale-[1.3] transition-all duration-200 ease-in-out">
         {
               (currentCurrency === 'GBP' || currentCurrency === 'EUR') ? (
-               <div className="flex items-center h-[28px] w-[28px] hover:scale-[1.1] transition-transform duration-200 ease-in-out">
+               <div className="flex items-center h-[28px] w-[28px] lg:hover:scale-[1.1] transition-transform duration-200 ease-in-out">
               {currentCurrency}
                 </div>
                 ) : 
@@ -356,12 +356,12 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
                 >
-                  <div className="mt-1 p-6 w-screen sm:max-w-md bg-white overflow-y-scroll">
+                  <div className="p-6 w-screen sm:max-w-md bg-black overflow-y-scroll">
                     <div className="flex justify-between items-center relative bottom-1">
                       <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                        className="-m-2 p-2 text-white"
                         onClick={() => {
                             onClose();
                             }}>
@@ -371,11 +371,11 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                      <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">Currencies</Dialog.Title>
+                      <Dialog.Title className="text-xl font-semibold mx-auto text-white">Currencies</Dialog.Title>
                       <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-mx-2 -my-[10px] p-2 text-gray-400 hover:text-gray-500"
+                        className="-mx-2 -my-[10px] p-2 text-white"
                         onClick={() => {
                             closeMenu();
                             onClose();
@@ -391,7 +391,7 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
                     onClick={() => {
                         setCurrentCurrency('USD');
                     }} 
-                    className="flex flow-row items-center w-full justify-between border-b">
+                    className="flex flow-row items-center w-full justify-between border-b text-white">
                     <div 
                     className={!currentCurrency || currentCurrency === 'USD' ? "pointer-events-none h-[75px] flex flex-row items-center p-2 whitespace-nowrap" : "flex h-[75px] flex-row items-center p-2 whitespace-nowrap"}>
                         <Image src="/um.svg" width="40" height="30" layout="fixed" objectFit="cover" />
@@ -399,11 +399,11 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
                         </div>
                             {
                             currentCurrency === 'USD' ?
-                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                  </svg>) :
                                 (<span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
                                 </svg>
                                 </span>)
@@ -414,19 +414,19 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
                     onClick={() => {
                         setCurrentCurrency('GBP');
                     }} 
-                    className="flex flow-row items-center w-full justify-between border-b">
+                    className="flex flow-row items-center w-full justify-between border-b text-white">
                     <div 
-                    className="flex border-b h-[75px] flex-row items-center w-full p-2 whitespace-nowrap">
+                    className="flex h-[75px] flex-row items-center w-full p-2 whitespace-nowrap">
                          <Image src="/gb.svg" width="40" height="30" layout="fixed" objectFit="cover" />
                         <div className="ml-9">United Kingdom</div>
                         </div>
                             {
                             currentCurrency === 'GBP' ?
-                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                  </svg>) :
                                 (<span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
                                 </svg>
                                 </span>)
@@ -436,19 +436,19 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
                     onClick={() => {
                         setCurrentCurrency('EUR');
                     }}
-                    className="flex flow-row items-center w-full justify-between border-b">
+                    className="flex flow-row items-center w-full justify-between border-b text-white">
                     <div  
-                    className="flex border-b h-[75px] flex-row items-center w-full p-2 whitespace-nowrap">
+                    className="flex h-[75px] flex-row items-center w-full p-2 whitespace-nowrap">
                         <Image src="/eu.svg" width="40" height="30" layout="fixed" objectFit="cover" />
                         <div className="ml-9">European Union</div>
                         </div>
                             {
                             currentCurrency === 'EUR' ?
-                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                  </svg>) :
                                 (<span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
                                 </svg>
                                 </span>)

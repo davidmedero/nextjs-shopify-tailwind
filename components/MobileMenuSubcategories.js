@@ -61,12 +61,12 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
                 >
-                  <div className="mt-1 p-6 w-screen sm:max-w-md bg-white overflow-y-scroll">
+                  <div className="p-6 w-screen sm:max-w-md bg-black overflow-y-scroll">
                     <div className="flex justify-between items-center relative bottom-1">
                       <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                        className="-m-2 p-2 text-white lg:hover:text-gray-500"
                         onClick={() => {
                             onClose();
                             setShowSub_Subcategories(false)
@@ -77,11 +77,11 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                      <Dialog.Title className="text-xl font-semibold mx-auto text-gray-900">{categoryTitle}</Dialog.Title>
+                      <Dialog.Title className="text-xl font-semibold mx-auto text-white">{categoryTitle}</Dialog.Title>
                       <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-mx-2 -my-[10px] p-2 text-gray-400 hover:text-gray-500"
+                        className="-mx-2 -my-[10px] p-2 text-white lg:hover:text-gray-500"
                         onClick={() => {
                             closeMenu();
                             onClose();
@@ -92,13 +92,13 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                         <XIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
                     </div>
-                  <div {...handlers} className="mt-[28px]">
+                  <div {...handlers} className="mt-[28px] text-white">
                     {
                       subcategories.map(subcategory => (
                         <div key={subcategory.id}>
                           <div
                           onClick={() => toggleSub_Subcategories(subcategory.id)}
-                          className="border-b pl-3 hover:bg-pink-100 cursor-pointer">
+                          className="border-b pl-3 hover:text-[#ff00a7] cursor-pointer">
                               {
                                   !subcategory.sub_subcollections && subcategory.handle !== "" ? 
                                   (
@@ -131,7 +131,7 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                               {
                                 showSub_Subcategories[subcategory.id] ?
                                 (
-                                  <div className="my-4">
+                                  <div className="my-4 text-white">
                                     {
                                       subcategory.sub_subcollections?.map(sub_subcategory => (
                                         <div 
@@ -142,7 +142,7 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                                             }}>
                                             <Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
                                                 <div className="relative">
-                                                    <a className='flex py-1 px-6 cursor-pointer hover:bg-pink-100'>
+                                                    <a className='flex py-1 px-6 cursor-pointer hover:text-[#ff00a7]'>
                                                         {sub_subcategory.title}
                                                     </a>
                                                 </div>

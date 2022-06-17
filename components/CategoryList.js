@@ -307,7 +307,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             <div 
             ref={tabletRef}
             onClick={() => toggleSortOptions()}
-            className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 md:visible md:relative md:top-[11px] md:z-[1] md:opacity-100 lg:invisible lg:absolute lg:z-[-1] lg:opacity-0'>
+            className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 md:visible md:relative md:top-[11px] md:z-[50] md:opacity-100 lg:invisible lg:absolute lg:z-[-1] lg:opacity-0'>
                 <span className="border-2 bg-black border-white p-1 pl-3 flex w-[200px] items-center justify-between">
                     <span className="select-none text-white font-semibold">SORT</span>
                     <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
@@ -351,9 +351,9 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 </div>
             </div>
             </div>
-              <span onClick={() => setShowFilterOptions(true)} className="cursor-pointer border-2 border-white bg-black ml-5 p-1 pl-3 flex w-[200px] relative top-[11px] items-center justify-between">
+              <span onClick={() => setShowFilterOptions(true)} className="cursor-pointer border-2 border-white bg-black ml-[15px] p-1 pl-3 flex w-[200px] relative top-[11px] items-center justify-between">
                 <span className="select-none text-white font-semibold">FILTER</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-90" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-[1px] rotate-90" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                 </svg>
               </span>
@@ -378,22 +378,23 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 {category.toString().charAt(0).toUpperCase() + category.toString().slice(1)}
           </div>
           </div>
-          <div className="flex flex-row justify-between mb-6 md:hidden">
+          <div className="grid grid-cols-2 gap-x-[15px] mb-6  md:hidden">
             <div>
             <div 
             ref={mobileRef}
             onClick={() => toggleSortOptions()}>
-                <span className="cursor-pointer border-2 border-white p-1 pl-3 flex xxs:w-[calc(50vw-30%)] sm:w-[calc(49vw-44%)] items-center justify-between">
+                <span className="cursor-pointer border-2 border-white p-1 pl-3 flex justify-between">
                     <span className="select-none font-semibold text-white">SORT</span>
                     <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
                 </span>
+                
                 {
-                    showSortOptions && (
-                      <div className="xxs:absolute">
-                        <div className='xxs:w-[calc(50.6vw-24%)] sm:w-[calc(48.86vw-30%)] text-white relative whitespace-nowrap bg-black shadow-xl border-t-0 border-2 border-gray-500 z-50'>
+                    showSortOptions ? (
+                      <div className="relative">
+                        <div className='text-white w-full max-w-md absolute whitespace-nowrap bg-black shadow-xl border-t-0 border-2 border-gray-500 z-50'>
                             <div 
                             onClick={() => {
                               sortByBestSellers();
@@ -420,11 +421,12 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             className={sortOption === 'Lowest Price' ? 'hover:bg-gray-800 p-3 text-[#ff00a7] cursor-pointer font-bold' : 'hover:bg-gray-800 p-3 hover:font-bold hover:text-white cursor-pointer'}>Lowest Price</div>
                         </div>
                       </div>
-                    )
+                    ) : null
                 }
+                
             </div>
             </div>
-              <span className="cursor-pointer border-2 border-white p-1 pl-3 flex xxs:w-[calc(95%-44.4vw)] sm:w-[calc(99.9%-47.1vw)] items-center justify-between">
+              <span className="cursor-pointer border-2 border-white p-1 pl-3 flex justify-between">
                 <span className="select-none font-semibold text-white">FILTER</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-90" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
@@ -874,7 +876,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
           </div>
         </Dialog>
       </Transition.Root>
-            <div className="xxs:-mx-4 sm:mx-0 grid grid-cols-2 gap-y-10 gap-x-[22px] sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 cursor-pointer">
+            <div className="xxs:-mx-4 sm:mx-0 grid grid-cols-2 gap-y-10 xxs:gap-x-[15px] sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 cursor-pointer">
               {
                 (sortOption === 'Best Sellers') ? (
                   [...products].slice(productsVisited, productsVisited + productsPerPage).map(product => (

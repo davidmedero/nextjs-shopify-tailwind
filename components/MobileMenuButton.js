@@ -7,7 +7,7 @@ export default function MobileMenuButton() {
   const [showModal, setShowModal] = useState(false)
 
   return (
-    <div>
+    <div className='relative xxs:right-1 mini:right-[unset]'>
         <button
         onClick={() => setShowModal(true)}
         type="button"
