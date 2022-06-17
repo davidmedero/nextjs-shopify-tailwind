@@ -395,11 +395,11 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
                     <div 
                     className={!currentCurrency || currentCurrency === 'USD' ? "pointer-events-none h-[75px] flex flex-row items-center p-2 whitespace-nowrap" : "flex h-[75px] flex-row items-center p-2 whitespace-nowrap"}>
                         <Image src="/um.svg" width="40" height="30" layout="fixed" objectFit="cover" />
-                        <div className="ml-9">United States</div>
+                        <div className={currentCurrency === 'USD' ? "text-[#ff00a7] ml-9" : "text-white ml-9"}>United States</div>
                         </div>
                             {
                             currentCurrency === 'USD' ?
-                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="black" viewBox="0 0 24 24" stroke="#ff00a7" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                  </svg>) :
                                 (<span>
@@ -418,11 +418,11 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
                     <div 
                     className="flex h-[75px] flex-row items-center w-full p-2 whitespace-nowrap">
                          <Image src="/gb.svg" width="40" height="30" layout="fixed" objectFit="cover" />
-                        <div className="ml-9">United Kingdom</div>
+                        <div className={currentCurrency === 'GBP' ? "text-[#ff00a7] ml-9" : "text-white ml-9"}>United Kingdom</div>
                         </div>
                             {
                             currentCurrency === 'GBP' ?
-                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="black" viewBox="0 0 24 24" stroke="#ff00a7" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                  </svg>) :
                                 (<span>
@@ -440,11 +440,11 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
                     <div  
                     className="flex h-[75px] flex-row items-center w-full p-2 whitespace-nowrap">
                         <Image src="/eu.svg" width="40" height="30" layout="fixed" objectFit="cover" />
-                        <div className="ml-9">European Union</div>
+                        <div className={currentCurrency === 'EUR' ? "text-[#ff00a7] ml-9" : "text-white ml-9"}>European Union</div>
                         </div>
                             {
                             currentCurrency === 'EUR' ?
-                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                (<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="black" viewBox="0 0 24 24" stroke="#ff00a7" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                  </svg>) :
                                 (<span>

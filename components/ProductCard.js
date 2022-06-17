@@ -6,6 +6,7 @@ import useSWR, { useSWRConfig } from "swr"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/router'
+import SignInModal from "./SignInModal"
 
 
 const fetcher = url => axios.get(url).then(res => res.data)
@@ -17,6 +18,8 @@ const ProductCard = ({ product }) => {
 
   const { data: session } = useSession()
   const email = session?.user.email
+
+  const [showSignInModal, setShowSignInModal] = useState(false)
 
   const router = useRouter();
 
@@ -112,24 +115,45 @@ const ProductCard = ({ product }) => {
     }
   }, [savedItems])
 
+  
   return (
     <>
     <Link href={`/${handle}`}>
       <a className="group">
         <div className="line w-full bg-gray-200 overflow-hidden">
             <div className="xxs:hidden lg:block relative w-full h-full">
-              <span 
+            {session && (
+            <>
+            <span 
               onMouseOver={() => setHeartFill(true)}
               onMouseLeave={() => setHeartFill(false)}
               onClick={(e) => {
                 handleButtonClick(e);
                 updateMacros()
               }}
-              className="absolute right-[6px] top-1 z-10">
+              className="absolute right-[6px] top-1 z-[1]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
+            </>
+            )}
+            {!session && (
+            <>
+            <span 
+              onMouseOver={() => setHeartFill(true)}
+              onMouseLeave={() => setHeartFill(false)}
+              onClick={(e) => {
+                handleButtonClick(e);
+                setShowSignInModal(true)
+              }}
+              className="absolute right-[6px] top-1 z-[1]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </span>
+            </>
+            )}
               {
                 show2ndPic ? (
                   <Image
@@ -157,6 +181,8 @@ const ProductCard = ({ product }) => {
               }
             </div>
             <div className="xxs:block lg:hidden relative w-full h-full">
+            {session && (
+            <>
             <span 
               onMouseOver={() => setHeartFill(true)}
               onMouseLeave={() => setHeartFill(false)}
@@ -169,6 +195,26 @@ const ProductCard = ({ product }) => {
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
+            </>
+            )}
+            {!session && (
+            <>
+            <span 
+              onMouseOver={() => setHeartFill(true)}
+              onMouseLeave={() => setHeartFill(false)}
+              onClick={(e) => {
+                handleButtonClick(e);
+                setShowSignInModal(true)
+              }}
+              className="absolute right-[6px] top-1 z-[1]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </span>
+            </>
+            )}
+            <SignInModal show={showSignInModal} onClose={() => setShowSignInModal(false)}>
+            </SignInModal>
             <Image
                     src={originalSrc}
                     alt={altText}
