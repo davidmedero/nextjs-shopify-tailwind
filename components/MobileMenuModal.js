@@ -91,7 +91,7 @@ export default function MobileMenuModal({ show, onClose }) {
                                         setCategoryHandle(collection.handle);
                                         setSubcategories(collection.subcollections)
                                     }}
-                                    className="flex border-b justify-between items-center hover:text-[#ff00a7] pl-3 cursor-pointer">
+                                    className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 hover:font-semibold pl-3 cursor-pointer">
                                         <span className="w-full h-[75px] flex items-center">{collection.title.toUpperCase()}</span>
                                         <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -104,7 +104,7 @@ export default function MobileMenuModal({ show, onClose }) {
                                 <div>
                                 {!session && (
                                   <>
-                                  <div onClick={() => setShowSignInModal(true)} className="xxs:block xs:!hidden flex flex-col hover:text-[#ff00a7]">
+                                  <div onClick={() => setShowSignInModal(true)} className="xxs:block xs:!hidden flex flex-col hover:text-[#ff00a7] hover:bg-gray-900">
                                   <div className="flex flex-row items-center justify-between pl-3 py-6 border-b">
                                     <div className="flex flex-row">SIGN IN <span className="ml-2"><SignInButton /></span></div>
                                     <div>
@@ -122,7 +122,7 @@ export default function MobileMenuModal({ show, onClose }) {
                                 <a className='cursor-pointer'>
                                 <div 
                                 onClick={() => onClose()}
-                                className="xxs:block xs:!hidden flex flex-col hover:text-[#ff00a7]">
+                                className="xxs:block xs:!hidden flex flex-col hover:text-[#ff00a7] hover:bg-gray-900">
                                   <div className="flex flex-row items-center justify-between pl-3 py-6 border-b">
                                     <div className="flex flex-row">MY ACCOUNT <span className="ml-2"><SignInButton /></span></div>
                                     <div>
@@ -142,7 +142,7 @@ export default function MobileMenuModal({ show, onClose }) {
                                   onClick={() => {
                                     setShowCurrencyModal(true);
                                 }}
-                                  className="flex flex-row items-center justify-between border-b pl-3 py-6 xs:hidden hover:text-[#ff00a7]">
+                                  className="flex flex-row items-center justify-between border-b pl-3 py-6 xs:hidden hover:text-[#ff00a7] hover:bg-gray-900">
                                   <div className="flex flex-row items-center">CHANGE CURRENCY<span className="ml-2">
                                     <CurrencyConversion 
                                       show={showCurrencyModal}

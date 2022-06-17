@@ -480,7 +480,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                           <div className="flex flex-col">
                           <div 
                             onClick={() => setShowBrandsFilter(true)}
-                            className="flex border-b justify-between items-center hover:text-[#ff00a7] pl-3 cursor-pointer hover:font-semibold">
+                            className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 pl-3 cursor-pointer hover:font-semibold">
                                 <span className="w-full h-[75px] flex items-center select-none">BRAND</span>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -490,7 +490,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             </div>
                           <div 
                             onClick={() => setShowColorFilter(true)}
-                            className="flex border-b justify-between items-center hover:text-[#ff00a7] pl-3 cursor-pointer hover:font-semibold">
+                            className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 pl-3 cursor-pointer hover:font-semibold">
                                 <span className="w-full h-[75px] flex items-center select-none">COLOR</span>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -500,7 +500,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             </div>
                             <div 
                             onClick={() => setShowSizeFilter(true)}
-                            className="flex border-b justify-between items-center hover:text-[#ff00a7] pl-3 cursor-pointer hover:font-semibold">
+                            className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 pl-3 cursor-pointer hover:font-semibold">
                                 <span className="w-full h-[75px] flex items-center select-none">SIZE</span>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -510,7 +510,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             </div>
                             <div 
                             onClick={() => setShowPriceFilter(true)}
-                            className="flex border-b justify-between items-center hover:text-[#ff00a7] pl-3 cursor-pointer hover:font-semibold">
+                            className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 pl-3 cursor-pointer hover:font-semibold">
                                 <span className="w-full h-[75px] flex items-center select-none">PRICE</span>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -692,7 +692,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             {
                               sizes.map(size => (
                                   <div className={checkedSize[size] ? "flex flex-row items-center justify-between text-[#ff00a7] hover:bg-gray-900 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
-                                  <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 select-none hover:font-semibold ">{size}</div>
+                                  <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 select-none hover:font-semibold">{size}</div>
                                     <div>
                                       <svg xmlns="http://www.w3.org/2000/svg" class={checkedSize[size] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -858,7 +858,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             {
                               brandsArray[0].map(brand => (
                                   <div className={checkedBrand[brand] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
-                                  <div onClick={() => toggleBrand(brand)} className="w-full py-4 pl-3 select-none">{brand.toUpperCase()}</div>
+                                  <div onClick={() => toggleBrand(brand)} className="w-full py-4 pl-3 select-none hover:font-semibold">{brand.toUpperCase()}</div>
                                     <div>
                                       <svg xmlns="http://www.w3.org/2000/svg" class={checkedBrand[brand] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
