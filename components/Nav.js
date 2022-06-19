@@ -334,7 +334,7 @@ export default function Nav() {
         <SlideDown className={'my-dropdown-slidedown'}>
         {
           ((showSubtotal) && (cartQuantity > 0)) ? (
-            <div className='pt-[15px] border-b-4 border-b-gray-900 bg-black py-2 px-4 relative flex flex-col border-t-black pb-3 -mt-1 left-[15px] overflow-hidden'>
+            <div className='pt-[15px] border-b-4 border-b-gray-900 bg-black py-2 px-4 relative flex flex-col border-t-black pb-3 -mt-1 left-[15px] !overflow-x-hidden'>
               <div className='flex flex-row justify-between pb-2'>
                 <span className='text-white relative'>QUANTITY:</span>
                 <span className='text-white relative'>{cartQuantity}</span>
@@ -345,7 +345,7 @@ export default function Nav() {
               </div>
               </div>
           ) : ((showSubtotal) && (cartQuantity === 0)) ? (
-            <div className='border-b-4 border-b-gray-900 bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[45px] -mt-1 overflow-hidden'>
+            <div className='border-b-4 border-b-gray-900 bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[45px] -mt-1 !overflow-x-hidden'>
             <div className='flex flex-row justify-between'>
               <span className='text-white relative top-1 text-base'>Your Bag is Empty!</span>
             </div>
