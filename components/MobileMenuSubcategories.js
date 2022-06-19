@@ -66,10 +66,10 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                       <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-white lg:hover:text-gray-500"
+                        className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() => {
                             onClose();
-                            setShowSub_Subcategories(false)
+                            setTimeout(() => setShowSub_Subcategories(false), 600)
                             }}>
 
                         <span className="sr-only">Close panel</span>
@@ -77,11 +77,11 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                      <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">{categoryTitle}</Dialog.Title>
+                      <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none tracking-wide">{categoryTitle.toUpperCase()}</Dialog.Title>
                       <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-mx-2 -my-[10px] p-2 text-white lg:hover:text-gray-500"
+                        className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() => {
                             closeMenu();
                             onClose();
@@ -110,14 +110,14 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                                           onClose();
                                           setShowSub_Subcategories(false)
                                         }}
-                                        className="w-full h-[75px] flex items-center">
-                                            {subcategory.title}
+                                        className="w-full h-[75px] flex items-center hover:font-semibold">
+                                            {subcategory.title.toUpperCase()}
                                             </div>
                                       </a>
                                     </Link>
                                   ) : (
                                   <div className="flex justify-between items-center">
-                                    <span className="w-full h-[75px] flex items-center">{subcategory.title}</span>
+                                    <span className="w-full h-[75px] flex items-center hover:font-semibold">{subcategory.title.toUpperCase()}</span>
                                     <span className={showSub_Subcategories[subcategory.id] ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}>
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -142,8 +142,8 @@ export default function MobileMenuSubcategories({ show, onClose, closeMenu, cate
                                             }}>
                                             <Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
                                                 <div className="relative">
-                                                    <a className='flex py-1 px-6 cursor-pointer hover:bg-gray-900 hover:text-[#ff00a7] select-none'>
-                                                        {sub_subcategory.title}
+                                                    <a className='flex py-1 px-6 cursor-pointer hover:bg-gray-900 hover:text-[#ff00a7] select-none hover:font-semibold'>
+                                                        {sub_subcategory.title.toUpperCase()}
                                                     </a>
                                                 </div>
                                             </Link>

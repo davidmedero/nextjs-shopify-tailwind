@@ -226,7 +226,7 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
             }
             </div>
             <div 
-            className="top-[28px] bg-black py-2 px-4 absolute flex flex-col right-0">
+            className="top-[28px] bg-black pb-2 px-4 absolute flex flex-col right-0">
             <SlideDown className={'my-dropdown-slidedown'}>
             {
             hoverCurrencies && (

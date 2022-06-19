@@ -66,12 +66,12 @@ export default function MobileMenuModal({ show, onClose }) {
                 >
                     <div {...handlers} className="p-6 flex flex-col w-screen sm:max-w-md bg-black text-white shadow-xl overflow-y-scroll">
                         <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-xl font-semibold mx-auto select-none">Menu</Dialog.Title>
+                          <Dialog.Title className="text-xl font-semibold mx-auto select-none">MENU</Dialog.Title>
                           <div className="ml-3 h-7 flex items-center">
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={onClose}
                                 >
                                 <span className="sr-only">Close panel</span>

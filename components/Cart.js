@@ -120,15 +120,15 @@ export default function Cart({ cart }) {
               leaveTo="translate-x-full"
             >
               <div {...handlers} className="w-screen max-w-full sm:max-w-md">
-                <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
+                <div className="h-full flex flex-col bg-black shadow-xl overflow-y-scroll">
                   <div className="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
                     <div className="flex items-start justify-between">
-                      <Dialog.Title className="text-lg font-medium text-gray-900">Shopping Bag</Dialog.Title>
+                      <Dialog.Title className="text-lg font-medium text-white">Shopping Bag</Dialog.Title>
                       <div className="ml-3 h-7 flex items-center">
                         <button
                         ref={cancelButtonRef}
                           type="button"
-                          className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                          className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7] transition ease-in-out duration-200"
                           onClick={() => setCartOpen(false)}
                         >
                           <span className="sr-only">Close panel</span>
@@ -144,7 +144,7 @@ export default function Cart({ cart }) {
                               <ul role="list" className="-my-6 divide-y divide-gray-200">
                           {cart.map((product) => (
                             <li key={product.id + Math.random()} className="py-6 flex">
-                              <div className="relative shadow-md flex-shrink-0 w-28 h-[160px] border rounded-md overflow-hidden">
+                              <div className="relative shadow-md flex-shrink-0 w-28 h-[160px] border rounded-md overflow-hidden hover:opacity-75">
                               <Link href={`/${product.handle}`} passHref>
                                 <a onClick={() => setCartOpen(false)}>
                                   <Image
@@ -159,7 +159,7 @@ export default function Cart({ cart }) {
 
                               <div className="ml-4 flex-1 flex flex-col">
                                 <div>
-                                  <div className="flex justify-between text-base font-medium text-gray-900">
+                                  <div className="flex justify-between text-base font-medium text-white">
                                     <h3>
                                     <Link href={`/${product.handle}`} passHref>
                                       <a onClick={() => setCartOpen(false)}>{product.title}</a>
@@ -173,22 +173,22 @@ export default function Cart({ cart }) {
                                       null
                                     }</p>
                                   </div>
-                                  <p className="mt-1 text-sm text-gray-500">{product.variantTitle}</p>
+                                  <p className="mt-1 text-sm text-white">{product.variantTitle}</p>
                                 </div>
-                                <div className="flex-1 flex items-end justify-between  text-sm">
+                                <div className="flex-1 flex items-end justify-between text-sm">
                                     <div className="rounded-md flex shadow-md flex-row max-w-[150px]">
                                       
-                                      <input id="mobile_quantity_input" autoComplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = product.variantQuantity} className="text-base  border-b border-t border-l text-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-blue-400 caret-indigo-400 w-full xxs:rounded-l-md xxs:rounded-r-none py-[6px] text-center" type="text" value={product.variantQuantity} onChange={(e) => handleChange(product.id, e.target.value)} />
+                                      <input id="mobile_quantity_input" autoComplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = product.variantQuantity} className="text-base  border-b border-t border-l bg-black text-white transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-md xxs:rounded-r-none py-[6px] text-center" type="text" value={product.variantQuantity} onChange={(e) => handleChange(product.id, e.target.value)} />
                                       <button 
                                       onClick={() => decrement(product.id)}
-                                      className='border-t border-b border-l text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-[6px] font-semibold hover:bg-gray-200 active:bg-black active:text-white'>
+                                      className='bg-black border-t border-b border-l text-white highlight-removal transition-all ease-in-out duration-100 px-3 py-[6px] hover:bg-gray-800 active:bg-gray-700 hover:text-white active:text-white'>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                           <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
                                         </svg>
                                       </button>
                                       <button 
                                       onClick={() => increment(product.id)}
-                                      className='border text-black highlight-removal transition-all ease-in-out duration-100 px-3 py-[6px] font-semibold hover:bg-gray-200 active:bg-black active:text-white rounded-r-md'>
+                                      className='bg-black border text-white highlight-removal transition-all ease-in-out duration-100 px-3 py-[6px] hover:bg-gray-800 active:bg-gray-700 hover:text-white active:text-white rounded-r-md'>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                           <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                                         </svg>
@@ -201,8 +201,8 @@ export default function Cart({ cart }) {
                                       updateState(product.id);
                                     }}
                                     type="button" 
-                                    className="relative bottom-2 xxs:ml-4 font-medium text-gray-500 hover:text-gray-800 hover:scale-150 transition-transform ">
-                                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    className="relative bottom-2 xxs:ml-4 font-medium hover:scale-150 transition-transform ">
+                                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="white">
                                       <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                       </svg>
                                     </button>
@@ -213,7 +213,7 @@ export default function Cart({ cart }) {
                           ))}
                         </ul> : 
                         <div>
-                            <p>Your Bag is Empty!</p>
+                            <p className='text-white'>Your Bag is Empty!</p>
                         </div>
                           }
                         
@@ -223,7 +223,7 @@ export default function Cart({ cart }) {
                   {
                       cart.length > 0 ? 
                       <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-                    <div className="flex justify-between text-base font-medium text-gray-900">
+                    <div className="flex justify-between text-base font-medium text-white">
                       <p>Subtotal</p>
                       <p>{
                           currency === '' ? formatter.format(cartTotal) :
@@ -237,7 +237,7 @@ export default function Cart({ cart }) {
                     <div className="mt-6">
                       <a
                         href={checkoutUrl}
-                        className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-black hover:bg-gray-800"
+                        className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#ff00a7] hover:bg-[#d4008a] transition-all ease-in-out duration-300"
                       >
                         Checkout
                       </a>
@@ -247,7 +247,7 @@ export default function Cart({ cart }) {
                         or{' '}
                         <button
                           type="button"
-                          className="font-medium hover:text-gray-800"
+                          className="font-medium hover:text-white transition-all ease-in-out duration-300"
                           onClick={() => setCartOpen(false)}
                         >
                           Continue Shopping<span aria-hidden="true"> &rarr;</span>

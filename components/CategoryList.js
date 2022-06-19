@@ -248,9 +248,9 @@ const CategoryList = ({ productsByCollection, category, product }) => {
 
   return (
     <div className="bg-[#0a0a0a]">
-        <div className="max-w-[1930px] mx-auto py-3 xxs:px-4 sm:px-8">
-        <div className="flex flex-wrap flex-row items-center text-sm sm:pt-2 w-full">
-          <div className="text-2xl text-white font-semibold xxs:mb-2">{
+        <div className="max-w-[1930px] mx-auto py-3">
+        <div className="flex flex-wrap flex-row items-center text-sm sm:pt-2 w-full px-[15px]">
+          <div className="text-2xl text-white xxs:mb-2 font-semibold tracking-wide">{
             category !== product.handle ?
             category.toString().toUpperCase()
             : null
@@ -308,7 +308,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             ref={tabletRef}
             onClick={() => toggleSortOptions()}
             className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 md:visible md:relative md:top-[11px] md:z-[50] md:opacity-100 lg:invisible lg:absolute lg:z-[-1] lg:opacity-0'>
-                <span className="border-2 bg-black border-white p-1 pl-3 flex w-[200px] items-center justify-between">
+                <span className="border-2 bg-black border-white p-1 pl-3 flex w-[200px] items-center justify-between cursor-pointer">
                     <span className="select-none text-white font-semibold">SORT</span>
                     <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -359,7 +359,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
               </span>
           </div>
           </div>
-          <div className="flex flex-row items-center text-sm xxs:mb-6 w-full">
+          <div className="flex flex-row items-center text-sm xxs:mb-6 w-full pl-[15px]">
           <div>
             <Link href={'/'}>
               <a className="hover:underline text-[#8d8d8d] font-semibold">
@@ -375,10 +375,10 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             &nbsp;
             </div>
           <div className="font-semibold text-[#ff00a7]">
-                {category.toString().charAt(0).toUpperCase() + category.toString().slice(1)}
+                {category.charAt(0).toUpperCase() + category.toString().slice(1)}
           </div>
           </div>
-          <div className="grid grid-cols-2 gap-x-[15px] mb-6  md:hidden">
+          <div className="grid grid-cols-2 gap-x-[15px] mx-[15px] mb-6 md:hidden">
             <div>
             <div 
             ref={mobileRef}
@@ -454,10 +454,10 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             <div className="fixed inset-y-0 right-0 sm:pl-10 max-w-full flex">
                 <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enter="transform transition ease-in-out xxs:duration-500 sm:duration-600"
                 enterFrom="translate-x-full"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leave="transform transition ease-in-out xxs:duration-500 sm:duration-600"
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
                 >
@@ -468,7 +468,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={() => setShowFilterOptions(false)}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -525,7 +525,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             setCheckedSize({});
                             setCheckedColor({});
                             setCheckedBrand({});
-                          }} className="flex items-center justify-center w-full px-3 py-4 border-2 border-white text-white font-semibold hover:bg-[#ff00a7] hover:text-white transition-all ease-in-out duration-300">CLEAR ALL</button>
+                          }} className="flex items-center justify-center w-full px-3 py-4 border-2 border-white text-white font-semibold hover:bg-[#ff00a7] hover:text-white">CLEAR ALL</button>
                       </div>
                       
                     </div>
@@ -555,10 +555,10 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
                 <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enter="transform transition ease-in-out xxs:duration-500 sm:duration-600"
                 enterFrom="-translate-x-[500px]"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leave="transform transition ease-in-out xxs:duration-500 sm:duration-600"
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
@@ -567,7 +567,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-white hover:text-gray-500"
+                        className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowPriceFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -579,7 +579,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={() => {setShowPriceFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -648,10 +648,10 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
                 <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enter="transform transition ease-in-out xxs:duration-500 sm:duration-600"
                 enterFrom="-translate-x-[500px]"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leave="transform transition ease-in-out xxs:duration-500 sm:duration-600"
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
@@ -660,7 +660,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-white hover:text-gray-500"
+                        className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowSizeFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -672,7 +672,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={() => {setShowSizeFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -731,10 +731,10 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
                 <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enter="transform transition ease-in-out xxs:duration-500 sm:duration-600"
                 enterFrom="-translate-x-[500px]"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leave="transform transition ease-in-out xxs:duration-500 sm:duration-600"
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
@@ -743,7 +743,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-white hover:text-gray-500"
+                        className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowColorFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -755,7 +755,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={() => {setShowColorFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -814,10 +814,10 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
                 <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enter="transform transition ease-in-out xxs:duration-500 sm:duration-600"
                 enterFrom="-translate-x-[500px]"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leave="transform transition ease-in-out xxs:duration-500 sm:duration-600"
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
@@ -826,7 +826,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-white hover:text-gray-500"
+                        className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowBrandsFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -838,7 +838,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={() => {setShowBrandsFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -876,7 +876,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
           </div>
         </Dialog>
       </Transition.Root>
-            <div className="xxs:-mx-4 sm:mx-0 grid grid-cols-2 gap-y-10 xxs:gap-x-[15px] sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 cursor-pointer">
+            <div className="sm:mx-0 grid grid-cols-2 gap-y-10 xxs:gap-x-[15px] sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 cursor-pointer">
               {
                 (sortOption === 'Best Sellers') ? (
                   [...products].slice(productsVisited, productsVisited + productsPerPage).map(product => (

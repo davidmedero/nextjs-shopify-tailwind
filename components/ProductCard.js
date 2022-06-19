@@ -220,8 +220,8 @@ const ProductCard = ({ product }) => {
                 />
             </div>
         </div>
-        <h3 className="mt-2 xxs:ml-2 sm:ml-0 text-sm font-medium text-white">{title}</h3>
-        <p className='mt-1 xxs:ml-2 sm:ml-0 text-sm text-white'>
+        <h3 className="mt-2 xxs:ml-2 text-sm font-medium text-white">{title}</h3>
+        <p className='mt-1 xxs:ml-2 text-sm text-white'>
           {
             currency === '' ? formatter.format(price) :
             currency === 'USD' ? formatter.format(price) :

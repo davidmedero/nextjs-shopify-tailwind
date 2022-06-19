@@ -11,7 +11,7 @@ export default function MobileMenuButton() {
         <button
         onClick={() => setShowModal(true)}
         type="button"
-        className="flex items-center">
+        className="flex items-center focus:outline-none focus-visible:ring-0 focus-visible:ring-black focus-visible:ring-offset-black focus-visible:ring-offset-2 focus-visible:border-black">
             <div className="space-y-1">
                 <span className="block w-7 h-[3px] bg-white"></span>
                 <span className="block w-7 h-[3px] bg-white"></span>

@@ -93,6 +93,7 @@ export default function ProductForm({ product }) {
     
 
     function setOptions(name, value) {
+
         const quantity = inventory && inventory.map(item => {
             if ((item.title === value)) {
               return item.quantityAvailable
@@ -200,7 +201,8 @@ export default function ProductForm({ product }) {
 
 
   return (
-    <div className="xxs:mt-4 md:!mt-0 py-4 relative -top-4 md:top-0 flex flex-col w-11/12 md:w-[390px] pr-3">
+    <div className="xxs:mt-[10px] md:!mt-0 py-4 relative -top-4 md:top-0 flex flex-col xxs:w-full md:w-[390px]">
+        <div className="xxs:mx-[15px] md:mx-0 md:mr-[15px]">
         <Head>
             <script type='text/javascript' id={product.id}>
                 {
@@ -380,14 +382,14 @@ export default function ProductForm({ product }) {
       {
           Object.values(selectedOptions).join('') == ("SELECT A SIZE...") ? (
             <button 
-        className={"cursor-not-allowed select-none shadow-md rounded-md font-semibold bg-[#ff00a7] text-white px-2 py-3 mt-5"}>SELECT A SIZE</button>
+        className={"cursor-not-allowed select-none shadow-md rounded-md font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5"}>SELECT A SIZE</button>
           ) :
        (<button 
         onClick={() => {
             addToCart(selectedVariant)
             setCounter(1)
         }}
-        className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white px-2 py-3 mt-5 hover:bg-[#ae1077]"}>ADD TO BAG</button>) 
+        className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5 hover:bg-[#d4008a]"}>ADD TO BAG</button>) 
       }
     <div className="mt-3">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
@@ -446,6 +448,7 @@ export default function ProductForm({ product }) {
     }
     </div>
         </div>
+      </div>
       </div>
     </div>
   )

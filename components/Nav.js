@@ -142,7 +142,7 @@ export default function Nav() {
 
   return (
     <header className='border-b-4 border-b-gray-900 sticky top-0 z-20 bg-black'>
-        <div className={(showMenu ? 'flex items-center justify-between max-w-full xxs:py-3 xxs:px-4 search:px-5 sm:px-8 mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-full xxs:py-3 xxs:px-4 search:px-5 sm:px-8 mx-auto xxs:pb-20 lg:pb-[12px] transition-all duration-300 ease-in-out')}>
+        <div className={(showMenu ? 'flex items-center justify-between max-w-full xxs:py-3 xxs:px-[15px] mx-auto transition-all duration-300 ease-in-out' : 'flex items-center justify-between max-w-full xxs:py-3 xxs:px-[15px] mx-auto xxs:pb-20 lg:pb-[12px] transition-all duration-300 ease-in-out')}>
             <div className="xxs:flex lg:!hidden">
             <MobileMenuButton />
             </div>
@@ -223,7 +223,7 @@ export default function Nav() {
                
               </div>
             </div>
-            <div className='flex items-center justify-center relative xxs:left-3 cursor-pointer'>
+            <div className='flex items-center justify-center relative xxs:left-[8px] cursor-pointer'>
               <div 
               className='px-[6px] relative lg:hover:scale-[1.3] transition-all duration-200 ease-in-out'
               ref={ref}
@@ -334,7 +334,7 @@ export default function Nav() {
         <SlideDown className={'my-dropdown-slidedown'}>
         {
           ((showSubtotal) && (cartQuantity > 0)) ? (
-            <div className='pt-[15px] border-b-4 border-b-gray-900 bg-black py-2 px-4 relative flex flex-col border-t-black pb-3'>
+            <div className='pt-[15px] border-b-4 border-b-gray-900 bg-black py-2 px-4 relative flex flex-col border-t-black pb-3 -mt-1 left-[15px]'>
               <div className='flex flex-row justify-between pb-2'>
                 <span className='text-white relative'>QUANTITY:</span>
                 <span className='text-white relative'>{cartQuantity}</span>
@@ -345,7 +345,7 @@ export default function Nav() {
               </div>
               </div>
           ) : ((showSubtotal) && (cartQuantity === 0)) ? (
-            <div className='border-b-4 border-b-gray-900 bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[30px] -mt-1'>
+            <div className='border-b-4 border-b-gray-900 bg-black py-2 pb-4 px-4 relative flex !w-[170px] left-[45px] -mt-1'>
             <div className='flex flex-row justify-between'>
               <span className='text-white relative top-1 text-base'>Your Bag is Empty!</span>
             </div>

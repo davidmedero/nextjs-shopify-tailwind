@@ -2,11 +2,13 @@ import React from 'react'
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { SlideDown } from 'react-slidedown'
+import 'react-slidedown/lib/slidedown.css'
 
 
 export default function ProductOptions({ name, values, selectedOptions, setOptions, inventory }) {
 
-    const [selected, setSelected] = useState(`SELECT A ${name.toUpperCase()}...`)
+  const [selected, setSelected] = useState(`SELECT A ${name.toUpperCase()}...`)
 
   return (
     <fieldset>
@@ -30,6 +32,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             leaveTo="opacity-0"
           >
             <Listbox.Options className="dropdownOptions z-[9999] absolute w-full py-1 mt-1 text-base bg-black rounded-md shadow-lg max-h-60 ring-1 ring-black border ring-opacity-5 focus:outline-none sm:text-sm">
+            <SlideDown className={'my-dropdown-slidedown'}>
               {
               values.map(value => {
                 const quantity = inventory && inventory.map(item => {
@@ -37,6 +40,12 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                     return item.quantityAvailable
                   }
                 }).filter(el => el !== undefined).join('')
+                const disabledOption = inventory && inventory.map(item => {
+                  if ((item.title === value && item.quantityAvailable === 0)) {
+                    return item.title
+                  }
+                }).filter(el => el !== undefined).join('')
+                console.log(disabledOption)
                   const id = `option-${name}-${value}`
                   const checked = selectedOptions[name] === value
                 return (
@@ -46,6 +55,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                   name={`option-${name}`}
                   checked={checked}
                   value={value}
+                  disabled={disabledOption}
                   className={({ active }) =>
                     `${quantity == 0 ? 'text-white pointer-events-none border-b relative border-gray-100 select-none py-2 pl-10 pr-4' : 'text-white border-b border-gray-100 select-none relative py-2 pl-10 pr-4 cursor-pointer'} ${
                       active ? 'text-[#ff00a7] bg-gray-800' : 'text-white'
@@ -77,6 +87,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                 )
               })
               }
+              </SlideDown>
             </Listbox.Options>
           </Transition>
         </div>
