@@ -330,7 +330,7 @@ export default function Nav() {
         }
         </SlideDown>
         </div>
-        <div className="xxs:hidden lg:block absolute right-[54px] top-[60px] w-[200px] flex flex-col justify-center select-none text-sm">
+        <div className="xxs:hidden lg:block absolute right-[54px] top-[60px] w-[200px] flex flex-col justify-center select-none text-sm !overflow-x-hidden">
         <SlideDown className={'my-dropdown-slidedown'}>
         {
           ((showSubtotal) && (cartQuantity > 0)) ? (
