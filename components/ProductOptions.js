@@ -1,5 +1,4 @@
-import React from 'react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect, useCallback } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { SlideDown } from 'react-slidedown'
@@ -16,7 +15,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
     <div className="mt-2">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <Listbox.Button className="border relative w-full py-2 pl-3 pr-10 text-left bg-black hover:bg-gray-800 text-white rounded-md shadow-md cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7]">
+          <Listbox.Button className="border relative w-full py-2 pl-3 pr-10 text-left bg-black text-white rounded-md shadow-md cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-1 hover:ring-offset-[#ff00a7] transition-all ease-in-out duration-200">
             <span className="block truncate xxs:text-center pl-7 select-none">{selected}</span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
               <SelectorIcon
@@ -25,12 +24,6 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
               />
             </span>
           </Listbox.Button>
-          <Transition
-            as={Fragment}
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
             <Listbox.Options className="dropdownOptions z-[9999] absolute w-full py-1 mt-1 text-base bg-black rounded-md shadow-lg max-h-60 ring-1 ring-black border ring-opacity-5 focus:outline-none sm:text-sm">
             <SlideDown className={'my-dropdown-slidedown'}>
               {
@@ -45,11 +38,10 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                     return item.title
                   }
                 }).filter(el => el !== undefined).join('')
-                console.log(disabledOption)
                   const id = `option-${name}-${value}`
                   const checked = selectedOptions[name] === value
                 return (
-                <label key={id} htmlFor={id} onClick={() => {setOptions(name, value)}} className={quantity == 0 ? 'cursor-not-allowed' : 'cursor-pointer'}>
+                <label key={id} htmlFor={id} onClick={() => setOptions(name, value)} className={quantity == 0 ? 'cursor-not-allowed' : 'cursor-pointer'}>
                 <Listbox.Option
                   id={id}
                   name={`option-${name}`}
@@ -89,7 +81,6 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
               }
               </SlideDown>
             </Listbox.Options>
-          </Transition>
         </div>
       </Listbox>
     </div>

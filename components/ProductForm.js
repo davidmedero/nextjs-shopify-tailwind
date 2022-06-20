@@ -86,7 +86,7 @@ export default function ProductForm({ product }) {
     product.options.map(item => {
         defaultValues[item.name] = `SELECT A ${item.name.toUpperCase()}...`
     })
-    console.log(defaultValues)
+
     const [selectedVariant, setSelectedVariant] = useState(allVariantOptions[0])
     const [selectedOptions, setSelectedOptions] = useState(defaultValues)
     const [counter, setCounter] = useState(1);

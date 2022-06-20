@@ -3,18 +3,19 @@ import ProductPageContent from "../components/ProductPageContent"
 import CategoryList from "../components/CategoryList"
 import SubcategoryList from "../components/SubcategoryList"
 import Sub_SubcategoryList from "../components/Sub_SubcategoryList"
+import TypeList from '../components/TypeList'
 import BrandList from "../components/BrandList"
 import { useRouter } from 'next/router'
 import collections from '../categories'
 import brands from '../brands'
 
 
-export default function Slug({ product, category, productsByCollection, productsBySubcollection, productsBySub_Subcollection, productsByBrand }) {
+export default function Slug({ product, category, productsByCollection, productsBySubcollection, productsBySub_Subcollection, productsByBrand, productsByType }) {
 
   const router = useRouter()
   
   const { asPath } = router
-console.log(product)
+
   return (
   <>
     <main>
@@ -38,7 +39,12 @@ console.log(product)
         }
         {
           asPath === '/' + category[0] + '/' + category[1] + '/' + category[2] ? 
-          <Sub_SubcategoryList productsBySub_Subcollection={productsBySub_Subcollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
+          <Sub_SubcategoryList productsBySub_Subcollection={productsBySub_Subcollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} type={category[3]} /> :
+          null
+        }
+        {
+          asPath === '/' + category[0] + '/' + category[1] + '/' + category[2] + '/' + category[3] ? 
+          <TypeList productsByType={productsByType} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} type={category[3]} /> :
           null
         }
         {
@@ -85,6 +91,26 @@ export async function getStaticPaths() {
       }
     }
   }
+  const types = []
+  for (let category of categories) {
+    for (let subcategory of category.subcollections) {
+      if (subcategory.sub_subcollections) {
+        for (let sub_subcategory of subcategory.sub_subcollections) {
+          if (sub_subcategory.types && subcategory.handle !== "") {
+            for (let type of sub_subcategory.types) {
+              if (type.handle !== "") {
+                types.push({
+                  params: {
+                    slug: [category.handle, subcategory.handle, sub_subcategory.handle, type.handle]
+                  }
+                })
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   const products = await getAllProducts()
   const productPaths = products.map(item => {
     const product = String(item.node.handle)
@@ -111,6 +137,7 @@ export async function getStaticPaths() {
         ...sub_SubcategoryPaths,
         ...productPaths,
         ...brandPaths,
+        ...types
       ],
       fallback: false
     }
@@ -122,6 +149,7 @@ export async function getStaticProps({ params }) {
   const productsBySubcollection = await getProductsbyCollection(params.slug[1])
   const productsBySub_Subcollection = await getProductsbyCollection(params.slug[2])
   const productsByBrand = await getProductsbyCollection(params.slug[1]);
+  const productsByType = await getProductsbyCollection(params.slug[3])
     return {
         props: {
           category: params.slug || null,
@@ -129,7 +157,8 @@ export async function getStaticProps({ params }) {
           productsByCollection,
           productsBySubcollection,
           productsBySub_Subcollection,
-          productsByBrand
+          productsByBrand,
+          productsByType
         }
       }
 }

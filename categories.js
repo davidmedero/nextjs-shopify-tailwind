@@ -126,7 +126,24 @@ const collections = [
                 {
                   id: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM5MTA4MjYwNjg1MQ==",
                   handle: "skirts",
-                  title: "Skirts"
+                  title: "Skirts",
+                  types: [
+                    {
+                      id: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM5NTAzNjYyMzEwNw==",
+                      handle: "mini-skirts",
+                      title: "Mini Skirts"
+                    },
+                    {
+                      id: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM5NTAzNjc1NDE3OQ==",
+                      handle: "midi-skirts",
+                      title: "Midi Skirts"
+                    },
+                    {
+                      id: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM5NTAzNjgxOTcxNQ==",
+                      handle: "maxi-skirts",
+                      title: "Maxi Skirts"
+                    }
+                  ]
                 }
               ]
           },

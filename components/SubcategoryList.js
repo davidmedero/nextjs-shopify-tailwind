@@ -10,9 +10,26 @@ import ReactPaginate from "react-paginate"
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import brands from "../brands"
+import collections from '../categories'
 
 
 const SubcategoryList = ({ productsBySubcollection, category, subcategory, product }) => {
+
+  const categoryTitle = collections.map(el => {
+    if (el.handle === category) {
+      return el.title
+    }
+  })
+
+  const title = categoryTitle.filter(el => el !== undefined)
+
+  const subcategories = collections.map(el => {
+    if (el.handle === category) {
+      return el.subcollections
+    }
+  })
+
+  const filteredSubcategories = subcategories.filter(el => el !== undefined)
 
   const [products, setProducts] = useState(productsBySubcollection)
   const [pageNumber, setPageNumber] = useState(0)
@@ -250,9 +267,11 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
         <div className="max-w-[1930px] mx-auto py-3">
         <div className="flex flex-wrap flex-row items-center text-sm sm:pt-2 w-full px-[15px]">
           <div className="text-2xl text-white xxs:mb-2 font-semibold tracking-wide">{
-            subcategory !== product.handle ?
-            subcategory.toString().toUpperCase()
-            : null
+           filteredSubcategories[0].map(el => {
+            if (subcategory !== product.handle && el.handle === subcategory) {
+                return el.title.toUpperCase()
+            }
+            })
           }</div>
           <div className="md:ml-auto md:flex md:flex-row xxs:hidden">
             <div>
@@ -376,7 +395,9 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
           <div>
             <Link href={`/${category}`}>
               <a className="hover:underline text-[#8d8d8d] font-semibold">
-                {category.toString().charAt(0).toUpperCase() + category.toString().slice(1)}
+               {
+                 title[0]
+               }
               </a>
             </Link>
           </div>
@@ -388,7 +409,13 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             &nbsp;
             </div>
           <div className="font-semibold text-[#ff00a7]">
-                {subcategory.toString().charAt(0).toUpperCase() + subcategory.toString().slice(1)}
+              {
+                filteredSubcategories[0].map(el => {
+                  if (subcategory !== product.handle && el.handle === subcategory) {
+                      return el.title
+                  }
+                  })
+              }
           </div>
           </div>
           <div className="grid grid-cols-2 gap-x-[15px] mx-[15px] mb-6 md:hidden">
@@ -467,10 +494,10 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             <div className="fixed inset-y-0 right-0 sm:pl-10 max-w-full flex">
                 <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enter="transform transition ease-in-out duration-[600ms]"
                 enterFrom="translate-x-full"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leave="transform transition ease-in-out duration-[600ms]"
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
                 >
@@ -481,7 +508,7 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={() => setShowFilterOptions(false)}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -568,10 +595,10 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
                 <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enter="transform transition ease-in-out duration-[600ms]"
                 enterFrom="-translate-x-[500px]"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leave="transform transition ease-in-out duration-[600ms]"
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
@@ -580,7 +607,7 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-white hover:text-gray-500"
+                        className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowPriceFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -592,7 +619,7 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={() => {setShowPriceFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -661,10 +688,10 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
                 <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enter="transform transition ease-in-out duration-[600ms]"
                 enterFrom="-translate-x-[500px]"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leave="transform transition ease-in-out duration-[600ms]"
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
@@ -673,7 +700,7 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-white hover:text-gray-500"
+                        className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowSizeFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -685,7 +712,7 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={() => {setShowSizeFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -744,10 +771,10 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
                 <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enter="transform transition ease-in-out duration-[600ms]"
                 enterFrom="-translate-x-[500px]"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leave="transform transition ease-in-out duration-[600ms]"
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
@@ -756,7 +783,7 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-white hover:text-gray-500"
+                        className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowColorFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -768,7 +795,7 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={() => {setShowColorFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>
@@ -827,10 +854,10 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             <div className="fixed inset-y-0 right-0 max-w-full flex overflow-hidden">
                 <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-600"
+                enter="transform transition ease-in-out duration-[600ms]"
                 enterFrom="-translate-x-[500px]"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-600"
+                leave="transform transition ease-in-out duration-[600ms]"
                 leaveFrom="translate-x-0"
                 leaveTo={(showFilterOptions === false) ? "translate-x-full" : "-translate-x-[500px]"}
                 >
@@ -839,7 +866,7 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                         <button
                         ref={cancelButtonRef}
                         type="button"
-                        className="-m-2 p-2 text-white hover:text-gray-500"
+                        className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowBrandsFilter(false)}>
                         <span className="sr-only">Close panel</span>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -851,7 +878,7 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                             <button
                                 ref={cancelButtonRef}
                                 type="button"
-                                className="-m-2 p-2 text-white hover:text-gray-500"
+                                className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                                 onClick={() => {setShowBrandsFilter(false); setShowFilterOptions(false)}}
                                 >
                                 <span className="sr-only">Close panel</span>

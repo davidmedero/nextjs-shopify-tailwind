@@ -13,17 +13,41 @@ import brands from "../brands"
 import collections from '../categories'
 
 
-const CategoryList = ({ productsByCollection, category, product }) => {
+const TypeList = ({ productsByType, category, subcategory, sub_subcategory, product, type }) => {
 
   const categoryTitle = collections.map(el => {
     if (el.handle === category) {
-      return el.title
+        return el.title
     }
-  })
+    })
 
-  const title = categoryTitle.filter(el => el !== undefined)
+  const title = categoryTitle.filter(el => el !== undefined)  
 
-  const [products, setProducts] = useState(productsByCollection)
+  const subcategories = collections.map(el => {
+    if (el.handle === category) {
+        return el.subcollections
+    }
+    })
+
+  const filteredSubcategories = subcategories.filter(el => el !== undefined)
+
+  const sub_subcategories = filteredSubcategories[0].map(el => {
+    if (el.handle === subcategory) {
+        return el.sub_subcollections
+    }
+    })
+
+  const filteredSub_subcategories = sub_subcategories.filter(el => el !== undefined)
+
+  const types = filteredSub_subcategories[0].map(el => {
+    if (el.handle === sub_subcategory) {
+        return el.types
+    }
+    })
+
+  const filteredTypes = types.filter(el => el !== undefined)
+
+  const [products, setProducts] = useState(productsByType)
   const [pageNumber, setPageNumber] = useState(0)
   const productsPerPage = 20
   const productsVisited = pageNumber * productsPerPage
@@ -103,13 +127,6 @@ const CategoryList = ({ productsByCollection, category, product }) => {
 
   const handlers = useSwipeable({
       onSwipedRight: () => {setShowFilterOptions(false); setShowPriceFilter(false); setShowSizeFilter(false); setShowColorFilter(false); setShowBrandsFilter(false)},
-      onSwipedLeft: () => {setShowPriceFilter(false); setShowSizeFilter(false); setShowColorFilter(false); setShowBrandsFilter(false)},
-      preventDefaultTouchmoveEvent: true,
-      trackMouse: true
-    });
-
-    const secondHandlers = useSwipeable({
-      onSwipedRight: () => {setShowFilterOptions(false)},
       preventDefaultTouchmoveEvent: true,
       trackMouse: true
     });
@@ -126,7 +143,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
 
   useEffect(() => {
     let newArray = []
-    productsByCollection.map(product => {
+    productsByType.map(product => {
       if (product.node.priceRange.minVariantPrice.amount >= minVal && product.node.priceRange.minVariantPrice.amount <= maxVal) {
         newArray.push(product)
       } 
@@ -134,7 +151,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
     setPriceTracker(newArray)
   }, [minVal, maxVal])
 
-  const sizes = [...new Set(productsByCollection.map(product => (
+  const sizes = [...new Set(productsByType.map(product => (
     product.node.options[0].values
   )).flat())]
 
@@ -147,7 +164,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
     }))
   }
 
-  const colors = [...new Set(productsByCollection.map(product => (
+  const colors = [...new Set(productsByType.map(product => (
     product.node.tags
   )).flat())]
 
@@ -163,7 +180,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   useEffect(() => {
       let selectedSizesArray = Object.entries(checkedSize).filter(val => !val.includes(false)).map(el => el[0])
       let newArray = []
-      productsByCollection.map(product => {
+      productsByType.map(product => {
         product.node.variants.edges.map(el => {
           if ((selectedSizesArray.includes(el.node.title)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
             newArray.push(product)
@@ -176,7 +193,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   useEffect(() => {
     let selectedColorsArray = Object.entries(checkedColor).filter(val => !val.includes(false)).map(el => el[0])
     let newArray = []
-    productsByCollection.map(product => {
+    productsByType.map(product => {
       product.node.variants.edges.map(el => {
         if (product.node.tags.some(tag => selectedColorsArray.includes(tag)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
           newArray.push(product)
@@ -200,7 +217,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   useEffect(() => {
     let selectedBrandsArray = Object.entries(checkedBrand).filter(val => !val.includes(false)).map(el => el[0])
     let newArray = []
-    productsByCollection.map(product => {
+    productsByType.map(product => {
       product.node.variants.edges.map(el => {
         if ((product.node.collections.edges.some(brand => selectedBrandsArray.includes(brand.node.title))) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
           newArray.push(product)
@@ -261,15 +278,16 @@ const CategoryList = ({ productsByCollection, category, product }) => {
     setProducts(productsArray)
   }, [priceTracker, sizeTracker, colorTracker, brandsTracker])
 
-
   return (
-    <div className="bg-[#0a0a0a]">
+        <div className="bg-[#0a0a0a]">
         <div className="max-w-[1930px] mx-auto py-3">
         <div className="flex flex-wrap flex-row items-center text-sm sm:pt-2 w-full px-[15px]">
           <div className="text-2xl text-white xxs:mb-2 font-semibold tracking-wide">{
-            category !== product.handle ?
-            title[0].toUpperCase()
-            : null
+            filteredTypes[0].map(el => {
+                if (type !== product.handle && el.handle === type) {
+                    return el.title.toUpperCase()
+                }
+            })
           }</div>
           <div className="md:ml-auto md:flex md:flex-row xxs:hidden">
             <div>
@@ -383,7 +401,63 @@ const CategoryList = ({ productsByCollection, category, product }) => {
               </a>
             </Link>
           </div>
-            <div className="text-white">
+          <div className="text-white">
+            &nbsp;
+              {
+                ' ' + '/' + ' '
+              }
+            &nbsp;
+            </div>
+          <div>
+            <Link href={`/${category}`}>
+              <a className="hover:underline text-[#8d8d8d] font-semibold">
+                {
+                    title[0]
+                }
+              </a>
+            </Link>
+          </div>
+          <div className="text-white">
+            &nbsp;
+              {
+                ' ' + '/' + ' '
+              }
+            &nbsp;
+            </div>
+          <div>
+            <Link href={`/${category}/${subcategory}`}>
+              <a className="hover:underline text-[#8d8d8d] font-semibold">
+               {
+                filteredSubcategories[0].map(el => {
+                    if (subcategory !== product.handle && el.handle === subcategory) {
+                        return el.title
+                    }
+                    })
+               }
+              </a>
+            </Link>
+          </div>
+          <div className="text-white">
+            &nbsp;
+              {
+                ' ' + '/' + ' '
+              }
+            &nbsp;
+            </div>
+            <div>
+            <Link href={`/${category}/${subcategory}/${sub_subcategory}`}>
+              <a className="hover:underline text-[#8d8d8d] font-semibold">
+                {
+                 filteredSub_subcategories[0].map(el => {
+                    if (sub_subcategory !== product.handle && el.handle === sub_subcategory) {
+                        return el.title
+                    }
+                  })
+                }
+              </a>
+            </Link>
+          </div>
+          <div className="text-white">
             &nbsp;
               {
                 ' ' + '/' + ' '
@@ -391,8 +465,12 @@ const CategoryList = ({ productsByCollection, category, product }) => {
             &nbsp;
             </div>
           <div className="font-semibold text-[#ff00a7]">
-                {
-                  title[0]
+            {
+            filteredTypes[0].map(el => {
+                    if (type !== product.handle && el.handle === type) {
+                        return el.title
+                    }
+                })
                 }
           </div>
           </div>
@@ -451,13 +529,13 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                 </svg>
               </span>
           </div>
-          <Transition.Root show={showFilterOptions} as={Fragment} {...secondHandlers}>
+          <Transition.Root show={showFilterOptions} as={Fragment} {...handlers}>
         <Dialog 
         initialFocus={cancelButtonRef}
         as="div" 
         className="fixed z-50 inset-0 overflow-hidden" 
         onClose={() => setShowFilterOptions(false)}>
-            <div className="absolute inset-0">
+            <div {...handlers} className="absolute inset-0">
             <Transition.Child
                 as={Fragment}
                 enter="ease-in-out duration-500"
@@ -543,7 +621,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             setCheckedSize({});
                             setCheckedColor({});
                             setCheckedBrand({});
-                          }} className="flex items-center justify-center w-full px-3 py-4 border-2 border-white text-white font-semibold hover:bg-[#ff00a7] hover:text-white">CLEAR ALL</button>
+                          }} className="flex items-center justify-center w-full px-3 py-4 border-2 border-white text-white font-semibold hover:bg-[#ff00a7] hover:text-white transition-all ease-in-out duration-300">CLEAR ALL</button>
                       </div>
                       
                     </div>
@@ -943,4 +1021,4 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   )
 }
 
-export default CategoryList
+export default TypeList
