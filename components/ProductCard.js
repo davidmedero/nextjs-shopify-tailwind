@@ -74,12 +74,12 @@ const ProductCard = ({ product }) => {
   const updateMacros = async () => {
     console.log('yes')
     if (added) {
-      await fetch("http://localhost:3000/api/wishlist-endpoint", {
+      await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
         method: 'delete',
         body: JSON.stringify(handle)
       })
     } else {
-      await fetch("http://localhost:3000/api/wishlist-endpoint", {
+      await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
         method: 'post',
         body: JSON.stringify(handle)
       })

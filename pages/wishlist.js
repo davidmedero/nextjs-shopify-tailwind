@@ -1,4 +1,4 @@
-import { getSession, useSession } from "next-auth/react"
+import { getSession } from "next-auth/react"
 import fetch from 'isomorphic-unfetch'
 import { getAllProducts } from '../lib/shopify'
 import WishlistProductCard from "../components/WishlistProductCard"
@@ -14,15 +14,11 @@ import brands from "../brands"
 import { Dialog, Transition } from '@headlessui/react'
 import { useSwipeable } from 'react-swipeable'
 import { XIcon } from '@heroicons/react/outline'
-import collections from '../categories'
 
 
-export default function wishlist({ data, allProducts }) {
+export default function wishlist({ wishlistArray }) {
 
   const { mutate } = useSWRConfig()
-
-  const { data: session } = useSession()
-  const email = session?.user.email
 
   const router = useRouter();
 
@@ -30,25 +26,17 @@ export default function wishlist({ data, allProducts }) {
     router.replace(router.asPath);
   }
 
-  const user = data.map(el => (
-    (el.email === email) && el
-  )).filter(el => el !== false)
+  const [products, setProducts] = useState(wishlistArray)
 
-  let wishlistArray = []
-  
-  allProducts.map(product => (
-    user.map(item => (
-      (item.saved_items.includes(product.node.handle)) 
-        ? wishlistArray.push(product)
-        : null
-    ))
-  ))
+  useEffect(() => {
+    setProducts(wishlistArray)
+  }, [wishlistArray])
 
   const [pageNumber, setPageNumber] = useState(0)
   const productsPerPage = 20
   const productsVisited = pageNumber * productsPerPage
 
-  const pageCount = Math.ceil(wishlistArray.length / productsPerPage)
+  const pageCount = Math.ceil(products.length / productsPerPage)
 
   const changePage = ({ selected }) => {
     setPageNumber(selected)
@@ -120,7 +108,7 @@ export default function wishlist({ data, allProducts }) {
   }, [tabletRef, desktopRef, mobileRef]);
 
   const updateMacros = async () => {
-      const res = await fetch("http://localhost:3000/api/wishlist-endpoint", {
+      const res = await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
         method: 'put'
       })
 
@@ -146,153 +134,153 @@ export default function wishlist({ data, allProducts }) {
       trackMouse: true
     });
 
-  // const [min, setMin] = useState(0)
-  // const [max, setMax] = useState(500)
-  // const [minVal, setMinVal] = useState(0)
-  // const [maxVal, setMaxVal] = useState(500)
+  const [min, setMin] = useState(0)
+  const [max, setMax] = useState(500)
+  const [minVal, setMinVal] = useState(0)
+  const [maxVal, setMaxVal] = useState(500)
 
-  // const onSliderChange = (value) => {
-  //   setMinVal(value[0])
-  //   setMaxVal(value[1])
-  // }
+  const onSliderChange = (value) => {
+    setMinVal(value[0])
+    setMaxVal(value[1])
+  }
 
-  // useEffect(() => {
-  //   let newArray = []
-  //   wishlistArray.map(product => {
-  //     if (product.node.priceRange.minVariantPrice.amount >= minVal && product.node.priceRange.minVariantPrice.amount <= maxVal) {
-  //       newArray.push(product)
-  //     } 
-  //   })
-  //   setPriceTracker(newArray)
-  // }, [minVal, maxVal])
+  useEffect(() => {
+    let newArray = []
+    wishlistArray.map(product => {
+      if (product.node.priceRange.minVariantPrice.amount >= minVal && product.node.priceRange.minVariantPrice.amount <= maxVal) {
+        newArray.push(product)
+      } 
+    })
+    setPriceTracker(newArray)
+  }, [minVal, maxVal])
 
-  // const sizes = [...new Set(wishlistArray.map(product => (
-  //   product.node.options[0].values
-  // )).flat())]
+  const sizes = [...new Set(wishlistArray.map(product => (
+    product.node.options[0].values
+  )).flat())]
 
-  // const [checkedSize, setCheckedSize] = useState({})
+  const [checkedSize, setCheckedSize] = useState({})
 
-  // const toggleSize = name => {
-  //   setCheckedSize(prev => ({
-  //     ...prev,
-  //     [name]: !prev[name]
-  //   }))
-  // }
+  const toggleSize = name => {
+    setCheckedSize(prev => ({
+      ...prev,
+      [name]: !prev[name]
+    }))
+  }
 
-  // const colors = [...new Set(wishlistArray.map(product => (
-  //   product.node.tags
-  // )).flat())]
+  const colors = [...new Set(wishlistArray.map(product => (
+    product.node.tags
+  )).flat())]
 
-  // const [checkedColor, setCheckedColor] = useState({})
+  const [checkedColor, setCheckedColor] = useState({})
 
-  // const toggleColor = name => {
-  //   setCheckedColor(prev => ({
-  //     ...prev,
-  //     [name]: !prev[name]
-  //   }))
-  // }
+  const toggleColor = name => {
+    setCheckedColor(prev => ({
+      ...prev,
+      [name]: !prev[name]
+    }))
+  }
 
-  // useEffect(() => {
-  //     let selectedSizesArray = Object.entries(checkedSize).filter(val => !val.includes(false)).map(el => el[0])
-  //     let newArray = []
-  //     wishlistArray.map(product => {
-  //       product.node.variants.edges.map(el => {
-  //         if ((selectedSizesArray.includes(el.node.title)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
-  //           newArray.push(product)
-  //         }
-  //       })
-  //     })
-  //     setSizeTracker(newArray)
-  // }, [checkedSize])
+  useEffect(() => {
+      let selectedSizesArray = Object.entries(checkedSize).filter(val => !val.includes(false)).map(el => el[0])
+      let newArray = []
+      wishlistArray.map(product => {
+        product.node.variants.edges.map(el => {
+          if ((selectedSizesArray.includes(el.node.title)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
+            newArray.push(product)
+          }
+        })
+      })
+      setSizeTracker(newArray)
+  }, [checkedSize])
 
-  // useEffect(() => {
-  //   let selectedColorsArray = Object.entries(checkedColor).filter(val => !val.includes(false)).map(el => el[0])
-  //   let newArray = []
-  //   wishlistArray.map(product => {
-  //     product.node.variants.edges.map(el => {
-  //       if (product.node.tags.some(tag => selectedColorsArray.includes(tag)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
-  //         newArray.push(product)
-  //       }
-  //     })
-  //   })
-  //   setColorTracker(newArray)
-  // }, [checkedColor])
+  useEffect(() => {
+    let selectedColorsArray = Object.entries(checkedColor).filter(val => !val.includes(false)).map(el => el[0])
+    let newArray = []
+    wishlistArray.map(product => {
+      product.node.variants.edges.map(el => {
+        if (product.node.tags.some(tag => selectedColorsArray.includes(tag)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
+          newArray.push(product)
+        }
+      })
+    })
+    setColorTracker(newArray)
+  }, [checkedColor])
 
-  // const brandsArray = brands.map(el => el.subcollections.map(el => el.title))
+  const brandsArray = brands.map(el => el.subcollections.map(el => el.title))
 
-  // const [checkedBrand, setCheckedBrand] = useState({})
+  const [checkedBrand, setCheckedBrand] = useState({})
 
-  // const toggleBrand = name => {
-  //   setCheckedBrand(prev => ({
-  //     ...prev,
-  //     [name]: !prev[name]
-  //   }))
-  // }
+  const toggleBrand = name => {
+    setCheckedBrand(prev => ({
+      ...prev,
+      [name]: !prev[name]
+    }))
+  }
 
-  // useEffect(() => {
-  //   let selectedBrandsArray = Object.entries(checkedBrand).filter(val => !val.includes(false)).map(el => el[0])
-  //   let newArray = []
-  //   wishlistArray.map(product => {
-  //     product.node.variants.edges.map(el => {
-  //       if ((product.node.collections.edges.some(brand => selectedBrandsArray.includes(brand.node.title))) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
-  //         newArray.push(product)
-  //       }
-  //     })
-  //   })
-  //   setBrandsTracker(newArray)
-  // }, [checkedBrand])
+  useEffect(() => {
+    let selectedBrandsArray = Object.entries(checkedBrand).filter(val => !val.includes(false)).map(el => el[0])
+    let newArray = []
+    wishlistArray.map(product => {
+      product.node.variants.edges.map(el => {
+        if ((product.node.collections.edges.some(brand => selectedBrandsArray.includes(brand.node.title))) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
+          newArray.push(product)
+        }
+      })
+    })
+    setBrandsTracker(newArray)
+  }, [checkedBrand])
 
-  // useEffect(() => {
-  //   let newArray = []
-  //   let productsArray = []
-  //   const tracker = [priceTracker, sizeTracker, colorTracker, brandsTracker]
-  //   tracker.map(arr => {
-  //     if (arr.length !== 0) {
-  //       newArray.push(arr)
-  //     }
-  //   })
-  //   if (newArray.length === 1) {
-  //     for (let i of newArray[0]) {
-  //       productsArray.push(i)
-  //     }
-  //   }
-  //   if (newArray.length === 2) {
-  //     for (let i of newArray[0]) {
-  //       for (let j of newArray[1]) {
-  //         if (i.node.title === j.node.title) {
-  //           console.log(i.node.title)
-  //           productsArray.push(i)
-  //         }
-  //       }
-  //     }
-  //   }
-  //   if (newArray.length === 3) {
-  //     for (let i of newArray[0]) {
-  //       for (let j of newArray[1]) {
-  //         for (let k of newArray[2]) {
-  //           if ((i.node.title === j.node.title) && (i.node.title === k.node.title)) {
-  //             productsArray.push(i)
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   if (newArray.length === 4) {
-  //     for (let i of newArray[0]) {
-  //       for (let j of newArray[1]) {
-  //         for (let k of newArray[2]) {
-  //           for (let o of newArray[3]) {
-  //             if ((i.node.title === j.node.title) && (i.node.title === k.node.title) && (i.node.title === o.node.title)) {
-  //               productsArray.push(i)
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   setProducts(productsArray)
-  // }, [priceTracker, sizeTracker, colorTracker, brandsTracker])
-  console.log(wishlistArray)
+  useEffect(() => {
+    let newArray = []
+    let productsArray = []
+    const tracker = [priceTracker, sizeTracker, colorTracker, brandsTracker]
+    tracker.map(arr => {
+      if (arr.length !== 0) {
+        newArray.push(arr)
+      }
+    })
+    if (newArray.length === 1) {
+      for (let i of newArray[0]) {
+        productsArray.push(i)
+      }
+    }
+    if (newArray.length === 2) {
+      for (let i of newArray[0]) {
+        for (let j of newArray[1]) {
+          if (i.node.title === j.node.title) {
+            console.log(i.node.title)
+            productsArray.push(i)
+          }
+        }
+      }
+    }
+    if (newArray.length === 3) {
+      for (let i of newArray[0]) {
+        for (let j of newArray[1]) {
+          for (let k of newArray[2]) {
+            if ((i.node.title === j.node.title) && (i.node.title === k.node.title)) {
+              productsArray.push(i)
+            }
+          }
+        }
+      }
+    }
+    if (newArray.length === 4) {
+      for (let i of newArray[0]) {
+        for (let j of newArray[1]) {
+          for (let k of newArray[2]) {
+            for (let o of newArray[3]) {
+              if ((i.node.title === j.node.title) && (i.node.title === k.node.title) && (i.node.title === o.node.title)) {
+                productsArray.push(i)
+              }
+            }
+          }
+        }
+      }
+    }
+    setProducts(productsArray)
+  }, [priceTracker, sizeTracker, colorTracker, brandsTracker])
+
 
   return (
     <div className="bg-[#0a0a0a]">
@@ -415,7 +403,7 @@ export default function wishlist({ data, allProducts }) {
               </span>
           </div>
           </div>
-        {/* <Transition.Root show={showFilterOptions} as={Fragment} {...secondHandlers}>
+        <Transition.Root show={showFilterOptions} as={Fragment} {...secondHandlers}>
         <Dialog 
         initialFocus={cancelButtonRef}
         as="div" 
@@ -857,27 +845,27 @@ export default function wishlist({ data, allProducts }) {
             </div>
           </div>
         </Dialog>
-      </Transition.Root> */}
+      </Transition.Root>
         <div className="sm:mx-0 grid grid-cols-2 gap-y-10 xxs:gap-x-[15px] sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 cursor-pointer">
           {
               (sortOption === 'Recently Added') ? (
-                [...wishlistArray].slice(productsVisited, productsVisited + productsPerPage).map(product => (
+                [...products].slice(productsVisited, productsVisited + productsPerPage).map(product => (
                   <WishlistProductCard key={product.node.id} product={product} />
               )) 
               ) : (sortOption === 'Newest') ? (
-                [...wishlistArray].sort((a, b) => (
+                [...products].sort((a, b) => (
                   (a.node.createdAt < b.node.createdAt) ? 1 : ((a.node.createdAt > b.node.createdAt) ? -1 : 0)
                 )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
                     <WishlistProductCard key={product.node.id} product={product} />
                 ))
               ) : (sortOption === 'Highest Price') ? (
-                [...wishlistArray].sort((a, b) => (
+                [...products].sort((a, b) => (
                   (b.node.priceRange.minVariantPrice.amount - a.node.priceRange.minVariantPrice.amount)
                 )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
                     <WishlistProductCard key={product.node.id} product={product} />
                 )) 
               ) : (sortOption === 'Lowest Price') ? (
-                [...wishlistArray].sort((a, b) => (
+                [...products].sort((a, b) => (
                     (a.node.priceRange.minVariantPrice.amount - b.node.priceRange.minVariantPrice.amount)
                   )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
                       <WishlistProductCard key={product.node.id} product={product} />
@@ -909,6 +897,7 @@ export default function wishlist({ data, allProducts }) {
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req })
+  const email = session?.user.email
 
   if (!session) {
     return {
@@ -920,12 +909,27 @@ export async function getServerSideProps({ req }) {
   }
 
   const allProducts = await getAllProducts()
-  const res = await fetch("http://localhost:3000/api/wishlist-endpoint")
+  const res = await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint")
   const json = await res.json()
+
+  const user = json.map(el => (
+    (el.email === email) && el
+  )).filter(el => el !== false)
+
+  let wishlistArray = []
+  allProducts.map(product => (
+    user.map(item => (
+      (item.saved_items.includes(product.node.handle)) 
+        ? wishlistArray.push(product)
+        : null
+    ))
+  ))
+
   return {
     props: {
       data: json,
-      allProducts
+      allProducts,
+      wishlistArray
     },
   };
 }

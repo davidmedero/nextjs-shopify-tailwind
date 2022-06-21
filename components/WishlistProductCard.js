@@ -3,9 +3,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import { useRouter } from 'next/router'
+import { useSWRConfig } from "swr"
 
 
 const WishlistProductCard = ({ product }) => {
+
+  const { mutate } = useSWRConfig()
 
   const router = useRouter();
 
@@ -62,14 +65,16 @@ const WishlistProductCard = ({ product }) => {
   }, []);
 
   const updateMacros = async () => {
-    const res = await fetch("http://localhost:3000/api/wishlist-endpoint", {
+    const res = await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
       method: 'delete',
       body: JSON.stringify(handle)
     })
   
     if (res.status < 300) {
-        refreshData();
-      }
+      refreshData();
+    }
+
+    mutate('/api/wishlist-endpoint')
   }
 
 
