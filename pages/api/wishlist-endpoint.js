@@ -51,4 +51,17 @@ handler.delete(async (req, res) => {
 
 })
 
+handler.put(async (req, res) => {
+    const session = await getSession({ req })
+    const email = JSON.stringify(session?.user.email)
+
+    await req.db.collection('users').updateOne(
+        { email: JSON.parse(email) },
+        { $set: { "saved_items": [] } }
+    )
+
+    res.json(await req.db.collection('users').find({}).toArray())
+
+})
+
 export default handler

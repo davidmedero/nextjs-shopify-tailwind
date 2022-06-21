@@ -5,7 +5,7 @@ import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import { useRouter } from 'next/router'
 
 
-const WishlistProductCard = ({ product, arr }) => {
+const WishlistProductCard = ({ product }) => {
 
   const router = useRouter();
 
@@ -59,11 +59,10 @@ const WishlistProductCard = ({ product, arr }) => {
   const handleButtonClick = useCallback((e) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log('Button Click');
   }, []);
 
   const updateMacros = async () => {
-    const res = await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
+    const res = await fetch("http://localhost:3000/api/wishlist-endpoint", {
       method: 'delete',
       body: JSON.stringify(handle)
     })
