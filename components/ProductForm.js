@@ -7,6 +7,7 @@ import axios from "axios"
 import Head from 'next/head'
 import Link from "next/link"
 import collections from "../categories"
+import Image from "next/image"
 
 
 const fetcher = (url, id) => (
@@ -214,6 +215,16 @@ export default function ProductForm({ product, allProducts }) {
             }
         }
     }).filter(el => el !== undefined)
+
+    const [showVariant, setShowVariant] = useState('')
+    
+    const colorVariantHoverImage = (handle) => {
+        allProducts.map(el => {
+            if (handle === el.node.handle) {
+                setShowVariant(el.node.images.edges[0].node.originalSrc)
+            }
+        })
+    }
     
 
   return (
@@ -371,6 +382,8 @@ export default function ProductForm({ product, allProducts }) {
                     <Link href={`/${el.handle}`}>
                     <a>
                         <div 
+                        onMouseOver={() => colorVariantHoverImage(el.handle)}
+                        onMouseLeave={() => setShowVariant('')}
                         style={{ backgroundColor:`${el.color}` }} 
                         className='w-6 h-6 mr-6 rounded-full hover:ring-2 hover:ring-[#ff00a7] hover:border-white hover:ring-offset-2 hover:ring-offset-[#ff00a7] transition-all ease-in-out duration-200'>
                         </div>
@@ -381,6 +394,17 @@ export default function ProductForm({ product, allProducts }) {
         )
       }
       </div>
+      {
+        showVariant && (
+            <div className="relative !right-[456px] bottom-[116px] w-[115.3%] block">
+                <div className="absolute inset-0">
+            <Image 
+            src={showVariant} 
+            width='600' height='852' layout="responsive" objectFit="cover" />
+            </div>
+            </div>
+        )
+      }
       {
           product.options.map(({ name, values }) => (
               <ProductOptions 
