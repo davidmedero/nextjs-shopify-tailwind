@@ -394,6 +394,7 @@ export default function ProductForm({ product, allProducts }) {
         )
       }
       </div>
+      <div className="xxs:hidden lg:!block">
       {
         showVariant && (
             <div className="relative !right-[456px] bottom-[116px] w-[115.3%] block">
@@ -405,6 +406,7 @@ export default function ProductForm({ product, allProducts }) {
             </div>
         )
       }
+      </div>
       {
           product.options.map(({ name, values }) => (
               <ProductOptions 
