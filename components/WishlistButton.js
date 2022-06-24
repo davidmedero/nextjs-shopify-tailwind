@@ -27,7 +27,6 @@ export default function SignInButton() {
   }).filter(el => el != undefined)
 
   useEffect(() => {
-    console.log(savedItems)
     if (savedItems) {
       if (savedItems[0]) {
         if (savedItems[0].length > 0) {

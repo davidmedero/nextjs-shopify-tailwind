@@ -17,8 +17,7 @@ const fetcher = (url, id) => (
     }).then((res) => res.data)
 )
 
-export default function ProductForm({ product }) {
-    console.log(product)
+export default function ProductForm({ product, allProducts }) {
 
     const [currencyRates, setCurrencyRates] = useState(0)
 
@@ -198,7 +197,24 @@ export default function ProductForm({ product }) {
             }
         }
     }, [productInventory, selectedVariant])
+    
+    const handleAndTag = allProducts.map(el => {
+        const notAvailable = el.node.variants.edges.every(el => el.node.availableForSale === false)
 
+        const tag = el.node.tags.map(el => {
+            if (el.includes('#')) {
+                return el
+            }
+        }).filter(el => el !== undefined)
+
+        if (product.vendor !== "0" && product.vendor == el.node.vendor && notAvailable === false) {
+            return {
+                color: tag[0],
+                handle: el.node.handle
+            }
+        }
+    }).filter(el => el !== undefined)
+    
 
   return (
     <div className="xxs:mt-[10px] md:!mt-0 py-4 relative -top-4 md:top-0 flex flex-col xxs:w-full md:w-[390px]">
@@ -342,6 +358,29 @@ export default function ProductForm({ product }) {
       currency === 'EUR' ? EURFormatter.format(Math.ceil(product.variants.edges[0].node.priceV2.amount * EURcurrency * shopifyConversionFee)) :
       null
       }</span>
+      <div className="flex flex-row w-full mt-4 xxs:w-full md:w-[390px]">
+      {
+        ((product.vendor !== "0") && (handleAndTag.length > 1)) && (
+            handleAndTag.map(el => (
+                el.handle === product.handle ? (
+                    <div 
+                    style={{ backgroundColor:`${el.color}` }} 
+                    className='w-6 h-6 mr-6 rounded-full cursor-not-allowed ring-2 ring-[#ff00a7] border-white ring-offset-2 ring-offset-[#ff00a7]'>
+                    </div>
+                ) : (
+                    <Link href={`/${el.handle}`}>
+                    <a>
+                        <div 
+                        style={{ backgroundColor:`${el.color}` }} 
+                        className='w-6 h-6 mr-6 rounded-full hover:ring-2 hover:ring-[#ff00a7] hover:border-white hover:ring-offset-2 hover:ring-offset-[#ff00a7] transition-all ease-in-out duration-200'>
+                        </div>
+                    </a>
+                </Link>
+                )
+            ))
+        )
+      }
+      </div>
       {
           product.options.map(({ name, values }) => (
               <ProductOptions 

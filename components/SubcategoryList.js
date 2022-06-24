@@ -229,7 +229,6 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
       for (let i of newArray[0]) {
         for (let j of newArray[1]) {
           if (i.node.title === j.node.title) {
-            console.log(i.node.title)
             productsArray.push(i)
           }
         }

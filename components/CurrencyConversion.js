@@ -55,7 +55,6 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
 
         storedCart.map(el => {
             if (el.buyerIdentity !== undefined) {
-                console.log(el.buyerIdentity)
                 currentCurrency === 'USD' ? {
                     ...el.buyerIdentity,
                     countryCode: 'US'
@@ -123,14 +122,12 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
         if (currentCurrency !== '') {
             for (let i of storedCart) {
                 if ((Object.prototype.toString.call(storedCart[0]) !== '[object Array]')) {
-                    console.log('object')
                     clearCart()
                     setCartOpen(true)
                     addToCart(storedCart[0])
                     localStorage.setItem("checkout_id", JSON.stringify(storedCart))
                 }
                 if ((Object.prototype.toString.call(storedCart[0]) === '[object Array]') && (storedCart[0].length === 1)) {
-                    console.log('array')
                     clearCart()
                     setCartOpen(true)
                     addToCart(JSON.parse(JSON.stringify(storedCart[0]).replace(/[\[\]']+/g,'')))
@@ -138,7 +135,6 @@ export default function CurrencyConversion({ show, onClose, closeMenu }) {
                 }
             }
             if ((storedCart[0]?.length > 1) && (cart.length > 1)) {
-                console.log('many')
                 clearCart()
                 const newArray = []
                 for (let i of storedCart[0]) {

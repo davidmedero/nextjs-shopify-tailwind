@@ -2,7 +2,7 @@ import { getSession } from "next-auth/react"
 import fetch from 'isomorphic-unfetch'
 import { getAllProducts } from '../lib/shopify'
 import WishlistProductCard from "../components/WishlistProductCard"
-import { useState, useRef, useEffect, Fragment, useLayoutEffect, useCallback } from "react"
+import { useState, useRef, useEffect, Fragment, useLayoutEffect } from "react"
 import {SlideDown} from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import ReactPaginate from "react-paginate"
@@ -248,7 +248,6 @@ export default function wishlist({ wishlistArray }) {
       for (let i of newArray[0]) {
         for (let j of newArray[1]) {
           if (i.node.title === j.node.title) {
-            console.log(i.node.title)
             productsArray.push(i)
           }
         }

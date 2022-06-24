@@ -13,7 +13,7 @@ import axios from "axios"
 const fetcher = url => axios.get(url).then(res => res.data)
 
 
-export default function ProductPageContent({ product }) {
+export default function ProductPageContent({ product, allProducts }) {
 
   const { mutate } = useSWRConfig()
 
@@ -60,15 +60,13 @@ export default function ProductPageContent({ product }) {
   const [heartFill, setHeartFill] = useState(false)
 
   const handleButtonClick = useCallback((e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    console.log('Button Click');
-  }, []);
+    e.stopPropagation()
+    e.preventDefault()
+  }, [])
 
   const [added, setAdded] = useState(false)
 
   const updateMacros = async () => {
-    console.log('yes')
     if (added) {
       await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
         method: 'delete',
@@ -92,7 +90,6 @@ export default function ProductPageContent({ product }) {
   }).filter(el => el != undefined)
 
   useEffect(() => {
-    console.log(savedItems)
     if (savedItems) {
       if (savedItems[0]) {
         if (savedItems[0].includes(product.handle)) {
@@ -218,7 +215,7 @@ export default function ProductPageContent({ product }) {
             {images}
           </Swiper>
         </div>
-        <ProductForm product={product} />
+        <ProductForm product={product} allProducts={allProducts} />
       </div>
       <RecommendedList current={product.id} products={product.collections.edges[0].node.products.edges} />
     </div>

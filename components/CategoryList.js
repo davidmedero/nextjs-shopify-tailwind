@@ -13,7 +13,7 @@ import brands from "../brands"
 import collections from '../categories'
 
 
-const CategoryList = ({ productsByCollection, category, product }) => {
+const CategoryList = ({ productsByCollection, category, product, allCollections }) => {
 
   const categoryTitle = collections.map(el => {
     if (el.handle === category) {
@@ -151,6 +151,14 @@ const CategoryList = ({ productsByCollection, category, product }) => {
     product.node.tags
   )).flat())]
 
+  const newColors = colors.map(el => {
+    if (!el.includes('#')) {
+      return el
+    }
+  }).filter(el => el !== undefined)
+
+  console.log(newColors)
+
   const [checkedColor, setCheckedColor] = useState({})
 
   const toggleColor = name => {
@@ -187,6 +195,20 @@ const CategoryList = ({ productsByCollection, category, product }) => {
   }, [checkedColor])
 
   const brandsArray = brands.map(el => el.subcollections.map(el => el.title))
+  const collectionsInCategory = (productsByCollection.map(el => el.node.collections.edges)).flat()
+  const collectionsNoDuplicates = [...new Set(collectionsInCategory.map(el => el.node.title))]
+
+  const newBrandsArray = allCollections.map(i => {
+    if (brandsArray[0].includes(i.node.title) && i.node.products.edges.length !== 0) {
+      return i.node.title
+    }
+  }).filter(el => el !== undefined)
+
+  const displayBrandsInCollection = collectionsNoDuplicates.map(collection => {
+    if (newBrandsArray.includes(collection)) {
+      return collection
+    }
+  }).filter(el => el !== undefined)
 
   const [checkedBrand, setCheckedBrand] = useState({})
 
@@ -228,7 +250,6 @@ const CategoryList = ({ productsByCollection, category, product }) => {
       for (let i of newArray[0]) {
         for (let j of newArray[1]) {
           if (i.node.title === j.node.title) {
-            console.log(i.node.title)
             productsArray.push(i)
           }
         }
@@ -791,7 +812,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             </div>
                             <div className="flex flex-col mt-5">
                             {
-                              colors.map(color => (
+                              newColors.map(color => (
                                   <div className={checkedColor[color] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
                                   <div onClick={() => toggleColor(color)} className="w-full py-4 pl-3 select-none hover:font-semibold">{color.toUpperCase()}</div>
                                     <div>
@@ -874,7 +895,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
                             </div>
                             <div className="flex flex-col mt-5">
                             {
-                              brandsArray[0].map(brand => (
+                              displayBrandsInCollection.map(brand => (
                                   <div className={checkedBrand[brand] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
                                   <div onClick={() => toggleBrand(brand)} className="w-full py-4 pl-3 select-none hover:font-semibold">{brand.toUpperCase()}</div>
                                     <div>
@@ -936,7 +957,7 @@ const CategoryList = ({ productsByCollection, category, product }) => {
               nextLinkClassName={"nextBttn"}
               disabledClassName={"paginationDisabled"}
               activeClassName={"paginationActive"}
-              forcePage={pageNumber}/>
+              forcePage={pageNumber} />
              )
            }
           </div>

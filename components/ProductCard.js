@@ -64,15 +64,13 @@ const ProductCard = ({ product }) => {
   const [heartFill, setHeartFill] = useState(false)
 
   const handleButtonClick = useCallback((e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    console.log('Button Click');
-  }, []);
+    e.stopPropagation()
+    e.preventDefault()
+  }, [])
 
   const [added, setAdded] = useState(false)
 
   const updateMacros = async () => {
-    console.log('yes')
     if (added) {
       await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
         method: 'delete',
@@ -96,7 +94,6 @@ const ProductCard = ({ product }) => {
   }).filter(el => el != undefined)
 
   useEffect(() => {
-    console.log(savedItems)
     if (savedItems) {
       if (savedItems[0]) {
         if (savedItems[0].includes(handle)) {

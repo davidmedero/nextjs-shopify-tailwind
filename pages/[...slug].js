@@ -1,4 +1,4 @@
-import { getAllProducts, getProduct, getProductsbyCollection } from "../lib/shopify"
+import { getAllProducts, getProduct, getProductsbyCollection, getAllCollections } from "../lib/shopify"
 import ProductPageContent from "../components/ProductPageContent"
 import CategoryList from "../components/CategoryList"
 import SubcategoryList from "../components/SubcategoryList"
@@ -10,7 +10,7 @@ import collections from '../categories'
 import brands from '../brands'
 
 
-export default function Slug({ product, category, productsByCollection, productsBySubcollection, productsBySub_Subcollection, productsByBrand, productsByType }) {
+export default function Slug({ product, category, productsByCollection, productsBySubcollection, productsBySub_Subcollection, productsByBrand, productsByType, allCollections, allProducts }) {
 
   const router = useRouter()
   
@@ -22,13 +22,13 @@ export default function Slug({ product, category, productsByCollection, products
       <div className="md:min-h-screen md:py-12 md:pt-0">
         {
           product.length != 0 ?
-          <ProductPageContent product={product} /> :
+          <ProductPageContent product={product} allProducts={allProducts} /> :
           null
         }
         {
           asPath === '/' + category[0] && 
           asPath !== '/' + product.handle ? 
-          <CategoryList productsByCollection={productsByCollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} /> :
+          <CategoryList productsByCollection={productsByCollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} allCollections={allCollections} /> :
           null
         }
         {
@@ -148,8 +148,11 @@ export async function getStaticProps({ params }) {
   const productsByCollection = await getProductsbyCollection(params.slug[0])
   const productsBySubcollection = await getProductsbyCollection(params.slug[1])
   const productsBySub_Subcollection = await getProductsbyCollection(params.slug[2])
-  const productsByBrand = await getProductsbyCollection(params.slug[1]);
+  const productsByBrand = await getProductsbyCollection(params.slug[1])
   const productsByType = await getProductsbyCollection(params.slug[3])
+  const allCollections = await getAllCollections()
+  const allProducts = await getAllProducts()
+
     return {
         props: {
           category: params.slug || null,
@@ -158,7 +161,9 @@ export async function getStaticProps({ params }) {
           productsBySubcollection,
           productsBySub_Subcollection,
           productsByBrand,
-          productsByType
+          productsByType,
+          allCollections,
+          allProducts
         }
       }
 }
