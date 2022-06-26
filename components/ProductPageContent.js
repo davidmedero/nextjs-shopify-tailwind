@@ -24,10 +24,12 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const images = []
 
-  product.images.edges.map((image, i) => {
+  const newImages = product.variants.edges[0].node.image.originalSrc === product.variants.edges[1].node.image.originalSrc ? product.images.edges : product.images.edges.slice(0, product.images.edges.length - 1)
+
+  newImages.map((image, i) => {
     images.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={image.node.originalSrc} atl={image.node.altText} width='600' height='850' layout="responsive" objectFit="cover" />
+        <Image src={image.node.originalSrc} atl={image.node.altText} width='600' height='960' layout="responsive" objectFit="cover" />
       </SwiperSlide>
     )
   })
@@ -101,12 +103,14 @@ export default function ProductPageContent({ product, allProducts }) {
     }
   }, [savedItems])
 
+console.log(product.variants.edges[0].node.image.originalSrc === product.variants.edges[1].node.image.originalSrc)
+
   return (
     <div>
       <div className="flex flex-col justify-center items-center md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto">
       <div className="xxs:hidden lg:block w-[8.35%]">
         {
-            product.images.edges.map(image => (
+            newImages.map(image => (
               <div
               className="mb-6">
                 <Image 
@@ -153,7 +157,7 @@ export default function ProductPageContent({ product, allProducts }) {
             </>
             )}
             {
-              [product.images.edges[imageIndex]].map(image => (
+              [newImages[imageIndex]].map(image => (
                 <div>
                   {
                     <figure 
@@ -163,7 +167,7 @@ export default function ProductPageContent({ product, allProducts }) {
                       <Image 
                       className="opacity-100 hover:opacity-0 transition-all ease-in-out duration-500" 
                       src={image.node.originalSrc} 
-                      width='600' height='852' layout="responsive" objectFit="cover" />
+                      width='500' height='800' layout="responsive" objectFit="cover" />
                     </figure>
                   }
                   </div>

@@ -28,7 +28,7 @@ export default function Slug({ product, category, productsByCollection, products
         {
           asPath === '/' + category[0] && 
           asPath !== '/' + product.handle ? 
-          <CategoryList productsByCollection={productsByCollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} allCollections={allCollections} /> :
+          <CategoryList productsByCollection={productsByCollection} product={product} category={category[0]} subcategory={category[1]} sub_subcategory={category[2]} allCollections={allCollections} allProducts={allProducts} /> :
           null
         }
         {

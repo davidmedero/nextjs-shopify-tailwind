@@ -11,7 +11,7 @@ import SignInModal from "./SignInModal"
 const fetcher = url => axios.get(url).then(res => res.data)
 
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, allProducts }) => {
 
   const { mutate } = useSWRConfig()
 
@@ -105,6 +105,32 @@ const ProductCard = ({ product }) => {
     }
   }, [savedItems])
 
+  const handleAndColorImage = allProducts?.map(el => {
+
+    const notAvailable = el.node.variants.edges.every(el => el.node.availableForSale === false)
+
+    const colorImage = el.node.variants.edges[0].node.image.originalSrc
+
+    if (product.node.vendor !== "0" && product.node.vendor == el.node.vendor && notAvailable === false) {
+        return {
+            handle: el.node.handle,
+            image: colorImage
+        }
+    }
+    }).filter(el => el !== undefined)
+
+    const [showVariant, setShowVariant] = useState('')
+
+    const colorVariantHoverImage = (handle) => {
+        allProducts.map(el => {
+            if (handle === el.node.handle) {
+                setShowVariant(el.node.images.edges[0].node.originalSrc)
+            }
+        })
+    }
+
+    console.log(product)
+
 
   return (
     <>
@@ -149,8 +175,8 @@ const ProductCard = ({ product }) => {
                   <Image
                     src={secondPicSrc}
                     alt={secondPicAltText}
-                    width='600'
-                    height='860'
+                    width='500'
+                    height='800'
                     layout="responsive"
                     objectFit="cover"
                     style={{display: 'inline-block', width: 'full' }}
@@ -159,10 +185,10 @@ const ProductCard = ({ product }) => {
                 )
                 :
                 (<Image
-                    src={originalSrc}
+                    src={showVariant !== '' ? showVariant : originalSrc}
                     alt={altText}
-                    width='600'
-                    height='860'
+                    width='500'
+                    height='800'
                     layout="responsive"
                     objectFit="cover"
                     style={{display: 'inline-block', width: 'full' }}
@@ -206,10 +232,10 @@ const ProductCard = ({ product }) => {
             <SignInModal show={showSignInModal} onClose={() => setShowSignInModal(false)}>
             </SignInModal>
             <Image
-                    src={originalSrc}
+                    src={showVariant !== '' ? showVariant : originalSrc}
                     alt={altText}
-                    width='600'
-                    height='860'
+                    width='500'
+                    height='800'
                     layout="responsive"
                     objectFit="cover"
                     style={{display: 'inline-block', width: 'full' }}
@@ -217,6 +243,35 @@ const ProductCard = ({ product }) => {
                 />
             </div>
         </div>
+        <div className={((product.node.vendor !== "0") && (handleAndColorImage?.length > 1) && (product.node.variants.edges[0].node.image.originalSrc !== product.node.variants.edges[1].node.image.originalSrc)) ? "flex flex-row w-full mt-4 xxs:w-full md:w-[390px] xxs:ml-2" : "hidden mt-0"}>
+      {
+        ((product.node.vendor !== "0") && (handleAndColorImage?.length > 1) && (product.node.variants.edges[0].node.image.originalSrc !== product.node.variants.edges[1].node.image.originalSrc)) && (
+            handleAndColorImage.map(el => (
+                el.handle === product.node.handle ? (
+                    <div 
+                    className='w-6 h-6 mr-6 rounded-full cursor-not-allowed ring-2 ring-[#ff00a7] border-white ring-offset-2 ring-offset-[#ff00a7]'>
+                        <Image src={el.image}
+                        className="rounded-full"
+                        width='60' height='60' layout="responsive" objectFit="cover" />
+                    </div>
+                ) : (
+                    <Link href={`/${el.handle}`}>
+                    <a>
+                        <div 
+                        onMouseOver={() => colorVariantHoverImage(el.handle)}
+                        onMouseLeave={() => setShowVariant('')}
+                        className='w-6 h-6 mr-6 rounded-full hover:ring-2 hover:ring-[#ff00a7] hover:border-white hover:ring-offset-2 hover:ring-offset-[#ff00a7] transition-all ease-in-out duration-200'>
+                            <Image src={el.image}
+                            className="rounded-full"
+                            width='60' height='60' layout="responsive" objectFit="cover" />
+                        </div>
+                    </a>
+                </Link>
+                )
+            ))
+        )
+      }
+      </div>
         <h3 className="mt-2 xxs:ml-2 text-sm font-medium text-white">{title}</h3>
         <p className='mt-1 xxs:ml-2 text-sm text-white'>
           {

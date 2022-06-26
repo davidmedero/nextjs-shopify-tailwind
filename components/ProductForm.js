@@ -199,19 +199,16 @@ export default function ProductForm({ product, allProducts }) {
         }
     }, [productInventory, selectedVariant])
     
-    const handleAndTag = allProducts.map(el => {
+    const handleAndColorImage = allProducts.map(el => {
+
         const notAvailable = el.node.variants.edges.every(el => el.node.availableForSale === false)
 
-        const tag = el.node.tags.map(el => {
-            if (el.includes('#')) {
-                return el
-            }
-        }).filter(el => el !== undefined)
+        const colorImage = el.node.variants.edges[0].node.image.originalSrc
 
         if (product.vendor !== "0" && product.vendor == el.node.vendor && notAvailable === false) {
             return {
-                color: tag[0],
-                handle: el.node.handle
+                handle: el.node.handle,
+                image: colorImage
             }
         }
     }).filter(el => el !== undefined)
@@ -369,14 +366,16 @@ export default function ProductForm({ product, allProducts }) {
       currency === 'EUR' ? EURFormatter.format(Math.ceil(product.variants.edges[0].node.priceV2.amount * EURcurrency * shopifyConversionFee)) :
       null
       }</span>
-      <div className="flex flex-row w-full mt-4 xxs:w-full md:w-[390px]">
+      <div className={((product.vendor !== "0") && (handleAndColorImage?.length > 1) && (product.variants.edges[0].node.image.originalSrc !== product.variants.edges[1].node.image.originalSrc)) ? "flex flex-row w-full mt-4 xxs:w-full md:w-[390px]" : "hidden mt-0"}>
       {
-        ((product.vendor !== "0") && (handleAndTag.length > 1)) && (
-            handleAndTag.map(el => (
+        ((product.vendor !== "0") && (handleAndColorImage.length > 1) && (product.variants.edges[0].node.image.originalSrc !== product.variants.edges[1].node.image.originalSrc)) && (
+            handleAndColorImage.map(el => (
                 el.handle === product.handle ? (
                     <div 
-                    style={{ backgroundColor:`${el.color}` }} 
                     className='w-6 h-6 mr-6 rounded-full cursor-not-allowed ring-2 ring-[#ff00a7] border-white ring-offset-2 ring-offset-[#ff00a7]'>
+                        <Image src={el.image}
+                        className="rounded-full"
+                        width='60' height='60' layout="responsive" objectFit="cover" />
                     </div>
                 ) : (
                     <Link href={`/${el.handle}`}>
@@ -384,8 +383,10 @@ export default function ProductForm({ product, allProducts }) {
                         <div 
                         onMouseOver={() => colorVariantHoverImage(el.handle)}
                         onMouseLeave={() => setShowVariant('')}
-                        style={{ backgroundColor:`${el.color}` }} 
                         className='w-6 h-6 mr-6 rounded-full hover:ring-2 hover:ring-[#ff00a7] hover:border-white hover:ring-offset-2 hover:ring-offset-[#ff00a7] transition-all ease-in-out duration-200'>
+                            <Image src={el.image}
+                            className="rounded-full"
+                            width='60' height='60' layout="responsive" objectFit="cover" />
                         </div>
                     </a>
                 </Link>
@@ -397,11 +398,11 @@ export default function ProductForm({ product, allProducts }) {
       <div className="xxs:hidden lg:!block">
       {
         showVariant && (
-            <div className="relative !right-[456px] bottom-[116px] w-[115.3%] block">
+            <div className="relative !right-[456px] bottom-[117px] w-[115.3%] block">
                 <div className="absolute inset-0">
             <Image 
             src={showVariant} 
-            width='600' height='852' layout="responsive" objectFit="cover" />
+            width='500' height='800' layout="responsive" objectFit="cover" />
             </div>
             </div>
         )
