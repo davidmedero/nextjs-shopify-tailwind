@@ -126,10 +126,7 @@ export default function Nav() {
     };
   }, [ref])
 
-  const queryRef = useRef()
-
   const [query, setQuery] = useState("")
-  queryRef.current = query
 
   useEffect(() => {
     if (query.length > 2) {

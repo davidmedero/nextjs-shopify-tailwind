@@ -105,31 +105,31 @@ const ProductCard = ({ product, allProducts }) => {
     }
   }, [savedItems])
 
-  const handleAndColorImage = allProducts?.map(el => {
+  // const handleAndColorImage = allProducts?.map(el => {
 
-    const notAvailable = el.node.variants.edges.every(el => el.node.availableForSale === false)
+  //   const notAvailable = el.node.variants.edges.every(el => el.node.availableForSale === false)
 
-    const colorImage = el.node.variants.edges[0].node.image.originalSrc
+  //   const colorImage = el.node.variants.edges[0].node.image?.originalSrc
 
-    if (product.node.vendor !== "0" && product.node.vendor == el.node.vendor && notAvailable === false) {
-        return {
-            handle: el.node.handle,
-            image: colorImage
-        }
-    }
-    }).filter(el => el !== undefined)
+  //   if (product.node.vendor !== "0" && product.node.vendor == el.node.vendor && notAvailable === false) {
+  //       return {
+  //           handle: el.node.handle,
+  //           image: colorImage
+  //       }
+  //   }
+  //   }).filter(el => el !== undefined)
 
-    const [showVariant, setShowVariant] = useState('')
+  //   const [showVariant, setShowVariant] = useState('')
 
-    const colorVariantHoverImage = (handle) => {
-        allProducts.map(el => {
-            if (handle === el.node.handle) {
-                setShowVariant(el.node.images.edges[0].node.originalSrc)
-            }
-        })
-    }
+  //   const colorVariantHoverImage = (handle) => {
+  //       allProducts.map(el => {
+  //           if (handle === el.node.handle) {
+  //               setShowVariant(el.node.images.edges[0].node.originalSrc)
+  //           }
+  //       })
+  //   }
 
-    console.log(product)
+  //   console.log(product)
 
 
   return (
@@ -185,7 +185,7 @@ const ProductCard = ({ product, allProducts }) => {
                 )
                 :
                 (<Image
-                    src={showVariant !== '' ? showVariant : originalSrc}
+                    src={originalSrc}
                     alt={altText}
                     width='500'
                     height='800'
@@ -232,7 +232,7 @@ const ProductCard = ({ product, allProducts }) => {
             <SignInModal show={showSignInModal} onClose={() => setShowSignInModal(false)}>
             </SignInModal>
             <Image
-                    src={showVariant !== '' ? showVariant : originalSrc}
+                    src={originalSrc}
                     alt={altText}
                     width='500'
                     height='800'
@@ -243,7 +243,7 @@ const ProductCard = ({ product, allProducts }) => {
                 />
             </div>
         </div>
-        <div className={((product.node.vendor !== "0") && (handleAndColorImage?.length > 1) && (product.node.variants.edges[0].node.image.originalSrc !== product.node.variants.edges[1].node.image.originalSrc)) ? "flex flex-row w-full mt-4 xxs:w-full md:w-[390px] xxs:ml-2" : "hidden mt-0"}>
+        {/* <div className={((product.node.vendor !== "0") && (handleAndColorImage?.length > 1) && (product.node.variants.edges[0].node.image.originalSrc !== product.node.variants.edges[1].node.image.originalSrc)) ? "flex flex-row w-full mt-4 xxs:w-full md:w-[390px] xxs:ml-2" : "hidden mt-0"}>
       {
         ((product.node.vendor !== "0") && (handleAndColorImage?.length > 1) && (product.node.variants.edges[0].node.image.originalSrc !== product.node.variants.edges[1].node.image.originalSrc)) && (
             handleAndColorImage.map(el => (
@@ -271,7 +271,7 @@ const ProductCard = ({ product, allProducts }) => {
             ))
         )
       }
-      </div>
+      </div> */}
         <h3 className="mt-2 xxs:ml-2 text-sm font-medium text-white">{title}</h3>
         <p className='mt-1 xxs:ml-2 text-sm text-white'>
           {

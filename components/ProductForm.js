@@ -84,7 +84,7 @@ export default function ProductForm({ product, allProducts }) {
 
     const defaultValues = {}
     product.options.map(item => {
-        defaultValues[item.name] = `SELECT A ${item.name.toUpperCase()}...`
+      defaultValues[item.name] = item.values[0]
     })
 
     const [selectedVariant, setSelectedVariant] = useState(allVariantOptions[0])
@@ -94,13 +94,12 @@ export default function ProductForm({ product, allProducts }) {
 
     function setOptions(name, value) {
 
-        const quantity = inventory && inventory.map(item => {
-            if ((item.title === value)) {
-              return item.quantityAvailable
-            }
-        }).filter(el => el !== undefined).join('')
+        // const quantity = inventory && inventory.map(item => {
+        //     if ((item.title === value)) {
+        //       return item.quantityAvailable
+        //     }
+        // }).filter(el => el !== undefined).join('')
 
-        if (JSON.parse(quantity) !== 0) {
             setSelectedOptions(prevState => {
                 return { ...prevState, [name]: value }
             })
@@ -111,12 +110,11 @@ export default function ProductForm({ product, allProducts }) {
             }
             
             allVariantOptions.map(item => {
-                if ((JSON.stringify(item.options) === JSON.stringify(selection)) && (JSON.parse(quantity) !== 0)) {
+                if ((JSON.stringify(item.options) === JSON.stringify(selection))) {
                     setSelectedVariant(item)
                     setCounter(1)
                 }
             })
-        }
     }
 
     const increment = () => {
@@ -199,29 +197,29 @@ export default function ProductForm({ product, allProducts }) {
         }
     }, [productInventory, selectedVariant])
     
-    const handleAndColorImage = allProducts.map(el => {
+    // const handleAndColorImage = allProducts.map(el => {
 
-        const notAvailable = el.node.variants.edges.every(el => el.node.availableForSale === false)
+    //     const notAvailable = el.node.variants.edges.every(el => el.node.availableForSale === false)
 
-        const colorImage = el.node.variants.edges[0].node.image.originalSrc
+    //     const colorImage = el.node.variants.edges[0].node.image.originalSrc
 
-        if (product.vendor !== "0" && product.vendor == el.node.vendor && notAvailable === false) {
-            return {
-                handle: el.node.handle,
-                image: colorImage
-            }
-        }
-    }).filter(el => el !== undefined)
+    //     if (product.vendor !== "0" && product.vendor == el.node.vendor && notAvailable === false) {
+    //         return {
+    //             handle: el.node.handle,
+    //             image: colorImage
+    //         }
+    //     }
+    // }).filter(el => el !== undefined)
 
-    const [showVariant, setShowVariant] = useState('')
+    // const [showVariant, setShowVariant] = useState('')
     
-    const colorVariantHoverImage = (handle) => {
-        allProducts.map(el => {
-            if (handle === el.node.handle) {
-                setShowVariant(el.node.images.edges[0].node.originalSrc)
-            }
-        })
-    }
+    // const colorVariantHoverImage = (handle) => {
+    //     allProducts.map(el => {
+    //         if (handle === el.node.handle) {
+    //             setShowVariant(el.node.images.edges[0].node.originalSrc)
+    //         }
+    //     })
+    // }
     
 
   return (
@@ -355,7 +353,8 @@ export default function ProductForm({ product, allProducts }) {
                             }
                         });
                         }
-                `}
+                `
+                }
             </script>
         </Head>
       <h2 className="text-2xl font-bold text-white">{product.title}</h2>
@@ -366,7 +365,7 @@ export default function ProductForm({ product, allProducts }) {
       currency === 'EUR' ? EURFormatter.format(Math.ceil(product.variants.edges[0].node.priceV2.amount * EURcurrency * shopifyConversionFee)) :
       null
       }</span>
-      <div className={((product.vendor !== "0") && (handleAndColorImage?.length > 1) && (product.variants.edges[0].node.image.originalSrc !== product.variants.edges[1].node.image.originalSrc)) ? "flex flex-row w-full mt-4 xxs:w-full md:w-[390px]" : "hidden mt-0"}>
+      {/* <div className={((product.vendor !== "0") && (handleAndColorImage?.length > 1) && (product.variants.edges[0].node.image.originalSrc !== product.variants.edges[1].node.image.originalSrc)) ? "flex flex-row w-full mt-4 xxs:w-full md:w-[390px]" : "hidden mt-0"}>
       {
         ((product.vendor !== "0") && (handleAndColorImage.length > 1) && (product.variants.edges[0].node.image.originalSrc !== product.variants.edges[1].node.image.originalSrc)) && (
             handleAndColorImage.map(el => (
@@ -407,7 +406,7 @@ export default function ProductForm({ product, allProducts }) {
             </div>
         )
       }
-      </div>
+      </div> */}
       {
           product.options.map(({ name, values }) => (
               <ProductOptions 
@@ -420,6 +419,7 @@ export default function ProductForm({ product, allProducts }) {
               productInventory={productInventory}
               available={available}
               inventory={inventory}
+              handle={product.handle}
               />
           ))
       }
@@ -445,18 +445,18 @@ export default function ProductForm({ product, allProducts }) {
         </button>  
         </span>
       </div>   
-      {
-          Object.values(selectedOptions).join('') == ("SELECT A SIZE...") ? (
+
+          {/* Object.values(selectedOptions).join('') == ("SELECT A SIZE...") ? (
             <button 
-        className={"cursor-not-allowed select-none shadow-md rounded-md font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5"}>SELECT A SIZE</button>
-          ) :
-       (<button 
+        className={"cursor-not-allowed select-none shadow-md rounded-md font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5"}>SELECT A SIZE</button> */}
+
+       <button 
         onClick={() => {
             addToCart(selectedVariant)
             setCounter(1)
         }}
-        className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5 hover:bg-[#d4008a]"}>ADD TO BAG</button>) 
-      }
+        className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5 hover:bg-[#d4008a]"}>ADD TO BAG</button>
+
     <div className="mt-3">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
     <div className="selectSection">

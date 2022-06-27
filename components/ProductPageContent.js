@@ -24,9 +24,9 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const images = []
 
-  const newImages = product.variants.edges[0].node.image.originalSrc === product.variants.edges[1].node.image.originalSrc ? product.images.edges : product.images.edges.slice(0, product.images.edges.length - 1)
+  // const newImages = product.variants.edges[0].node.image.originalSrc === product.variants.edges[1].node.image.originalSrc ? product.images.edges : product.images.edges.slice(0, product.images.edges.length - 1)
 
-  newImages.map((image, i) => {
+  product.images.edges.map((image, i) => {
     images.push(
       <SwiperSlide key={`slide-${i}`}>
         <Image src={image.node.originalSrc} atl={image.node.altText} width='600' height='960' layout="responsive" objectFit="cover" />
@@ -103,14 +103,13 @@ export default function ProductPageContent({ product, allProducts }) {
     }
   }, [savedItems])
 
-console.log(product.variants.edges[0].node.image.originalSrc === product.variants.edges[1].node.image.originalSrc)
 
   return (
     <div>
       <div className="flex flex-col justify-center items-center md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto">
       <div className="xxs:hidden lg:block w-[8.35%]">
         {
-            newImages.map(image => (
+            product.images.edges.map(image => (
               <div
               className="mb-6">
                 <Image 
@@ -157,7 +156,7 @@ console.log(product.variants.edges[0].node.image.originalSrc === product.variant
             </>
             )}
             {
-              [newImages[imageIndex]].map(image => (
+              [product.images.edges[imageIndex]].map(image => (
                 <div>
                   {
                     <figure 
