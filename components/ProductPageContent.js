@@ -8,12 +8,15 @@ import SignInModal from "./SignInModal"
 import { useSession } from "next-auth/react"
 import useSWR, { useSWRConfig } from "swr"
 import axios from "axios"
+import { useRouter } from 'next/router'
 
 
 const fetcher = url => axios.get(url).then(res => res.data)
 
 
 export default function ProductPageContent({ product, allProducts }) {
+
+  const router = useRouter()
 
   const { mutate } = useSWRConfig()
 
@@ -24,12 +27,41 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const images = []
 
-  // const newImages = product.variants.edges[0].node.image.originalSrc === product.variants.edges[1].node.image.originalSrc ? product.images.edges : product.images.edges.slice(0, product.images.edges.length - 1)
+  const [variantImages, setVariantImages] = useState([])
 
-  product.images.edges.map((image, i) => {
+  useEffect(() => {
+    const newArray = []
+    product.variants.edges.map(el => {
+      const url = new URL(window.location)
+
+      if ((url.searchParams.get('color') === (el.node.selectedOptions[1].value)) && (![...new Set(newArray.map(el => el.id))].includes(el.node.image.id))) {
+        newArray.push({image: el.node.image.originalSrc, id: el.node.image.id})
+      }
+    }).filter(el => el !== undefined)
+
+    setVariantImages(newArray)
+    
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('color', () => {
+      const newArray = []
+      product.variants.edges.map(el => {
+        const url = new URL(window.location)
+
+        if ((url.searchParams.get('color') === (el.node.selectedOptions[1].value)) && (![...new Set(newArray.map(el => el.id))].includes(el.node.image.id))) {
+          newArray.push({image: el.node.image.originalSrc, id: el.node.image.id})
+        }
+      }).filter(el => el !== undefined)
+
+      setVariantImages(newArray)
+    })
+  }, [])
+
+  variantImages.map((el, i) => {
     images.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={image.node.originalSrc} atl={image.node.altText} width='600' height='960' layout="responsive" objectFit="cover" />
+        <Image src={el.image} width='600' height='960' layout="responsive" objectFit="cover" />
       </SwiperSlide>
     )
   })
@@ -39,16 +71,16 @@ export default function ProductPageContent({ product, allProducts }) {
   const [imageIndex, setImageIndex] = useState(0)
 
   const [mousePosition, setMousePosition] = useState({
-    backgroundImage: `url(${[product.images.edges[imageIndex]].map(image => image.node.originalSrc)})`,
+    backgroundImage: `url(${[variantImages[imageIndex]].map(el => el?.image)})`,
     backgroundPosition: '0% 0%'
   })
 
   const findImage = (e) => {
-    setImageIndex(product.images.edges.findIndex(el => el.node.id === JSON.parse(e.target.dataset.info).id))
+    setImageIndex(variantImages.findIndex(el => el.id === JSON.parse(e.target.dataset.info).id))
   }
 
   useEffect(() => {
-    const src = [product.images.edges[imageIndex]].map(image => image.node.originalSrc)
+    const src = [variantImages[imageIndex]].map(el => el?.image)
     setMousePosition({ backgroundImage: `url(${src})` })
   }, [imageIndex]); 
 
@@ -109,13 +141,12 @@ export default function ProductPageContent({ product, allProducts }) {
       <div className="flex flex-col justify-center items-center md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto">
       <div className="xxs:hidden lg:block w-[8.35%]">
         {
-            product.images.edges.map(image => (
+            variantImages.map(el => (
               <div
               className="mb-6">
                 <Image 
-                src={image.node.originalSrc} 
-                atl={image.node.altText} 
-                data-info={JSON.stringify(image.node)}
+                src={el.image} 
+                data-info={JSON.stringify(el)}
                 onMouseOver={(e) => findImage(e)}
                 width='200' height='300' layout="responsive" objectFit="cover" />
               </div>
@@ -156,7 +187,11 @@ export default function ProductPageContent({ product, allProducts }) {
             </>
             )}
             {
-              [product.images.edges[imageIndex]].map(image => (
+              console.log([product.images.edges[imageIndex]].map(el => (el.node.originalSrc)))
+            }
+            {
+             [variantImages[imageIndex]].map(el => (
+              el &&
                 <div>
                   {
                     <figure 
@@ -165,7 +200,7 @@ export default function ProductPageContent({ product, allProducts }) {
                     style={mousePosition}>
                       <Image 
                       className="opacity-100 hover:opacity-0 transition-all ease-in-out duration-500" 
-                      src={image.node.originalSrc} 
+                      src={el.image} 
                       width='500' height='800' layout="responsive" objectFit="cover" />
                     </figure>
                   }
