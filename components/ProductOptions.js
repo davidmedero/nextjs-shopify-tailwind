@@ -44,6 +44,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
     url.searchParams.set('color', `${val}`)
     name !== 'Size' && window.history.replaceState({}, '', url)
     name !== 'Size' && setColor(val)
+    router.reload()
   })
 
   useEffect(() => {
