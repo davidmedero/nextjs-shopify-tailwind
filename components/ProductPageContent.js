@@ -29,35 +29,6 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const [variantImages, setVariantImages] = useState([])
 
-  useEffect(() => {
-    const newArray = []
-    product.variants.edges.map(el => {
-      const url = new URL(window.location)
-
-      if ((url.searchParams.get('color') === (el.node.selectedOptions[1].value)) && (![...new Set(newArray.map(el => el.id))].includes(el.node.image.id))) {
-        newArray.push({image: el.node.image.originalSrc, id: el.node.image.id})
-      }
-    }).filter(el => el !== undefined)
-
-    setVariantImages(newArray)
-    
-  }, [])
-
-  useEffect(() => {
-    window.addEventListener('color', () => {
-      const newArray = []
-      product.variants.edges.map(el => {
-        const url = new URL(window.location)
-
-        if ((url.searchParams.get('color') === (el.node.selectedOptions[1].value)) && (![...new Set(newArray.map(el => el.id))].includes(el.node.image.id))) {
-          newArray.push({image: el.node.image.originalSrc, id: el.node.image.id})
-        }
-      }).filter(el => el !== undefined)
-
-      setVariantImages(newArray)
-    })
-  }, [])
-
   variantImages.map((el, i) => {
     images.push(
       <SwiperSlide key={`slide-${i}`}>
@@ -82,7 +53,7 @@ export default function ProductPageContent({ product, allProducts }) {
   useEffect(() => {
     const src = [variantImages[imageIndex]].map(el => el?.image)
     setMousePosition({ backgroundImage: `url(${src})` })
-  }, [imageIndex]); 
+  }, [imageIndex, variantImages]); 
 
   const handleMouseMove = (e) => {
     const { left, top, width, height } = e.target.getBoundingClientRect()
@@ -90,6 +61,42 @@ export default function ProductPageContent({ product, allProducts }) {
     const y = (e.pageY - top) / height * 100
     setMousePosition({ ...mousePosition, backgroundPosition: `${x}% ${y}%` })
   }
+
+  useEffect(() => {
+    const newArray = []
+    product.variants.edges.map(el => {
+      const url = new URL(window.location)
+
+      if ((url.searchParams.get('color') === (el.node.selectedOptions[0].value)) && (![...new Set(newArray.map(el => el.id))].includes(el.node.image.id))) {
+        newArray.push({image: el.node.image.originalSrc, id: el.node.image.id})
+      }
+    }).filter(el => el !== undefined)
+
+    setVariantImages(newArray)
+
+    const src = variantImages[imageIndex]?.image
+    setMousePosition({ backgroundImage: `url(${src})` })
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('color', () => {
+      const newArray = []
+      product.variants.edges.map(el => {
+        const url = new URL(window.location)
+
+        if ((url.searchParams.get('color') === (el.node.selectedOptions[0].value)) && (![...new Set(newArray.map(el => el.id))].includes(el.node.image.id))) {
+          newArray.push({image: el.node.image.originalSrc, id: el.node.image.id})
+        }
+      }).filter(el => el !== undefined)
+
+      setVariantImages(newArray)
+
+      setImageIndex(0)
+
+      const src = variantImages[imageIndex]?.image
+      setMousePosition({ backgroundImage: `url(${src})` })
+    })
+  }, [])
 
   const [heartFill, setHeartFill] = useState(false)
 
@@ -186,9 +193,6 @@ export default function ProductPageContent({ product, allProducts }) {
               </span>
             </>
             )}
-            {
-              console.log([product.images.edges[imageIndex]].map(el => (el.node.originalSrc)))
-            }
             {
              [variantImages[imageIndex]].map(el => (
               el &&

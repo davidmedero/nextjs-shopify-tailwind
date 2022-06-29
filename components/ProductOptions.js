@@ -1,4 +1,6 @@
 import { Fragment, useState, useEffect, useCallback, useRef } from 'react'
+import useSWR, { useSWRConfig } from "swr"
+import axios from "axios"
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { SlideDown } from 'react-slidedown'
@@ -6,9 +8,28 @@ import 'react-slidedown/lib/slidedown.css'
 import { useRouter } from 'next/router'
 
 
-export default function ProductOptions({ name, values, selectedOptions, setOptions, inventory, handle }) {
+const fetcher = (url, id) => (
+  axios.get(url, {
+      params: {
+          id: id
+      }
+  }).then((res) => res.data)
+)
+
+
+export default function ProductOptions({ name, values, selectedOptions, setOptions, product }) {
 
   const router = useRouter()
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  }
+
+  const { data: productInventory } = useSWR(
+    ['/api/available', product.handle],
+    (url, id) => fetcher(url, id), 
+    { errorRetryCount: 3}
+  )
 
   const initialColor = values.map(value => {
     if (selectedOptions[name] === value && name !== 'Size') {
@@ -22,7 +43,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
     const url = new URL(window.location)
     url.searchParams.set('color', `${val}`)
     name !== 'Size' && window.history.replaceState({}, '', url)
-    setColor(url.searchParams.get('color'))
+    name !== 'Size' && setColor(val)
   })
 
   useEffect(() => {
@@ -40,6 +61,14 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
   useEffect(() => {
     window.dispatchEvent(new Event("color"))
   }, [color])
+
+  const [inventory, setInventory] = useState([])
+
+  useEffect(() => {
+    if (productInventory) {
+        setInventory(productInventory.variants.edges.map(item => item.node))
+    }
+  }, [productInventory])
   
 
   return (
@@ -51,8 +80,14 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             const id = `option-${name}-${value}`
             const checked = selectedOptions[name] === value
 
+            const available = inventory && inventory.map(el => {
+              if ((el.title === (color + ' / ' + value)) && (name === 'Size')) {
+                return el.availableForSale
+              }
+            }).filter(el => el !== undefined).join('')
+            
             return (
-              <label key={id} htmlFor={id} onClick={(e) => handleQuery(e, name, value)}>
+              <label key={id} htmlFor={id} onClick={(e) => available !== 'false' && handleQuery(e, name, value)}>
                 <input
                   className="sr-only"
                   type="radio"
@@ -61,11 +96,13 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                   value={value}
                   checked={checked}
                   onChange={() => {
-                    setOptions(name, value)
+                    available !== 'false' && setOptions(name, value)
                   }}
                 />
-                <div className={`p-2 mt-3 text-lg rounded-full block cursor-pointer mr-3 ${color === value ? "text-white bg-gray-900" : "text-gray-900 bg-gray-200"}`}>
-                  <span className="px-2">{value}</span>
+                <div className={`${available == 'false' && 'cursor-not-allowed'}`}>
+                  <div className={`p-2 mt-3 text-lg rounded-full block cursor-pointer mr-3 ${checked && available !== 'false'  ? "text-white bg-gray-900" : "text-gray-900 bg-gray-200"} ${available == 'false'  ? "bg-red-500 pointer-events-none" : "bg-gray-200"} `}>
+                    <span className="px-2">{value}</span>
+                  </div>
                 </div>
               </label>
             )

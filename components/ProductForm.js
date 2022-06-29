@@ -54,11 +54,11 @@ export default function ProductForm({ product, allProducts }) {
     const { data: productInventory } = useSWR(
         ['/api/available', product.handle],
         (url, id) => fetcher(url, id), 
-        { errorRetryCount: 3 }
+        { errorRetryCount: 3}
     )
 
-    const [available, setAvailable] = useState(true)
-    const [inventory, setInventory] = useState(0)
+    const [inventory, setInventory] = useState([])
+
 
     const { cart, addToCart } = useContext(CartContext)
 
@@ -93,28 +93,21 @@ export default function ProductForm({ product, allProducts }) {
     
 
     function setOptions(name, value) {
+        setSelectedOptions(prevState => {
+            return { ...prevState, [name]: value }
+        })
 
-        // const quantity = inventory && inventory.map(item => {
-        //     if ((item.title === value)) {
-        //       return item.quantityAvailable
-        //     }
-        // }).filter(el => el !== undefined).join('')
-
-            setSelectedOptions(prevState => {
-                return { ...prevState, [name]: value }
-            })
-    
-            const selection = {
-                ...selectedOptions, 
-                [name]: value
+        const selection = {
+            ...selectedOptions, 
+            [name]: value
+        }
+        
+        allVariantOptions.map(item => {
+            if ((JSON.stringify(item.options) === JSON.stringify(selection))) {
+                setSelectedVariant(item)
+                setCounter(1)
             }
-            
-            allVariantOptions.map(item => {
-                if ((JSON.stringify(item.options) === JSON.stringify(selection))) {
-                    setSelectedVariant(item)
-                    setCounter(1)
-                }
-            })
+        })
     }
 
     const increment = () => {
@@ -185,42 +178,7 @@ export default function ProductForm({ product, allProducts }) {
         }
     }
 
-    useEffect(() => {
-        if (productInventory) {
-            const checkAvailable = productInventory?.variants.edges.filter(item => item.node.id === selectedVariant.id)
-            setInventory(productInventory?.variants.edges.map(item => item.node))
-            if (checkAvailable[0].node.availableForSale) {
-                setAvailable(true)
-            } else {
-                setAvailable(false)
-            }
-        }
-    }, [productInventory, selectedVariant])
-    
-    // const handleAndColorImage = allProducts.map(el => {
 
-    //     const notAvailable = el.node.variants.edges.every(el => el.node.availableForSale === false)
-
-    //     const colorImage = el.node.variants.edges[0].node.image.originalSrc
-
-    //     if (product.vendor !== "0" && product.vendor == el.node.vendor && notAvailable === false) {
-    //         return {
-    //             handle: el.node.handle,
-    //             image: colorImage
-    //         }
-    //     }
-    // }).filter(el => el !== undefined)
-
-    // const [showVariant, setShowVariant] = useState('')
-    
-    // const colorVariantHoverImage = (handle) => {
-    //     allProducts.map(el => {
-    //         if (handle === el.node.handle) {
-    //             setShowVariant(el.node.images.edges[0].node.originalSrc)
-    //         }
-    //     })
-    // }
-    
 
   return (
     <div className="xxs:mt-[10px] md:!mt-0 py-4 relative -top-4 md:top-0 flex flex-col xxs:w-full md:w-[390px]">
@@ -365,48 +323,6 @@ export default function ProductForm({ product, allProducts }) {
       currency === 'EUR' ? EURFormatter.format(Math.ceil(product.variants.edges[0].node.priceV2.amount * EURcurrency * shopifyConversionFee)) :
       null
       }</span>
-      {/* <div className={((product.vendor !== "0") && (handleAndColorImage?.length > 1) && (product.variants.edges[0].node.image.originalSrc !== product.variants.edges[1].node.image.originalSrc)) ? "flex flex-row w-full mt-4 xxs:w-full md:w-[390px]" : "hidden mt-0"}>
-      {
-        ((product.vendor !== "0") && (handleAndColorImage.length > 1) && (product.variants.edges[0].node.image.originalSrc !== product.variants.edges[1].node.image.originalSrc)) && (
-            handleAndColorImage.map(el => (
-                el.handle === product.handle ? (
-                    <div 
-                    className='w-6 h-6 mr-6 rounded-full cursor-not-allowed ring-2 ring-[#ff00a7] border-white ring-offset-2 ring-offset-[#ff00a7]'>
-                        <Image src={el.image}
-                        className="rounded-full"
-                        width='60' height='60' layout="responsive" objectFit="cover" />
-                    </div>
-                ) : (
-                    <Link href={`/${el.handle}`}>
-                    <a>
-                        <div 
-                        onMouseOver={() => colorVariantHoverImage(el.handle)}
-                        onMouseLeave={() => setShowVariant('')}
-                        className='w-6 h-6 mr-6 rounded-full hover:ring-2 hover:ring-[#ff00a7] hover:border-white hover:ring-offset-2 hover:ring-offset-[#ff00a7] transition-all ease-in-out duration-200'>
-                            <Image src={el.image}
-                            className="rounded-full"
-                            width='60' height='60' layout="responsive" objectFit="cover" />
-                        </div>
-                    </a>
-                </Link>
-                )
-            ))
-        )
-      }
-      </div>
-      <div className="xxs:hidden lg:!block">
-      {
-        showVariant && (
-            <div className="relative !right-[456px] bottom-[117px] w-[115.3%] block">
-                <div className="absolute inset-0">
-            <Image 
-            src={showVariant} 
-            width='500' height='800' layout="responsive" objectFit="cover" />
-            </div>
-            </div>
-        )
-      }
-      </div> */}
       {
           product.options.map(({ name, values }) => (
               <ProductOptions 
@@ -416,10 +332,7 @@ export default function ProductForm({ product, allProducts }) {
               selectedOptions={selectedOptions}
               setOptions={setOptions}
               selectedVariant={selectedVariant}
-              productInventory={productInventory}
-              available={available}
-              inventory={inventory}
-              handle={product.handle}
+              product={product}
               />
           ))
       }
@@ -445,11 +358,6 @@ export default function ProductForm({ product, allProducts }) {
         </button>  
         </span>
       </div>   
-
-          {/* Object.values(selectedOptions).join('') == ("SELECT A SIZE...") ? (
-            <button 
-        className={"cursor-not-allowed select-none shadow-md rounded-md font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5"}>SELECT A SIZE</button> */}
-
        <button 
         onClick={() => {
             addToCart(selectedVariant)
