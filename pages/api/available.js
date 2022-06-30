@@ -34,7 +34,7 @@ export default async function available(req, res) {
     {
       productByHandle(handle: "${handle}") {
         id
-        variants(first: 25) {
+        variants(first: 250) {
           edges {
             node {
                 id

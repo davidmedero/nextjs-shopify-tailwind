@@ -75,7 +75,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
 
   return (
     <fieldset className="mt-3 text-white">
-      <div className="inline-flex items-center flex-wrap">
+      <div className={`${name === "Color" ? "inline-flex items-center flex-wrap" : "grid grid-cols-4 gap-x-1"}`}>
         {
           values.map(value => {
             const id = `option-${name}-${value}`
@@ -86,9 +86,9 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                 return el.availableForSale
               }
             }).filter(el => el !== undefined).join('')
-
+            console.log(inventory)
             const colorPicLookup = inventory && inventory.map(el => (
-              (el.title === (value + ' / ' + 'XX-SMALL'))
+              (el.title === (value + ' / ' + '0'))
             ))
 
             const colorPicIndex = colorPicLookup.findIndex(el => el === true)
@@ -113,8 +113,8 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                     </div>
                   ) : (
                     <div className={`${available == 'false' && 'cursor-not-allowed'}`}>
-                      <div className={`${"p-2 mt-3 text-base rounded-md block cursor-pointer mr-3"} ${checked && available !== 'false'  ? "text-white bg-gray-900" : "text-gray-900 bg-gray-200"} ${available == 'false'  ? "bg-red-500 pointer-events-none" : "bg-gray-200"} `}>
-                        <span className="px-2">{value}</span>
+                      <div className={`${"flex items-center justify-center box-border w-[85px] h-10 text-center mt-3 text-base rounded-sm cursor-pointer text-black font-semibold hover:border-2 hover:border-[#ff00a7] transition-all ease-in-out duration-200"} ${checked && available !== 'false'  && "border-2 border-[#ff00a7] transition-all ease-in-out duration-200"} ${available == 'false'  ? "soldOut pointer-events-none bg-gray-300 text-gray-600" : "bg-white"} `}>
+                        <span>{value}</span>
                       </div>
                   </div>
                   )
