@@ -25,12 +25,24 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const [showSignInModal, setShowSignInModal] = useState(false)
 
-  const images = []
+  const variantImagesArray = []
+
+  const noVariantsArray = []
 
   const [variantImages, setVariantImages] = useState([])
 
+  const [noVariantImages, setNoVariantImages] = useState([])
+
   variantImages.map((el, i) => {
-    images.push(
+    variantImagesArray.push(
+      <SwiperSlide key={`slide-${i}`}>
+        <Image src={el.image} width='600' height='960' layout="responsive" objectFit="cover" />
+      </SwiperSlide>
+    )
+  })
+
+  noVariantImages.map((el, i) => {
+    noVariantsArray.push(
       <SwiperSlide key={`slide-${i}`}>
         <Image src={el.image} width='600' height='960' layout="responsive" objectFit="cover" />
       </SwiperSlide>
@@ -60,6 +72,29 @@ export default function ProductPageContent({ product, allProducts }) {
     const x = (e.pageX - left) / width * 100
     const y = (e.pageY - top) / height * 100
     setMousePosition({ ...mousePosition, backgroundPosition: `${x}% ${y}%` })
+  }
+
+  const [noVariantsImageIndex, setNoVariantsImageIndex] = useState(0)
+
+  const [noVariantsMousePosition, setNoVariantsMousePosition] = useState({
+    backgroundImage: `url(${[noVariantImages[noVariantsImageIndex]].map(el => el?.image)})`,
+    backgroundPosition: '0% 0%'
+  })
+
+  const findImageNoVariants = (e) => {
+    setNoVariantsImageIndex(noVariantImages.findIndex(el => el.id === JSON.parse(e.target.dataset.info).id))
+  }
+
+  useEffect(() => {
+    const src = [noVariantImages[noVariantsImageIndex]].map(el => el?.image)
+    setMousePosition({ backgroundImage: `url(${src})` })
+  }, [noVariantsImageIndex, noVariantImages]); 
+
+  const handleMouseMoveNoVariants = (e) => {
+    const { left, top, width, height } = e.target.getBoundingClientRect()
+    const x = (e.pageX - left) / width * 100
+    const y = (e.pageY - top) / height * 100
+    setNoVariantsMousePosition({ ...noVariantsMousePosition, backgroundPosition: `${x}% ${y}%` })
   }
 
   useEffect(() => {
@@ -254,7 +289,7 @@ export default function ProductPageContent({ product, allProducts }) {
             className="w-full"
             loop='true'
           >
-            {images}
+            {variantImagesArray}
           </Swiper>
         </div>
         <ProductForm product={product} allProducts={allProducts} />
