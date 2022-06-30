@@ -6,6 +6,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { SlideDown } from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 
 const fetcher = (url, id) => (
@@ -58,6 +59,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
     }
   }, [])
 
+
   useEffect(() => {
     window.dispatchEvent(new Event("color"))
   }, [color])
@@ -73,7 +75,6 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
 
   return (
     <fieldset className="mt-3 text-white">
-      <legend className="text-xl font-semibold">{name}</legend>
       <div className="inline-flex items-center flex-wrap">
         {
           values.map(value => {
@@ -85,6 +86,12 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                 return el.availableForSale
               }
             }).filter(el => el !== undefined).join('')
+
+            const colorPicLookup = inventory && inventory.map(el => (
+              (el.title === (value + ' / ' + 'XX-SMALL'))
+            ))
+
+            const colorPicIndex = colorPicLookup.findIndex(el => el === true)
             
             return (
               <label key={id} htmlFor={id} onClick={() => available !== 'false' && name !== 'Size' && handleQuery(value)}>
@@ -99,11 +106,19 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                     available !== 'false' && setOptions(name, value)
                   }}
                 />
-                <div className={`${available == 'false' && 'cursor-not-allowed'}`}>
-                  <div className={`p-2 mt-3 text-lg rounded-full block cursor-pointer mr-3 ${checked && available !== 'false'  ? "text-white bg-gray-900" : "text-gray-900 bg-gray-200"} ${available == 'false'  ? "bg-red-500 pointer-events-none" : "bg-gray-200"} `}>
-                    <span className="px-2">{value}</span>
+                {
+                  name === 'Color' && colorPicIndex !== -1 ? (
+                    <div className={`w-8 h-8 rounded-full mr-5 cursor-pointer box-border hover:border-4 border-[#ff00a7] transition-all ease-in-out duration-200 ${color === value && "cursor-not-allowed border-4 border-[#ff00a7] transition-all ease-in-out duration-200"}`}>
+                      <Image src={product.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
+                    </div>
+                  ) : (
+                    <div className={`${available == 'false' && 'cursor-not-allowed'}`}>
+                      <div className={`${"p-2 mt-3 text-base rounded-md block cursor-pointer mr-3"} ${checked && available !== 'false'  ? "text-white bg-gray-900" : "text-gray-900 bg-gray-200"} ${available == 'false'  ? "bg-red-500 pointer-events-none" : "bg-gray-200"} `}>
+                        <span className="px-2">{value}</span>
+                      </div>
                   </div>
-                </div>
+                  )
+                }
               </label>
             )
           })

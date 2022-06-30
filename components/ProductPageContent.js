@@ -31,8 +31,6 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const [variantImages, setVariantImages] = useState([])
 
-  const [noVariantImages, setNoVariantImages] = useState([])
-
   variantImages.map((el, i) => {
     variantImagesArray.push(
       <SwiperSlide key={`slide-${i}`}>
@@ -41,10 +39,10 @@ export default function ProductPageContent({ product, allProducts }) {
     )
   })
 
-  noVariantImages.map((el, i) => {
+  product.images.edges.map((image, i) => {
     noVariantsArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={el.image} width='600' height='960' layout="responsive" objectFit="cover" />
+        <Image src={image.node.originalSrc} width='600' height='960' layout="responsive" objectFit="cover" />
       </SwiperSlide>
     )
   })
@@ -77,18 +75,18 @@ export default function ProductPageContent({ product, allProducts }) {
   const [noVariantsImageIndex, setNoVariantsImageIndex] = useState(0)
 
   const [noVariantsMousePosition, setNoVariantsMousePosition] = useState({
-    backgroundImage: `url(${[noVariantImages[noVariantsImageIndex]].map(el => el?.image)})`,
+    backgroundImage: `url(${[product.images.edges[noVariantsImageIndex]].map(image => image.node.originalSrc)})`,
     backgroundPosition: '0% 0%'
   })
 
   const findImageNoVariants = (e) => {
-    setNoVariantsImageIndex(noVariantImages.findIndex(el => el.id === JSON.parse(e.target.dataset.info).id))
+    setNoVariantsImageIndex(product.images.edges.findIndex(el => el.node.id === JSON.parse(e.target.dataset.info).id))
   }
 
   useEffect(() => {
-    const src = [noVariantImages[noVariantsImageIndex]].map(el => el?.image)
-    setMousePosition({ backgroundImage: `url(${src})` })
-  }, [noVariantsImageIndex, noVariantImages]); 
+    const src = [product.images.edges[noVariantsImageIndex]].map(image => image.node.originalSrc)
+    setNoVariantsMousePosition({ backgroundImage: `url(${src})` })
+  }, [noVariantsImageIndex]); 
 
   const handleMouseMoveNoVariants = (e) => {
     const { left, top, width, height } = e.target.getBoundingClientRect()
@@ -107,7 +105,7 @@ export default function ProductPageContent({ product, allProducts }) {
       }
     }).filter(el => el !== undefined)
 
-    setVariantImages(newArray)
+    setVariantImages(newArray.slice(1, newArray.length))
 
     const src = variantImages[imageIndex]?.image
     setMousePosition({ backgroundImage: `url(${src})` })
@@ -124,7 +122,7 @@ export default function ProductPageContent({ product, allProducts }) {
         }
       }).filter(el => el !== undefined)
 
-      setVariantImages(newArray)
+      setVariantImages(newArray.slice(1, newArray.length))
 
       setImageIndex(0)
 
@@ -183,6 +181,7 @@ export default function ProductPageContent({ product, allProducts }) {
       <div className="flex flex-col justify-center items-center md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto">
       <div className="xxs:hidden lg:block w-[8.35%]">
         {
+          variantImages.length !== 0 ? (
             variantImages.map(el => (
               <div
               className="mb-6">
@@ -193,6 +192,19 @@ export default function ProductPageContent({ product, allProducts }) {
                 width='200' height='300' layout="responsive" objectFit="cover" />
               </div>
             ))
+          ) : (
+            product.images.edges.map(image => (
+              <div
+              className="mb-6">
+                <Image 
+                src={image.node.originalSrc} 
+                data-info={JSON.stringify(image.node)}
+                onMouseOver={(e) => findImageNoVariants(e)}
+                width='200' height='300' layout="responsive" objectFit="cover" />
+              </div>
+            ))
+          )
+            
           }
           </div>
           <div className="relative xxs:hidden lg:block w-[40%]">
@@ -229,22 +241,41 @@ export default function ProductPageContent({ product, allProducts }) {
             </>
             )}
             {
-             [variantImages[imageIndex]].map(el => (
-              el &&
-                <div>
-                  {
-                    <figure 
-                    className="w-full block bg-no-repeat cursor-move"
-                    onMouseMove={(e) => handleMouseMove(e)} 
-                    style={mousePosition}>
-                      <Image 
-                      className="opacity-100 hover:opacity-0 transition-all ease-in-out duration-500" 
-                      src={el.image} 
-                      width='500' height='800' layout="responsive" objectFit="cover" />
-                    </figure>
-                  }
-                  </div>
-              ))
+              variantImages.length !== 0 ? (
+                [variantImages[imageIndex]].map(el => (
+                  el &&
+                    <div>
+                      {
+                        <figure 
+                        className="w-full block bg-no-repeat cursor-move"
+                        onMouseMove={(e) => handleMouseMove(e)} 
+                        style={mousePosition}>
+                          <Image 
+                          className="opacity-100 hover:opacity-0 transition-all ease-in-out duration-500" 
+                          src={el.image} 
+                          width='500' height='800' layout="responsive" objectFit="cover" />
+                        </figure>
+                      }
+                      </div>
+                  ))
+              ) : (
+                [product.images.edges[noVariantsImageIndex]].map(image => (
+                    <div>
+                      {
+                        <figure 
+                        className="w-full block bg-no-repeat cursor-move"
+                        onMouseMove={(e) => handleMouseMoveNoVariants(e)} 
+                        style={noVariantsMousePosition}>
+                          <Image 
+                          className="opacity-100 hover:opacity-0 transition-all ease-in-out duration-500" 
+                          src={image.node.originalSrc} 
+                          width='500' height='800' layout="responsive" objectFit="cover" />
+                        </figure>
+                      }
+                      </div>
+                  ))
+              )
+            
             }
           </div>
         <div className="relative lg:hidden w-full flex justify-center md:mr-[calc(15%-100px)] md:max-w-[432px] bg-white">
@@ -289,7 +320,7 @@ export default function ProductPageContent({ product, allProducts }) {
             className="w-full"
             loop='true'
           >
-            {variantImagesArray}
+            {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
           </Swiper>
         </div>
         <ProductForm product={product} allProducts={allProducts} />
