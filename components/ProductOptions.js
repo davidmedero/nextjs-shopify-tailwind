@@ -39,12 +39,11 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
 
   const [color, setColor] = useState('')
 
-  const handleQuery = ((e, name, val) => {
+  const handleQuery = ((val) => {
     const url = new URL(window.location)
     url.searchParams.set('color', `${val}`)
-    name !== 'Size' && window.history.replaceState({}, '', url)
-    name !== 'Size' && setColor(val)
-    router.reload()
+    window.history.replaceState({}, '', url)
+    setColor(url.searchParams.get('color'))
   })
 
   useEffect(() => {
@@ -82,13 +81,13 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             const checked = selectedOptions[name] === value
 
             const available = inventory && inventory.map(el => {
-              if ((el.title === (color + ' / ' + value)) && (name === 'Size')) {
+              if ((el.title === (selectedOptions.Color + ' / ' + value)) && (name === 'Size')) {
                 return el.availableForSale
               }
             }).filter(el => el !== undefined).join('')
             
             return (
-              <label key={id} htmlFor={id} onClick={(e) => available !== 'false' && handleQuery(e, name, value)}>
+              <label key={id} htmlFor={id} onClick={() => available !== 'false' && name !== 'Size' && handleQuery(value)}>
                 <input
                   className="sr-only"
                   type="radio"
