@@ -24,19 +24,43 @@ const ProductCard = ({ product }) => {
 
   const { altText, originalSrc } = product.node.images.edges[0].node
 
-  // const secondPicSrc = product.node.images.edges[1].node.originalSrc
+  const [secondVariantImage, setSecondVariantImage] = useState('')
 
-  // const [imageIndex, setImageIndex] = useState(0)
+  const fisrtImgArray = []
+  const secondImgArray = []
 
-  // const findVariantImage = () => {
-  //   setImageIndex(product.node.variants.edges.findIndex(el => el))
-  // }
+  product.node.options?.map(({ values }) => (
+    values.map(value => {
+      product.node.variants.edges.map(el => {
+        if ((el.node.title === (value + ' / ' + '1'))) {
+          fisrtImgArray.push(el.node.image.originalSrc)
+        } else if ((el.node.title === (value + ' / ' + '3'))) {
+          secondImgArray.push(el.node.image.originalSrc)
+        }
+      })
+    })
+  ))
 
-  console.log(product.node.options.map(({ name, values }) =>( name, values)))
+  const combinedArray = fisrtImgArray.map((x, i) => {
+    return {
+      first: x,
+      second: secondImgArray[i]
+    }
+  })
 
-  const secondPicSrcVariants = product.node.variants.edges[2].node.image.originalSrc
+  const showSecondImage = (firstImage) => {
+    combinedArray.map(el => {
+      if (firstImage === el.first) {
+        setSecondVariantImage(el.second)
+      }
+    })
+  }
+
+  const secondPicSrcVariants = product.node.variants?.edges[2].node.image.originalSrc
 
   const [show2ndPic, setShow2ndPic] = useState(false)
+
+  const [variantPic, setVariantPic] = useState('')
 
   const price = product.node.priceRange.minVariantPrice.amount
 
@@ -153,19 +177,29 @@ const ProductCard = ({ product }) => {
             </>
             )}
               {
-                show2ndPic ? (
+                secondVariantImage ? (
                   <Image
-                    src={secondPicSrcVariants}
+                    src={secondVariantImage}
                     width='500'
                     height='800'
                     layout="responsive"
                     objectFit="cover"
                     style={{display: 'inline-block', width: 'full' }}
-                    onMouseLeave={() => setShow2ndPic(false)}
-                />
+                    onMouseLeave={() => setSecondVariantImage('')}
+                  />
                 )
-                :
-                (<Image
+                : variantPic ? (
+                  <Image
+                    src={variantPic}
+                    width='500'
+                    height='800'
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{display: 'inline-block', width: 'full' }}
+                    onMouseOver={() => showSecondImage(variantPic)}
+                />
+                ) : (
+                  <Image
                     src={originalSrc}
                     width='500'
                     height='800'
@@ -173,7 +207,8 @@ const ProductCard = ({ product }) => {
                     objectFit="cover"
                     style={{display: 'inline-block', width: 'full' }}
                     onMouseOver={() => setShow2ndPic(true)}
-                />)
+                />
+                )
               }
             </div>
             <div className="xxs:block lg:hidden relative w-full h-full">
@@ -225,7 +260,7 @@ const ProductCard = ({ product }) => {
         </div>
         <div className="inline-flex items-center flex-wrap">
         {
-          product.node.options.map(({ name, values }) => (
+          product.node.options?.map(({ name, values }) => (
             values.map(value => {
               const id = `option-${name}-${value}`
   
@@ -234,6 +269,12 @@ const ProductCard = ({ product }) => {
               ))
   
               const colorPicIndex = colorPicLookup.findIndex(el => el === true)
+
+              const variantImageSrc = product.node.variants.edges.map(el => {
+                  if (el.node.title === (value + ' / ' + '1')) {
+                    return el.node.image.originalSrc
+                  }
+              }).filter(el => el !== undefined).join('')
 
               return (
                 <label key={id} htmlFor={id} className="cursor-pointer">
@@ -246,9 +287,15 @@ const ProductCard = ({ product }) => {
                   />
                   {
                     name === 'Color' && colorPicIndex !== -1 && (
-                      <div className={`w-8 h-8 rounded-full mr-5 box-border hover:border-2 border-[#ff00a7]`}>
-                        <Image src={product.node.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
-                      </div>
+                      <Link href={`/${handle}?color=${value}`}>
+                        <a>
+                          <div 
+                          onMouseOver={() => setVariantPic(variantImageSrc)}
+                          className={`w-8 h-8 rounded-full mr-5 box-border hover:border-2 border-[#ff00a7]`}>
+                            <Image src={product.node.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
+                          </div>
+                        </a>
+                      </Link>
                     )
                   }
                 </label>
