@@ -1,11 +1,6 @@
-import { Fragment, useState, useEffect, useCallback, useRef } from 'react'
-import useSWR, { useSWRConfig } from "swr"
+import { useState, useEffect } from 'react'
+import useSWR from "swr"
 import axios from "axios"
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { SlideDown } from 'react-slidedown'
-import 'react-slidedown/lib/slidedown.css'
-import { useRouter } from 'next/router'
 import Image from 'next/image'
 
 
@@ -19,12 +14,6 @@ const fetcher = (url, id) => (
 
 
 export default function ProductOptions({ name, values, selectedOptions, setOptions, product }) {
-
-  const router = useRouter()
-
-  const refreshData = () => {
-    router.replace(router.asPath);
-  }
 
   const { data: productInventory } = useSWR(
     ['/api/available', product.handle],
@@ -59,7 +48,6 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
     }
   }, [])
 
-
   useEffect(() => {
     window.dispatchEvent(new Event("color"))
   }, [color])
@@ -75,7 +63,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
 
   return (
     <fieldset className="mt-3 text-white">
-      <div className={`${name === "Color" ? "inline-flex items-center flex-wrap" : "grid grid-cols-4 gap-x-1"}`}>
+      <div className={`${name === "Color" ? "inline-flex items-center flex-wrap" : "grid lg:grid-cols-4 md:grid-cols-3 gap-x-2"}`}>
         {
           values.map(value => {
             const id = `option-${name}-${value}`
@@ -84,9 +72,11 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             const available = inventory && inventory.map(el => {
               if ((el.title === (selectedOptions.Color + ' / ' + value)) && (name === 'Size')) {
                 return el.availableForSale
+              } else if ((el.title === value) && (name === 'Size')) {
+                return el.availableForSale
               }
             }).filter(el => el !== undefined).join('')
-            console.log(inventory)
+
             const colorPicLookup = inventory && inventory.map(el => (
               (el.title === (value + ' / ' + '0'))
             ))
@@ -94,7 +84,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             const colorPicIndex = colorPicLookup.findIndex(el => el === true)
             
             return (
-              <label key={id} htmlFor={id} onClick={() => available !== 'false' && name !== 'Size' && handleQuery(value)}>
+              <label key={id} htmlFor={id} onClick={() => available !== 'false' && name !== 'Size' && handleQuery(value)} className="cursor-pointer">
                 <input
                   className="sr-only"
                   type="radio"
@@ -108,12 +98,12 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                 />
                 {
                   name === 'Color' && colorPicIndex !== -1 ? (
-                    <div className={`w-8 h-8 rounded-full mr-5 cursor-pointer box-border hover:border-4 border-[#ff00a7] transition-all ease-in-out duration-200 ${color === value && "cursor-not-allowed border-4 border-[#ff00a7] transition-all ease-in-out duration-200"}`}>
+                    <div className={`w-8 h-8 rounded-full mr-5 box-border hover:border-2 border-[#ff00a7] ${color === value && "cursor-not-allowed hover:!border-4 border-4 border-[#ff00a7]"}`}>
                       <Image src={product.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
                     </div>
                   ) : (
                     <div className={`${available == 'false' && 'cursor-not-allowed'}`}>
-                      <div className={`${"flex items-center justify-center box-border w-[85px] h-10 text-center mt-3 text-base rounded-sm cursor-pointer text-black font-semibold hover:border-2 hover:border-[#ff00a7] transition-all ease-in-out duration-200"} ${checked && available !== 'false'  && "border-2 border-[#ff00a7] transition-all ease-in-out duration-200"} ${available == 'false'  ? "soldOut pointer-events-none bg-gray-300 text-gray-600" : "bg-white"} `}>
+                      <div className={`${"flex items-center justify-center border-white border box-border lg:w-[88px] md:w-[120px] h-10 text-center md:mt-[7px] text-base rounded-sm cursor-pointer text-white bg-black font-semibold hover:border-[#ff00a7]"} ${checked && available !== 'false'  && "border-2 border-[#ff00a7]"} ${available == 'false'  && "soldOut pointer-events-none text-gray-400"} `}>
                         <span>{value}</span>
                       </div>
                   </div>

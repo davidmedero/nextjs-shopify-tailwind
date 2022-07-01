@@ -24,9 +24,17 @@ const ProductCard = ({ product }) => {
 
   const { altText, originalSrc } = product.node.images.edges[0].node
 
-  const secondPicSrc = product.node.images.edges[1].node.originalSrc
+  // const secondPicSrc = product.node.images.edges[1].node.originalSrc
 
-  const secondPicAltText = product.node.images.edges[1].node.altText
+  // const [imageIndex, setImageIndex] = useState(0)
+
+  // const findVariantImage = () => {
+  //   setImageIndex(product.node.variants.edges.findIndex(el => el))
+  // }
+
+  console.log(product.node.options.map(({ name, values }) =>( name, values)))
+
+  const secondPicSrcVariants = product.node.variants.edges[2].node.image.originalSrc
 
   const [show2ndPic, setShow2ndPic] = useState(false)
 
@@ -147,8 +155,7 @@ const ProductCard = ({ product }) => {
               {
                 show2ndPic ? (
                   <Image
-                    src={secondPicSrc}
-                    alt={secondPicAltText}
+                    src={secondPicSrcVariants}
                     width='500'
                     height='800'
                     layout="responsive"
@@ -160,7 +167,6 @@ const ProductCard = ({ product }) => {
                 :
                 (<Image
                     src={originalSrc}
-                    alt={altText}
                     width='500'
                     height='800'
                     layout="responsive"
@@ -216,6 +222,40 @@ const ProductCard = ({ product }) => {
                     onMouseOver={() => setShow2ndPic(true)}
                 />
             </div>
+        </div>
+        <div className="inline-flex items-center flex-wrap">
+        {
+          product.node.options.map(({ name, values }) => (
+            values.map(value => {
+              const id = `option-${name}-${value}`
+  
+              const colorPicLookup = product.node.variants.edges.map(el => (
+                (el.node.title === (value + ' / ' + '0'))
+              ))
+  
+              const colorPicIndex = colorPicLookup.findIndex(el => el === true)
+
+              return (
+                <label key={id} htmlFor={id} className="cursor-pointer">
+                  <input
+                    className="sr-only"
+                    type="radio"
+                    id={id}
+                    name={`option-${name}`}
+                    value={value}
+                  />
+                  {
+                    name === 'Color' && colorPicIndex !== -1 && (
+                      <div className={`w-8 h-8 rounded-full mr-5 box-border hover:border-2 border-[#ff00a7]`}>
+                        <Image src={product.node.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
+                      </div>
+                    )
+                  }
+                </label>
+              )
+            }) 
+          ))
+        }
         </div>
         <h3 className="mt-2 xxs:ml-2 text-sm font-medium text-white">{title}</h3>
         <p className='mt-1 xxs:ml-2 text-sm text-white'>

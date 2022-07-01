@@ -14,6 +14,7 @@ module.exports = {
       'search': '410px',
       'mini': '360px',
       'xmini': '330px',
+      'sizes': '850px',
       ...defaultTheme.screens,
     },
   },

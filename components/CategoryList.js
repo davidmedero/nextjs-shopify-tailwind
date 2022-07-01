@@ -102,17 +102,17 @@ const CategoryList = ({ productsByCollection, category, product, allCollections,
   const cancelButtonRef = useRef()
 
   const handlers = useSwipeable({
-      onSwipedRight: () => {setShowFilterOptions(false); setShowPriceFilter(false); setShowSizeFilter(false); setShowColorFilter(false); setShowBrandsFilter(false)},
-      onSwipedLeft: () => {setShowPriceFilter(false); setShowSizeFilter(false); setShowColorFilter(false); setShowBrandsFilter(false)},
-      preventDefaultTouchmoveEvent: true,
-      trackMouse: true
-    });
+    onSwipedRight: () => {setShowFilterOptions(false); setShowPriceFilter(false); setShowSizeFilter(false); setShowColorFilter(false); setShowBrandsFilter(false)},
+    onSwipedLeft: () => {setShowPriceFilter(false); setShowSizeFilter(false); setShowColorFilter(false); setShowBrandsFilter(false)},
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true
+  });
 
-    const secondHandlers = useSwipeable({
-      onSwipedRight: () => {setShowFilterOptions(false)},
-      preventDefaultTouchmoveEvent: true,
-      trackMouse: true
-    });
+  const secondHandlers = useSwipeable({
+    onSwipedRight: () => {setShowFilterOptions(false)},
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true
+  });
 
   const [min, setMin] = useState(0)
   const [max, setMax] = useState(500)
