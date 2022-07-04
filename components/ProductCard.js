@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
 
   const { handle, title } = product.node
 
-  const { altText, originalSrc } = product.node.images.edges[0].node
+  const { originalSrc } = product.node.images.edges[0].node
 
   const [secondVariantImage, setSecondVariantImage] = useState('')
 
@@ -56,7 +56,7 @@ const ProductCard = ({ product }) => {
     })
   }
 
-  const secondPicSrcVariants = product.node.variants?.edges[2].node.image.originalSrc
+  const secondPicSrc = product.node.images.edges[1].node.originalSrc
 
   const [show2ndPic, setShow2ndPic] = useState(false)
 
@@ -137,10 +137,43 @@ const ProductCard = ({ product }) => {
     }
   }, [savedItems])
 
+  const [variantLink, setVariantLink] = useState('')
+
+  const firstLinkArray = []
+  const colorLinkArray = []
+
+  product.node.options?.map(({ values }) => (
+    values.map(value => {
+      product.node.variants.edges.map(el => {
+        if ((el.node.title === (value + ' / ' + '1'))) {
+          firstLinkArray.push(el.node.image.originalSrc)
+          colorLinkArray.push(`/${handle}` + '?color=' + value)
+        }
+      })
+    })
+  ))
+
+  const combinedLinkArray = firstLinkArray.map((x, i) => {
+    return {
+      firstImg: x,
+      handle: colorLinkArray[i]
+    }
+  })
+
+  const firstImgLink = (val) => {
+    combinedLinkArray.map(el => {
+      if (val === el.firstImg) {
+        setVariantLink(el.handle)
+      }
+    })
+  }
+
 
   return (
     <>
-    <Link href={`/${handle}`}>
+    {
+      product.node.variants?.edges[0].node.selectedOptions[0].name !== 'Color' ? (
+        <Link href={`/${handle}`}>
       <a className="group">
         <div className="line w-full bg-gray-200 overflow-hidden">
             <div className="xxs:hidden lg:block relative w-full h-full">
@@ -177,37 +210,26 @@ const ProductCard = ({ product }) => {
             </>
             )}
               {
-                secondVariantImage ? (
+                show2ndPic ? (
                   <Image
-                    src={secondVariantImage}
+                    src={secondPicSrc}
                     width='500'
                     height='800'
                     layout="responsive"
                     objectFit="cover"
                     style={{display: 'inline-block', width: 'full' }}
-                    onMouseLeave={() => setSecondVariantImage('')}
-                  />
-                )
-                : variantPic ? (
-                  <Image
-                    src={variantPic}
-                    width='500'
-                    height='800'
-                    layout="responsive"
-                    objectFit="cover"
-                    style={{display: 'inline-block', width: 'full' }}
-                    onMouseOver={() => showSecondImage(variantPic)}
+                    onMouseLeave={() => setShow2ndPic(false)}
                 />
                 ) : (
                   <Image
-                    src={originalSrc}
-                    width='500'
-                    height='800'
-                    layout="responsive"
-                    objectFit="cover"
-                    style={{display: 'inline-block', width: 'full' }}
-                    onMouseOver={() => setShow2ndPic(true)}
-                />
+                  src={originalSrc}
+                  width='500'
+                  height='800'
+                  layout="responsive"
+                  objectFit="cover"
+                  style={{display: 'inline-block', width: 'full' }}
+                  onMouseOver={() => setShow2ndPic(true)}
+              />
                 )
               }
             </div>
@@ -248,7 +270,6 @@ const ProductCard = ({ product }) => {
             </SignInModal>
             <Image
                     src={originalSrc}
-                    alt={altText}
                     width='500'
                     height='800'
                     layout="responsive"
@@ -316,6 +337,185 @@ const ProductCard = ({ product }) => {
         </p>
       </a>
     </Link>
+      ) : (
+        <Link href={`${variantLink}`}>
+      <a className="group">
+        <div className="line w-full bg-gray-200 overflow-hidden">
+            <div className="xxs:hidden lg:block relative w-full h-full">
+            {session && (
+            <>
+            <span 
+              onMouseOver={() => setHeartFill(true)}
+              onMouseLeave={() => setHeartFill(false)}
+              onClick={(e) => {
+                handleButtonClick(e);
+                updateMacros()
+              }}
+              className="absolute right-[6px] top-1 z-[1]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </span>
+            </>
+            )}
+            {!session && (
+            <>
+            <span 
+              onMouseOver={() => setHeartFill(true)}
+              onMouseLeave={() => setHeartFill(false)}
+              onClick={(e) => {
+                handleButtonClick(e);
+                setShowSignInModal(true)
+              }}
+              className="absolute right-[6px] top-1 z-[1]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </span>
+            </>
+            )}
+              {
+                secondVariantImage ? (
+                  <Image
+                    src={secondVariantImage}
+                    width='500'
+                    height='800'
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{display: 'inline-block', width: 'full' }}
+                    onMouseLeave={() => setSecondVariantImage('')}
+                  />
+                )
+                : variantPic ? (
+                  <Image
+                    src={variantPic}
+                    width='500'
+                    height='800'
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{display: 'inline-block', width: 'full' }}
+                    onMouseOver={() => {firstImgLink(variantPic); showSecondImage(variantPic)}}
+                />
+                ) : (
+                  <Image
+                    src={originalSrc}
+                    width='500'
+                    height='800'
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{display: 'inline-block', width: 'full' }}
+                    onMouseOver={() => {firstImgLink(originalSrc); showSecondImage(originalSrc)}}
+                />
+                )
+              }
+            </div>
+            <div className="xxs:block lg:hidden relative w-full h-full">
+            {session && (
+            <>
+            <span 
+              onMouseOver={() => setHeartFill(true)}
+              onMouseLeave={() => setHeartFill(false)}
+              onClick={(e) => {
+                handleButtonClick(e);
+                updateMacros()
+              }}
+              className="absolute right-[6px] top-1 z-[1]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </span>
+            </>
+            )}
+            {!session && (
+            <>
+            <span 
+              onMouseOver={() => setHeartFill(true)}
+              onMouseLeave={() => setHeartFill(false)}
+              onClick={(e) => {
+                handleButtonClick(e);
+                setShowSignInModal(true)
+              }}
+              className="absolute right-[6px] top-1 z-[1]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </span>
+            </>
+            )}
+            <SignInModal show={showSignInModal} onClose={() => setShowSignInModal(false)}>
+            </SignInModal>
+            <Image
+                    src={originalSrc}
+                    width='500'
+                    height='800'
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{display: 'inline-block', width: 'full' }}
+                    onMouseOver={() => setShow2ndPic(true)}
+                />
+            </div>
+        </div>
+        <div className="inline-flex items-center flex-wrap">
+        {
+          product.node.options?.map(({ name, values }) => (
+            values.map(value => {
+              const id = `option-${name}-${value}`
+  
+              const colorPicLookup = product.node.variants.edges.map(el => (
+                (el.node.title === (value + ' / ' + '0'))
+              ))
+  
+              const colorPicIndex = colorPicLookup.findIndex(el => el === true)
+
+              const variantImageSrc = product.node.variants.edges.map(el => {
+                  if (el.node.title === (value + ' / ' + '1')) {
+                    return el.node.image.originalSrc
+                  }
+              }).filter(el => el !== undefined).join('')
+
+              return (
+                <label key={id} htmlFor={id} className="cursor-pointer">
+                  <input
+                    className="sr-only"
+                    type="radio"
+                    id={id}
+                    name={`option-${name}`}
+                    value={value}
+                  />
+                  {
+                    name === 'Color' && colorPicIndex !== -1 && (
+                      <Link href={`/${handle}?color=${value}`}>
+                        <a>
+                          <div 
+                          onMouseOver={() => setVariantPic(variantImageSrc)}
+                          className={`w-8 h-8 rounded-full mr-5 box-border hover:border-2 border-[#ff00a7]`}>
+                            <Image src={product.node.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
+                          </div>
+                        </a>
+                      </Link>
+                    )
+                  }
+                </label>
+              )
+            }) 
+          ))
+        }
+        </div>
+        <h3 className="mt-2 xxs:ml-2 text-sm font-medium text-white">{title}</h3>
+        <p className='mt-1 xxs:ml-2 text-sm text-white'>
+          {
+            currency === '' ? formatter.format(price) :
+            currency === 'USD' ? formatter.format(price) :
+            currency === 'GBP' ? GBPFormatter.format(Math.ceil(price * GBPcurrency * shopifyConversionFee)) :
+            currency === 'EUR' ? EURFormatter.format(Math.ceil(price * EURcurrency * shopifyConversionFee)) :
+            null
+          }
+        </p>
+      </a>
+    </Link>
+      )
+    }
+    
     </>
   )
 }

@@ -134,9 +134,15 @@ const CategoryList = ({ productsByCollection, category, product, allCollections,
     setPriceTracker(newArray)
   }, [minVal, maxVal])
 
-  const sizes = [...new Set(productsByCollection.map(product => (
-    product.node.options[0].values
-  )).flat())]
+  const sizes = ([...new Set(productsByCollection.map(product => {
+    return product.node.variants.edges.map(variant => {
+      return variant.node.selectedOptions.map(option => {
+        if (option.name === 'Size') {
+          return option.value
+        }
+      }).filter(option => option !== undefined)
+    }).flat()
+  }).flat())])
 
   const [checkedSize, setCheckedSize] = useState({})
 
@@ -157,8 +163,6 @@ const CategoryList = ({ productsByCollection, category, product, allCollections,
     }
   }).filter(el => el !== undefined)
 
-  console.log(newColors)
-
   const [checkedColor, setCheckedColor] = useState({})
 
   const toggleColor = name => {
@@ -170,10 +174,12 @@ const CategoryList = ({ productsByCollection, category, product, allCollections,
 
   useEffect(() => {
       let selectedSizesArray = Object.entries(checkedSize).filter(val => !val.includes(false)).map(el => el[0])
+      console.log(selectedSizesArray)
       let newArray = []
       productsByCollection.map(product => {
         product.node.variants.edges.map(el => {
-          if ((selectedSizesArray.includes(el.node.title)) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
+          console.log(el.node)
+          if (((selectedSizesArray.includes(el.node.title)) || (selectedSizesArray.includes(el.node.selectedOptions[1]?.value))) && (el.node.availableForSale == true) && (!newArray.includes(product))) {
             newArray.push(product)
           }
         })
