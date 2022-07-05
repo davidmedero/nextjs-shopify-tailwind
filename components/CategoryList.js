@@ -13,7 +13,7 @@ import brands from "../brands"
 import collections from '../categories'
 
 
-const CategoryList = ({ productsByCollection, category, product, allCollections, allProducts }) => {
+const CategoryList = ({ productsByCollection, category, product, allCollections }) => {
 
   const categoryTitle = collections.map(el => {
     if (el.handle === category) {
@@ -928,25 +928,25 @@ const CategoryList = ({ productsByCollection, category, product, allCollections,
               {
                 (sortOption === 'Best Sellers') ? (
                   [...products].slice(productsVisited, productsVisited + productsPerPage).map(product => (
-                    <ProductCard key={product.node.id} product={product} allProducts={allProducts} filteredColorPic={filteredColorPic} />
+                    <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic} />
                 )) 
                 ) : (sortOption === 'Newest') ? (
                   [...products].sort((a, b) => (
                     (a.node.createdAt < b.node.createdAt) ? 1 : ((a.node.createdAt > b.node.createdAt) ? -1 : 0)
                   )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
-                      <ProductCard key={product.node.id} product={product} allProducts={allProducts} filteredColorPic={filteredColorPic} />
+                      <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic} />
                   ))
                 ) : (sortOption === 'Highest Price') ? (
                   [...products].sort((a, b) => (
                     (b.node.priceRange.minVariantPrice.amount - a.node.priceRange.minVariantPrice.amount)
                   )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
-                      <ProductCard key={product.node.id} product={product} allProducts={allProducts} filteredColorPic={filteredColorPic} />
+                      <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic} />
                   )) 
                 ) : (sortOption === 'Lowest Price') ? (
                   [...products].sort((a, b) => (
                       (a.node.priceRange.minVariantPrice.amount - b.node.priceRange.minVariantPrice.amount)
                     )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
-                        <ProductCard key={product.node.id} product={product} allProducts={allProducts} filteredColorPic={filteredColorPic} />
+                        <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic} />
                     ))
                 ) : null
               }

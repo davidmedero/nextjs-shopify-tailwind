@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import ProductCard from "../components/ProductCard"
 import { getAllProducts } from "../lib/shopify"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 
 export default function search({ products }) {
@@ -23,6 +23,19 @@ const filteredProducts = products.filter(product => {
         return product
     }
 })
+
+const [filteredColorPic, setFilteredColorPic] = useState([])
+
+useEffect(() => {
+    products.map(product => {
+        product.node.tags.some(tag => {
+            if (query?.toLowerCase().replace(/ /g,' ').split(' ').includes(tag)) {
+                setFilteredColorPic([tag])
+            }
+        })
+    })
+
+}, [query])
 
 const [showSortOptions, setShowSortOptions] = useState(false)
 
@@ -112,25 +125,25 @@ function sortByLowestPrice() {
                         {
                             (sortOption === 'Best Sellers') ? (
                             filteredProducts.map(product => (
-                                <ProductCard key={product.node.id} product={product} />
+                                <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic}/>
                             ))
                             ) : (sortOption === 'Newest') ? (
                             filteredProducts.sort((a, b) => (
                                 (a.node.createdAt < b.node.createdAt) ? 1 : ((a.node.createdAt > b.node.createdAt) ? -1 : 0)
                               )).map(product => (
-                                <ProductCard key={product.node.id} product={product} />
+                                <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic}/>
                             ))
                             ) : (sortOption === 'Highest Price') ? (
                             filteredProducts.sort((a, b) => (
                                 (a.node.priceRange.minVariantPrice.amount < b.node.priceRange.minVariantPrice.amount) ? 1 : ((a.node.priceRange.minVariantPrice.amount > b.node.priceRange.minVariantPrice.amount) ? -1 : 0)
                               )).map(product => (
-                                  <ProductCard key={product.node.id} product={product} />
+                                  <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic}/>
                               )) 
                             ) : (sortOption === 'Lowest Price') ? (
                             filteredProducts.sort((a, b) => (
                                 (a.node.priceRange.minVariantPrice.amount < b.node.priceRange.minVariantPrice.amount) ? -1 : ((a.node.priceRange.minVariantPrice.amount > b.node.priceRange.minVariantPrice.amount) ? 1 : 0)
                               )).map(product => (
-                                <ProductCard key={product.node.id} product={product} />
+                                <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic}/>
                             )) 
                           ) : null
                         }
