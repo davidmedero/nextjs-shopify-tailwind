@@ -167,7 +167,7 @@ const CategoryList = ({ productsByCollection, category, product, allCollections,
 
   const toggleColor = name => {
     setCheckedColor(prev => ({
-      ...prev,
+      ...!prev,
       [name]: !prev[name]
     }))
   }
@@ -187,6 +187,8 @@ const CategoryList = ({ productsByCollection, category, product, allCollections,
       setSizeTracker(newArray)
   }, [checkedSize])
 
+  const [filteredColorPic, setFilteredColorPic] = useState([])
+
   useEffect(() => {
     let selectedColorsArray = Object.entries(checkedColor).filter(val => !val.includes(false)).map(el => el[0])
     let newArray = []
@@ -198,6 +200,7 @@ const CategoryList = ({ productsByCollection, category, product, allCollections,
       })
     })
     setColorTracker(newArray)
+    setFilteredColorPic(selectedColorsArray)
   }, [checkedColor])
 
   const brandsArray = brands.map(el => el.subcollections.map(el => el.title))
@@ -925,25 +928,25 @@ const CategoryList = ({ productsByCollection, category, product, allCollections,
               {
                 (sortOption === 'Best Sellers') ? (
                   [...products].slice(productsVisited, productsVisited + productsPerPage).map(product => (
-                    <ProductCard key={product.node.id} product={product} allProducts={allProducts} />
+                    <ProductCard key={product.node.id} product={product} allProducts={allProducts} filteredColorPic={filteredColorPic} />
                 )) 
                 ) : (sortOption === 'Newest') ? (
                   [...products].sort((a, b) => (
                     (a.node.createdAt < b.node.createdAt) ? 1 : ((a.node.createdAt > b.node.createdAt) ? -1 : 0)
                   )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
-                      <ProductCard key={product.node.id} product={product} allProducts={allProducts} />
+                      <ProductCard key={product.node.id} product={product} allProducts={allProducts} filteredColorPic={filteredColorPic} />
                   ))
                 ) : (sortOption === 'Highest Price') ? (
                   [...products].sort((a, b) => (
                     (b.node.priceRange.minVariantPrice.amount - a.node.priceRange.minVariantPrice.amount)
                   )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
-                      <ProductCard key={product.node.id} product={product} allProducts={allProducts} />
+                      <ProductCard key={product.node.id} product={product} allProducts={allProducts} filteredColorPic={filteredColorPic} />
                   )) 
                 ) : (sortOption === 'Lowest Price') ? (
                   [...products].sort((a, b) => (
                       (a.node.priceRange.minVariantPrice.amount - b.node.priceRange.minVariantPrice.amount)
                     )).slice(productsVisited, productsVisited + productsPerPage).map(product => (
-                        <ProductCard key={product.node.id} product={product} allProducts={allProducts} />
+                        <ProductCard key={product.node.id} product={product} allProducts={allProducts} filteredColorPic={filteredColorPic} />
                     ))
                 ) : null
               }

@@ -10,20 +10,16 @@ const router = useRouter()
 
 const query = router.query.query
 
-const filteredProductsIDs = products.filter(product => {
-    if (query === '') {
-        return product
-    } else if (product.node.title.toLowerCase().includes(query?.toLowerCase())) {
-        return product
-    }
-}).map(product => (
-    product.node.id
-))
-
 const filteredProducts = products.filter(product => {
     if (query === '') {
         return product
     } else if (product.node.title.toLowerCase().includes(query?.toLowerCase())) {
+        return product
+    } else if (product.node.tags.some(tag => tag.includes(query?.toLowerCase())) && query?.toLowerCase().replace(/ /g,' ').split(' ').length < 2) {
+        return product
+    } else if (product.node.title.toLowerCase().replace(/ /g,' ').split(' ').some(el => query?.toLowerCase().replace(/ /g,' ').split(' ').includes(el))) {
+        return product
+    } else if (product.node.tags.some(tag => query?.toLowerCase().replace(/ /g,' ').split(' ').includes(tag)) && query?.toLowerCase().replace(/ /g,' ').split(' ').some(el => product.node.title.toLowerCase().includes(el))) {
         return product
     }
 })
@@ -50,17 +46,17 @@ function sortByLowestPrice() {
 
 
     return (
-        <div className="pt-3 bg-white">
+        <div className="pt-3 bg-[#0a0a0a] text-white">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="flex flex-row items-center w-full flex-wrap">
                     <span className="my-5">
                         <span className="text-2xl pl-1">
                         {
-                        `WE FOUND ${filteredProductsIDs.length}`
+                        `WE FOUND ${filteredProducts.length}`
                         }
                         </span>
                         { ' ' }
-                        <span className="text-2xl pl-1">{filteredProductsIDs.length > 1 || filteredProductsIDs.length === 0 ? 'RESULTS' : 'RESULT'}</span>
+                        <span className="text-2xl pl-1">{filteredProducts.length > 1 || filteredProducts.length === 0 ? 'RESULTS' : 'RESULT'}</span>
                         { ' ' }
                         <span className="text-2xl pl-1">MATCHING</span>
                         { ' ' }

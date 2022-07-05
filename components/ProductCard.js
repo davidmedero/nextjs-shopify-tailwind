@@ -11,7 +11,7 @@ import SignInModal from "./SignInModal"
 const fetcher = url => axios.get(url).then(res => res.data)
 
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, filteredColorPic }) => {
 
   const { mutate } = useSWRConfig()
 
@@ -23,6 +23,8 @@ const ProductCard = ({ product }) => {
   const { handle, title } = product.node
 
   const { originalSrc } = product.node.images.edges[0].node
+
+  const [colorTracker, setColorTracker] = useState('')
 
   const [secondVariantImage, setSecondVariantImage] = useState('')
 
@@ -167,6 +169,17 @@ const ProductCard = ({ product }) => {
       }
     })
   }
+
+  useEffect(() => {
+    if (filteredColorPic) {
+      product.node.variants?.edges.map(el => {
+        if ((el.node.title.toLowerCase() === (filteredColorPic.join('').toLowerCase() + ' / ' + '1'))) {
+          setVariantPic(el.node.image.originalSrc)
+          setColorTracker(filteredColorPic.join('').toLowerCase())
+        }
+      })
+    }
+  }, [filteredColorPic])
 
 
   return (
@@ -487,8 +500,8 @@ const ProductCard = ({ product }) => {
                       <Link href={`/${handle}?color=${value}`}>
                         <a>
                           <div 
-                          onMouseOver={() => setVariantPic(variantImageSrc)}
-                          className={`w-8 h-8 rounded-full mr-5 box-border hover:border-2 border-[#ff00a7]`}>
+                          onMouseOver={() => {setVariantPic(variantImageSrc); setColorTracker(value)}}
+                          className={`w-8 h-8 rounded-full mr-5 box-border hover:border-2 border-[#ff00a7] ${colorTracker.toLowerCase() === value.toLowerCase() && "hover:!border-4 border-4 border-[#ff00a7]"}`}>
                             <Image src={product.node.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
                           </div>
                         </a>

@@ -2,23 +2,12 @@ import { useState, useContext, useEffect, useLayoutEffect } from "react"
 import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import ProductOptions from "./ProductOptions"
 import { CartContext } from '../context/shopContext'
-import useSWR from "swr"
-import axios from "axios"
 import Head from 'next/head'
 import Link from "next/link"
 import collections from "../categories"
-import Image from "next/image"
 
 
-const fetcher = (url, id) => (
-    axios.get(url, {
-        params: {
-            id: id
-        }
-    }).then((res) => res.data)
-)
-
-export default function ProductForm({ product, allProducts }) {
+export default function ProductForm({ product }) {
 
     const [currencyRates, setCurrencyRates] = useState(0)
 
@@ -50,15 +39,6 @@ export default function ProductForm({ product, allProducts }) {
     }, [])
 
     const categories = collections
-
-    const { data: productInventory } = useSWR(
-        ['/api/available', product.handle],
-        (url, id) => fetcher(url, id), 
-        { errorRetryCount: 3}
-    )
-
-    const [inventory, setInventory] = useState([])
-
 
     const { cart, addToCart } = useContext(CartContext)
 
