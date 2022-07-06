@@ -6,12 +6,19 @@ import useSWR, { useSWRConfig } from "swr"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import SignInModal from "./SignInModal"
+import colors from '../colors.js'
 
 
 const fetcher = url => axios.get(url).then(res => res.data)
 
 
 const ProductCard = ({ product, filteredColorPic }) => {
+
+  console.log(
+    colors.map(color => {
+      return Object.values(color)[0].map(el => el)
+    }).filter(el => el !== undefined)
+  )
 
   const { mutate } = useSWRConfig()
 
@@ -34,9 +41,9 @@ const ProductCard = ({ product, filteredColorPic }) => {
   product.node.options?.map(({ values }) => (
     values.map(value => {
       product.node.variants.edges.map(el => {
-        if ((el.node.title === (value + ' / ' + '1'))) {
+        if ((el.node.title === (value + ' / ' + product.node.variants.edges[1].node.selectedOptions[1]?.value))) {
           fisrtImgArray.push(el.node.image.originalSrc)
-        } else if ((el.node.title === (value + ' / ' + '3'))) {
+        } else if ((el.node.title === (value + ' / ' + product.node.variants.edges[2].node.selectedOptions[1]?.value))) {
           secondImgArray.push(el.node.image.originalSrc)
         }
       })
@@ -147,7 +154,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
   product.node.options?.map(({ values }) => (
     values.map(value => {
       product.node.variants.edges.map(el => {
-        if ((el.node.title === (value + ' / ' + '1'))) {
+        if ((el.node.title === (value + ' / ' + product.node.variants.edges[1].node.selectedOptions[1]?.value))) {
           firstLinkArray.push(el.node.image.originalSrc)
           colorLinkArray.push(`/${handle}` + '?color=' + value)
         }
@@ -173,10 +180,15 @@ const ProductCard = ({ product, filteredColorPic }) => {
   useEffect(() => {
     if (filteredColorPic && filteredColorPic.length !== 0) {
       product.node.variants?.edges.map(el => {
-        if (el.node.title.toLowerCase().includes((filteredColorPic.join('').toLowerCase() + ' / ' + '1'))) {
-          setVariantPic(el.node.image.originalSrc)
-          setColorTracker(el.node.selectedOptions[0].value)
-        }
+        colors.map(color => {
+          if (el.node.title.toLowerCase().includes((filteredColorPic.join('').toLowerCase() + ' / ' + product.node.variants.edges[1].node.selectedOptions[1]?.value))) {
+            setVariantPic(el.node.image.originalSrc)
+            setColorTracker(el.node.selectedOptions[0].value)
+          } else if (filteredColorPic.join('') == Object.keys(color) && Object.values(color)[0].some(val => el.node.title.toLowerCase().includes(val + '/' + product.node.variants.edges[1].node.selectedOptions[1]?.value))) {
+            setVariantPic(el.node.image.originalSrc)
+            setColorTracker(el.node.selectedOptions[0].value)
+          }
+        })
       })
     }
   }, [filteredColorPic])
@@ -475,13 +487,13 @@ const ProductCard = ({ product, filteredColorPic }) => {
               const id = `option-${name}-${value}`
   
               const colorPicLookup = product.node.variants.edges.map(el => (
-                (el.node.title === (value + ' / ' + '0'))
+                (el.node.title === (value + ' / ' + product.node.variants.edges[0].node.selectedOptions[1]?.value))
               ))
   
               const colorPicIndex = colorPicLookup.findIndex(el => el === true)
 
               const variantImageSrc = product.node.variants.edges.map(el => {
-                  if (el.node.title === (value + ' / ' + '1')) {
+                  if (el.node.title === (value + ' / ' + product.node.variants.edges[1].node.selectedOptions[1]?.value)) {
                     return el.node.image.originalSrc
                   }
               }).filter(el => el !== undefined).join('')

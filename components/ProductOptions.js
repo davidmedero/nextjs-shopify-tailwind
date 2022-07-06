@@ -78,8 +78,8 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
               }
             }).filter(el => el !== undefined).join('')
 
-            const colorPicLookup = inventory && inventory.map(el => (
-              (el.title === (value + ' / ' + '0'))
+            const colorPicLookup = product.variants.edges.map(el => (
+              (el.node.title === (value + ' / ' + product.variants.edges[0].node.selectedOptions[1]?.value))
             ))
 
             const colorPicIndex = colorPicLookup.findIndex(el => el === true)
@@ -99,7 +99,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                 />
                 {
                   name === 'Color' && colorPicIndex !== -1 ? (
-                    <div className={`w-8 h-8 rounded-full mr-5 box-border border-2 hover:border-2 border-white ${color === value && "hover:!border-4 border-4 border-[#ff00a7]"}`}>
+                    <div className={`w-8 h-8 rounded-full mr-5 box-border border-2 border-black ring-2 ring-white hover:opacity-75 ${color === value && "!ring-4 ring-white"}`}>
                       <Image src={product.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
                     </div>
                   ) : (

@@ -1,5 +1,5 @@
 const colors = [
-    { black },
+    { black: ['coal', 'carbon', 'graphite', 'jet', 'outer space', 'off black']},
     { blue: ['indigo', 'light wash', 'medium wash', 'dark wash', 'navy', 'light blue', 'dark blue', 'denim', 'royal', 'pastel blue', 'poolside'] },
     { white: ['off white', 'ivory'] },
     { pink: ['neon pink', 'mauve', 'fuchsia', 'magenta', 'rose gold', 'blush', 'candy pink', 'light pink', 'dark pink', 'pastel pink'] }, 
