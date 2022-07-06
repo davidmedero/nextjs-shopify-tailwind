@@ -70,6 +70,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             const checked = selectedOptions[name] === value
 
             const available = inventory && inventory.map(el => {
+              console.log(product)
               if ((el.title === (selectedOptions.Color + ' / ' + value)) && (name === 'Size')) {
                 return el.availableForSale
               } else if ((el.title === value) && (name === 'Size')) {
@@ -98,7 +99,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                 />
                 {
                   name === 'Color' && colorPicIndex !== -1 ? (
-                    <div className={`w-8 h-8 rounded-full mr-5 box-border hover:border-2 border-[#ff00a7] ${color === value && "hover:!border-4 border-4 border-[#ff00a7]"}`}>
+                    <div className={`w-8 h-8 rounded-full mr-5 box-border border-2 hover:border-2 border-white ${color === value && "hover:!border-4 border-4 border-[#ff00a7]"}`}>
                       <Image src={product.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
                     </div>
                   ) : (

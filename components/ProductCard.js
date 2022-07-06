@@ -171,11 +171,11 @@ const ProductCard = ({ product, filteredColorPic }) => {
   }
 
   useEffect(() => {
-    if (filteredColorPic) {
+    if (filteredColorPic && filteredColorPic.length !== 0) {
       product.node.variants?.edges.map(el => {
-        if ((el.node.title.toLowerCase() === (filteredColorPic.join('').toLowerCase() + ' / ' + '1'))) {
+        if (el.node.title.toLowerCase().includes((filteredColorPic.join('').toLowerCase() + ' / ' + '1'))) {
           setVariantPic(el.node.image.originalSrc)
-          setColorTracker(filteredColorPic.join('').toLowerCase())
+          setColorTracker(el.node.selectedOptions[0].value)
         }
       })
     }
@@ -468,7 +468,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                 />
             </div>
         </div>
-        <div className="inline-flex items-center flex-wrap">
+        <div className="inline-flex items-center flex-wrap mt-2">
         {
           product.node.options?.map(({ name, values }) => (
             values.map(value => {
@@ -485,7 +485,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                     return el.node.image.originalSrc
                   }
               }).filter(el => el !== undefined).join('')
-
+              
               return (
                 <label key={id} htmlFor={id} className="cursor-pointer">
                   <input
@@ -501,7 +501,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                         <a>
                           <div 
                           onMouseOver={() => {setVariantPic(variantImageSrc); setColorTracker(value)}}
-                          className={`w-8 h-8 rounded-full mr-5 box-border hover:border-2 border-[#ff00a7] ${colorTracker.toLowerCase() === value.toLowerCase() && "hover:!border-4 border-4 border-[#ff00a7]"}`}>
+                          className={`w-8 h-8 rounded-full mr-5 box-border border-2 hover:border-2 border-white ${colorTracker.toLowerCase() === value.toLowerCase() && "hover:!border-4 border-4 border-[#ff00a7]"}`}>
                             <Image src={product.node.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
                           </div>
                         </a>
