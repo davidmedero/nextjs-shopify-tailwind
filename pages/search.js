@@ -2,6 +2,7 @@ import { useRouter } from "next/router"
 import ProductCard from "../components/ProductCard"
 import { getAllProducts } from "../lib/shopify"
 import { useEffect, useState } from "react"
+import colors from '../colors.js'
 
 
 export default function search({ products }) {
@@ -10,32 +11,46 @@ const router = useRouter()
 
 const query = router.query.query
 
+const colorVals = (colors.map(color => {
+    return Object.values(color)
+  }).flat()).flat()
+
 const filteredProducts = products.filter(product => {
     if (query === '') {
         return product
-    } else if (product.node.title.toLowerCase().includes(query?.toLowerCase())) {
+    } else if (product.node.tags.some(tag => tag.includes(query?.toLowerCase())) && query?.toLowerCase().split(' ').length < 2) {
         return product
-    } else if (product.node.tags.some(tag => tag.includes(query?.toLowerCase())) && query?.toLowerCase().replace(/ /g,' ').split(' ').length < 2) {
+    } else if (product.node.title.toLowerCase().split(' ').some(el => query?.toLowerCase().split(' ').includes(el))) {
         return product
-    } else if (product.node.title.toLowerCase().replace(/ /g,' ').split(' ').some(el => query?.toLowerCase().replace(/ /g,' ').split(' ').includes(el))) {
+    } else if (product.node.tags.some(tag => query?.toLowerCase().split(' ').includes(tag)) && query?.toLowerCase().split(' ').some(el => product.node.title.toLowerCase().includes(el))) {
         return product
-    } else if (product.node.tags.some(tag => query?.toLowerCase().replace(/ /g,' ').split(' ').includes(tag)) && query?.toLowerCase().replace(/ /g,' ').split(' ').some(el => product.node.title.toLowerCase().includes(el))) {
+    } else if (query?.toLowerCase().split(' ').some(el => product.node.title.toLowerCase().includes(el))) {
         return product
     }
 })
 
 const [filteredColorPic, setFilteredColorPic] = useState([])
 
+const [filteredShade, setFilteredShade] = useState([])
+
 useEffect(() => {
     products.map(product => {
         product.node.tags.some(tag => {
-            if (query?.toLowerCase().replace(/ /g,' ').split(' ').includes(tag)) {
+            if (query?.toLowerCase().split(' ').includes(tag)) {
                 setFilteredColorPic([tag])
             }
         })
     })
 
+    colorVals.some(color => {
+        if (query?.toLowerCase().split(' ').filter(el => el !== '').includes(color)) {
+            setFilteredShade([color])
+        }
+    })
+
 }, [query])
+
+console.log(filteredShade, "SPACE", query?.toLowerCase().split(' ').filter(el => el !== ''))
 
 const [showSortOptions, setShowSortOptions] = useState(false)
 
@@ -125,25 +140,25 @@ function sortByLowestPrice() {
                         {
                             (sortOption === 'Best Sellers') ? (
                             filteredProducts.map(product => (
-                                <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic}/>
+                                <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic} filteredShade={filteredShade} />
                             ))
                             ) : (sortOption === 'Newest') ? (
                             filteredProducts.sort((a, b) => (
                                 (a.node.createdAt < b.node.createdAt) ? 1 : ((a.node.createdAt > b.node.createdAt) ? -1 : 0)
                               )).map(product => (
-                                <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic}/>
+                                <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic} filteredShade={filteredShade} />
                             ))
                             ) : (sortOption === 'Highest Price') ? (
                             filteredProducts.sort((a, b) => (
                                 (a.node.priceRange.minVariantPrice.amount < b.node.priceRange.minVariantPrice.amount) ? 1 : ((a.node.priceRange.minVariantPrice.amount > b.node.priceRange.minVariantPrice.amount) ? -1 : 0)
                               )).map(product => (
-                                  <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic}/>
+                                  <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic} filteredShade={filteredShade} />
                               )) 
                             ) : (sortOption === 'Lowest Price') ? (
                             filteredProducts.sort((a, b) => (
                                 (a.node.priceRange.minVariantPrice.amount < b.node.priceRange.minVariantPrice.amount) ? -1 : ((a.node.priceRange.minVariantPrice.amount > b.node.priceRange.minVariantPrice.amount) ? 1 : 0)
                               )).map(product => (
-                                <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic}/>
+                                <ProductCard key={product.node.id} product={product} filteredColorPic={filteredColorPic} filteredShade={filteredShade} />
                             )) 
                           ) : null
                         }

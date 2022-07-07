@@ -12,13 +12,7 @@ import colors from '../colors.js'
 const fetcher = url => axios.get(url).then(res => res.data)
 
 
-const ProductCard = ({ product, filteredColorPic }) => {
-
-  console.log(
-    colors.map(color => {
-      return Object.values(color)[0].map(el => el)
-    }).filter(el => el !== undefined)
-  )
+const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
 
   const { mutate } = useSWRConfig()
 
@@ -179,19 +173,37 @@ const ProductCard = ({ product, filteredColorPic }) => {
 
   useEffect(() => {
     if (filteredColorPic && filteredColorPic.length !== 0) {
+
+      const checkedColorVals = Object.values(colors.filter(color => {
+        return filteredColorPic.join('') == Object.keys(color)
+      })[0])[0]
+
       product.node.variants?.edges.map(el => {
-        colors.map(color => {
-          if (el.node.title.toLowerCase().includes((filteredColorPic.join('').toLowerCase() + ' / ' + product.node.variants.edges[1].node.selectedOptions[1]?.value))) {
+          if (el.node.title.toLowerCase().includes(filteredColorPic.join('').toLowerCase() + ' / ' + product.node.variants.edges[1].node.selectedOptions[1]?.value.toLowerCase())) {
             setVariantPic(el.node.image.originalSrc)
             setColorTracker(el.node.selectedOptions[0].value)
-          } else if (filteredColorPic.join('') == Object.keys(color) && Object.values(color)[0].some(val => el.node.title.toLowerCase().includes(val + '/' + product.node.variants.edges[1].node.selectedOptions[1]?.value))) {
+          } else if (checkedColorVals.some(val => el.node.title.toLowerCase().split(' ').includes(val))) {
             setVariantPic(el.node.image.originalSrc)
             setColorTracker(el.node.selectedOptions[0].value)
           }
-        })
       })
     }
+
   }, [filteredColorPic])
+
+  useEffect(() => {
+    if (filteredShade && filteredShade.length !== []) {
+        setVariantPic('')
+        setColorTracker('')
+      product.node.variants?.edges.map(el => {
+        if (el.node.title.toLowerCase().includes(filteredShade.join('').toLowerCase() + ' / ' + product.node.variants.edges[1].node.selectedOptions[1]?.value.toLowerCase())) {
+          setVariantPic(el.node.image.originalSrc)
+          setColorTracker(el.node.selectedOptions[0].value)
+        }
+      })
+    }
+
+  }, [filteredShade])
 
 
   return (
@@ -212,7 +224,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                 updateMacros()
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -228,7 +240,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                 setShowSignInModal(true)
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -269,7 +281,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                 updateMacros()
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -285,7 +297,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                 setShowSignInModal(true)
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -303,52 +315,6 @@ const ProductCard = ({ product, filteredColorPic }) => {
                     onMouseOver={() => setShow2ndPic(true)}
                 />
             </div>
-        </div>
-        <div className="inline-flex items-center flex-wrap">
-        {
-          product.node.options?.map(({ name, values }) => (
-            values.map(value => {
-              const id = `option-${name}-${value}`
-  
-              const colorPicLookup = product.node.variants.edges.map(el => (
-                (el.node.title === (value + ' / ' + '0'))
-              ))
-  
-              const colorPicIndex = colorPicLookup.findIndex(el => el === true)
-
-              const variantImageSrc = product.node.variants.edges.map(el => {
-                  if (el.node.title === (value + ' / ' + '1')) {
-                    return el.node.image.originalSrc
-                  }
-              }).filter(el => el !== undefined).join('')
-
-              return (
-                <label key={id} htmlFor={id} className="cursor-pointer">
-                  <input
-                    className="sr-only"
-                    type="radio"
-                    id={id}
-                    name={`option-${name}`}
-                    value={value}
-                  />
-                  {
-                    name === 'Color' && colorPicIndex !== -1 && (
-                      <Link href={`/${handle}?color=${value}`}>
-                        <a>
-                          <div 
-                          onMouseOver={() => setVariantPic(variantImageSrc)}
-                          className={`w-8 h-8 rounded-full mr-5 box-border hover:border-2 border-[#ff00a7]`}>
-                            <Image src={product.node.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
-                          </div>
-                        </a>
-                      </Link>
-                    )
-                  }
-                </label>
-              )
-            }) 
-          ))
-        }
         </div>
         <h3 className="mt-2 xxs:ml-2 text-sm font-medium text-white">{title}</h3>
         <p className='mt-1 xxs:ml-2 text-sm text-white'>
@@ -377,7 +343,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                 updateMacros()
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -393,7 +359,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                 setShowSignInModal(true)
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -445,7 +411,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                 updateMacros()
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -461,7 +427,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                 setShowSignInModal(true)
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -480,7 +446,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                 />
             </div>
         </div>
-        <div className="inline-flex items-center flex-wrap mt-2">
+        <div className="inline-flex items-center flex-wrap mt-4 xxs:ml-3">
         {
           product.node.options?.map(({ name, values }) => (
             values.map(value => {
@@ -513,7 +479,7 @@ const ProductCard = ({ product, filteredColorPic }) => {
                         <a>
                           <div 
                           onMouseOver={() => {setVariantPic(variantImageSrc); setColorTracker(value)}}
-                          className={`w-8 h-8 rounded-full mr-5 box-border border-2 hover:border-2 border-white ${colorTracker.toLowerCase() === value.toLowerCase() && "hover:!border-4 border-4 border-[#ff00a7]"}`}>
+                          className={`w-8 h-8 rounded-full mr-5 box-border border-2 border-black ring-2 ring-white hover:ring-[#ff00a7] ${colorTracker.toLowerCase() === value.toLowerCase() && "!ring-4 ring-white border-4"}`}>
                             <Image src={product.node.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
                           </div>
                         </a>

@@ -99,7 +99,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                 />
                 {
                   name === 'Color' && colorPicIndex !== -1 ? (
-                    <div className={`w-8 h-8 rounded-full mr-5 box-border border-2 border-black ring-2 ring-white hover:opacity-75 ${color === value && "!ring-4 ring-white"}`}>
+                    <div className={`w-8 h-8 rounded-full mr-5 box-border border-2 border-black ring-2 ring-white hover:ring-[#ff00a7] ${color === value && "!ring-4 ring-white border-4"}`}>
                       <Image src={product.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
                     </div>
                   ) : (
