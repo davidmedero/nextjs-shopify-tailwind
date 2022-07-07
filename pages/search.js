@@ -18,6 +18,8 @@ const colorVals = (colors.map(color => {
 const filteredProducts = products.filter(product => {
     if (query === '') {
         return product
+    } else if (product.node.title.toLowerCase().includes(query?.toLowerCase())) {
+        return product
     } else if (product.node.tags.some(tag => tag.includes(query?.toLowerCase())) && query?.toLowerCase().split(' ').length < 2) {
         return product
     } else if (product.node.title.toLowerCase().split(' ').some(el => query?.toLowerCase().split(' ').includes(el))) {
