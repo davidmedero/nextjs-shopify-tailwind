@@ -3,7 +3,7 @@ import ProductForm from './ProductForm'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Navigation, Pagination } from 'swiper'
 import RecommendedList from './RecommendedList'
-import { useLayoutEffect, useEffect, useState, useCallback, useRef } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import SignInModal from "./SignInModal"
 import { useSession } from "next-auth/react"
 import useSWR, { useSWRConfig } from "swr"
@@ -175,11 +175,62 @@ export default function ProductPageContent({ product, allProducts }) {
     }
   }, [savedItems])
 
+  const SCROLL_BOX_MIN_HEIGHT = 20;
+  const [hovering, setHovering] = useState(false);
+  const [scrollBoxHeight, setScrollBoxHeight] = useState(SCROLL_BOX_MIN_HEIGHT);
+  const [scrollBoxTop, setScrollBoxTop] = useState(0);
+  const scrollHostRef = useRef();
+
+  const handleMouseOver = useCallback(() => {
+    !hovering && setHovering(true);
+  }, [hovering]);
+
+  const handleMouseOut = useCallback(() => {
+    !!hovering && setHovering(false);
+  }, [hovering]);
+
+  const handleScroll = useCallback(() => {
+    if (!scrollHostRef) {
+      return;
+    }
+    const scrollHostElement = scrollHostRef.current;
+    const { scrollTop, scrollHeight, offsetHeight } = scrollHostElement;
+
+    let newTop =
+      (parseInt(scrollTop, 10) / parseInt(scrollHeight, 10)) * offsetHeight;
+
+    // newTop = newTop + parseInt(scrollTop, 10);
+    newTop = Math.min(newTop, offsetHeight - scrollBoxHeight);
+    setScrollBoxTop(newTop);
+  }, []);
+
+  useEffect(() => {
+    const scrollHostElement = scrollHostRef.current;
+    const { clientHeight, scrollHeight } = scrollHostElement;
+    const scrollBoxPercentage = clientHeight / scrollHeight;
+    const scrollbarHeight = Math.max(
+      scrollBoxPercentage * clientHeight,
+      SCROLL_BOX_MIN_HEIGHT
+    );
+    setScrollBoxHeight(scrollbarHeight);
+    console.log(scrollBoxHeight)
+    scrollHostElement.addEventListener("scroll", handleScroll, true);
+    return function cleanup() {
+      scrollHostElement.removeEventListener("scroll", handleScroll, true);
+    };
+  }, []);
+
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto">
-      <div className="xxs:hidden lg:block w-[8.35%] relative -right-[49px] cursor-pointer max-h-[613px] overflow-y-scroll">
+      <div className="flex flex-col justify-center items-start md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto">
+      <div
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+      className={`scrollhost-container xxs:hidden lg:block w-[8.35%] cursor-pointer h-[613px] overflow-hidden`}>
+        <div 
+        ref={scrollHostRef}
+        className={`scrollhost max-h-full`}>
         {
           variantImages.length !== 0 ? (
             variantImages.map(el => (
@@ -207,6 +258,13 @@ export default function ProductPageContent({ product, allProducts }) {
             
           }
           </div>
+      <div className={"scroll-bar2 transition-all ease-in-out duration-200"} style={{ opacity: hovering ? 1 : 0 }}>
+        <div
+          className={"scroll-thumb2"}
+          style={{ height: scrollBoxHeight - 8, top: scrollBoxTop }}
+        />
+      </div>
+    </div>
           <div className="relative xxs:hidden lg:block w-[40%]">
           {session && (
             <>

@@ -322,3 +322,25 @@ html {
       rgba(0,0,0,0) calc(50% + 0.8px),
       rgba(0,0,0,0) 100%);
 }
+
+.scroll-bar2 {
+  width: 10px;
+  height: 100%;
+  right: 0;
+  top: 0px;
+  position: absolute;
+  border-radius: 7px;
+  bottom: 0px;
+}
+
+.scroll-thumb2 {
+  cursor: grab;
+  width: 8px;
+  margin-left: 2px;
+  margin-top: 3.5px;
+  position: absolute;
+  border-radius: 7px;
+  background-color: rgb(92, 89, 89);
+  z-index: 10;
+  transition: opacity 0.3s;
+}

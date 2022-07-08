@@ -190,7 +190,6 @@ export default function Layout({ children, className, ...restProps }) {
 
   return (
     <>
-    <div className="App">
     <div
       className={"scrollhost-container"}
     >
@@ -219,7 +218,6 @@ export default function Layout({ children, className, ...restProps }) {
           onMouseDown={handleScrollThumbMouseDown}
         />
       </div>
-    </div>
     </div>
     </>
   )
