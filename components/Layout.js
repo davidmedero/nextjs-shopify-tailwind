@@ -137,9 +137,6 @@ export default function Layout({ children, className, ...restProps }) {
     [scrollBoxHeight]
   );
 
-  const size = useWindowSize();
-
-  function useWindowSize() {
     // Initialize state with undefined width/height so server and client renders match
     // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
     const [windowSize, setWindowSize] = useState({
@@ -162,8 +159,6 @@ export default function Layout({ children, className, ...restProps }) {
       // Remove event listener on cleanup
       return () => window.removeEventListener("resize", handleResize);
     }, []); // Empty array ensures that effect is only run on mount
-    return windowSize;
-  }
 
   useEffect(() => {
     const scrollHostElement = scrollHostRef.current
@@ -178,7 +173,7 @@ export default function Layout({ children, className, ...restProps }) {
     return function cleanup() {
       scrollHostElement.removeEventListener("scroll", handleScroll, true)
     }
-  }, [scrollBoxTop, size.height])
+  }, [scrollBoxTop, windowSize, router.asPath])
 
   useEffect(() => {
     //this handles the dragging on scroll-thumb

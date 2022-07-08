@@ -199,7 +199,7 @@ export default function Nav() {
                   onChange={(e) => setQuery(e.target.value)}
                   autoComplete='off'
                   autoFocus
-                  id='input' type="text" placeholder="Search..." name="input" className="border-b border-b-white border-black lg:w-[400px] xl:w-[500px] text-white bg-black" />
+                  id='input' type="text" placeholder="Search..." name="input" className="border-b border-b-white border-black lg:w-[400px] xl:w-[500px] text-white bg-black caret-[#ff00a7]" />
                   <span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -262,7 +262,7 @@ export default function Nav() {
                     ref={mobileInputRef}
                     autoComplete='off'
                     autoFocus
-                    id="mobile-input" type="text" placeholder="Search..." className="xxs:border-b-white xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none bg-black text-white" />
+                    id="mobile-input" type="text" placeholder="Search..." className="xxs:border-b-white xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none bg-black text-white caret-[#ff00a7]" />
                     <span>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
                       <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
