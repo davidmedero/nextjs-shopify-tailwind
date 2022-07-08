@@ -193,8 +193,7 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
 
   useEffect(() => {
     if (filteredShade && filteredShade.length !== []) {
-        setVariantPic('')
-        setColorTracker('')
+
       product.node.variants?.edges.map(el => {
         if (el.node.title.toLowerCase().includes(filteredShade.join('').toLowerCase() + ' / ' + product.node.variants.edges[1].node.selectedOptions[1]?.value.toLowerCase())) {
           setVariantPic(el.node.image.originalSrc)
