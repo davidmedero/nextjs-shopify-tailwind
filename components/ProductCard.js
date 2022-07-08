@@ -478,7 +478,7 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                         <a>
                           <div 
                           onMouseOver={() => {setVariantPic(variantImageSrc); setColorTracker(value)}}
-                          className={`w-8 h-8 rounded-full mr-5 box-border border-2 border-black ring-2 ring-white hover:ring-[#ff00a7] ${colorTracker.toLowerCase() === value.toLowerCase() && "!ring-4 ring-white border-4"}`}>
+                          className={`w-8 h-8 rounded-full mr-5 box-border border-2 border-black ring-2 ring-white ${colorTracker.toLowerCase() === value.toLowerCase() && "!ring-4 ring-white border-4"}`}>
                             <Image src={product.node.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
                           </div>
                         </a>

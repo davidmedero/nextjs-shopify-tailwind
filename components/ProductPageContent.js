@@ -179,12 +179,12 @@ export default function ProductPageContent({ product, allProducts }) {
   return (
     <div>
       <div className="flex flex-col justify-center items-center md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto">
-      <div className="xxs:hidden lg:block w-[8.35%]">
+      <div className="xxs:hidden lg:block w-[8.35%] relative -right-[49px] cursor-pointer max-h-[613px] overflow-y-scroll">
         {
           variantImages.length !== 0 ? (
             variantImages.map(el => (
               <div
-              className="mb-6">
+              className="mb-6 last:mb-0">
                 <Image 
                 src={el.image} 
                 data-info={JSON.stringify(el)}
@@ -247,7 +247,7 @@ export default function ProductPageContent({ product, allProducts }) {
                     <div>
                       {
                         <figure 
-                        className="w-full block bg-no-repeat cursor-move"
+                        className="w-[88.8%] float-right block bg-no-repeat cursor-move"
                         onMouseMove={(e) => handleMouseMove(e)} 
                         style={mousePosition}>
                           <Image 
