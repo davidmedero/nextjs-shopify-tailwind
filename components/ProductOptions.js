@@ -59,18 +59,27 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
         setInventory(productInventory.variants.edges.map(item => item.node))
     }
   }, [productInventory])
+
+  const checkSKU = [...new Set((product.variants.edges.filter(el => (
+    (el.node.sku !== '0')
+  )).filter(el => (
+    el !== 'false'
+  ))).map(el => {
+    return el.node.selectedOptions.map(el => {
+    return el.value
+  })
+  }).flat())]
   
 
   return (
     <fieldset className="mt-3 text-white">
-      <div className={`${name === "Color" ? "inline-flex items-center flex-wrap" : "grid lg:grid-cols-4 md:grid-cols-3 gap-x-2"}`}>
+      <div className="flex flex-wrap items-center">
         {
-          values.map(value => {
+          values.filter(el => checkSKU.includes(el)).map(value => {
             const id = `option-${name}-${value}`
             const checked = selectedOptions[name] === value
 
             const available = inventory && inventory.map(el => {
-              console.log(product)
               if ((el.title === (selectedOptions.Color + ' / ' + value)) && (name === 'Size')) {
                 return el.availableForSale
               } else if ((el.title === value) && (name === 'Size')) {
@@ -83,9 +92,9 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             ))
 
             const colorPicIndex = colorPicLookup.findIndex(el => el === true)
-            
+
             return (
-              <label key={id} htmlFor={id} onClick={() => available !== 'false' && name !== 'Size' && handleQuery(value)} className="cursor-pointer">
+              <label key={id} htmlFor={id} onClick={() => available !== 'false' && name !== 'Size' && handleQuery(value)} className={`cursor-pointer ${name === 'Size' && 'm-[4px]'} ${name === 'Color' && 'p-[6px]'}`}>
                 <input
                   className="sr-only"
                   type="radio"
@@ -99,13 +108,13 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                 />
                 {
                   name === 'Color' && colorPicIndex !== -1 ? (
-                    <div className={`w-8 h-8 rounded-full mr-5 box-border border-2 border-black ring-2 ring-white hover:ring-[#ff00a7] ${color === value && "!ring-4 ring-white border-4"}`}>
+                    <div className={`w-8 h-8 rounded-full m-[6px] box-border border-2 border-black ring-2 ring-white hover:ring-[#ff00a7] ${color === value && "!ring-4 ring-white border-4"}`}>
                       <Image src={product.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
                     </div>
                   ) : (
                     <div className={`${available == 'false' && 'cursor-not-allowed'}`}>
-                      <div className={`${"flex items-center justify-center border-white border box-border lg:w-[88px] md:w-[120px] h-10 text-center md:mt-[7px] text-base rounded-sm cursor-pointer text-white bg-black font-semibold hover:border-[#ff00a7]"} ${checked && available !== 'false'  && "border-2 border-[#ff00a7]"} ${available == 'false'  && "soldOut pointer-events-none text-gray-400"} `}>
-                        <span>{value}</span>
+                      <div className={`${"relative flex items-center justify-center border-white border box-border p-[4px] w-[122px] h-10 text-center text-base rounded-sm cursor-pointer text-white bg-black font-semibold hover:border-[#ff00a7]"} ${checked && available !== 'false'  && "border-2 border-[#ff00a7]"} ${available == 'false'  && "soldOut pointer-events-none text-gray-400"} `}>
+                        <span className='absolute'>{value}</span>
                       </div>
                   </div>
                   )

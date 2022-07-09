@@ -29,7 +29,9 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const noVariantsArray = []
 
+  const variantImageRef = useRef()
   const [variantImages, setVariantImages] = useState([])
+  variantImageRef.current = variantImages
 
   variantImages.map((el, i) => {
     variantImagesArray.push(
@@ -184,7 +186,7 @@ export default function ProductPageContent({ product, allProducts }) {
   const [isDragging, setDragging] = useState(false);
 
   const handleMouseOver = useCallback(() => {
-    !hovering && setHovering(true);
+    !hovering && (variantImageRef.current.length > 4 || (variantImages.length === 0 && product.images.edges.length > 4)) && setHovering(true);
   }, [hovering]);
 
   const handleMouseOut = useCallback(() => {
@@ -265,7 +267,7 @@ export default function ProductPageContent({ product, allProducts }) {
     return function cleanup() {
       scrollHostElement.removeEventListener("scroll", handleScroll, true);
     };
-  }, []);
+  }, [scrollBoxTop]);
 
   useEffect(() => {
     //this is handle the dragging on scroll-thumb
@@ -286,7 +288,7 @@ export default function ProductPageContent({ product, allProducts }) {
       <div
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
-      className={`scrollhost-container xxs:hidden lg:block w-[8.35%] cursor-pointer h-[613px] overflow-hidden`}>
+      className={`scrollhost-container xxs:hidden lg:block w-[8.35%] cursor-pointer h-[613px] z-10 relative left-[49px]`}>
         <div 
         ref={scrollHostRef}
         className={`scrollhost max-h-full`}>
@@ -319,7 +321,7 @@ export default function ProductPageContent({ product, allProducts }) {
           </div>
       <div className={"scroll-bar2 transition-all ease-in-out duration-200"} style={{ opacity: hovering ? 1 : 0 }}>
         <div
-          className={"scroll-thumb2"}
+          className={(variantImageRef.current.length > 4 || (variantImages.length === 0 && product.images.edges.length > 4)) && "scroll-thumb2"}
           style={{ height: scrollBoxHeight - 8, top: scrollBoxTop }}
           onMouseDown={handleScrollThumbMouseDown}
         />
@@ -336,7 +338,7 @@ export default function ProductPageContent({ product, allProducts }) {
                 updateMacros()
               }}
               className="absolute right-[8px] top-[6px] z-[10]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -352,7 +354,7 @@ export default function ProductPageContent({ product, allProducts }) {
                 setShowSignInModal(true)
               }}
               className="absolute right-[8px] top-[6px] z-[10]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -407,7 +409,7 @@ export default function ProductPageContent({ product, allProducts }) {
                 updateMacros()
               }}
               className="absolute xxs:right-[10px] md:right-[8px] xxs:top-[7px] md:top-[6px] z-[10]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-9 xxs:w-9 md:h-8 md:w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-9 xxs:w-9 md:h-8 md:w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
@@ -423,7 +425,7 @@ export default function ProductPageContent({ product, allProducts }) {
                 setShowSignInModal(true)
               }}
               className="absolute xxs:right-[10px] md:right-[8px] xxs:top-[7px] md:top-[6px] z-[10]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-9 xxs:w-9 md:h-8 md:w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-9 xxs:w-9 md:h-8 md:w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>

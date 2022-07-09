@@ -158,11 +158,27 @@ export default function ProductForm({ product }) {
         }
     }
 
+    const [color, setColor] = useState('')
+
+    useEffect(() => {
+        const url = new URL(window.location)
+        if (url.searchParams.get('color')) {
+        setColor(url.searchParams.get('color'))
+        }
+    }, [selectedVariant, selectedOptions])
+
+    useEffect(() => {
+        const url = new URL(window.location)
+        if (url.searchParams.get('color')) {
+          setColor(url.searchParams.get('color'))
+        }
+      }, [])
+
 
 
   return (
     <div className="xxs:mt-[10px] md:!mt-0 py-4 relative -top-4 md:top-0 flex flex-col xxs:w-full md:w-[390px]">
-        <div className="xxs:mx-[15px] md:mx-0 md:mr-[15px]">
+        <div className="xxs:mx-[15px] md:mx-0">
         <Head>
             <script type='text/javascript' id={product.id}>
                 {
@@ -295,7 +311,7 @@ export default function ProductForm({ product }) {
                 }
             </script>
         </Head>
-      <h2 className="text-2xl font-bold text-white">{product.title}</h2>
+      <h2 className="text-2xl font-bold text-white">{product.title} {selectedOptions.Color && (' - ' + color)}</h2>
       <span className="pb-3 text-xl text-white">{
       currency === '' ? formatter.format(product.variants.edges[0].node.priceV2.amount) :
       currency === 'USD' ? formatter.format(product.variants.edges[0].node.priceV2.amount) :
@@ -316,7 +332,7 @@ export default function ProductForm({ product }) {
               />
           ))
       }
-       <div className="text-base rounded-md shadow-md flex justify-between xxs:w-full mt-5">
+       <div className="text-base rounded-md shadow-md flex justify-between xxs:w-full mt-[17px]">
         
         <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-white bg-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-md xxs:rounded-r-none pl-[85px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
 

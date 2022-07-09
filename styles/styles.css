@@ -325,11 +325,9 @@ html {
 
 .scroll-bar2 {
   width: 10px;
-  height: 100%;
   right: 0;
   top: 0px;
   position: absolute;
-  border-radius: 7px;
   bottom: 0px;
 }
 
