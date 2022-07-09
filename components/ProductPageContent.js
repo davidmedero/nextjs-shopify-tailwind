@@ -180,6 +180,8 @@ export default function ProductPageContent({ product, allProducts }) {
   const [scrollBoxHeight, setScrollBoxHeight] = useState(SCROLL_BOX_MIN_HEIGHT);
   const [scrollBoxTop, setScrollBoxTop] = useState(0);
   const scrollHostRef = useRef();
+  const [lastScrollThumbPosition, setScrollThumbPosition] = useState(0);
+  const [isDragging, setDragging] = useState(false);
 
   const handleMouseOver = useCallback(() => {
     !hovering && setHovering(true);
@@ -188,6 +190,51 @@ export default function ProductPageContent({ product, allProducts }) {
   const handleMouseOut = useCallback(() => {
     !!hovering && setHovering(false);
   }, [hovering]);
+
+  const handleDocumentMouseUp = useCallback(
+    e => {
+      if (isDragging) {
+        e.preventDefault();
+        setDragging(false);
+      }
+    },
+    [isDragging]
+  );
+
+  const handleDocumentMouseMove = useCallback(
+    e => {
+      if (isDragging) {
+        e.preventDefault();
+        e.stopPropagation();
+        const scrollHostElement = scrollHostRef.current;
+        const { scrollHeight, offsetHeight } = scrollHostElement;
+
+        let deltaY = e.clientY - lastScrollThumbPosition;
+        let percentage = deltaY * (scrollHeight / offsetHeight);
+
+        setScrollThumbPosition(e.clientY);
+        setScrollBoxTop(
+          Math.min(
+            Math.max(0, scrollBoxTop + deltaY),
+            offsetHeight - scrollBoxHeight
+          )
+        );
+        scrollHostElement.scrollTop = Math.min(
+          scrollHostElement.scrollTop + percentage,
+          scrollHeight - offsetHeight
+        );
+      }
+    },
+    [isDragging, lastScrollThumbPosition, scrollBoxHeight, scrollBoxTop]
+  );
+
+  const handleScrollThumbMouseDown = useCallback(e => {
+    e.preventDefault();
+    e.stopPropagation();
+    setScrollThumbPosition(e.clientY);
+    setDragging(true);
+    console.log("handleScrollThumbMouseDown");
+  }, []);
 
   const handleScroll = useCallback(() => {
     if (!scrollHostRef) {
@@ -219,6 +266,18 @@ export default function ProductPageContent({ product, allProducts }) {
       scrollHostElement.removeEventListener("scroll", handleScroll, true);
     };
   }, []);
+
+  useEffect(() => {
+    //this is handle the dragging on scroll-thumb
+    document.addEventListener("mousemove", handleDocumentMouseMove);
+    document.addEventListener("mouseup", handleDocumentMouseUp);
+    document.addEventListener("mouseleave", handleDocumentMouseUp);
+    return function cleanup() {
+      document.removeEventListener("mousemove", handleDocumentMouseMove);
+      document.removeEventListener("mouseup", handleDocumentMouseUp);
+      document.removeEventListener("mouseleave", handleDocumentMouseUp);
+    };
+  }, [handleDocumentMouseMove, handleDocumentMouseUp]);
 
 
   return (
@@ -262,6 +321,7 @@ export default function ProductPageContent({ product, allProducts }) {
         <div
           className={"scroll-thumb2"}
           style={{ height: scrollBoxHeight - 8, top: scrollBoxTop }}
+          onMouseDown={handleScrollThumbMouseDown}
         />
       </div>
     </div>
