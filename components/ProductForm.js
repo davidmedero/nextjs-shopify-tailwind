@@ -5,9 +5,12 @@ import { CartContext } from '../context/shopContext'
 import Head from 'next/head'
 import Link from "next/link"
 import collections from "../categories"
+import { useRouter } from "next/router"
 
 
-export default function ProductForm({ product }) {
+export default function ProductForm({ product, variantImages }) {
+
+    const router = useRouter()
 
     const [currencyRates, setCurrencyRates] = useState(0)
 
@@ -54,6 +57,8 @@ export default function ProductForm({ product }) {
             title: product.title,
             handle: product.handle,
             image: variant.node.image?.originalSrc,
+            variantImages: variantImages,
+            variantLink: router.asPath,
             options: allOptions,
             variantTitle: variant.node.title,
             variantPrice: variant.node.priceV2.amount,

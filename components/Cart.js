@@ -9,6 +9,7 @@ import { useSwipeable } from 'react-swipeable';
 
 
 export default function Cart({ cart }) {
+
   const cancelButtonRef = useRef()
 
   const { cartOpen, setCartOpen, checkoutUrl, removeCartItem, updateCartQuantity } = useContext(CartContext)
@@ -86,6 +87,8 @@ export default function Cart({ cart }) {
     trackMouse: true
   });
 
+  console.log(cart.map(product => product))
+
 
   return (
     <Transition.Root show={cartOpen} as={Fragment} {...handlers}>
@@ -145,14 +148,25 @@ export default function Cart({ cart }) {
                           {cart.map((product) => (
                             <li key={product.id + Math.random()} className="py-6 flex">
                               <div className="relative shadow-md flex-shrink-0 w-28 h-[160px] border rounded-md overflow-hidden hover:opacity-75">
-                              <Link href={`/${product.handle}`} passHref>
+                              <Link href={`/${product.variantLink}`} passHref>
                                 <a onClick={() => setCartOpen(false)}>
-                                  <Image
+                                  {
+                                    product.variantImages.length !== 0 ? (
+                                      <Image
+                                    src={product.variantImages[0]?.image}
+                                    alt={product.title}
+                                    layout="fill"
+                                    objectFit="cover"
+                                  />
+                                    ) : (
+                                      <Image
                                     src={product.image}
                                     alt={product.title}
                                     layout="fill"
                                     objectFit="cover"
                                   />
+                                    )
+                                  }
                                 </a>
                                 </Link>
                               </div>

@@ -505,7 +505,6 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
     </Link>
       )
     }
-    
     </>
   )
 }

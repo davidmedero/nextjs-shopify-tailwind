@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react"
 import useSWR, { useSWRConfig } from "swr"
 import axios from "axios"
 import { useRouter } from 'next/router'
+import Cart from './Cart'
 
 
 const fetcher = url => axios.get(url).then(res => res.data)
@@ -443,7 +444,7 @@ export default function ProductPageContent({ product, allProducts }) {
             {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
           </Swiper>
         </div>
-        <ProductForm product={product} allProducts={allProducts} />
+        <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>
       <RecommendedList current={product.id} products={product.collections.edges[0].node.products.edges} />
     </div>
