@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react"
 import useSWR, { useSWRConfig } from "swr"
 import axios from "axios"
 import { useRouter } from 'next/router'
-import Cart from './Cart'
+import GetTheLook from './GetTheLook'
 
 
 const fetcher = url => axios.get(url).then(res => res.data)
@@ -282,10 +282,13 @@ export default function ProductPageContent({ product, allProducts }) {
     };
   }, [handleDocumentMouseMove, handleDocumentMouseUp]);
 
+  const [showGTL, setShowGTL] = useState(true)
+  const [showYMAL, setShowYMAL] = useState(false)
+
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-start md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto">
+      <div className="flex flex-col justify-center items-start md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto relative lg:right-[25px]">
       <div
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
@@ -372,6 +375,7 @@ export default function ProductPageContent({ product, allProducts }) {
                         onMouseMove={(e) => handleMouseMove(e)} 
                         style={mousePosition}>
                           <Image 
+                          onClick={()=> window.open(`${el.image}`, "_blank")} 
                           className="opacity-100 hover:opacity-0 transition-all ease-in-out duration-500" 
                           src={el.image} 
                           width='500' height='800' layout="responsive" objectFit="cover" />
@@ -446,7 +450,23 @@ export default function ProductPageContent({ product, allProducts }) {
         </div>
         <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>
-      <RecommendedList current={product.id} products={product.collections.edges[0].node.products.edges} />
+      <div className='mx-8'>
+        <div className="suggestions flex flex-row justify-around mx-auto text-white border rounded-sm border-white max-w-[1220px] cursor-pointer">
+          <div 
+          onMouseOver={() => {setShowGTL(true), setShowYMAL(false)}}
+          className='w-full h-full py-3 font-semibold hover:text-[#ff00a7]'>GET THE LOOK</div>
+          <div 
+          onMouseOver={() => {setShowGTL(false), setShowYMAL(true)}}
+          className='w-full h-full py-3 font-semibold hover:text-[#ff00a7]'>YOU MAY ALSO LIKE</div>
+        </div>
+      </div>
+      {
+            showGTL ? (
+              <GetTheLook current={product.id} product={product} allProducts={allProducts} />
+            ) : (
+              <RecommendedList current={product.id} products={product.collections.edges.length > 1 ? product.collections.edges[product.collections.edges.length - 1].node.products.edges : product.collections.edges[0].node.products.edges} />
+            )
+          }
     </div>
   )
 }

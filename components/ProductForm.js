@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useLayoutEffect } from "react"
+import { useState, useContext, useEffect, useLayoutEffect, useRef } from "react"
 import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import ProductOptions from "./ProductOptions"
 import { CartContext } from '../context/shopContext'
@@ -72,10 +72,9 @@ export default function ProductForm({ product, variantImages }) {
       defaultValues[item.name] = item.values[0]
     })
 
-    const [selectedVariant, setSelectedVariant] = useState(allVariantOptions[0])
-    const [selectedOptions, setSelectedOptions] = useState(defaultValues)
-    const [counter, setCounter] = useState(1);
-    
+    const [selectedVariant, setSelectedVariant] = useState({})
+    const [selectedOptions, setSelectedOptions] = useState({})
+    const [counter, setCounter] = useState(1)
 
     function setOptions(name, value) {
         setSelectedOptions(prevState => {
@@ -94,6 +93,14 @@ export default function ProductForm({ product, variantImages }) {
             }
         })
     }
+
+    const [checkedSize, setCheckedSize] = useState(false)
+
+    useEffect(() => {
+        window.addEventListener('selectSize', () => {
+            setCheckedSize(true)
+        })
+      }, [])
 
     const increment = () => {
         counter < 9 ? counter += 1 : counter = 9
@@ -177,7 +184,9 @@ export default function ProductForm({ product, variantImages }) {
         if (url.searchParams.get('color')) {
           setColor(url.searchParams.get('color'))
         }
-      }, [])
+    }, [])
+
+    const [sizesOutline, setSizesOutline] = useState(false)
 
 
 
@@ -324,22 +333,24 @@ export default function ProductForm({ product, variantImages }) {
       currency === 'EUR' ? EURFormatter.format(Math.ceil(product.variants.edges[0].node.priceV2.amount * EURcurrency * shopifyConversionFee)) :
       null
       }</span>
-      {
-          product.options.map(({ name, values }) => (
-              <ProductOptions 
-              key={`key-${name}`}
-              name={name}
-              values={values}
-              selectedOptions={selectedOptions}
-              setOptions={setOptions}
-              selectedVariant={selectedVariant}
-              product={product}
-              />
-          ))
-      }
-       <div className="text-base rounded-md shadow-md flex justify-between xxs:w-full mt-[17px]">
+        {
+            product.options.map(({ name, values }) => (
+                <ProductOptions 
+                key={`key-${name}`}
+                name={name}
+                values={values}
+                selectedOptions={selectedOptions}
+                setOptions={setOptions}
+                selectedVariant={selectedVariant}
+                product={product}
+                sizesOutline={sizesOutline}
+                checkedSize={checkedSize}
+                />
+            ))
+        }
+       <div className="text-base rounded-sm shadow-md flex justify-between xxs:w-full mt-[17px]">
         
-        <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-white bg-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-md xxs:rounded-r-none pl-[85px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
+        <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-white bg-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-sm xxs:rounded-r-none pl-[85px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
 
         <span className="flex"> 
         <button 
@@ -352,20 +363,28 @@ export default function ProductForm({ product, variantImages }) {
         
         <button 
         onClick={increment}
-        className='bg-black border text-white highlight-removal transition-all ease-in-out duration-100 px-3 py-2 hover:bg-gray-800 active:bg-gray-700 hover:text-white active:text-white rounded-r-md'>
+        className='bg-black border text-white highlight-removal transition-all ease-in-out duration-100 px-3 py-2 hover:bg-gray-800 active:bg-gray-700 hover:text-white active:text-white rounded-r-sm'>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
           </svg>
         </button>  
         </span>
-      </div>   
-       <button 
+      </div>
+      {
+        checkedSize === false ? (
+            <button 
+            onMouseOver={() => setSizesOutline(true)}
+            onMouseLeave={() => setSizesOutline(false)}
+            className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-sm font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5 hover:bg-[#d4008a]"}>SELECT A SIZE</button>
+        ) : (
+            <button 
         onClick={() => {
             addToCart(selectedVariant)
             setCounter(1)
         }}
-        className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-md font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5 hover:bg-[#d4008a]"}>ADD TO BAG</button>
-
+        className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-sm font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5 hover:bg-[#d4008a]"}>ADD TO BAG</button>
+        )
+      }
     <div className="mt-3">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
     <div className="selectSection">

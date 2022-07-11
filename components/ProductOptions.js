@@ -13,7 +13,7 @@ const fetcher = (url, id) => (
 )
 
 
-export default function ProductOptions({ name, values, selectedOptions, setOptions, product }) {
+export default function ProductOptions({ name, values, selectedOptions, setOptions, product, sizesOutline, checkedSize }) {
 
   const { data: productInventory } = useSWR(
     ['/api/available', product.handle],
@@ -41,11 +41,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
     if (url.searchParams.get('color')) {
       setOptions(name, url.searchParams.get('color'))
       setColor(url.searchParams.get('color'))
-    } else {
-      url.searchParams.set('color', initialColor)
-      window.history.replaceState({}, '', url)
-      setColor(initialColor)
-    }
+    } 
   }, [])
 
   useEffect(() => {
@@ -69,6 +65,12 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
     return el.value
   })
   }).flat())]
+
+  const [detectClick, setDetectClick] = useState(false)
+
+  useEffect(() => {
+    window.dispatchEvent(new Event("selectSize"))
+  }, [detectClick])
   
 
   return (
@@ -94,7 +96,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
             const colorPicIndex = colorPicLookup.findIndex(el => el === true)
 
             return (
-              <label key={id} htmlFor={id} onClick={() => available !== 'false' && name !== 'Size' && handleQuery(value)} className={`cursor-pointer ${name === 'Size' && 'm-[4px]'} ${name === 'Color' && 'p-[6px]'}`}>
+              <label key={id} htmlFor={id} onClick={() => available !== 'false' && name !== 'Size' && handleQuery(value)} className={`cursor-pointer ${name === 'Size' && 'm-[4px]'} ${name === 'Size' && sizesOutline === true && checkedSize === false && 'ring ring-[#ff00a7]'} ${name === 'Color' && 'p-[6px]'}`}>
                 <input
                   className="sr-only"
                   type="radio"
@@ -112,7 +114,9 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                       <Image src={product.variants.edges[colorPicIndex]?.node.image.originalSrc} className="rounded-full" width='500' height='500' layout="responsive" objectFit="cover" />
                     </div>
                   ) : (
-                    <div className={`${available == 'false' && 'cursor-not-allowed'}`}>
+                    <div 
+                    onClick={() => setDetectClick(true)}
+                    className={`${available == 'false' && 'cursor-not-allowed'}`}>
                       <div className={`${"relative flex items-center justify-center border-white border box-border p-[4px] w-[122px] h-10 text-center text-base rounded-sm cursor-pointer text-white bg-black font-semibold hover:border-[#ff00a7]"} ${checked && available !== 'false'  && "border-2 border-[#ff00a7]"} ${available == 'false'  && "soldOut pointer-events-none text-gray-400"} `}>
                         <span className='absolute'>{value}</span>
                       </div>
