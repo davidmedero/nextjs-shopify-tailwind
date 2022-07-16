@@ -75,7 +75,7 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
 
   return (
     <fieldset className="mt-3 text-white">
-      <div className="flex flex-wrap items-center">
+      <div className={name !== 'Color' ? "grid grid-cols-3 items-center" : "flex flex-wrap items-center"}>
         {
           values.filter(el => checkSKU.includes(el)).map(value => {
             const id = `option-${name}-${value}`
@@ -117,8 +117,8 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
                     <div 
                     onClick={() => setDetectClick(true)}
                     className={`${available == 'false' && 'cursor-not-allowed'}`}>
-                      <div className={`${"relative flex items-center justify-center border-white border box-border p-[4px] w-[122px] h-10 text-center text-base rounded-sm cursor-pointer text-white bg-black font-semibold hover:border-[#ff00a7]"} ${checked && available !== 'false'  && "border-2 border-[#ff00a7]"} ${available == 'false'  && "soldOut pointer-events-none text-gray-400"} `}>
-                        <span className='absolute'>{value}</span>
+                      <div className={`${"relative flex items-center justify-center border-white border box-border p-[4px] h-10 text-center text-base rounded-sm cursor-pointer text-white bg-black font-semibold hover:border-[#ff00a7]"} ${checked && available !== 'false'  && "border-2 border-[#ff00a7]"} ${available == 'false'  && "soldOut pointer-events-none text-gray-400"} `}>
+                        <span>{value}</span>
                       </div>
                   </div>
                   )

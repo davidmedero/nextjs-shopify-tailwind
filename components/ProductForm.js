@@ -191,7 +191,7 @@ export default function ProductForm({ product, variantImages }) {
 
 
   return (
-    <div className="xxs:mt-[10px] md:!mt-0 py-4 relative -top-4 md:top-0 flex flex-col xxs:w-full md:w-[390px]">
+    <div className="lg:right-[49px] xxs:mt-[10px] md:!mt-0 py-4 !pb-0 relative -top-4 md:top-0 flex flex-col xxs:w-full md:w-[390px] md:mr-3 lg:mr-0">
         <div className="xxs:mx-[15px] md:mx-0">
         <Head>
             <script type='text/javascript' id={product.id}>

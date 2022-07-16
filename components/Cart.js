@@ -145,7 +145,7 @@ export default function Cart({ cart }) {
                               <ul role="list" className="-my-6 divide-y divide-gray-200">
                           {cart.map((product) => (
                             <li key={product.id + Math.random()} className="py-6 flex">
-                              <div className="relative shadow-md flex-shrink-0 w-28 h-[160px] border rounded-md overflow-hidden hover:opacity-75">
+                              <div className="relative shadow-md flex-shrink-0 w-28 h-[166px] border rounded-md overflow-hidden hover:opacity-75">
                               <Link href={`/${product.variantLink}`} passHref>
                                 <a onClick={() => setCartOpen(false)}>
                                   {

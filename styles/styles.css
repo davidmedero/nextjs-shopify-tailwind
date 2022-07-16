@@ -343,3 +343,13 @@ html {
   z-index: 10;
   transition: opacity 0.3s;
 }
+
+.heart:after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -40%;
+  width: 170%;
+  height: 180%;
+  cursor: pointer;
+}

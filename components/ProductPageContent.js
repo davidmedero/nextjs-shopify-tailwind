@@ -33,6 +33,10 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const noVariantsArray = []
 
+  const variantImagesArrayMobile = []
+
+  const noVariantsArrayMobile = []
+
   const variantImageRef = useRef()
   const [variantImages, setVariantImages] = useState([])
   variantImageRef.current = variantImages
@@ -40,7 +44,12 @@ export default function ProductPageContent({ product, allProducts }) {
   variantImages.map((el, i) => {
     variantImagesArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={el.image} width='600' height='960' layout="responsive" objectFit="cover" />
+        <Image src={el.image} width='300' height='427' layout="responsive" objectFit="contain" />
+      </SwiperSlide>
+    )
+    variantImagesArrayMobile.push(
+      <SwiperSlide key={`slide-${i}`}>
+        <Image src={el.image} width='300' height='350' layout="responsive" objectFit="contain" />
       </SwiperSlide>
     )
   })
@@ -48,7 +57,12 @@ export default function ProductPageContent({ product, allProducts }) {
   product.images.edges.map((image, i) => {
     noVariantsArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={image.node.originalSrc} width='600' height='960' layout="responsive" objectFit="cover" />
+        <Image src={image.node.originalSrc} width='300' height='427' layout="responsive" objectFit="contain" />
+      </SwiperSlide>
+    )
+    noVariantsArrayMobile.push(
+      <SwiperSlide key={`slide-${i}`}>
+        <Image src={image.node.originalSrc} width='300' height='350' layout="responsive" objectFit="contain" />
       </SwiperSlide>
     )
   })
@@ -290,11 +304,11 @@ export default function ProductPageContent({ product, allProducts }) {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-start md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto relative lg:right-[25px]">
+      <div className="flex flex-col justify-center items-start md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto relative lg:left-[25px]">
       <div
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
-      className={`scrollhost-container xxs:hidden lg:block w-[8.35%] cursor-pointer h-[613px] z-10 relative left-[49px]`}>
+      className={`scrollhost-container xxs:hidden lg:block w-[8.35%] cursor-pointer h-[613px] z-10 !top-[62px]`}>
         <div 
         ref={scrollHostRef}
         className={`scrollhost max-h-full`}>
@@ -333,7 +347,7 @@ export default function ProductPageContent({ product, allProducts }) {
         />
       </div>
     </div>
-          <div className="relative xxs:hidden lg:block w-[40%]">
+          <div className="sticky !top-[62px] xxs:hidden lg:block w-[40%]">
           {session && (
             <>
             <span 
@@ -343,7 +357,7 @@ export default function ProductPageContent({ product, allProducts }) {
                 handleButtonClick(e);
                 updateMacros()
               }}
-              className="absolute right-[8px] top-[6px] z-[10]">
+              className="absolute heart right-[57px] top-[6px] z-[10]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
@@ -359,7 +373,7 @@ export default function ProductPageContent({ product, allProducts }) {
                 handleButtonClick(e);
                 setShowSignInModal(true)
               }}
-              className="absolute right-[8px] top-[6px] z-[10]">
+              className="absolute heart right-[57px] top-[6px] z-[10]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
@@ -373,7 +387,7 @@ export default function ProductPageContent({ product, allProducts }) {
                     <div>
                       {
                         <figure 
-                        className="w-[88.8%] float-right block bg-no-repeat cursor-move"
+                        className="w-[88.8%] block bg-no-repeat cursor-move"
                         onMouseMove={(e) => handleMouseMove(e)} 
                         style={mousePosition}>
                           <Image 
@@ -417,7 +431,7 @@ export default function ProductPageContent({ product, allProducts }) {
                 handleButtonClick(e);
                 updateMacros()
               }}
-              className="absolute xxs:right-[10px] md:right-[8px] xxs:top-[7px] md:top-[6px] z-[10]">
+              className="absolute heart xxs:right-[10px] md:right-[8px] xxs:top-[7px] md:top-[6px] z-[10]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-9 xxs:w-9 md:h-8 md:w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
@@ -433,7 +447,7 @@ export default function ProductPageContent({ product, allProducts }) {
                 handleButtonClick(e);
                 setShowSignInModal(true)
               }}
-              className="absolute xxs:right-[10px] md:right-[8px] xxs:top-[7px] md:top-[6px] z-[10]">
+              className="absolute heart xxs:right-[10px] md:right-[8px] xxs:top-[7px] md:top-[6px] z-[10]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-9 xxs:w-9 md:h-8 md:w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
@@ -442,15 +456,26 @@ export default function ProductPageContent({ product, allProducts }) {
             )}
             <SignInModal show={showSignInModal} onClose={() => setShowSignInModal(false)}>
             </SignInModal>
-            <Swiper
-            style={{ '--swiper-navigation-color': '#000', '--swiper-pagination-color': '#000' }}
-            navigation={true}
-            pagination={{ clickable: true }}
-            className="w-full"
-            loop='true'
-          >
-            {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
-          </Swiper>
+              <Swiper
+              style={{ '--swiper-navigation-color': '#000', '--swiper-pagination-color': '#000' }}
+              navigation={true}
+              pagination={{ clickable: true }}
+              className="w-full xxs:hidden sm:block"
+              loop='true'
+            >
+              {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
+            </Swiper>
+
+              <Swiper
+              style={{ '--swiper-navigation-color': '#000', '--swiper-pagination-color': '#000' }}
+              navigation={true}
+              pagination={{ clickable: true }}
+              className="w-full xxs:block sm:hidden"
+              loop='true'
+            >
+              {variantImagesArrayMobile.length === 0 ? noVariantsArrayMobile : variantImagesArrayMobile}
+            </Swiper>
+
         </div>
         <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>
