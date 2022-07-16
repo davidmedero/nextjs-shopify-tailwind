@@ -87,8 +87,6 @@ export default function Cart({ cart }) {
     trackMouse: true
   });
 
-  console.log(cart.map(product => product))
-
 
   return (
     <Transition.Root show={cartOpen} as={Fragment} {...handlers}>

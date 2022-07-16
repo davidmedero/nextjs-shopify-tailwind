@@ -80,7 +80,8 @@ html {
 }
 
 .scrollhost-container {
-  position: relative;
+  position: sticky;
+  top: 0;
 }
 
 .scrollhost {
@@ -98,7 +99,7 @@ html {
   top: 0px;
   position: absolute;
   bottom: 0px;
-  z-index: 9999;
+  z-index: 9980;
   overflow: hidden;
   cursor: pointer;
 }
@@ -112,7 +113,7 @@ html {
   border-radius: 7px;
   opacity: 0;
   background-color: white;
-  z-index: 9999;
+  z-index: 9980;
   transition: opacity 0.3s;
 }
 
@@ -341,21 +342,4 @@ html {
   background-color: rgb(92, 89, 89);
   z-index: 10;
   transition: opacity 0.3s;
-}
-
-.suggestions:after {
-  content:"";
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  border-left: 1px solid white;
-  transform: translate(-50%);
-}
-
-.suggestions {
-  border: 1px solid #333;
-  position:relative;
-  text-align:center
 }

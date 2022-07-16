@@ -10,6 +10,7 @@ import useSWR, { useSWRConfig } from "swr"
 import axios from "axios"
 import { useRouter } from 'next/router'
 import GetTheLook from './GetTheLook'
+import ImageModal from './ImageModal'
 
 
 const fetcher = url => axios.get(url).then(res => res.data)
@@ -23,6 +24,8 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const { data: session } = useSession()
   const email = session?.user.email
+
+  const [showImageModal, setShowImageModal] = useState(false)
 
   const [showSignInModal, setShowSignInModal] = useState(false)
 
@@ -263,12 +266,11 @@ export default function ProductPageContent({ product, allProducts }) {
       SCROLL_BOX_MIN_HEIGHT
     );
     setScrollBoxHeight(scrollbarHeight);
-    console.log(scrollBoxHeight)
     scrollHostElement.addEventListener("scroll", handleScroll, true);
     return function cleanup() {
       scrollHostElement.removeEventListener("scroll", handleScroll, true);
     };
-  }, [scrollBoxTop]);
+  }, [scrollBoxTop, hovering]);
 
   useEffect(() => {
     //this is handle the dragging on scroll-thumb
@@ -375,7 +377,7 @@ export default function ProductPageContent({ product, allProducts }) {
                         onMouseMove={(e) => handleMouseMove(e)} 
                         style={mousePosition}>
                           <Image 
-                          onClick={()=> window.open(`${el.image}`, "_blank")} 
+                          onClick={() => setShowImageModal(true)}
                           className="opacity-100 hover:opacity-0 transition-all ease-in-out duration-500" 
                           src={el.image} 
                           width='500' height='800' layout="responsive" objectFit="cover" />
@@ -392,6 +394,7 @@ export default function ProductPageContent({ product, allProducts }) {
                         onMouseMove={(e) => handleMouseMoveNoVariants(e)} 
                         style={noVariantsMousePosition}>
                           <Image 
+                          onClick={() => setShowImageModal(true)}
                           className="opacity-100 hover:opacity-0 transition-all ease-in-out duration-500" 
                           src={image.node.originalSrc} 
                           width='500' height='800' layout="responsive" objectFit="cover" />
@@ -403,6 +406,7 @@ export default function ProductPageContent({ product, allProducts }) {
             
             }
           </div>
+          <ImageModal show={showImageModal} onClose={() => setShowImageModal(false)} product={product} />
         <div className="relative lg:hidden w-full flex justify-center md:mr-[calc(15%-100px)] md:max-w-[432px] bg-white">
         {session && (
             <>
@@ -450,14 +454,14 @@ export default function ProductPageContent({ product, allProducts }) {
         </div>
         <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>
-      <div className='mx-8'>
-        <div className="suggestions flex flex-row justify-around mx-auto text-white border rounded-sm border-white max-w-[1220px] cursor-pointer">
+      <div className='mx-8 mt-3'>
+        <div className="text-2xl relative text-center flex flex-row justify-around mx-auto text-white max-w-[1220px] cursor-pointer mb-4">
           <div 
           onMouseOver={() => {setShowGTL(true), setShowYMAL(false)}}
-          className='w-full h-full py-3 font-semibold hover:text-[#ff00a7]'>GET THE LOOK</div>
+          className={`rounded-sm w-full h-full py-5 font-semibold hover:text-[#ff00a7] ${showGTL ? "border-l border-r border-t rounded-br-none" : "border-l-0 border-t-0 border-b !rounded-none bg-gray-900"}`}>GET THE LOOK</div>
           <div 
           onMouseOver={() => {setShowGTL(false), setShowYMAL(true)}}
-          className='w-full h-full py-3 font-semibold hover:text-[#ff00a7]'>YOU MAY ALSO LIKE</div>
+          className={`rounded-sm w-full h-full py-5 font-semibold hover:text-[#ff00a7] ${showYMAL ? "border-l border-r border-t rounded-bl-none" : "border-r-0 border-t-0 border-b !rounded-none bg-gray-900"}`}>YOU MAY ALSO LIKE</div>
         </div>
       </div>
       {
