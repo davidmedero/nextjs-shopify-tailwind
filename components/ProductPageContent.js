@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import ProductForm from './ProductForm'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperCore, { Navigation, Pagination } from 'swiper'
+import SwiperCore, { Navigation, Pagination, FreeMode } from 'swiper'
 import RecommendedList from './RecommendedList'
 import { useEffect, useState, useCallback, useRef } from "react"
 import SignInModal from "./SignInModal"
@@ -460,22 +460,13 @@ export default function ProductPageContent({ product, allProducts }) {
               style={{ '--swiper-navigation-color': '#000', '--swiper-pagination-color': '#000' }}
               navigation={true}
               pagination={{ clickable: true }}
-              className="w-full xxs:hidden sm:block"
-              loop='true'
+              className="w-full"
+              slidesPerView={1.5}
+              freeMode={true}
+              modules={[FreeMode, Pagination]}
             >
               {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
             </Swiper>
-
-              <Swiper
-              style={{ '--swiper-navigation-color': '#000', '--swiper-pagination-color': '#000' }}
-              navigation={true}
-              pagination={{ clickable: true }}
-              className="w-full xxs:block sm:hidden"
-              loop='true'
-            >
-              {variantImagesArrayMobile.length === 0 ? noVariantsArrayMobile : variantImagesArrayMobile}
-            </Swiper>
-
         </div>
         <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>
