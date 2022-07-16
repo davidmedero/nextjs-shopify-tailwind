@@ -5,6 +5,7 @@ import 'swiper/css/bundle'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import "swiper/css/free-mode"
 import Layout from '../components/Layout'
 import ShopProvider from '../context/shopContext'
 import { useRouter } from 'next/router'

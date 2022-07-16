@@ -33,10 +33,6 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const noVariantsArray = []
 
-  const variantImagesArrayMobile = []
-
-  const noVariantsArrayMobile = []
-
   const variantImageRef = useRef()
   const [variantImages, setVariantImages] = useState([])
   variantImageRef.current = variantImages
@@ -47,22 +43,12 @@ export default function ProductPageContent({ product, allProducts }) {
         <Image src={el.image} width='300' height='427' layout="responsive" objectFit="contain" />
       </SwiperSlide>
     )
-    variantImagesArrayMobile.push(
-      <SwiperSlide key={`slide-${i}`}>
-        <Image src={el.image} width='300' height='350' layout="responsive" objectFit="contain" />
-      </SwiperSlide>
-    )
   })
 
   product.images.edges.map((image, i) => {
     noVariantsArray.push(
       <SwiperSlide key={`slide-${i}`}>
         <Image src={image.node.originalSrc} width='300' height='427' layout="responsive" objectFit="contain" />
-      </SwiperSlide>
-    )
-    noVariantsArrayMobile.push(
-      <SwiperSlide key={`slide-${i}`}>
-        <Image src={image.node.originalSrc} width='300' height='350' layout="responsive" objectFit="contain" />
       </SwiperSlide>
     )
   })
