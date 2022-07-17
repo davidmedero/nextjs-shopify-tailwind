@@ -289,7 +289,14 @@ export default function ProductPageContent({ product, allProducts }) {
   const [showGTL, setShowGTL] = useState(true)
   const [showYMAL, setShowYMAL] = useState(false)
 
-  const [ref] = useKeenSlider();
+  const [ref] = useKeenSlider({
+    slides: {
+      perView: 1.5,
+      spacing: 0,
+    },
+    mode: "free-snap",
+    loop: false,
+    })
 
 
   return (
@@ -456,9 +463,9 @@ export default function ProductPageContent({ product, allProducts }) {
               {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
             </Swiper> */}
             <div ref={ref} className="keen-slider">
-              {variantImages.map((src, idx) => (
+              {variantImages.map((el, idx) => (
                 <div key={idx} className="keen-slider__slide">
-                  <img src={src.image} />
+                  <Image src={el.image} width='300' height='427' layout="responsive" objectFit="contain" />
                 </div>
               ))}
             </div>
