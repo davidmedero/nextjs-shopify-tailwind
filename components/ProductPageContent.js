@@ -474,9 +474,9 @@ export default function ProductPageContent({ product, allProducts }) {
             <div ref={ref} className="keen-slider">
               { variantImagesArray.length === 0 ? (
                 product.images.edges.map((image, i) => {
-                  <div key={i} className="keen-slider__slide">
+                  return (<div key={i} className="keen-slider__slide">
                     <Image src={image.node.originalSrc} width='417' height='627' layout="responsive" objectFit="contain" />
-                  </div>
+                  </div>)
                 })
               ) : (
                 variantImages.map((el, idx) => (
@@ -487,21 +487,23 @@ export default function ProductPageContent({ product, allProducts }) {
               )
               }
             </div>
-        <div className="dots absolute bottom-0">
-          {[
-            ...Array(instanceRef.current.track.details.slides.length).keys(),
-          ].map((idx) => {
-            return (
-              <button
-                key={idx}
-                onClick={() => {
-                  instanceRef.current?.moveToIdx(idx)
-                }}
-                className={"dot" + (currentSlide === idx ? " active" : "")}
-              ></button>
-            )
-          })}
-        </div>
+            {loaded && instanceRef.current && (
+              <div className="dots absolute bottom-0">
+                {[
+                  ...Array(instanceRef?.current?.track?.details?.slides.length).keys(),
+                ].map((idx) => {
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        instanceRef.current?.moveToIdx(idx)
+                      }}
+                      className={"dot" + (currentSlide === idx ? " active" : "")}
+                    ></button>
+                  )
+                })}
+              </div>
+            )}
         </div>
         <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>
