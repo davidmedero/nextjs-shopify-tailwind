@@ -11,6 +11,8 @@ import axios from "axios"
 import { useRouter } from 'next/router'
 import GetTheLook from './GetTheLook'
 import ImageModal from './ImageModal'
+import 'keen-slider/keen-slider.min.css'
+import { useKeenSlider } from 'keen-slider/react'
 
 
 const fetcher = url => axios.get(url).then(res => res.data)
@@ -287,6 +289,8 @@ export default function ProductPageContent({ product, allProducts }) {
   const [showGTL, setShowGTL] = useState(true)
   const [showYMAL, setShowYMAL] = useState(false)
 
+  const [ref] = useKeenSlider();
+
 
   return (
     <div>
@@ -442,9 +446,7 @@ export default function ProductPageContent({ product, allProducts }) {
             )}
             <SignInModal show={showSignInModal} onClose={() => setShowSignInModal(false)}>
             </SignInModal>
-              <Swiper
-              style={{ '--swiper-navigation-color': '#000', '--swiper-pagination-color': '#000' }}
-              navigation={true}
+              {/* <Swiper
               pagination={{ clickable: true }}
               className="w-full"
               slidesPerView={1.5}
@@ -452,7 +454,14 @@ export default function ProductPageContent({ product, allProducts }) {
               modules={[FreeMode, Pagination]}
             >
               {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
-            </Swiper>
+            </Swiper> */}
+            <div ref={ref} className="keen-slider">
+              {variantImages.map((src, idx) => (
+                <div key={idx} className="keen-slider__slide">
+                  <img src={src.image} />
+                </div>
+              ))}
+            </div>
         </div>
         <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>
