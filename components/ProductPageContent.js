@@ -289,14 +289,23 @@ export default function ProductPageContent({ product, allProducts }) {
   const [showGTL, setShowGTL] = useState(true)
   const [showYMAL, setShowYMAL] = useState(false)
 
-  const [ref] = useKeenSlider({
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [loaded, setLoaded] = useState(false)
+
+  const [ref, instanceRef] = useKeenSlider({
     slides: {
-      perView: 1.5,
-      spacing: 0,
+      perView: 1.5
     },
     mode: "free-snap",
     loop: false,
-    })
+    initial: 0,
+    slideChanged(slider) {
+      setCurrentSlide(slider.track.details.rel)
+    },
+    created() {
+      setLoaded(true)
+    },
+  })
 
 
   return (
@@ -463,12 +472,36 @@ export default function ProductPageContent({ product, allProducts }) {
               {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
             </Swiper> */}
             <div ref={ref} className="keen-slider">
-              {variantImages.map((el, idx) => (
-                <div key={idx} className="keen-slider__slide">
-                  <Image src={el.image} width='300' height='427' layout="responsive" objectFit="contain" />
-                </div>
-              ))}
+              { variantImagesArray.length === 0 ? (
+                product.images.edges.map((image, i) => {
+                  <div key={i} className="keen-slider__slide">
+                    <Image src={image.node.originalSrc} width='417' height='627' layout="responsive" objectFit="contain" />
+                  </div>
+                })
+              ) : (
+                variantImages.map((el, idx) => (
+                  <div key={idx} className="keen-slider__slide">
+                    <Image src={el.image} width='417' height='627' layout="responsive" objectFit="contain" />
+                  </div>
+                ))
+              )
+              }
             </div>
+        <div className="dots absolute bottom-0">
+          {[
+            ...Array(instanceRef.current.track.details.slides.length).keys(),
+          ].map((idx) => {
+            return (
+              <button
+                key={idx}
+                onClick={() => {
+                  instanceRef.current?.moveToIdx(idx)
+                }}
+                className={"dot" + (currentSlide === idx ? " active" : "")}
+              ></button>
+            )
+          })}
+        </div>
         </div>
         <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>
