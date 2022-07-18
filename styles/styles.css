@@ -369,16 +369,6 @@ html {
   transform: translate(-50%);
 } */
 
-.dropdownOptions {
-  -ms-overflow-style: none; /* for Internet Explorer, Edge */
-  scrollbar-width: none; /* for Firefox */
-  overflow-y: scroll; 
-}
-
-.dropdownOptions::-webkit-scrollbar {
-  display: none; /* for Chrome, Safari, and Opera */
-}
-
 .soldOut {
   background: 
   linear-gradient(to top left,
@@ -415,7 +405,7 @@ html {
   transition: opacity 0.3s;
 }
 
-.heart:after {
+/* .heart:after {
   content: '';
   position: absolute;
   top: -50%;
@@ -423,9 +413,9 @@ html {
   width: 170%;
   height: 180%;
   cursor: pointer;
-}
+} */
 
-.dots {
+/* .dots {
   display: flex;
   padding: 10px 0;
   justify-content: center;
@@ -448,4 +438,6 @@ html {
 
 .dot.active {
   background: black;
-}
+} */
+
+

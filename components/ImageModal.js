@@ -26,7 +26,7 @@ export default function ImageModal({ show, onClose, product }) {
   variantImages.map((el, i) => {
     variantImagesArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={el.image} width='600' height='960' layout="responsive" objectFit="cover" />
+        <img src={el.image} className="h-screen w-auto mx-auto flex justify-center" />
       </SwiperSlide>
     )
   })
@@ -34,7 +34,7 @@ export default function ImageModal({ show, onClose, product }) {
   product.images.edges.map((image, i) => {
     noVariantsArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={image.node.originalSrc} width='600' height='960' layout="responsive" objectFit="cover" />
+        <Image src={image.node.originalSrc} width='420' height='430' layout="responsive" objectFit="contain" />
       </SwiperSlide>
     )
   })
@@ -112,9 +112,11 @@ export default function ImageModal({ show, onClose, product }) {
 
   const imageColumn = useRef()
 
+  const swiperImageRef =useRef()
+
   useEffect(() => {
     function handleClickOutside(event) {
-        if (cancelButtonRef.current && !cancelButtonRef.current.contains(event.target) && event.target !== document.getElementById("enlargeImage") && event.target !== document.getElementById("enlargeImage2") && event.target !== document.getElementById("enlargeImage3") && !imageColumn.current.contains(event.target) && event.target !== document.getElementById("scrb3") && event.target !== document.getElementById("scrt3") && event.target !== document.querySelector(".modalBlock")) {
+        if (cancelButtonRef.current && !cancelButtonRef.current.contains(event.target) && event.target !== document.getElementById("enlargeImage") && event.target !== document.getElementById("enlargeImage2") && event.target !== document.getElementById("enlargeImage3") && !imageColumn.current.contains(event.target) && event.target !== document.getElementById("scrb3") && event.target !== document.getElementById("scrt3") && event.target !== document.querySelector(".modalBlock") && !swiperImageRef.current.contains(event.target)) {
             onClose()
         }
         }
@@ -398,7 +400,7 @@ export default function ImageModal({ show, onClose, product }) {
     as="div" 
     className="fixed z-[9990] inset-0" 
     onClose={onClose}>
-      <div {...handlers} ref={scrollHostRef2} className="scrollhost3">
+      <div {...handlers} ref={scrollHostRef2} className="lg:scrollhost3">
         <Transition.Child
         {...handlers}
           as={Fragment}
@@ -411,7 +413,7 @@ export default function ImageModal({ show, onClose, product }) {
         >
           <Dialog.Overlay {...handlers} className="absolute inset-0 bg-opacity-75 transition-opacity" />
         </Transition.Child>
-        <div {...handlers} className="mx-auto inset-y-0 max-w-full flex justify-center">
+        <div {...handlers} className="mx-auto inset-y-0 flex justify-center">
           <Transition.Child
           {...handlers}
             as={Fragment}
@@ -482,11 +484,11 @@ export default function ImageModal({ show, onClose, product }) {
                     <div>
                       {
                         <figure 
-                        className="w-full block bg-cover bg-no-repeat cursor-pointer">
+                        className="w-full block cursor-pointer">
                           <Image 
+                          className='z-[9999] relative'
                           id='enlargeImage'
                           onClick={()=> window.open(`${el.image}`, "_blank")} 
-                          className="" 
                           src={el.image} 
                           width='500' height='800' layout="responsive" objectFit="cover" />
                         </figure>
@@ -498,10 +500,11 @@ export default function ImageModal({ show, onClose, product }) {
                     <div>
                       {
                         <figure 
-                        className="w-full block bg-no-repeat cursor-pointer">
+                        className="w-full block cursor-pointer">
                           <Image 
+                          className='z-[9999] relative'
                           id='enlargeImage2'
-                          className="" 
+                          onClick={()=> window.open(`${el.image}`, "_blank")}
                           src={image.node.originalSrc} 
                           width='500' height='800' layout="responsive" objectFit="cover" />
                         </figure>
@@ -512,18 +515,18 @@ export default function ImageModal({ show, onClose, product }) {
             
             }
           </div>
-        <div className="relative lg:hidden w-full flex justify-center md:mr-[calc(15%-100px)] md:max-w-[432px] bg-white">
+
+        </div>
+        </div>
+        <div ref={swiperImageRef} className="lg:hidden">
             <Swiper
             style={{ '--swiper-navigation-color': '#000', '--swiper-pagination-color': '#000' }}
             navigation={true}
             pagination={{ clickable: true }}
-            className="w-full"
             loop='true'
           >
             {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
           </Swiper>
-        </div>
-        </div>
         </div>
         </div>
       </div>

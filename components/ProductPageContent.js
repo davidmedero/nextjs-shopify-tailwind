@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Navigation, Pagination, FreeMode } from 'swiper'
 import RecommendedList from './RecommendedList'
 import { useEffect, useState, useCallback, useRef } from "react"
-import SignInModal from "./SignInModal"
 import GetTheLook from './GetTheLook'
 import ImageModal from './ImageModal'
 // import 'keen-slider/keen-slider.min.css'
@@ -14,8 +13,6 @@ import ImageModal from './ImageModal'
 export default function ProductPageContent({ product, allProducts }) {
 
   const [showImageModal, setShowImageModal] = useState(false)
-
-  const [showSignInModal, setShowSignInModal] = useState(false)
 
   const variantImagesArray = []
 
@@ -337,10 +334,11 @@ export default function ProductPageContent({ product, allProducts }) {
             }
           </div>
           <ImageModal show={showImageModal} onClose={() => setShowImageModal(false)} product={product} />
-        <div className="md:sticky md:top-[64px] lg:hidden xxs:w-[106.5%] md:w-full flex justify-center md:max-w-[59.5%] bg-white">
-            <SignInModal show={showSignInModal} onClose={() => setShowSignInModal(false)}>
-            </SignInModal>
+        <div 
+        
+        className="md:sticky md:top-[64px] lg:hidden xxs:w-[106.5%] md:w-full flex justify-center md:max-w-[59.5%] bg-white">
               <Swiper
+              onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
               pagination={{ clickable: true }}
               className="w-full"
               slidesPerView={2}
@@ -389,10 +387,10 @@ export default function ProductPageContent({ product, allProducts }) {
         <div className="text-2xl relative text-center flex flex-row justify-around mx-auto text-white max-w-[1220px] cursor-pointer mb-4">
           <div 
           onMouseOver={() => {setShowGTL(true), setShowYMAL(false)}}
-          className={`rounded-sm w-full h-full py-5 font-semibold hover:text-[#ff00a7] ${showGTL ? "border-l border-r border-t rounded-br-none" : "border-l-0 border-t-0 border-b !rounded-none bg-gray-900"}`}>GET THE LOOK</div>
+          className={`rounded-md w-full h-full py-5 font-semibold hover:text-[#ff00a7] ${showGTL ? "border-l border-r border-t rounded-b-none" : "border-l-0 border-t-0 border-b bg-gray-900 rounded-tl-md rounded-b-none"}`}>GET THE LOOK</div>
           <div 
           onMouseOver={() => {setShowGTL(false), setShowYMAL(true)}}
-          className={`rounded-sm w-full h-full py-5 font-semibold hover:text-[#ff00a7] ${showYMAL ? "border-l border-r border-t rounded-bl-none" : "border-r-0 border-t-0 border-b !rounded-none bg-gray-900"}`}>YOU MAY ALSO LIKE</div>
+          className={`rounded-md w-full h-full py-5 font-semibold hover:text-[#ff00a7] ${showYMAL ? "border-l border-r border-t rounded-b-none" : "border-r-0 border-t-0 border-b bg-gray-900 rounded-tr-md rounded-b-none"}`}>YOU MAY ALSO LIKE</div>
         </div>
       </div>
       {

@@ -9,6 +9,7 @@ import { useRouter } from "next/router"
 import useSWR, { useSWRConfig } from "swr"
 import axios from "axios"
 import { useSession } from "next-auth/react"
+import SignInModal from "./SignInModal"
 
 
 const fetcher = url => axios.get(url).then(res => res.data)
@@ -22,6 +23,8 @@ export default function ProductForm({ product, variantImages }) {
 
     const { data: session } = useSession()
     const email = session?.user.email
+
+    const [showSignInModal, setShowSignInModal] = useState(false)
 
     const [currencyRates, setCurrencyRates] = useState(0)
 
@@ -405,7 +408,7 @@ export default function ProductForm({ product, variantImages }) {
         }
        <div className="text-base rounded-sm shadow-md flex justify-between xxs:w-full mt-[17px]">
         
-        <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-white bg-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-sm xxs:rounded-r-none pl-[85px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
+        <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-white bg-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-sm xxs:rounded-r-none pl-[36px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
 
         <span className="flex"> 
         <button 
@@ -425,20 +428,20 @@ export default function ProductForm({ product, variantImages }) {
         </button>  
         </span>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mt-5">
       {
         checkedSize === false ? (
             <button 
             onMouseOver={() => setSizesOutline(true)}
             onMouseLeave={() => setSizesOutline(false)}
-            className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-sm font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5 hover:bg-[#d4008a]"}>SELECT A SIZE</button>
+            className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-sm font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 hover:bg-[#d4008a]"}>SELECT A SIZE</button>
         ) : (
             <button 
         onClick={() => {
             addToCart(selectedVariant)
             setCounter(1)
         }}
-        className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-sm font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5 hover:bg-[#d4008a]"}>ADD TO BAG</button>
+        className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-sm font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 hover:bg-[#d4008a]"}>ADD TO BAG</button>
         )
       }
       {session && (
@@ -466,7 +469,7 @@ export default function ProductForm({ product, variantImages }) {
                 handleButtonClick(e);
                 setShowSignInModal(true)
               }}
-              className="z-[10]">
+              className="px-3 z-[10]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
@@ -474,6 +477,8 @@ export default function ProductForm({ product, variantImages }) {
             </>
             )}
             </div>
+            <SignInModal show={showSignInModal} onClose={() => setShowSignInModal(false)}>
+            </SignInModal>
     <div className="mt-3">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
     <div className="selectSection">
