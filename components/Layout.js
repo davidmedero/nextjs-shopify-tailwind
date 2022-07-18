@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef } from "react"
 import Nav from './Nav'
 import Footer from './Footer'
-import { useRouter } from "next/router";
+import { useRouter } from "next/router"
 
 
 const SCROLL_BOX_MIN_HEIGHT = 20;
@@ -190,9 +190,7 @@ export default function Layout({ children, className, ...restProps }) {
 
   return (
     <>
-    <div
-      className={"scrollhost-container"}
-    >
+    <div>
       <div
         ref={scrollHostRef}
         className={`scrollhost ${className}`}

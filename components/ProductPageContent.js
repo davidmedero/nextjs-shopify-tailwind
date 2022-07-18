@@ -5,27 +5,13 @@ import SwiperCore, { Navigation, Pagination, FreeMode } from 'swiper'
 import RecommendedList from './RecommendedList'
 import { useEffect, useState, useCallback, useRef } from "react"
 import SignInModal from "./SignInModal"
-import { useSession } from "next-auth/react"
-import useSWR, { useSWRConfig } from "swr"
-import axios from "axios"
-import { useRouter } from 'next/router'
 import GetTheLook from './GetTheLook'
 import ImageModal from './ImageModal'
-import 'keen-slider/keen-slider.min.css'
-import { useKeenSlider } from 'keen-slider/react'
-
-
-const fetcher = url => axios.get(url).then(res => res.data)
+// import 'keen-slider/keen-slider.min.css'
+// import { useKeenSlider } from 'keen-slider/react'
 
 
 export default function ProductPageContent({ product, allProducts }) {
-
-  const router = useRouter()
-
-  const { mutate } = useSWRConfig()
-
-  const { data: session } = useSession()
-  const email = session?.user.email
 
   const [showImageModal, setShowImageModal] = useState(false)
 
@@ -42,7 +28,7 @@ export default function ProductPageContent({ product, allProducts }) {
   variantImages.map((el, i) => {
     variantImagesArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={el.image} width='300' height='427' layout="responsive" objectFit="contain" />
+        <Image src={el.image} width='417' height='627' layout="responsive" objectFit="contain" />
       </SwiperSlide>
     )
   })
@@ -50,7 +36,7 @@ export default function ProductPageContent({ product, allProducts }) {
   product.images.edges.map((image, i) => {
     noVariantsArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={image.node.originalSrc} width='300' height='427' layout="responsive" objectFit="contain" />
+        <Image src={image.node.originalSrc} width='417' height='627' layout="responsive" objectFit="contain" />
       </SwiperSlide>
     )
   })
@@ -138,50 +124,6 @@ export default function ProductPageContent({ product, allProducts }) {
       setMousePosition({ backgroundImage: `url(${src})` })
     })
   }, [])
-
-  const [heartFill, setHeartFill] = useState(false)
-
-  const handleButtonClick = useCallback((e) => {
-    e.stopPropagation()
-    e.preventDefault()
-  }, [])
-
-  const [added, setAdded] = useState(false)
-
-  const updateMacros = async () => {
-    if (added) {
-      await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
-        method: 'delete',
-        body: JSON.stringify(product.handle)
-      })
-    } else {
-      await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
-        method: 'post',
-        body: JSON.stringify(product.handle)
-      })
-    }
-    mutate('/api/wishlist-endpoint')
-  }
-
-  const { data, error } = useSWR('/api/wishlist-endpoint', fetcher)
-
-  const savedItems = data && data.map(el => {
-    if (el.email === email) {
-      return el.saved_items
-    }
-  }).filter(el => el != undefined)
-
-  useEffect(() => {
-    if (savedItems) {
-      if (savedItems[0]) {
-        if (savedItems[0].includes(product.handle)) {
-          setAdded(true)
-        } else {
-          setAdded(false)
-        }
-      }
-    }
-  }, [savedItems])
 
   const SCROLL_BOX_MIN_HEIGHT = 20;
   const [hovering, setHovering] = useState(false);
@@ -289,32 +231,32 @@ export default function ProductPageContent({ product, allProducts }) {
   const [showGTL, setShowGTL] = useState(true)
   const [showYMAL, setShowYMAL] = useState(false)
 
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [loaded, setLoaded] = useState(false)
+  // const [currentSlide, setCurrentSlide] = useState(0)
+  // const [loaded, setLoaded] = useState(false)
 
-  const [ref, instanceRef] = useKeenSlider({
-    slides: {
-      perView: 1.5
-    },
-    mode: "free-snap",
-    loop: false,
-    initial: 0,
-    slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel)
-    },
-    created() {
-      setLoaded(true)
-    },
-  })
+  // const [ref, instanceRef] = useKeenSlider({
+  //   slides: {
+  //     perView: 2
+  //   },
+  //   mode: "free-snap",
+  //   loop: false,
+  //   initial: 0,
+  //   slideChanged(slider) {
+  //     setCurrentSlide(slider.track.details.rel)
+  //   },
+  //   created() {
+  //     setLoaded(true)
+  //   },
+  // })
 
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-start md:pb-6 md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto relative lg:left-[25px]">
+      <div className="flex flex-col justify-center md:pb-6 md:flex-row md:items-start lg:space-x-6 lg:max-w-[960px] mx-auto relative">
       <div
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
-      className={`scrollhost-container xxs:hidden lg:block w-[8.35%] cursor-pointer h-[613px] z-10 !top-[62px]`}>
+      className={`scrollhost-container xxs:hidden lg:block w-[90.2px] cursor-pointer h-[613px] z-10 !top-[62px]`}>
         <div 
         ref={scrollHostRef}
         className={`scrollhost max-h-full`}>
@@ -354,38 +296,6 @@ export default function ProductPageContent({ product, allProducts }) {
       </div>
     </div>
           <div className="sticky !top-[62px] xxs:hidden lg:block w-[40%]">
-          {session && (
-            <>
-            <span 
-              onMouseOver={() => setHeartFill(true)}
-              onMouseLeave={() => setHeartFill(false)}
-              onClick={(e) => {
-                handleButtonClick(e);
-                updateMacros()
-              }}
-              className="absolute heart right-[57px] top-[6px] z-[10]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </span>
-            </>
-            )}
-            {!session && (
-            <>
-            <span 
-              onMouseOver={() => setHeartFill(true)}
-              onMouseLeave={() => setHeartFill(false)}
-              onClick={(e) => {
-                handleButtonClick(e);
-                setShowSignInModal(true)
-              }}
-              className="absolute heart right-[57px] top-[6px] z-[10]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </span>
-            </>
-            )}
             {
               variantImages.length !== 0 ? (
                 [variantImages[imageIndex]].map(el => (
@@ -393,7 +303,7 @@ export default function ProductPageContent({ product, allProducts }) {
                     <div>
                       {
                         <figure 
-                        className="w-[88.8%] block bg-no-repeat cursor-move"
+                        className="w-[383px] block bg-no-repeat cursor-move"
                         onMouseMove={(e) => handleMouseMove(e)} 
                         style={mousePosition}>
                           <Image 
@@ -427,51 +337,19 @@ export default function ProductPageContent({ product, allProducts }) {
             }
           </div>
           <ImageModal show={showImageModal} onClose={() => setShowImageModal(false)} product={product} />
-        <div className="relative lg:hidden w-full flex justify-center md:mr-[calc(15%-100px)] md:max-w-[432px] bg-white">
-        {session && (
-            <>
-            <span 
-              onMouseOver={() => setHeartFill(true)}
-              onMouseLeave={() => setHeartFill(false)}
-              onClick={(e) => {
-                handleButtonClick(e);
-                updateMacros()
-              }}
-              className="absolute heart xxs:right-[10px] md:right-[8px] xxs:top-[7px] md:top-[6px] z-[10]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-9 xxs:w-9 md:h-8 md:w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </span>
-            </>
-            )}
-            {!session && (
-            <>
-            <span 
-              onMouseOver={() => setHeartFill(true)}
-              onMouseLeave={() => setHeartFill(false)}
-              onClick={(e) => {
-                handleButtonClick(e);
-                setShowSignInModal(true)
-              }}
-              className="absolute heart xxs:right-[10px] md:right-[8px] xxs:top-[7px] md:top-[6px] z-[10]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="xxs:h-9 xxs:w-9 md:h-8 md:w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </span>
-            </>
-            )}
+        <div className="md:sticky md:top-[64px] lg:hidden xxs:w-[106.5%] md:w-full flex justify-center md:max-w-[59.5%] bg-white">
             <SignInModal show={showSignInModal} onClose={() => setShowSignInModal(false)}>
             </SignInModal>
-              {/* <Swiper
+              <Swiper
               pagination={{ clickable: true }}
               className="w-full"
-              slidesPerView={1.5}
+              slidesPerView={2}
               freeMode={true}
               modules={[FreeMode, Pagination]}
             >
               {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
-            </Swiper> */}
-            <div ref={ref} className="keen-slider">
+            </Swiper>
+            {/* <div ref={ref} className="keen-slider">
               { variantImagesArray.length === 0 ? (
                 product.images.edges.map((image, i) => {
                   return (<div key={i} className="keen-slider__slide">
@@ -503,7 +381,7 @@ export default function ProductPageContent({ product, allProducts }) {
                   )
                 })}
               </div>
-            )}
+            )} */}
         </div>
         <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>

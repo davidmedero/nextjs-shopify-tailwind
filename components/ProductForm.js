@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useLayoutEffect, useRef } from "react"
+import { useState, useContext, useEffect, useLayoutEffect, useCallback } from "react"
 import { formatter, GBPFormatter, EURFormatter } from "../utils/helpers"
 import ProductOptions from "./ProductOptions"
 import { CartContext } from '../context/shopContext'
@@ -6,11 +6,22 @@ import Head from 'next/head'
 import Link from "next/link"
 import collections from "../categories"
 import { useRouter } from "next/router"
+import useSWR, { useSWRConfig } from "swr"
+import axios from "axios"
+import { useSession } from "next-auth/react"
+
+
+const fetcher = url => axios.get(url).then(res => res.data)
 
 
 export default function ProductForm({ product, variantImages }) {
 
     const router = useRouter()
+
+    const { mutate } = useSWRConfig()
+
+    const { data: session } = useSession()
+    const email = session?.user.email
 
     const [currencyRates, setCurrencyRates] = useState(0)
 
@@ -188,10 +199,54 @@ export default function ProductForm({ product, variantImages }) {
 
     const [sizesOutline, setSizesOutline] = useState(false)
 
+    const [heartFill, setHeartFill] = useState(false)
+
+    const handleButtonClick = useCallback((e) => {
+        e.stopPropagation()
+        e.preventDefault()
+    }, [])
+
+    const [added, setAdded] = useState(false)
+
+    const updateMacros = async () => {
+        if (added) {
+        await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
+            method: 'delete',
+            body: JSON.stringify(product.handle)
+        })
+        } else {
+        await fetch("https://nextjs-shopify-tailwind-wine.vercel.app/api/wishlist-endpoint", {
+            method: 'post',
+            body: JSON.stringify(product.handle)
+        })
+        }
+        mutate('/api/wishlist-endpoint')
+    }
+
+    const { data, error } = useSWR('/api/wishlist-endpoint', fetcher)
+
+    const savedItems = data && data.map(el => {
+        if (el.email === email) {
+        return el.saved_items
+        }
+    }).filter(el => el != undefined)
+
+    useEffect(() => {
+        if (savedItems) {
+        if (savedItems[0]) {
+            if (savedItems[0].includes(product.handle)) {
+            setAdded(true)
+            } else {
+            setAdded(false)
+            }
+        }
+        }
+    }, [savedItems])
+
 
 
   return (
-    <div className="lg:right-[49px] xxs:mt-[10px] md:!mt-0 py-4 !pb-0 relative -top-4 md:top-0 flex flex-col xxs:w-full md:w-[390px] md:mr-3 lg:mr-0">
+    <div className="xxs:mt-[10px] md:!mt-0 py-4 !pb-0 relative -top-4 md:top-0 flex flex-col xxs:w-full md:w-[390px] md:mx-3 lg:mr-0">
         <div className="xxs:mx-[15px] md:mx-0">
         <Head>
             <script type='text/javascript' id={product.id}>
@@ -370,6 +425,7 @@ export default function ProductForm({ product, variantImages }) {
         </button>  
         </span>
       </div>
+      <div className="flex justify-between items-center">
       {
         checkedSize === false ? (
             <button 
@@ -385,6 +441,39 @@ export default function ProductForm({ product, variantImages }) {
         className={"shadow-md select-none transition-all ease-in-out duration-400 rounded-sm font-semibold bg-[#ff00a7] text-white w-full px-2 py-3 mt-5 hover:bg-[#d4008a]"}>ADD TO BAG</button>
         )
       }
+      {session && (
+            <>
+            <span 
+              onMouseOver={() => setHeartFill(true)}
+              onMouseLeave={() => setHeartFill(false)}
+              onClick={(e) => {
+                handleButtonClick(e);
+                updateMacros()
+              }}
+              className="z-[10]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </span>
+            </>
+            )}
+            {!session && (
+            <>
+            <span 
+              onMouseOver={() => setHeartFill(true)}
+              onMouseLeave={() => setHeartFill(false)}
+              onClick={(e) => {
+                handleButtonClick(e);
+                setShowSignInModal(true)
+              }}
+              className="z-[10]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </span>
+            </>
+            )}
+            </div>
     <div className="mt-3">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
     <div className="selectSection">
