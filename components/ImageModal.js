@@ -454,7 +454,7 @@ export default function ImageModal({ show, onClose, product }) {
       ref={imageColumn}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
-      className={`scrollhost-container xxs:hidden lg:block w-[8.35%] cursor-pointer h-[613px] z-10`}>
+      className={`scrollhost-container xxs:hidden lg:block w-[90.2px] cursor-pointer h-[613px] z-10`}>
         <div
         ref={scrollHostRef}
         className={`scrollhost max-h-full`}>
