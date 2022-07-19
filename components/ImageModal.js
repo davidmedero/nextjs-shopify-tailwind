@@ -7,13 +7,16 @@ import { useSwipeable } from 'react-swipeable'
 
 
 export default function ImageModal({ show, onClose, product }) {
-    const cancelButtonRef = useRef()
 
-    const handlers = useSwipeable({
-      onSwipedUp: () => onClose(),
-      preventDefaultTouchmoveEvent: true,
-      trackMouse: true
-    })
+  const cancelButtonRef0 = useRef()
+
+  const cancelButtonRef2 = useRef()
+
+  const handlers = useSwipeable({
+    onSwipedUp: () => onClose(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true
+  })
 
   const variantImagesArray = []
 
@@ -26,7 +29,7 @@ export default function ImageModal({ show, onClose, product }) {
   variantImages.map((el, i) => {
     variantImagesArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <img src={el.image} className="h-screen w-auto mx-auto flex justify-center" />
+        <img src={el.image} onClick={(e) => {e.preventDefault(); e.stopPropagation()}} className="max-h-screen max-w-full h-full mx-auto select-none" />
       </SwiperSlide>
     )
   })
@@ -34,7 +37,7 @@ export default function ImageModal({ show, onClose, product }) {
   product.images.edges.map((image, i) => {
     noVariantsArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <Image src={image.node.originalSrc} width='420' height='430' layout="responsive" objectFit="contain" />
+        <img src={image.node.originalSrc} onClick={(e) => {e.preventDefault(); e.stopPropagation()}} className="max-h-screen max-w-full h-full mx-auto select-none" />
       </SwiperSlide>
     )
   })
@@ -112,19 +115,25 @@ export default function ImageModal({ show, onClose, product }) {
 
   const imageColumn = useRef()
 
-  const swiperImageRef =useRef()
+  const [active, setActive] = useState(false)
+
+  useEffect(() => {
+    setActive(false)
+  }, [active])
 
   useEffect(() => {
     function handleClickOutside(event) {
-        if (cancelButtonRef.current && !cancelButtonRef.current.contains(event.target) && event.target !== document.getElementById("enlargeImage") && event.target !== document.getElementById("enlargeImage2") && event.target !== document.getElementById("enlargeImage3") && !imageColumn.current.contains(event.target) && event.target !== document.getElementById("scrb3") && event.target !== document.getElementById("scrt3") && event.target !== document.querySelector(".modalBlock") && !swiperImageRef.current.contains(event.target)) {
+      console.log()
+        if (cancelButtonRef0.current && !cancelButtonRef0.current.contains(event.target) && cancelButtonRef2.current && !cancelButtonRef2.current.contains(event.target) && event.target !== document.getElementById("enlargeImage") && event.target !== document.getElementById("enlargeImage2") && event.target !== document.getElementById("enlargeImage3") && !imageColumn.current.contains(event.target) && event.target !== document.getElementById("scrb3") && event.target !== document.getElementById("scrt3") && event.target !== document.querySelector(".modalBlock") && event.target !== document.querySelector(".swiper-button-prev") && event.target !== document.querySelector(".swiper-button-next") && document.querySelectorAll(".swiper-pagination").forEach(el => el !== event.target) && document.querySelectorAll(".swiper-pagination-bullet").forEach(el => el !== event.target)) {
             onClose()
         }
+        
         }
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
         document.removeEventListener("mousedown", handleClickOutside);
     };
-}, [cancelButtonRef]);
+  }, [cancelButtonRef2]);
 
   const SCROLL_BOX_MIN_HEIGHT = 20;
   const [hovering, setHovering] = useState(false);
@@ -396,11 +405,11 @@ export default function ImageModal({ show, onClose, product }) {
     onMouseOver={handleMouseOver2}
     onMouseOut={handleMouseOut2}
     {...handlers}
-    initialFocus={cancelButtonRef}
+    initialFocus={cancelButtonRef0}
     as="div" 
     className="fixed z-[9990] inset-0" 
     onClose={onClose}>
-      <div {...handlers} ref={scrollHostRef2} className="lg:scrollhost3">
+      <div {...handlers} ref={scrollHostRef2} className="scrollhost3">
         <Transition.Child
         {...handlers}
           as={Fragment}
@@ -411,7 +420,7 @@ export default function ImageModal({ show, onClose, product }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay {...handlers} className="absolute inset-0 bg-opacity-75 transition-opacity" />
+          <Dialog.Overlay {...handlers} className="" />
         </Transition.Child>
         <div {...handlers} className="mx-auto inset-y-0 flex justify-center">
           <Transition.Child
@@ -425,14 +434,22 @@ export default function ImageModal({ show, onClose, product }) {
             leaveTo="-translate-y-full"
           >
       <div>
-      <div className="w-screen bg-black bg-opacity-75">
-          <div className="flex justify-end p-2 sticky top-0">
-              <button ref={cancelButtonRef} onClick={onClose} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white outline-none">
+      <div onClick={(e) => {e.target !== document.querySelector(".swiper-button-prev") && e.target !== document.querySelector(".swiper-button-next") && !imageColumn.current.contains(e.target) && e.target !== document.querySelector(".modalBlock") && setActive(true); for (let i of document.querySelectorAll('.swiper-pagination')) {
+        if (e.target == i) {
+          setActive(false)
+        }
+      }; for (let i of document.querySelectorAll('.swiper-pagination-bullet')) {
+        if (e.target == i) {
+          setActive(false)
+        }
+      }}} style={{background: active && onClose()}} className="w-screen bg-black bg-opacity-75">
+      <div className="sticky top-0">
+              <button ref={cancelButtonRef0} onClick={onClose} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white outline-none absolute z-[9999] right-2 top-2">
                   <svg className="w-7 h-7 highlight-removal outline-none" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
               </button>
           </div>
           <div>
-      <div  className="flex flex-col justify-center items-start md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto -mt-[56px]">
+      <div  className="flex flex-col justify-center items-start md:flex-row md:items-start lg:space-x-6 md:max-w-[1080px] mx-auto">
       <div
       ref={imageColumn}
       onMouseOver={handleMouseOver}
@@ -488,7 +505,7 @@ export default function ImageModal({ show, onClose, product }) {
                           <Image 
                           className='z-[9999] relative'
                           id='enlargeImage'
-                          onClick={()=> window.open(`${el.image}`, "_blank")} 
+                          onClick={(e)=> {e.preventDefault(); e.stopPropagation(); window.open(`${el.image}`, "_blank")}} 
                           src={el.image} 
                           width='500' height='800' layout="responsive" objectFit="cover" />
                         </figure>
@@ -504,7 +521,7 @@ export default function ImageModal({ show, onClose, product }) {
                           <Image 
                           className='z-[9999] relative'
                           id='enlargeImage2'
-                          onClick={()=> window.open(`${el.image}`, "_blank")}
+                          onClick={(e)=> {e.preventDefault(); e.stopPropagation(); window.open(`${el.image}`, "_blank")}}
                           src={image.node.originalSrc} 
                           width='500' height='800' layout="responsive" objectFit="cover" />
                         </figure>
@@ -518,9 +535,12 @@ export default function ImageModal({ show, onClose, product }) {
 
         </div>
         </div>
-        <div ref={swiperImageRef} className="lg:hidden">
+        <div className="lg:hidden">
+        <button ref={cancelButtonRef2} onClick={onClose} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white outline-none absolute z-[9999] right-2 top-2">
+                  <svg className="w-7 h-7 highlight-removal outline-none" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+              </button>
             <Swiper
-            style={{ '--swiper-navigation-color': '#000', '--swiper-pagination-color': '#000' }}
+            style={{ '--swiper-navigation-color': 'transparent', '--swiper-pagination-color': 'transparent' }}
             navigation={true}
             pagination={{ clickable: true }}
             loop='true'

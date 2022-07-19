@@ -14,6 +14,8 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const [showImageModal, setShowImageModal] = useState(false)
 
+  const modalRef = useRef()
+
   const variantImagesArray = []
 
   const noVariantsArray = []
@@ -300,7 +302,7 @@ export default function ProductPageContent({ product, allProducts }) {
                     <div>
                       {
                         <figure 
-                        className="w-[383px] block bg-no-repeat cursor-move"
+                        className="w-[383px] block bg-no-repeat cursor-zoom-in"
                         onMouseMove={(e) => handleMouseMove(e)} 
                         style={mousePosition}>
                           <Image 
@@ -317,7 +319,7 @@ export default function ProductPageContent({ product, allProducts }) {
                     <div>
                       {
                         <figure 
-                        className="w-full block bg-no-repeat cursor-move"
+                        className="w-full block bg-no-repeat cursor-zoom-in"
                         onMouseMove={(e) => handleMouseMoveNoVariants(e)} 
                         style={noVariantsMousePosition}>
                           <Image 
@@ -333,10 +335,10 @@ export default function ProductPageContent({ product, allProducts }) {
             
             }
           </div>
-          <ImageModal show={showImageModal} onClose={() => setShowImageModal(false)} product={product} />
+          <ImageModal show={showImageModal} open={() => setShowImageModal(true)} onClose={() => setShowImageModal(false)} product={product} />
         <div 
         
-        className="md:sticky md:top-[64px] lg:hidden xxs:w-[106.5%] md:w-full flex justify-center md:max-w-[59.5%] bg-white">
+        className="md:sticky md:top-[64px] lg:hidden xxs:w-[106.5%] md:w-full flex justify-center md:max-w-[59.5%] bg-white cursor-zoom-in">
               <Swiper
               onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
               pagination={{ clickable: true }}

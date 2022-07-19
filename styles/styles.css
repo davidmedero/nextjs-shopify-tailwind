@@ -2,14 +2,21 @@ body {
   background-color: #0A0A0A;
 }
 
-.swiper-button-prev,
-.swiper-button-next { 
-  opacity: .2 !important; 
+@media (min-width: 540px) {
+.swiper-button-prev {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='white' viewBox='0 0 24 24' stroke='white' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M11 17l-5-5m0 0l5-5m-5 5h12' /%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat;
+}
+
+.swiper-button-next {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='white' viewBox='0 0 24 24' stroke='white' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M13 7l5 5m0 0l-5 5m5-5H6' /%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat;
+}
 }
 
 .swiper-pagination-bullet {
-  width: var(--swiper-pagination-bullet-width,var(--swiper-pagination-bullet-size,10px)) !important;
-  height: var(--swiper-pagination-bullet-height,var(--swiper-pagination-bullet-size,10px)) !important;
+  width: 10px !important;
+  height: 10px !important;
 } 
 
 .swiper-pagination-bullet-active {
@@ -109,12 +116,14 @@ html {
   position: relative;
 }
 
+@media (min-width: 1024px) {
 .scrollhost3 {
   overflow: auto;
   height: 100vh;
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
+}
 }
 
 .scroll-bar {
@@ -142,6 +151,7 @@ html {
   transition: opacity 0.3s;
 }
 
+@media (min-width: 1024px) {
 .scroll-bar3 {
   width: 15px;
   height: 100vh;
@@ -153,7 +163,9 @@ html {
   overflow: hidden;
   cursor: pointer;
 }
+}
 
+@media (min-width: 1024px) {
 .scroll-thumb3 {
   cursor: grab;
   width: 8px;
@@ -165,6 +177,7 @@ html {
   background-color: white;
   z-index: 9999;
   transition: opacity 0.3s;
+}
 }
 
 .toggleScrollThumb {
