@@ -29,7 +29,7 @@ export default function ImageModal({ show, onClose, product }) {
   variantImages.map((el, i) => {
     variantImagesArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <img src={el.image} onClick={(e) => {e.preventDefault(); e.stopPropagation()}} className="max-h-screen max-w-full h-full mx-auto select-none" />
+        <img src={el.image} onClick={(e) => {e.preventDefault(); e.stopPropagation()}} className="imgModalMobile max-w-full mx-auto select-none" />
       </SwiperSlide>
     )
   })
@@ -43,6 +43,8 @@ export default function ImageModal({ show, onClose, product }) {
   })
 
   SwiperCore.use([Navigation, Pagination])
+
+
 
   const [imageIndex, setImageIndex] = useState(0)
 
@@ -398,6 +400,19 @@ export default function ImageModal({ show, onClose, product }) {
     };
   }, [handleDocumentMouseMove2, handleDocumentMouseUp2]);
 
+  useEffect(() => {
+    // First we get the viewport height and we multiply it by 1% to get a value for a vh unit
+    let vh = window.innerHeight * 0.01;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    // We listen to the resize event
+    window.addEventListener('resize', () => {
+    // We execute the same script as before
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
+  }, [scrollBoxTop2])
+
 
     return (
          <Transition.Root show={show} as={Fragment} {...handlers}>
@@ -420,9 +435,9 @@ export default function ImageModal({ show, onClose, product }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay {...handlers} className="" />
+          <Dialog.Overlay {...handlers}/>
         </Transition.Child>
-        <div {...handlers} className="mx-auto xxs:absolute lg:static xxs:inset-0 flex justify-center">
+        <div {...handlers} className="mx-auto inset-0 flex justify-center">
           <Transition.Child
           {...handlers}
             as={Fragment}
