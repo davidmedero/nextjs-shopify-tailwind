@@ -411,8 +411,8 @@ export default function ImageModal({ show, onClose, product }) {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
     });
-    window.addEventListener('touchstart', function onFirstTouch() {
-      this.window.removeEventListener('resize', () => {
+    window.addEventListener('touchstart', () => {
+       window.removeEventListener('resize', () => {
         // We execute the same script as before
         let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
