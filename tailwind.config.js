@@ -15,6 +15,7 @@ module.exports = {
       'mini': '360px',
       'xmini': '330px',
       'sizes': '850px',
+      'modal': '699px',
       ...defaultTheme.screens,
     },
   },

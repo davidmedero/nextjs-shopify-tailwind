@@ -343,7 +343,7 @@ export default function ProductPageContent({ product, allProducts }) {
               onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
               pagination={{ clickable: true }}
               className="w-full"
-              slidesPerView={2}
+              slidesPerView={1.4}
               freeMode={true}
               modules={[FreeMode, Pagination]}
             >
