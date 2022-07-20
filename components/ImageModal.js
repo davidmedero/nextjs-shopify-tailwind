@@ -422,7 +422,7 @@ export default function ImageModal({ show, onClose, product }) {
         >
           <Dialog.Overlay {...handlers} className="" />
         </Transition.Child>
-        <div {...handlers} className="mx-auto inset-y-0 flex justify-center">
+        <div {...handlers} className="mx-auto xxs:absolute lg:static xxs:inset-0 flex justify-center">
           <Transition.Child
           {...handlers}
             as={Fragment}
