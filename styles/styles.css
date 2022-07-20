@@ -1,6 +1,6 @@
 body {
   background-color: #0A0A0A;
-  max-height: -webkit-fill-available;
+  min-height: -webkit-fill-available;
 }
 
 html {
