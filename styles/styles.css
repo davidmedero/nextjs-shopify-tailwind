@@ -1,5 +1,7 @@
 body {
   background-color: #0A0A0A;
+  min-height: 100vh;
+  /* mobile viewport bug fix */
   min-height: -webkit-fill-available;
 }
 
