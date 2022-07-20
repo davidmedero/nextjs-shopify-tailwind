@@ -454,7 +454,8 @@ html {
 } */
 
 .imgModalMobile {
-  max-height: 100vh;
-  max-height: calc(var(--vh, 1vh) * 100);
+  max-height: -moz-available; 
+  max-height: -webkit-fill-available; 
+  max-height: fill-available;
 }
 
