@@ -29,7 +29,7 @@ export default function ImageModal({ show, onClose, product }) {
   variantImages.map((el, i) => {
     variantImagesArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <img src={el.image} onClick={(e) => {e.preventDefault(); e.stopPropagation()}} className="imgModalMobile max-w-full mx-auto select-none" />
+        <img src={el.image} onClick={(e) => {e.preventDefault(); e.stopPropagation()}} className="max-h-screen h-full max-w-full mx-auto select-none" />
       </SwiperSlide>
     )
   })
