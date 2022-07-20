@@ -453,9 +453,19 @@ html {
   background: black;
 } */
 
+@media (max-width: 499px) {
 .imgModalMobile {
+  max-height: 100vh; 
   max-height: -moz-available; 
   max-height: -webkit-fill-available; 
   max-height: fill-available;
 }
+}
 
+@media (min-width: 500px) {
+.imgModalMobile {
+  max-height: 100vh; 
+  height: 100%;
+  max-width: 100%;
+}
+}

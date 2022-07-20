@@ -338,7 +338,7 @@ export default function ProductPageContent({ product, allProducts }) {
           <ImageModal show={showImageModal} open={() => setShowImageModal(true)} onClose={() => setShowImageModal(false)} product={product} />
         <div 
         
-        className="md:sticky md:top-[64px] lg:hidden xxs:w-[106.5%] md:w-full flex justify-center md:max-w-[59.5%] bg-white cursor-zoom-in">
+        className="md:sticky md:top-[64px] lg:hidden xxs:w-full md:w-full flex justify-center md:max-w-[59.5%] bg-white cursor-zoom-in">
               <Swiper
               onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
               pagination={{ clickable: true }}

@@ -37,7 +37,7 @@ export default function ImageModal({ show, onClose, product }) {
   product.images.edges.map((image, i) => {
     noVariantsArray.push(
       <SwiperSlide key={`slide-${i}`}>
-        <img src={image.node.originalSrc} onClick={(e) => {e.preventDefault(); e.stopPropagation()}} className="max-h-screen max-w-full h-full mx-auto select-none" />
+        <img src={image.node.originalSrc} onClick={(e) => {e.preventDefault(); e.stopPropagation()}} className="imgModalMobile mx-auto select-none" />
       </SwiperSlide>
     )
   })
@@ -135,7 +135,7 @@ export default function ImageModal({ show, onClose, product }) {
         return () => {
         document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [cancelButtonRef2]);
+  }, [cancelButtonRef0, cancelButtonRef2]);
 
   const SCROLL_BOX_MIN_HEIGHT = 20;
   const [hovering, setHovering] = useState(false);
@@ -400,26 +400,6 @@ export default function ImageModal({ show, onClose, product }) {
     };
   }, [handleDocumentMouseMove2, handleDocumentMouseUp2]);
 
-  useEffect(() => {
-    // First we get the viewport height and we multiply it by 1% to get a value for a vh unit
-    let vh = window.innerHeight * 0.01;
-    // Then we set the value in the --vh custom property to the root of the document
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-    // We listen to the resize event
-    window.addEventListener('resize', () => {
-    // We execute the same script as before
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-    });
-    window.addEventListener('touchstart', () => {
-       window.removeEventListener('resize', () => {
-        // We execute the same script as before
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-        })
-    })
-  }, [])
-
 
     return (
          <Transition.Root show={show} as={Fragment} {...handlers}>
@@ -466,7 +446,7 @@ export default function ImageModal({ show, onClose, product }) {
         }
       }}} style={{background: active && onClose()}} className="w-screen bg-black bg-opacity-75">
       <div className="sticky top-0">
-              <button ref={cancelButtonRef0} onClick={onClose} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white outline-none absolute z-[9999] right-2 top-2">
+              <button ref={cancelButtonRef0} onClick={onClose} type="button" className="text-gray-400 hover:bg-opacity-75 hover:bg-gray-800 hover:text-[#ff00a7] rounded-lg text-sm p-1.5 ml-auto inline-flex items-center outline-none absolute z-[9999] right-2 top-2">
                   <svg className="w-7 h-7 highlight-removal outline-none" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
               </button>
           </div>
@@ -558,7 +538,7 @@ export default function ImageModal({ show, onClose, product }) {
         </div>
         </div>
         <div className="lg:hidden">
-        <button ref={cancelButtonRef2} onClick={onClose} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white outline-none absolute z-[9999] right-2 top-2">
+        <button ref={cancelButtonRef2} onClick={onClose} type="button" className="text-gray-400 hover:bg-black hover:text-[#ff00a7] rounded-lg text-sm p-1.5 ml-auto inline-flex items-center outline-none absolute z-[9999] right-2 top-2">
                   <svg className="w-7 h-7 highlight-removal outline-none" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
               </button>
             <Swiper
