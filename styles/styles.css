@@ -1,12 +1,5 @@
 body {
   background-color: #0A0A0A;
-  max-height: 100vh;
-  /* mobile viewport bug fix */
-  max-height: -webkit-fill-available;
-}
-
-html {
-  height: -webkit-fill-available;
 }
 
 @media (min-width: 540px) {
@@ -460,7 +453,7 @@ html {
   background: black;
 } */
 
-/* .imgModalMobile {
-  height: calc(var(--vh, 1vh) * 100);
-} */
+.imgModalMobile {
+  max-height: calc(var(--vh, 1vh) * 100);
+}
 
