@@ -251,7 +251,7 @@ export default function ProductPageContent({ product, allProducts }) {
 
   return (
     <div>
-      <div className="flex flex-col justify-center md:pb-6 md:flex-row md:items-start lg:space-x-6 lg:max-w-[960px] mx-auto relative">
+      <div className="flex flex-col justify-center md:pb-6 md:flex-row md:items-start lg:space-x-6 lg:max-w-[960px] mx-auto relative xxs:overflow-hidden md:!overflow-visible">
       <div
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
@@ -337,8 +337,7 @@ export default function ProductPageContent({ product, allProducts }) {
           </div>
           <ImageModal show={showImageModal} open={() => setShowImageModal(true)} onClose={() => setShowImageModal(false)} product={product} />
         <div 
-        
-        className="md:sticky md:top-[64px] lg:hidden xxs:w-full md:w-full flex justify-center md:max-w-[59.5%] bg-white cursor-zoom-in">
+        className="md:sticky md:block md:top-[64px] lg:hidden xxs:hidden md:w-full flex justify-center md:max-w-[55.7%] bg-white cursor-zoom-in">
               <Swiper
               onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
               pagination={{ clickable: true }}
@@ -349,6 +348,33 @@ export default function ProductPageContent({ product, allProducts }) {
             >
               {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
             </Swiper>
+            </div>
+            <div 
+        className="xxs:sticky xxs:w-full xs:!hidden md:hidden flex justify-center bg-white cursor-zoom-in">
+              <Swiper
+              onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
+              pagination={{ clickable: true }}
+              className="w-full"
+              slidesPerView={1.4}
+              freeMode={true}
+              modules={[FreeMode, Pagination]}
+            >
+              {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
+            </Swiper>
+            </div>
+            <div 
+        className="xxs:hidden xs:sticky md:!hidden xxs:w-full xs:!flex justify-center bg-white cursor-zoom-in">
+              <Swiper
+              onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
+              pagination={{ clickable: true }}
+              className="w-full"
+              slidesPerView={1.9}
+              freeMode={true}
+              modules={[FreeMode, Pagination]}
+            >
+              {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
+            </Swiper>
+            </div>
             {/* <div ref={ref} className="keen-slider">
               { variantImagesArray.length === 0 ? (
                 product.images.edges.map((image, i) => {
@@ -382,7 +408,6 @@ export default function ProductPageContent({ product, allProducts }) {
                 })}
               </div>
             )} */}
-        </div>
         <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>
       <div className='mx-8 mt-3'>
