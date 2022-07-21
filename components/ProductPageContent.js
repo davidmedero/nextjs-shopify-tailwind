@@ -397,9 +397,9 @@ export default function ProductPageContent({ product, allProducts }) {
       </div>
       {
             showGTL ? (
-              <GetTheLook current={product.id} product={product} allProducts={allProducts} />
+              <GetTheLook product={product} allProducts={allProducts} />
             ) : (
-              <RecommendedList current={product.id} products={product.collections.edges.length > 1 ? product.collections.edges[product.collections.edges.length - 1].node.products.edges : product.collections.edges[0].node.products.edges} />
+              <RecommendedList product={product} allProducts={allProducts} />
             )
           }
     </div>
