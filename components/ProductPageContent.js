@@ -14,8 +14,6 @@ export default function ProductPageContent({ product, allProducts }) {
 
   const [showImageModal, setShowImageModal] = useState(false)
 
-  const modalRef = useRef()
-
   const variantImagesArray = []
 
   const noVariantsArray = []
@@ -26,21 +24,15 @@ export default function ProductPageContent({ product, allProducts }) {
 
   variantImages.map((el, i) => {
     variantImagesArray.push(
-      <SwiperSlide key={`slide-${i}`}>
-        <Image src={el.image} width='417' height='627' layout="responsive" objectFit="contain" />
-      </SwiperSlide>
+      <Image src={el.image} width='417' height='627' layout="responsive" objectFit="contain" />
     )
   })
 
   product.images.edges.map((image, i) => {
     noVariantsArray.push(
-      <SwiperSlide key={`slide-${i}`}>
-        <Image src={image.node.originalSrc} width='417' height='627' layout="responsive" objectFit="contain" />
-      </SwiperSlide>
+      <Image src={image.node.originalSrc} width='417' height='627' layout="responsive" objectFit="contain" />
     )
   })
-
-  SwiperCore.use([Navigation, Pagination])
 
   const [imageIndex, setImageIndex] = useState(0)
 
@@ -234,12 +226,29 @@ export default function ProductPageContent({ product, allProducts }) {
   const [loaded, setLoaded] = useState(false)
 
   const [ref, instanceRef] = useKeenSlider({
-    slides: {
-      perView: 1.4
+    breakpoints: {
+      "(min-width: 0px)": {
+        slides: { perView: 1.4 }
+      },
+      "(min-width: 500px)": {
+        slides: { perView: 1.5 }
+      },
+      "(min-width: 600px)": {
+        slides: { perView: 1.9 }
+      },
+      "(min-width: 768px)": {
+        slides: { perView: 1.4 }
+      }
     },
     mode: "free-snap",
     loop: false,
     initial: 0,
+    slideChanged(slider) {
+      setCurrentSlide(slider.track.details.rel)
+    },
+    created() {
+      setLoaded(true);
+    }
   })
 
   useEffect(() => {
@@ -335,46 +344,9 @@ export default function ProductPageContent({ product, allProducts }) {
             
             }
           </div>
-          <ImageModal show={showImageModal} open={() => setShowImageModal(true)} onClose={() => setShowImageModal(false)} product={product} />
-        {/* <div 
-        className="md:sticky md:block md:top-[64px] lg:hidden xxs:hidden md:w-full flex justify-center md:max-w-[55.7%] bg-white cursor-zoom-in">
-              <Swiper
-              onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
-              pagination={{ clickable: true }}
-              className="w-full"
-              slidesPerView={1.4}
-              freeMode={true}
-              modules={[FreeMode, Pagination]}
-            >
-              {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
-            </Swiper>
-            </div> */}
+          <ImageModal show={showImageModal} onClose={() => setShowImageModal(false)} product={product} />
             <div 
-        className="xxs:sticky xxs:w-full md:max-w-[55.7%] lg:hidden flex justify-center bg-white cursor-zoom-in">
-              {/* <Swiper
-              onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
-              pagination={{ clickable: true }}
-              className="w-full"
-              slidesPerView={1.4}
-              freeMode={true}
-              modules={[FreeMode, Pagination]}
-            >
-              {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
-            </Swiper>
-            </div>
-            <div 
-        className="xxs:hidden xs:sticky md:!hidden xxs:w-full xs:!flex justify-center bg-white cursor-zoom-in">
-              <Swiper
-              onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
-              pagination={{ clickable: true }}
-              className="w-full"
-              slidesPerView={1.9}
-              freeMode={true}
-              modules={[FreeMode, Pagination]}
-            >
-              {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
-            </Swiper>
-            </div> */}
+        className="xxs:sticky xxs:max-w-[99.5%] md:min-w-[55.7%] md:max-w-[55.7%] lg:hidden flex justify-center bg-white cursor-zoom-in">
             <div ref={ref} className="keen-slider">
               { variantImagesArray.length === 0 ? (
                 product.images.edges.map((image, i) => {

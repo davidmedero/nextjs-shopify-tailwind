@@ -131,7 +131,6 @@ html {
   height: 100vh;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  position: relative;
 }
 
 .scroll-bar {
@@ -436,7 +435,7 @@ html {
   cursor: pointer;
 } */
 
-/* .dots {
+.dots {
   display: flex;
   padding: 10px 0;
   justify-content: center;
@@ -459,7 +458,7 @@ html {
 
 .dot.active {
   background: black;
-} */
+}
 
 @media (max-width: 499px) {
 .imgModalMobile {
