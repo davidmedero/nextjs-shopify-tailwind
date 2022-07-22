@@ -12,7 +12,6 @@
     "@shopify/shopify-api": "^2.1.0",
     "@types/nodemailer": "^6.4.4",
     "@vercel/fetch": "^6.1.1",
-    "autoprefixer": "^10.4.7",
     "axios": "^0.26.0",
     "email-validator": "^2.0.4",
     "isomorphic-unfetch": "^3.1.0",
@@ -21,7 +20,6 @@
     "jsonwebtoken": "^8.5.1",
     "keen-slider": "^6.7.0",
     "mongodb": "^4.7.0",
-    "mongosh": "^1.5.0",
     "next": "latest",
     "next-auth": "^4.3.1",
     "next-connect": "^0.12.2",
@@ -43,7 +41,7 @@
     "swiper": "^8.3.1",
     "swr": "^1.2.2",
     "tailwindcss": "^3.0.24",
-    "vercel": "^24.0.0"
+    "vercel": "^19.1.2"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.14",

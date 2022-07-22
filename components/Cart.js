@@ -107,7 +107,7 @@ export default function Cart({ cart }) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay {...handlers} className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <Dialog.Overlay {...handlers} className="absolute inset-0 bg-black bg-opacity-75 transition-opacity" />
           </Transition.Child>
           <div {...handlers} className="fixed inset-y-0 right-0 sm:pl-10 max-w-full flex">
             <Transition.Child

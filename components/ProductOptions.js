@@ -17,15 +17,8 @@ export default function ProductOptions({ name, values, selectedOptions, setOptio
 
   const { data: productInventory } = useSWR(
     ['/api/available', product.handle],
-    (url, id) => fetcher(url, id), 
-    { errorRetryCount: 3}
+    (url, id) => fetcher(url, id)
   )
-
-  const initialColor = values.map(value => {
-    if (selectedOptions[name] === value && name !== 'Size') {
-      return value
-    }
-  }).join('')
 
   const [color, setColor] = useState('')
 
