@@ -346,7 +346,7 @@ export default function ProductPageContent({ product, allProducts }) {
           </div>
           <ImageModal show={showImageModal} onClose={() => setShowImageModal(false)} product={product} />
             <div 
-        className="xxs:sticky xxs:max-w-[99.5%] md:min-w-[55.7%] md:max-w-[55.7%] lg:hidden flex justify-center bg-white cursor-zoom-in">
+        className="md:sticky md:top-[64px] xxs:max-w-[99.5%] md:min-w-[55.7%] md:max-w-[55.7%] lg:hidden flex justify-center bg-white cursor-zoom-in">
             <div ref={ref} className="keen-slider">
               { variantImagesArray.length === 0 ? (
                 product.images.edges.map((image, i) => {
