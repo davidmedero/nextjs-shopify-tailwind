@@ -6,8 +6,8 @@ import RecommendedList from './RecommendedList'
 import { useEffect, useState, useCallback, useRef } from "react"
 import GetTheLook from './GetTheLook'
 import ImageModal from './ImageModal'
-// import 'keen-slider/keen-slider.min.css'
-// import { useKeenSlider } from 'keen-slider/react'
+import 'keen-slider/keen-slider.min.css'
+import { useKeenSlider } from 'keen-slider/react'
 
 
 export default function ProductPageContent({ product, allProducts }) {
@@ -230,23 +230,23 @@ export default function ProductPageContent({ product, allProducts }) {
   const [showGTL, setShowGTL] = useState(true)
   const [showYMAL, setShowYMAL] = useState(false)
 
-  // const [currentSlide, setCurrentSlide] = useState(0)
-  // const [loaded, setLoaded] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [loaded, setLoaded] = useState(false)
 
-  // const [ref, instanceRef] = useKeenSlider({
-  //   slides: {
-  //     perView: 2
-  //   },
-  //   mode: "free-snap",
-  //   loop: false,
-  //   initial: 0,
-  //   slideChanged(slider) {
-  //     setCurrentSlide(slider.track.details.rel)
-  //   },
-  //   created() {
-  //     setLoaded(true)
-  //   },
-  // })
+  const [ref, instanceRef] = useKeenSlider({
+    slides: {
+      perView: 1.4
+    },
+    mode: "free-snap",
+    loop: false,
+    initial: 0,
+  })
+
+  useEffect(() => {
+   instanceRef?.current?.update()
+    }, [variantImages, instanceRef])
+
+  
 
 
   return (
@@ -336,7 +336,7 @@ export default function ProductPageContent({ product, allProducts }) {
             }
           </div>
           <ImageModal show={showImageModal} open={() => setShowImageModal(true)} onClose={() => setShowImageModal(false)} product={product} />
-        <div 
+        {/* <div 
         className="md:sticky md:block md:top-[64px] lg:hidden xxs:hidden md:w-full flex justify-center md:max-w-[55.7%] bg-white cursor-zoom-in">
               <Swiper
               onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
@@ -348,10 +348,10 @@ export default function ProductPageContent({ product, allProducts }) {
             >
               {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
             </Swiper>
-            </div>
+            </div> */}
             <div 
-        className="xxs:sticky xxs:w-full xs:!hidden md:hidden flex justify-center bg-white cursor-zoom-in">
-              <Swiper
+        className="xxs:sticky xxs:w-full md:max-w-[55.7%] lg:hidden flex justify-center bg-white cursor-zoom-in">
+              {/* <Swiper
               onClick={(e) => e.target !== document.querySelector(".swiper-pagination-bullet") && setShowImageModal(true)}
               pagination={{ clickable: true }}
               className="w-full"
@@ -374,17 +374,17 @@ export default function ProductPageContent({ product, allProducts }) {
             >
               {variantImagesArray.length === 0 ? noVariantsArray : variantImagesArray}
             </Swiper>
-            </div>
-            {/* <div ref={ref} className="keen-slider">
+            </div> */}
+            <div ref={ref} className="keen-slider">
               { variantImagesArray.length === 0 ? (
                 product.images.edges.map((image, i) => {
-                  return (<div key={i} className="keen-slider__slide">
+                  return (<div key={i} onClick={() => setShowImageModal(true)} className="keen-slider__slide">
                     <Image src={image.node.originalSrc} width='417' height='627' layout="responsive" objectFit="contain" />
                   </div>)
                 })
               ) : (
                 variantImages.map((el, idx) => (
-                  <div key={idx} className="keen-slider__slide">
+                  <div key={idx} onClick={() => setShowImageModal(true)} className="keen-slider__slide">
                     <Image src={el.image} width='417' height='627' layout="responsive" objectFit="contain" />
                   </div>
                 ))
@@ -407,7 +407,8 @@ export default function ProductPageContent({ product, allProducts }) {
                   )
                 })}
               </div>
-            )} */}
+            )}
+            </div>
         <ProductForm product={product} allProducts={allProducts} variantImages={variantImages} />
       </div>
       <div className='mx-8 mt-3'>
