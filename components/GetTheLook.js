@@ -3,7 +3,7 @@ import ProductCard from './ProductCard'
 const GetTheLook = ({ product, allProducts }) => {
 
     const gtlProducts = allProducts.map((prod, i) => {
-        if (((JSON.parse(product.metafield.value)).getTheLook).some(el => el === prod.node.handle)) {
+        if (product.metafield && ((JSON.parse(product.metafield.value)).getTheLook).some(el => el === prod.node.handle)) {
             return prod
         }
     }).filter(el => el !== undefined)

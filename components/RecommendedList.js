@@ -3,7 +3,7 @@ import ProductCard from './ProductCard'
 const RecommendedList = ({ product, allProducts }) => {
 
     const ymalProducts = allProducts.map((prod, i) => {
-        if (((JSON.parse(product.metafield.value)).youMayAlsoLike).some(el => el === prod.node.handle)) {
+        if (product.metafield && ((JSON.parse(product.metafield.value)).youMayAlsoLike).some(el => el === prod.node.handle)) {
             return prod
         }
     }).filter(el => el !== undefined)
