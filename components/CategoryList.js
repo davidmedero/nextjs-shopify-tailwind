@@ -737,7 +737,7 @@ const CategoryList = ({ productsByCollection, category, product, allCollections 
                             <div className="flex flex-col mt-5">
                             {
                               sizes.map(size => (
-                                  <div className={checkedSize[size] ? "flex flex-row items-center justify-between text-[#ff00a7] hover:bg-gray-900 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
+                                  <div key={size} className={checkedSize[size] ? "flex flex-row items-center justify-between text-[#ff00a7] hover:bg-gray-900 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
                                   <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 select-none hover:font-semibold">{size}</div>
                                     <div>
                                       <svg xmlns="http://www.w3.org/2000/svg" className={checkedSize[size] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -820,7 +820,7 @@ const CategoryList = ({ productsByCollection, category, product, allCollections 
                             <div className="flex flex-col mt-5">
                             {
                               newColors.map(color => (
-                                  <div className={checkedColor[color] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
+                                  <div key={color} className={checkedColor[color] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
                                   <div onClick={() => toggleColor(color)} className="w-full py-4 pl-3 select-none hover:font-semibold">{color.toUpperCase()}</div>
                                     <div>
                                       <svg xmlns="http://www.w3.org/2000/svg" className={checkedColor[color] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -903,7 +903,7 @@ const CategoryList = ({ productsByCollection, category, product, allCollections 
                             <div className="flex flex-col mt-5">
                             {
                               displayBrandsInCollection.map(brand => (
-                                  <div className={checkedBrand[brand] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
+                                  <div key={brand} className={checkedBrand[brand] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
                                   <div onClick={() => toggleBrand(brand)} className="w-full py-4 pl-3 select-none hover:font-semibold">{brand.toUpperCase()}</div>
                                     <div>
                                       <svg xmlns="http://www.w3.org/2000/svg" className={checkedBrand[brand] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
