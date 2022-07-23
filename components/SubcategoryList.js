@@ -281,8 +281,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 lg:visible lg:relative lg:top-[11px] lg:z-[15] lg:opacity-100'>
                 <span className="border-2 bg-black border-white p-1 pl-3 flex w-[200px] items-center justify-between">
                     <span className="select-none text-white font-semibold">SORT</span>
-                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
                 </span>
@@ -327,8 +327,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             className='xxs:invisible xxs:absolute xxs:z-[-1] xxs:opacity-0 md:visible md:relative md:top-[11px] md:z-[50] md:opacity-100 lg:invisible lg:absolute lg:z-[-1] lg:opacity-0'>
                 <span className="border-2 bg-black border-white p-1 pl-3 flex w-[200px] items-center justify-between cursor-pointer">
                     <span className="select-none text-white font-semibold">SORT</span>
-                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
                 </span>
@@ -370,8 +370,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             </div>
               <span onClick={() => setShowFilterOptions(true)} className="cursor-pointer border-2 border-white bg-black ml-[15px] p-1 pl-3 flex w-[200px] relative top-[11px] items-center justify-between">
                 <span className="select-none text-white font-semibold">FILTER</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-[1px] rotate-90" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-[1px] rotate-90" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                 </svg>
               </span>
           </div>
@@ -424,8 +424,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             onClick={() => toggleSortOptions()}>
                 <span className="cursor-pointer border-2 border-white p-1 pl-3 flex justify-between">
                     <span className="select-none font-semibold text-white">SORT</span>
-                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    <span className={showSortOptions ? "rotate-180 transition-all ease-in-out duration-200" : "rotate-360 transition-all ease-in-out duration-200"}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
                 </span>
@@ -467,8 +467,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
             </div>
               <span onClick={() => setShowFilterOptions(true)} className="cursor-pointer border-2 border-white p-1 pl-3 flex justify-between">
                 <span className="select-none font-semibold text-white">FILTER</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-[2px] rotate-90" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-[2px] rotate-90" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                 </svg>
               </span>
           </div>
@@ -522,8 +522,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                             className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 pl-3 cursor-pointer hover:font-semibold">
                                 <span className="w-full h-[75px] flex items-center select-none">BRAND</span>
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                                     </svg>
                                 </span>
                             </div>
@@ -532,8 +532,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                             className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 pl-3 cursor-pointer hover:font-semibold">
                                 <span className="w-full h-[75px] flex items-center select-none">COLOR</span>
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                                     </svg>
                                 </span>
                             </div>
@@ -542,8 +542,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                             className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 pl-3 cursor-pointer hover:font-semibold">
                                 <span className="w-full h-[75px] flex items-center select-none">SIZE</span>
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                                     </svg>
                                 </span>
                             </div>
@@ -552,8 +552,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                             className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 pl-3 cursor-pointer hover:font-semibold">
                                 <span className="w-full h-[75px] flex items-center select-none">PRICE</span>
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                                     </svg>
                                 </span>
                             </div>
@@ -609,8 +609,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                         className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowPriceFilter(false)}>
                         <span className="sr-only">Close panel</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
                           <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">FILTER</Dialog.Title>
@@ -702,8 +702,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                         className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowSizeFilter(false)}>
                         <span className="sr-only">Close panel</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
                           <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">FILTER</Dialog.Title>
@@ -733,8 +733,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                                   <div className={checkedSize[size] ? "flex flex-row items-center justify-between text-[#ff00a7] hover:bg-gray-900 cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
                                   <div onClick={() => toggleSize(size)} className="w-full py-4 pl-3 select-none hover:font-semibold">{size}</div>
                                     <div>
-                                      <svg xmlns="http://www.w3.org/2000/svg" class={checkedSize[size] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                      <svg xmlns="http://www.w3.org/2000/svg" className={checkedSize[size] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                       </svg>
                                     </div>
                                   </div>                     
@@ -785,8 +785,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                         className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowColorFilter(false)}>
                         <span className="sr-only">Close panel</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
                           <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">FILTER</Dialog.Title>
@@ -816,8 +816,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                                   <div className={checkedColor[color] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
                                   <div onClick={() => toggleColor(color)} className="w-full py-4 pl-3 select-none hover:font-semibold">{color.toUpperCase()}</div>
                                     <div>
-                                      <svg xmlns="http://www.w3.org/2000/svg" class={checkedColor[color] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                      <svg xmlns="http://www.w3.org/2000/svg" className={checkedColor[color] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                       </svg>
                                     </div>
                                   </div>                     
@@ -868,8 +868,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                         className="-m-2 p-2 text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-opacity-75 focus-visible:ring-[#ff00a7] focus-visible:ring-offset-[#ff00a7] focus-visible:ring-offset-2 focus-visible:border-[#ff00a7] hover:ring-1 hover:ring-[#ff00a7] hover:border-[#ff00a7] hover:ring-offset-2 hover:ring-offset-[#ff00a7]"
                         onClick={() =>setShowBrandsFilter(false)}>
                         <span className="sr-only">Close panel</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
                           <Dialog.Title className="text-xl font-semibold mx-auto text-white select-none">FILTER</Dialog.Title>
@@ -899,8 +899,8 @@ const SubcategoryList = ({ productsBySubcollection, category, subcategory, produ
                                   <div className={checkedBrand[brand] ? "flex flex-row items-center justify-between hover:bg-gray-900 text-[#ff00a7] cursor-pointer" : "flex flex-row items-center justify-between hover:bg-gray-900 cursor-pointer"}>
                                   <div onClick={() => toggleBrand(brand)} className="w-full py-4 pl-3 select-none hover:font-semibold">{brand.toUpperCase()}</div>
                                     <div>
-                                      <svg xmlns="http://www.w3.org/2000/svg" class={checkedBrand[brand] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                      <svg xmlns="http://www.w3.org/2000/svg" className={checkedBrand[brand] ? "h-6 w-6 mr-5" : "hidden"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                       </svg>
                                     </div>
                                   </div>                     

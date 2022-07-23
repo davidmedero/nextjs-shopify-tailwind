@@ -14,11 +14,14 @@ import { SessionProvider } from 'next-auth/react'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 NProgress.configure({ showSpinner: false })
+import React from 'react'
 
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
   const router = useRouter()
+
+  if (typeof window === "undefined") React.useLayoutEffect = () => {}
 
   Router.events.on('routeChangeStart', (url) => {
     NProgress.start()

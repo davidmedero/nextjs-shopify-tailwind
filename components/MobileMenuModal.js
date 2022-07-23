@@ -85,6 +85,7 @@ export default function MobileMenuModal({ show, onClose }) {
                                 {
                                   collections.map(collection => (
                                     <div 
+                                    key={collection.id}
                                     onClick={() => {
                                         setShowModal(true);
                                         setCategoryTitle(collection.title);
@@ -94,8 +95,8 @@ export default function MobileMenuModal({ show, onClose }) {
                                     className="flex border-b justify-between items-center hover:text-[#ff00a7] hover:bg-gray-900 hover:font-semibold pl-3 cursor-pointer select-none">
                                         <span className="w-full h-[75px] flex items-center">{collection.title.toUpperCase()}</span>
                                         <span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                                             </svg>
                                         </span>
                                     </div>
@@ -108,8 +109,8 @@ export default function MobileMenuModal({ show, onClose }) {
                                   <div className="flex flex-row items-center justify-between pl-3 py-6 border-b">
                                     <div className="flex flex-row">SIGN IN <span className="ml-2"><SignInButton /></span></div>
                                     <div>
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                                             </svg>
                                         </div>
                                   </div>
@@ -126,8 +127,8 @@ export default function MobileMenuModal({ show, onClose }) {
                                   <div className="flex flex-row items-center justify-between pl-3 py-6 border-b">
                                     <div className="flex flex-row">MY ACCOUNT <span className="ml-2"><SignInButton /></span></div>
                                     <div>
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                                             </svg>
                                         </div>
                                   </div>
@@ -151,8 +152,8 @@ export default function MobileMenuModal({ show, onClose }) {
                                       </span>
                                   </div>
                                   <div>
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                                             </svg>
                                         </div>
                                   </div>

@@ -223,8 +223,8 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                 updateMacros()
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
             </>
@@ -239,8 +239,8 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                 setShowSignInModal(true)
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
             </>
@@ -253,7 +253,6 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                     height='800'
                     layout="responsive"
                     objectFit="cover"
-                    style={{display: 'inline-block', width: 'full' }}
                     onMouseLeave={() => setShow2ndPic(false)}
                 />
                 ) : (
@@ -263,7 +262,6 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                   height='800'
                   layout="responsive"
                   objectFit="cover"
-                  style={{display: 'inline-block', width: 'full' }}
                   onMouseOver={() => setShow2ndPic(true)}
               />
                 )
@@ -280,8 +278,8 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                 updateMacros()
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
             </>
@@ -296,8 +294,8 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                 setShowSignInModal(true)
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
             </>
@@ -310,7 +308,6 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                     height='800'
                     layout="responsive"
                     objectFit="cover"
-                    style={{display: 'inline-block', width: 'full' }}
                     onMouseOver={() => setShow2ndPic(true)}
                 />
             </div>
@@ -342,8 +339,8 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                 updateMacros()
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
             </>
@@ -358,8 +355,8 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                 setShowSignInModal(true)
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
             </>
@@ -372,7 +369,6 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                     height='800'
                     layout="responsive"
                     objectFit="cover"
-                    style={{display: 'inline-block', width: 'full' }}
                     onMouseLeave={() => setSecondVariantImage('')}
                   />
                 )
@@ -383,7 +379,6 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                     height='800'
                     layout="responsive"
                     objectFit="cover"
-                    style={{display: 'inline-block', width: 'full' }}
                     onMouseOver={() => {firstImgLink(variantPic); showSecondImage(variantPic)}}
                 />
                 ) : (
@@ -393,7 +388,6 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                     height='800'
                     layout="responsive"
                     objectFit="cover"
-                    style={{display: 'inline-block', width: 'full' }}
                     onMouseOver={() => {firstImgLink(originalSrc); showSecondImage(originalSrc)}}
                 />
                 )
@@ -410,8 +404,8 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                 updateMacros()
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
             </>
@@ -426,8 +420,8 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                 setShowSignInModal(true)
               }}
               className="absolute right-[6px] top-1 z-[1]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "black"} strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
             </>
@@ -440,7 +434,6 @@ const ProductCard = ({ product, filteredColorPic, filteredShade }) => {
                     height='800'
                     layout="responsive"
                     objectFit="cover"
-                    style={{display: 'inline-block', width: 'full' }}
                     onMouseOver={() => setShow2ndPic(true)}
                 />
             </div>

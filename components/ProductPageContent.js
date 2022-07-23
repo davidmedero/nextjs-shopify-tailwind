@@ -1,7 +1,5 @@
 import Image from 'next/image'
 import ProductForm from './ProductForm'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperCore, { Navigation, Pagination, FreeMode } from 'swiper'
 import RecommendedList from './RecommendedList'
 import { useEffect, useState, useCallback, useRef } from "react"
 import GetTheLook from './GetTheLook'
@@ -48,7 +46,7 @@ export default function ProductPageContent({ product, allProducts }) {
   useEffect(() => {
     const src = [variantImages[imageIndex]].map(el => el?.image)
     setMousePosition({ backgroundImage: `url(${src})` })
-  }, [imageIndex, variantImages]); 
+  }, [imageIndex, variantImages])
 
   const handleMouseMove = (e) => {
     const { left, top, width, height } = e.target.getBoundingClientRect()
@@ -116,21 +114,21 @@ export default function ProductPageContent({ product, allProducts }) {
     })
   }, [])
 
-  const SCROLL_BOX_MIN_HEIGHT = 20;
-  const [hovering, setHovering] = useState(false);
-  const [scrollBoxHeight, setScrollBoxHeight] = useState(SCROLL_BOX_MIN_HEIGHT);
-  const [scrollBoxTop, setScrollBoxTop] = useState(0);
-  const scrollHostRef = useRef();
-  const [lastScrollThumbPosition, setScrollThumbPosition] = useState(0);
-  const [isDragging, setDragging] = useState(false);
+  const SCROLL_BOX_MIN_HEIGHT = 20
+  const [hovering, setHovering] = useState(false)
+  const [scrollBoxHeight, setScrollBoxHeight] = useState(SCROLL_BOX_MIN_HEIGHT)
+  const [scrollBoxTop, setScrollBoxTop] = useState(0)
+  const scrollHostRef = useRef()
+  const [lastScrollThumbPosition, setScrollThumbPosition] = useState(0)
+  const [isDragging, setDragging] = useState(false)
 
   const handleMouseOver = useCallback(() => {
     !hovering && (variantImageRef.current.length > 4 || (variantImages.length === 0 && product.images.edges.length > 4)) && setHovering(true);
-  }, [hovering]);
+  }, [hovering])
 
   const handleMouseOut = useCallback(() => {
     !!hovering && setHovering(false);
-  }, [hovering]);
+  }, [hovering])
 
   const handleDocumentMouseUp = useCallback(
     e => {
@@ -140,84 +138,83 @@ export default function ProductPageContent({ product, allProducts }) {
       }
     },
     [isDragging]
-  );
+  )
 
   const handleDocumentMouseMove = useCallback(
     e => {
       if (isDragging) {
-        e.preventDefault();
-        e.stopPropagation();
-        const scrollHostElement = scrollHostRef.current;
-        const { scrollHeight, offsetHeight } = scrollHostElement;
+        e.preventDefault()
+        e.stopPropagation()
+        const scrollHostElement = scrollHostRef.current
+        const { scrollHeight, offsetHeight } = scrollHostElement
 
-        let deltaY = e.clientY - lastScrollThumbPosition;
-        let percentage = deltaY * (scrollHeight / offsetHeight);
+        let deltaY = e.clientY - lastScrollThumbPosition
+        let percentage = deltaY * (scrollHeight / offsetHeight)
 
-        setScrollThumbPosition(e.clientY);
+        setScrollThumbPosition(e.clientY)
         setScrollBoxTop(
           Math.min(
             Math.max(0, scrollBoxTop + deltaY),
             offsetHeight - scrollBoxHeight
           )
-        );
+        )
         scrollHostElement.scrollTop = Math.min(
           scrollHostElement.scrollTop + percentage,
           scrollHeight - offsetHeight
-        );
+        )
       }
     },
     [isDragging, lastScrollThumbPosition, scrollBoxHeight, scrollBoxTop]
-  );
+  )
 
   const handleScrollThumbMouseDown = useCallback(e => {
-    e.preventDefault();
-    e.stopPropagation();
-    setScrollThumbPosition(e.clientY);
-    setDragging(true);
-    console.log("handleScrollThumbMouseDown");
-  }, []);
+    e.preventDefault()
+    e.stopPropagation()
+    setScrollThumbPosition(e.clientY)
+    setDragging(true)
+  }, [])
 
   const handleScroll = useCallback(() => {
     if (!scrollHostRef) {
-      return;
+      return
     }
-    const scrollHostElement = scrollHostRef.current;
-    const { scrollTop, scrollHeight, offsetHeight } = scrollHostElement;
+    const scrollHostElement = scrollHostRef.current
+    const { scrollTop, scrollHeight, offsetHeight } = scrollHostElement
 
     let newTop =
-      (parseInt(scrollTop, 10) / parseInt(scrollHeight, 10)) * offsetHeight;
+      (parseInt(scrollTop, 10) / parseInt(scrollHeight, 10)) * offsetHeight
 
     // newTop = newTop + parseInt(scrollTop, 10);
-    newTop = Math.min(newTop, offsetHeight - scrollBoxHeight);
-    setScrollBoxTop(newTop);
-  }, []);
+    newTop = Math.min(newTop, offsetHeight - scrollBoxHeight)
+    setScrollBoxTop(newTop)
+  }, [])
 
   useEffect(() => {
-    const scrollHostElement = scrollHostRef.current;
-    const { clientHeight, scrollHeight } = scrollHostElement;
-    const scrollBoxPercentage = clientHeight / scrollHeight;
+    const scrollHostElement = scrollHostRef.current
+    const { clientHeight, scrollHeight } = scrollHostElement
+    const scrollBoxPercentage = clientHeight / scrollHeight
     const scrollbarHeight = Math.max(
       scrollBoxPercentage * clientHeight,
       SCROLL_BOX_MIN_HEIGHT
-    );
-    setScrollBoxHeight(scrollbarHeight);
-    scrollHostElement.addEventListener("scroll", handleScroll, true);
+    )
+    setScrollBoxHeight(scrollbarHeight)
+    scrollHostElement.addEventListener("scroll", handleScroll, true)
     return function cleanup() {
-      scrollHostElement.removeEventListener("scroll", handleScroll, true);
-    };
-  }, [scrollBoxTop, hovering]);
+      scrollHostElement.removeEventListener("scroll", handleScroll, true)
+    }
+  }, [scrollBoxTop, hovering])
 
   useEffect(() => {
     //this is handle the dragging on scroll-thumb
-    document.addEventListener("mousemove", handleDocumentMouseMove);
-    document.addEventListener("mouseup", handleDocumentMouseUp);
-    document.addEventListener("mouseleave", handleDocumentMouseUp);
+    document.addEventListener("mousemove", handleDocumentMouseMove)
+    document.addEventListener("mouseup", handleDocumentMouseUp)
+    document.addEventListener("mouseleave", handleDocumentMouseUp)
     return function cleanup() {
-      document.removeEventListener("mousemove", handleDocumentMouseMove);
-      document.removeEventListener("mouseup", handleDocumentMouseUp);
-      document.removeEventListener("mouseleave", handleDocumentMouseUp);
-    };
-  }, [handleDocumentMouseMove, handleDocumentMouseUp]);
+      document.removeEventListener("mousemove", handleDocumentMouseMove)
+      document.removeEventListener("mouseup", handleDocumentMouseUp)
+      document.removeEventListener("mouseleave", handleDocumentMouseUp)
+    }
+  }, [handleDocumentMouseMove, handleDocumentMouseUp])
 
   const [showGTL, setShowGTL] = useState(true)
   const [showYMAL, setShowYMAL] = useState(false)
@@ -272,6 +269,7 @@ export default function ProductPageContent({ product, allProducts }) {
           variantImages.length !== 0 ? (
             variantImages.map(el => (
               <div
+              key={el.id}
               className="mb-6 last:mb-0">
                 <Image 
                 src={el.image} 
@@ -283,6 +281,7 @@ export default function ProductPageContent({ product, allProducts }) {
           ) : (
             product.images.edges.map(image => (
               <div
+              key={image.node.id}
               className="mb-6">
                 <Image 
                 src={image.node.originalSrc} 
@@ -308,7 +307,7 @@ export default function ProductPageContent({ product, allProducts }) {
               variantImages.length !== 0 ? (
                 [variantImages[imageIndex]].map(el => (
                   el &&
-                    <div>
+                    <div key={el.id}>
                       {
                         <figure 
                         className="w-[383px] block bg-no-repeat cursor-zoom-in"
@@ -325,7 +324,7 @@ export default function ProductPageContent({ product, allProducts }) {
                   ))
               ) : (
                 [product.images.edges[noVariantsImageIndex]].map(image => (
-                    <div>
+                    <div key={image.node.id}>
                       {
                         <figure 
                         className="w-full block bg-no-repeat cursor-zoom-in"
@@ -346,7 +345,7 @@ export default function ProductPageContent({ product, allProducts }) {
           </div>
           <ImageModal show={showImageModal} onClose={() => setShowImageModal(false)} product={product} />
             <div 
-        className="md:sticky md:top-[64px] xxs:max-w-[99.5%] md:min-w-[55.7%] md:max-w-[55.7%] lg:hidden flex justify-center bg-white cursor-zoom-in">
+        className="xxs:sticky md:top-[64px] xxs:max-w-full md:min-w-[55.7%] md:max-w-[55.7%] lg:hidden flex justify-center bg-white cursor-zoom-in">
             <div ref={ref} className="keen-slider">
               { variantImagesArray.length === 0 ? (
                 product.images.edges.map((image, i) => {

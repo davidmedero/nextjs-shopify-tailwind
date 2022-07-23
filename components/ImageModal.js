@@ -44,8 +44,6 @@ export default function ImageModal({ show, onClose, product }) {
 
   SwiperCore.use([Navigation, Pagination])
 
-
-
   const [imageIndex, setImageIndex] = useState(0)
 
   const [mousePosition, setMousePosition] = useState({
@@ -125,7 +123,6 @@ export default function ImageModal({ show, onClose, product }) {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      console.log()
         if (cancelButtonRef0.current && !cancelButtonRef0.current.contains(event.target) && cancelButtonRef2.current && !cancelButtonRef2.current.contains(event.target) && event.target !== document.getElementById("enlargeImage") && event.target !== document.getElementById("enlargeImage2") && event.target !== document.getElementById("enlargeImage3") && !imageColumn.current.contains(event.target) && event.target !== document.getElementById("scrb3") && event.target !== document.getElementById("scrt3") && event.target !== document.querySelector(".modalBlock") && event.target !== document.querySelector(".swiper-button-prev") && event.target !== document.querySelector(".swiper-button-next") && document.querySelectorAll(".swiper-pagination").forEach(el => el !== event.target) && document.querySelectorAll(".swiper-pagination-bullet").forEach(el => el !== event.target)) {
             onClose()
         }
@@ -447,7 +444,7 @@ export default function ImageModal({ show, onClose, product }) {
       }}} style={{background: active && onClose()}} className="w-screen">
       <div className="xxs:hidden lg:block sticky top-0">
               <button ref={cancelButtonRef0} onClick={onClose} type="button" className="text-gray-400 hover:bg-opacity-75 hover:bg-gray-800 hover:text-[#ff00a7] rounded-full text-sm p-1.5 ml-auto inline-flex items-center outline-none absolute z-[9999] right-2 top-2">
-                  <svg className="w-7 h-7 highlight-removal outline-none" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                  <svg className="w-7 h-7 highlight-removal outline-none" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>  
               </button>
           </div>
           <div>
@@ -464,6 +461,7 @@ export default function ImageModal({ show, onClose, product }) {
           variantImages.length !== 0 ? (
             variantImages.map(el => (
               <div
+              key={el.id}
               className="mb-6 last:mb-0">
                 <Image 
                 src={el.image} 
@@ -475,6 +473,7 @@ export default function ImageModal({ show, onClose, product }) {
           ) : (
             product.images.edges.map(image => (
               <div
+              key={image.node.id}
               className="mb-6">
                 <Image 
                 src={image.node.originalSrc} 
@@ -500,15 +499,15 @@ export default function ImageModal({ show, onClose, product }) {
               variantImages.length !== 0 ? (
                 [variantImages[imageIndex]].map(el => (
                   el &&
-                    <div>
+                    <div key={el.id}>
                       {
-                        <figure 
+                        <figure
                         className="w-full block cursor-pointer">
-                          <Image 
+                          <Image
                           className='z-[9999] relative'
                           id='enlargeImage'
-                          onClick={(e)=> {e.preventDefault(); e.stopPropagation(); window.open(`${el.image}`, "_blank")}} 
-                          src={el.image} 
+                          onClick={(e)=> {e.preventDefault(); e.stopPropagation(); window.open(`${el.image}`, "_blank")}}
+                          src={el.image}
                           width='500' height='800' layout="responsive" objectFit="cover" />
                         </figure>
                       }
@@ -516,15 +515,15 @@ export default function ImageModal({ show, onClose, product }) {
                   ))
               ) : (
                 [product.images.edges[noVariantsImageIndex]].map(image => (
-                    <div>
+                    <div key={image.node.id}>
                       {
-                        <figure 
+                        <figure
                         className="w-full block cursor-pointer">
-                          <Image 
+                          <Image
                           className='z-[9999] relative'
                           id='enlargeImage2'
                           onClick={(e)=> {e.preventDefault(); e.stopPropagation(); window.open(`${el.image}`, "_blank")}}
-                          src={image.node.originalSrc} 
+                          src={image.node.originalSrc}
                           width='500' height='800' layout="responsive" objectFit="cover" />
                         </figure>
                       }
@@ -538,8 +537,8 @@ export default function ImageModal({ show, onClose, product }) {
         </div>
         </div>
         <div className="xxs:block lg:hidden">
-        <button ref={cancelButtonRef2} onClick={onClose} type="button" className="text-gray-400 bg-opacity-75 bg-gray-800 rounded-full hover:text-[#ff00a7] text-sm p-1.5 ml-auto inline-flex items-center outline-none absolute z-[9999] xs:!right-2 xs:!top-2 xxs:right-0 xxs:top-0">
-                  <svg className="w-7 h-7 highlight-removal outline-none" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+        <button ref={cancelButtonRef2} onClick={onClose} type="button" className="text-gray-400 bg-opacity-75 rounded-full hover:text-[#ff00a7] text-sm p-1.5 ml-auto inline-flex items-center outline-none absolute z-[9999] xs:!right-2 xs:!top-2 xxs:right-0 xxs:top-0">
+                  <svg className="w-7 h-7 highlight-removal outline-none" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>  
               </button>
             <Swiper
             style={{ '--swiper-navigation-color': 'transparent', '--swiper-pagination-color': 'transparent' }}

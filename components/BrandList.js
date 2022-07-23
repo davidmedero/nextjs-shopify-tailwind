@@ -68,8 +68,8 @@ const BrandList = ({ productsByBrand, brand, product }) => {
             onMouseLeave={() => setShowSortOptions(false)}>
                 <span className="border-2 p-1 pl-3 flex w-[200px] items-center justify-between">
                     <span className="select-none">SORT</span>
-                    <span><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    <span><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                     </span>
                 </span>

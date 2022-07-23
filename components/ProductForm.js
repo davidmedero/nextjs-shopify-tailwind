@@ -247,7 +247,6 @@ export default function ProductForm({ product, variantImages }) {
     }, [savedItems])
 
 
-
   return (
     <div className="xxs:mt-[20px] md:!mt-0 pt-2 !pb-0 relative -top-4 md:top-0 flex flex-col xxs:w-full md:w-[390px] md:mx-3 lg:mr-0">
         <div className="xxs:mx-[15px] md:mx-0">
@@ -392,9 +391,9 @@ export default function ProductForm({ product, variantImages }) {
       null
       }</span>
         {
-            product.options.map(({ name, values }) => (
+            product.options.map(({ name, values, id }) => (
                 <ProductOptions 
-                key={`key-${name}`}
+                key={id}
                 name={name}
                 values={values}
                 selectedOptions={selectedOptions}
@@ -408,22 +407,22 @@ export default function ProductForm({ product, variantImages }) {
         }
        <div className="text-base rounded-sm shadow-md flex justify-between xxs:w-full mt-[17px]">
         
-        <input id="quantity_input" autocomplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-white bg-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-sm xxs:rounded-r-none pl-[36px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
+        <input id="quantity_input" autoComplete='off' inputMode='numeric' pattern="[0-9]*" onFocus={(e) => e.target.value = ""} onBlur={(e) => e.target.value = counter} className="text-base border-b border-t border-l text-white bg-black transition-all ease-in-out duration-100 relative focus:outline-2 outline-[#ff00a7] caret-[#ff00a7] w-full xxs:rounded-l-sm xxs:rounded-r-none pl-[36px] py-2 text-center" type="text"  value={counter} onChange={handleChange} />
 
         <span className="flex"> 
         <button 
         onClick={decrement}
         className='bg-black border-t border-b border-l text-white highlight-removal transition-all ease-in-out duration-100 px-3 py-2 hover:bg-gray-800 active:bg-gray-700 hover:text-white active:text-white'>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
           </svg>
         </button>
         
         <button 
         onClick={increment}
         className='bg-black border text-white highlight-removal transition-all ease-in-out duration-100 px-3 py-2 hover:bg-gray-800 active:bg-gray-700 hover:text-white active:text-white rounded-r-sm'>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
           </svg>
         </button>  
         </span>
@@ -454,8 +453,8 @@ export default function ProductForm({ product, variantImages }) {
                 updateMacros()
               }}
               className="m-3 mr-0 p-2 border rounded-full z-[10] cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 cursor-pointer" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
             </>
@@ -470,8 +469,8 @@ export default function ProductForm({ product, variantImages }) {
                 setShowSignInModal(true)
               }}
               className="m-3 mr-0 p-2 border rounded-full z-[10] cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill={heartFill || added ? "#ff00a7" : "none"} viewBox="0 0 24 24" stroke={heartFill || added ? "#ff00a7" : "white"} strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </span>
             </>
@@ -482,13 +481,13 @@ export default function ProductForm({ product, variantImages }) {
     <div className="mt-3">
     <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}></div>
     <div className="selectSection">
-    <button className="select-none -mt-[11px]" data-number="4" type="button"> <svg xmlns="http://www.w3.org/2000/svg" className="chevron" data-number="4" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path> </svg> <svg xmlns="http://www.w3.org/2000/svg" className="minus" data-number="4" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path> </svg> View More </button>
+    <button className="select-none -mt-[11px]" data-number="4" type="button"> <svg xmlns="http://www.w3.org/2000/svg" className="chevron" data-number="4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"> <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"></path> </svg> <svg xmlns="http://www.w3.org/2000/svg" className="minus" data-number="4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"> <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4"></path> </svg> View More </button>
     <div data-number="4" className="content ml-[35px] mb-[16px]">
     {
     product.collections.edges.map(el => (
         categories.map(category => (
             el.node.id === category.id ? (
-                <span className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
+                <span key={category.id} className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
                     <Link href={`/${category.handle}`}>
                         <a>
                             {el.node.title}
@@ -498,7 +497,7 @@ export default function ProductForm({ product, variantImages }) {
             ) : category.subcollections?.map(subcategory => (
                 el.node.id === subcategory.id ? (
                     <span>{' | '}
-                        <span className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
+                        <span key={subcategory.id} className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
                             <Link href={`/${category.handle}/${subcategory.handle}`}>
                                 <a>
                                     {el.node.title}
@@ -510,7 +509,7 @@ export default function ProductForm({ product, variantImages }) {
                     el.node.id === sub_subcategory.id &&
                     subcategory.handle !== "" ? (
                         <span>{' | '}
-                            <span className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
+                            <span key={sub_subcategory.id} className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
                                 <Link href={`/${category.handle}/${subcategory.handle}/${sub_subcategory.handle}`}>
                                     <a>
                                         {el.node.title}
@@ -521,7 +520,7 @@ export default function ProductForm({ product, variantImages }) {
                     ) : el.node.id === sub_subcategory.id && 
                         subcategory.handle === "" ? (
                         <span>{' | '}
-                            <span className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
+                            <span key={sub_subcategory.id + Math.random()} className="hover:underline hover:decoration-[#ff00a7] hover:text-[#ff00a7]">
                                 <Link href={`/${category.handle}/${sub_subcategory.handle}`}>
                                     <a>
                                         {el.node.title}

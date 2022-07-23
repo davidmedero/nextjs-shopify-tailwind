@@ -162,7 +162,7 @@ export default function Nav() {
                 showMenu && (
                   collections.map(collection => (
                       collection.handle == "shop" ?
-                      (<Link href={'/shop-brands'} >
+                      (<Link href={'/shop-brands'} key={collection.id} >
                       <a className="lg:text-[12px] xl:text-sm p-6 text-white hover:text-[#ff00a7] select-none"
                       data-info={JSON.stringify(collection)}
                       onMouseEnter={(e) => {
@@ -175,7 +175,7 @@ export default function Nav() {
                           {collection.title.toUpperCase()}
                       </a>
                       </Link>) :
-                      (<Link href={'/' + collection.handle} >
+                      (<Link href={'/' + collection.handle} key={collection.id}>
                           <a className="lg:text-[12px] xl:text-sm p-6 text-white hover:text-[#ff00a7] select-none"
                           data-info={JSON.stringify(collection)}
                           onMouseEnter={(e) => {
@@ -202,7 +202,7 @@ export default function Nav() {
                   id='input' type="text" placeholder="Search..." name="input" className="border-b border-b-white border-black lg:w-[400px] xl:w-[500px] text-white bg-black caret-[#ff00a7]" />
                   <span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
-                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                   </span>
                   </div>
@@ -211,7 +211,7 @@ export default function Nav() {
                   <input />
                   <span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
-                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                   </span>
                   </div>
@@ -227,8 +227,8 @@ export default function Nav() {
               onClick={() => {
                 toggleMenu();
                 }} >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
             <WishlistButton />
@@ -242,8 +242,8 @@ export default function Nav() {
             onMouseOver={() => setShowSubtotal(true)}
             onMouseLeave={() => setShowSubtotal(false)}
             >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 relative z-[9999]" fill="none" viewBox="0 0 24 24" stroke={cartQuantity > 0 ? '#ff00a7' : "white"} stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 relative z-[9999]" fill="none" viewBox="0 0 24 24" stroke={cartQuantity > 0 ? '#ff00a7' : "white"} strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg> 
             </a>
             <Cart cart={cart} />
@@ -265,7 +265,7 @@ export default function Nav() {
                     id="mobile-input" type="text" placeholder="Search..." className="xxs:border-b-white xxs:border-b xxs:w-[80vw] md:w-[60vw] xxs:rounded-none bg-black text-white caret-[#ff00a7]" />
                     <span>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="white">
-                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                       </svg>
                     </span>
                   </div>)
@@ -286,14 +286,14 @@ export default function Nav() {
                 <div>
                     {
                     subcategory.handle === "" ? (
-                        <div className="relative">
+                        <div key={subcategory.id} className="relative">
                         <div className='font-semibold text-white flex p-6 pointer-events-none'>
                             {subcategory.title.toUpperCase()}
                         </div>
                         </div>
                     ) : 
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle}>
-                        <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
+                        <div key={subcategory.id} onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
                             <a className='font-semibold text-white flex p-6 cursor-pointer hover:text-[#ff00a7] select-none'>
                                 {subcategory.title.toUpperCase()}
                             </a>
@@ -303,7 +303,7 @@ export default function Nav() {
                   {subcategory.sub_subcollections?.map(sub_subcategory => (
                       subcategory.handle === "" ? (
                         <Link href={'/' + categoryHandle + '/' + sub_subcategory.handle}>
-                        <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
+                        <div key={sub_subcategory.id} onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
                           <a className='flex py-1 px-6 text-gray-300 cursor-pointer hover:text-[#ff00a7] select-none'>
                             {sub_subcategory.title.toUpperCase()}
                           </a>
@@ -311,7 +311,7 @@ export default function Nav() {
                     </Link> 
                       ) :
                     (<Link href={'/' + categoryHandle + '/' + subcategory.handle + '/' + sub_subcategory.handle}>
-                        <div onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
+                        <div key={sub_subcategory.id} onClick={() => setShowSubMenu(false)} className="relative cursor-pointer">
                           <a className='flex py-1 px-6 text-gray-300 cursor-pointer hover:text-[#ff00a7] select-none'>
                             {sub_subcategory.title.toUpperCase()}
                           </a>
